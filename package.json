@@ -8,6 +8,6 @@
     "grunt-contrib-sass": "latest",
     "grunt-contrib-uglify": "latest",
     "grunt-contrib-watch": "latest",
-    "tether": "^1.4.0"
+    "tether": "^1.4.0",
   },
-}
+},
