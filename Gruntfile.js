@@ -36,16 +36,13 @@ module.exports = function(grunt) {
       }
     },
     cssmin: {
-      options: {
-        banner: '/*\n <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> \n*/\n'
-      },
       build: {
         files: {
           'dist/style.min.css': 'src/css/build-style.css'
         }
       }
     },
-    
+    // General Tasks
     watch: {
       
       // for stylesheets, watch css and scss files 
@@ -55,7 +52,7 @@ module.exports = function(grunt) {
 
       // for scripts, run jshint and uglify 
       scripts: { 
-        files: 'src/**/*.js' 
+        files: 'src/**/*.js',
         tasks: ['jshint', 'uglify'] 
       } 
     }

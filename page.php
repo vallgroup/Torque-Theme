@@ -25,5 +25,10 @@
 	</div>
 	
 	<?php endwhile; ?>
+	<?php else: ?>
+		<h1>
+			<?php echo __('Nothing to show yet.', 'wp_torque')?>
+		</h1>
+	<?php endif; ?>
 
 <?php TQ::get_template_parts( array( 'parts/shared/footer','parts/shared/html-footer' ) ); ?>
