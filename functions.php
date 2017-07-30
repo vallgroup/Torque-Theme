@@ -92,7 +92,7 @@
 		wp_register_script( 'scripts', get_template_directory_uri().'/dist/scripts.min.js', array( 'jquery' ), '0.0.1', true );
 		wp_enqueue_script( 'scripts' );
 
-		wp_register_style( 'style', get_stylesheet_directory_uri().'/dist/style.min.css', '', array(), 'style' );
+		wp_register_style( 'style', get_stylesheet_directory_uri().'/dist/style.min.css' );
 		wp_enqueue_style( 'style' );
 
 	}
