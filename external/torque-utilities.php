@@ -11,7 +11,7 @@
 	 *
 	 *
 	 */
-	 
+
 	 class TQ {
 
     	/**
@@ -32,7 +32,7 @@
     	 * Allows you to pass in an array of parts and output them in your theme
     	 * e.g. <?php get_template_parts(array('part-1', 'part-2')); ?>
     	 *
-    	 * @param 	array 
+    	 * @param 	array
     	 * @return 	void
     	 * @author 	Keir Whitaker
     	 **/
@@ -46,7 +46,7 @@
     	 * Pass in a path and get back the page ID
     	 * e.g. TQ::get_page_id_from_path('about/terms-and-conditions');
     	 *
-    	 * @param 	string 
+    	 * @param 	string
     	 * @return 	integer
     	 * @author 	Keir Whitaker
     	 **/
@@ -61,16 +61,16 @@
 
     	/**
     	 * Append page slugs to the body class
-    	 * NB: Requires init via add_filter('body_class', 'add_slug_to_body_class');
+    	 * NB: Requires init via add_filter( 'body_class', array( 'TQ', 'add_slug_to_body_class' ) );
     	 *
-    	 * @param 	array 
+    	 * @param 	array
     	 * @return 	array
     	 * @author 	Keir Whitaker
     	 */
     	public static function add_slug_to_body_class( $classes ) {
     		global $post;
-	   
-    		if( is_home() ) {			
+
+    		if( is_home() ) {
     			$key = array_search( 'blog', $classes );
     			if($key > -1) {
     				unset( $classes[$key] );
@@ -83,11 +83,11 @@
 
     		return $classes;
     	}
-	
+
     	/**
     	 * Get the category id from a category name
     	 *
-    	 * @param 	string 
+    	 * @param 	string
     	 * @return 	string
     	 * @author 	Keir Whitaker
     	 */
@@ -95,5 +95,5 @@
     		$term = get_term_by( 'name', $cat_name, 'category' );
     		return $term->term_id;
     	}
-	
+
     }
