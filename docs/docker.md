@@ -14,28 +14,29 @@ needing only to install docker.
 
 ## Usage
 
+#### Setup
+
 - Follow steps in [setup](./setup.md) to get your docker containers up and running.
 
 - Visit http://localhost:8000 to view the site, or to complete the 5 minute installation
   if this is a new project.
 
-- Visit http://localhost:8080 to open phpmyadmin. You can do everything you want here
-  as you normally would on a MAMP installation (import/export tables, manage users etc).
+#### Databse
 
-  The db data is stored as a volume ([see Docker Volumes](#resources)), meaning it actually lives on your local machine,
-  not within the container, and docker just has its own access to it.
+- Visit http://localhost:8080 to open phpmyadmin. You can do everything you want here as you normally would on a MAMP installation (import/export tables, manage users etc).
+
+- The db data is stored as a volume ([see Docker Volumes](#resources)), meaning it actually lives on your local machine, not within the container, and docker just has its own access to it.
   This gives us the ability to safely restart the mysql container without losing anything. See below for more info.
 
-- wp-content is stored as a bind mount ([see Docker Volumes](#resources)), so effectively it will stay in sync inside and outside
-  the container. It actually lives outside the container (in the project root), so deleting the container or
-  the image won't affect it.
+#### Updating WP-Content
 
-  Since wp-content is a volume, we can make changes to it either manually or via Wordpress
-  (eg by installing a plugin) and it will always stay in sync.
+- wp-content is stored as a bind mount ([see Docker Volumes](#resources)), so effectively it will stay in sync inside and outside the container. It actually lives outside the container (in the project root), so deleting the container or the image won't affect it.
 
-  _**Beware:**_ Reinstalling or updating the wp core could overwrite wp-content.
-  Make sure you have it backed up and saved in a different location before running
-  anything that will affect the wp core. This is why we work on the the files in a separate src dir and have webpack copy them over.
+- Since wp-content is a volume, we can make changes to it either manually or via Wordpress (eg by installing a plugin) and it will always stay in sync.
+
+_**Beware:**_ Reinstalling or updating the wp core could overwrite wp-content.
+Make sure you have it backed up and saved in a different location before running
+anything that will affect the wp core. This is why we work on the the files in a separate src dir and have webpack copy them over.
 
 ### Notice
 
