@@ -63,7 +63,7 @@
     This command will:
 
     - Download the docker images if you don't already have them cached.
-    - Start 3 docker containers:
+    - Start 3 docker containers ([docs here for more info on our use of docker](./docker.md)):
       1.  The MySQL database, using the secrets to define the db users.
       2.  PhpMyAdmin - access at http://localhost:8080
       3.  A PHP server running a Wordpress installation - access at http://localhost:8000

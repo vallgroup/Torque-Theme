@@ -4,7 +4,7 @@ This idea is for us to have a very easy to set up WP environment which both clie
 will also be able to run locally on their own machines, with identical environments,
 needing only to install docker.
 
-## Key Docker Terms
+## Key Docker Terms
 
 - Image:
   A container is launched by running an image. An image is an executable package that includes everything needed to run an application - the code, a runtime, libraries, environment variables, and configuration files.
