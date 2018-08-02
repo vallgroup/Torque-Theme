@@ -104,19 +104,11 @@ const config = {
     new CopyWebpackPlugin([
       {
         from: path.join(srcDir, 'statics/**/*'),
-        to: path.join(buildDir, 'statics'),
-      },
-      {
-        from: path.join(srcDir, 'external/**/*'),
-        to: path.join(buildDir, 'external'),
-      },
-      {
-        from: path.join(srcDir, 'parts/**/*'),
-        to: path.join(buildDir, 'parts'),
+        to: buildDir,
       },
       { from: path.join(srcDir, 'style.css'), to: buildDir },
       { from: path.join(srcDir, 'screenshot.png'), to: buildDir },
-      { from: path.join(srcDir, '*.php'), to: buildDir },
+      { from: path.join(srcDir, '**/*.php'), to: buildDir },
     ]),
   ],
 

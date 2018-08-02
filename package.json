@@ -7,9 +7,6 @@
   "scripts": {
     "start": "bash start.sh"
   },
-  "engines": {
-    "node": "10.8.0"
-  },
   "workspaces": [
     "themes/torque",
     "plugins/floor-plans"
