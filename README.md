@@ -7,6 +7,6 @@ Created by Torque
 [Setup](./docs/setup.md)
 [Developing](./docs/developing.md)
 
-## Resources
+## Resources
 
 [Changelog](./docs/changelog.md)
