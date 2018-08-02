@@ -7,9 +7,6 @@
   "scripts": {
     "start": "docker-compose up -d && yarn workspace torque-theme start"
   },
-  "engines": {
-    "node": "10.8.0"
-  },
   "workspaces": [
     "themes/torque"
   ]
