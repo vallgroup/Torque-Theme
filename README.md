@@ -4,9 +4,9 @@ Created by Torque
 
 ## Docs
 
-[Setup](./docs/setup.md)
-[Developing](./docs/developing.md)
+- [Setup](./docs/setup.md)
+- [Developing](./docs/developing.md)
 
 ## Resources
 
-[Changelog](./docs/changelog.md)
+- [Changelog](./docs/changelog.md)
