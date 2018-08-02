@@ -5,12 +5,16 @@
   "author": "Torque",
   "license": "ISC",
   "scripts": {
-    "start": "docker-compose up -d && yarn workspace torque-theme start"
+    "start": "bash start.sh"
   },
   "engines": {
     "node": "10.8.0"
   },
   "workspaces": [
-    "themes/torque"
-  ]
+    "themes/torque",
+    "plugins/floor-plans"
+  ],
+  "devDependencies": {
+    "npm-run-all": "^4.1.3"
+  }
 }
