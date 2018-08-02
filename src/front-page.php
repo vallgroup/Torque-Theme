@@ -19,9 +19,11 @@
 <div class="content">
 	<?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
 
-		<?php  
+		<?php
 			get_template_part( 'parts/templates/content', 'homepage' );
 		?>
+
+		<?php echo 'Hello World!'; ?>
 
 	<?php endwhile; ?>
 </div>

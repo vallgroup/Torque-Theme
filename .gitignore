@@ -1,2 +1,4 @@
+/secrets/
+/wp-content/
 /node_modules/
 yarn-error.log
