@@ -10,17 +10,17 @@ Any changes to src files in plugins/ or themes/ should now be visible after visi
 
 Otherwise, for more info on the project structure...
 
-### Why Yarn Workspaces and Webpack?
+## Why Yarn Workspaces and Webpack?
 
-> [See](https://yarnpkg.com/lang/en/docs/workspaces/)
+> [See Yarn official site](https://yarnpkg.com/lang/en/docs/workspaces/)
 
 The main benefit to us of using these workspaces is that we can define a separate package.json for each plugin and theme (ie package) that we add. This allows us to run a separate webpack instance in each, and so define a src directory, a build directory, loaders, and plugins on a per package basis, and independently build distributions of each package as and when we have a new version to ship.
 
-We have some default config files (eg .babelrc) in the project root which the separate webpack configs can use, but if they need something more specific (eg config for react), then they can define their own in their respective package root directory.
+We have some default config files (eg .babelrc) in the project root which the separate webpack configs can use, but if they need something more specific (eg config for a React project), then they can define their own in their respective package root directory.
 
-### Compilation to wp-content
+## Compilation to wp-content
 
-Our docker container takes its' wp-content from the wp-content directory in our project root, but we dont want to update that directly since it could be overwritten by docker and we would lose it for good ([see](./docker.md)).
+Our docker container takes its' wp-content from the wp-content directory in our project root, but we dont want to update that directly since it could be overwritten by docker and we would lose it for good ([see](./docker.md#updating-wp-content)).
 
 We combat this by storing our package src files in separate directories which mimic the wp-content structure. With webpack, we then either directly copy, or in the case of scss and js transform and compile, our files into the wp-content directory used by docker.
 
@@ -32,15 +32,13 @@ Exactly which directory in wp-content the files are compiled to can be set in th
 
 > Dev is done here, the rest is automatic
 
-2.  Webpack (when configured correctly) is watching for file changes, and will directly copy example.php from the src to its' respective location inside of wp-content.
+2.  Webpack (when configured correctly) is watching for file changes, and will directly copy example.php from the src to its' respective location inside of the wp-content in our project root.
 
-3.  Since wp-content is linked to the wordpress installation inside of the docker container via a bind mount, the site is updated too.
+3.  Since our wp-content is linked to the wordpress installation inside of the docker container via a bind mount, the site is updated too.
 
 **Note:** This would be the same process for js or scss files, except they would also be transformed/compiled/minified by webpack during the copy process.
 
-### Usage
-
-#### Creating a new package using yarn workspaces and webpack
+## Creating a new package using yarn workspaces and webpack
 
 > See themes/torque/ for a good example of a configured workspace
 
