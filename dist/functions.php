@@ -79,20 +79,20 @@
 
 	function bootstrap_script_init() {
 
-		wp_register_script('bootstrap', get_template_directory_uri(). '/bootstrap/js/bootstrap.min.js', array( 'jquery' ), '3.3.7', true);
+		wp_register_script('bootstrap', get_template_directory_uri(). 'statics/bootstrap/bootstrap.min.js', array( 'jquery' ), '3.3.7', true);
 		wp_enqueue_script('bootstrap');
 
-		wp_register_style( 'bootstrap', get_stylesheet_directory_uri().'/bootstrap/css/bootstrap.min.css', '', '3.3.7', 'all' );
+		wp_register_style( 'bootstrap', get_stylesheet_directory_uri().'statics/bootstrap/bootstrap.min.css', '', '3.3.7', 'all' );
 		wp_enqueue_style( 'bootstrap' );
 
 	}
 
 	function custom_script_init(){
 
-		wp_register_script( 'scripts', get_template_directory_uri().'/dist/scripts.min.js', array( 'jquery' ), '0.0.1', true );
+		wp_register_script( 'scripts', get_template_directory_uri().'/bundles/bundle.js', array( 'jquery' ), '0.0.1', true );
 		wp_enqueue_script( 'scripts' );
 
-		wp_register_style( 'style', get_stylesheet_directory_uri().'/dist/style.min.css' );
+		wp_register_style( 'style', get_stylesheet_directory_uri().'/bundles/main.css' );
 		wp_enqueue_style( 'style' );
 
 	}
@@ -152,7 +152,7 @@
 
 	// Add custom css
 	function my_custom_login() {
-		echo '<link rel="stylesheet" type="text/css" href="' . get_bloginfo('stylesheet_directory') . '/custom-login-style.css" />';
+		echo '<link rel="stylesheet" type="text/css" href="' . get_bloginfo('stylesheet_directory') . 'statics/css/custom-login-style.css" />';
 	}
 	add_action('login_head', 'my_custom_login');
 
@@ -167,4 +167,3 @@
 		return 'Torque Theme';
 	}
 	add_filter( 'login_headertitle', 'my_login_logo_url_title' );
-
