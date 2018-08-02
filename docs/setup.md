@@ -42,7 +42,7 @@
 
     This command will:
 
-    - Configure Yarn to allow workspaces
+    - Configure Yarn to allow workspaces [see](./developing.md)
     - Install node_modules for all workspaces and create yarn.lock files
 
 7.  Install docker
