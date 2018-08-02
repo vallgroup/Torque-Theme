@@ -23,7 +23,7 @@
 			get_template_part( 'parts/templates/content', 'homepage' );
 		?>
 
-		<?php echo 'Hello World!'; ?>
+		<?php echo 'Hello World Test Now!'; ?>
 
 	<?php endwhile; ?>
 </div>

@@ -1,36 +1,16 @@
 {
-  "name": "torque-theme",
-  "version": "0.2.0",
-  "description": "Base theme for all Torque projects",
+  "private": true,
+  "name": "torque-theme-workspace",
+  "version": "0.1.0",
   "author": "Torque",
   "license": "ISC",
   "scripts": {
-    "start": "docker-compose up -d && webpack --mode=development --watch",
-    "build": "webpack --mode=production"
+    "start": "docker-compose up -d && yarn workspace torque-theme start"
   },
   "engines": {
     "node": "10.8.0"
   },
-  "dependencies": {
-    "autoprefixer": "^9.0.2",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "path": "^0.12.7",
-    "webpack": "^4.16.3"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
-    "copy-webpack-plugin": "^4.5.2",
-    "css-loader": "^1.0.0",
-    "extract-text-webpack-plugin": "^4.0.0-alpha.0",
-    "file-loader": "^1.1.11",
-    "node-sass": "^4.9.2",
-    "postcss-loader": "^2.1.6",
-    "sass-loader": "^7.1.0",
-    "style-loader": "^0.21.0",
-    "url-loader": "^1.0.1",
-    "webpack-cli": "^3.1.0"
-  }
+  "workspaces": [
+    "themes/torque"
+  ]
 }

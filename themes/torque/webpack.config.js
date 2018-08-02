@@ -1,10 +1,11 @@
+const rootConfig = require('../../config')
 const path = require('path')
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const srcDir = path.join(__dirname, 'src')
-const buildDir = path.join(__dirname, 'wp-content/themes/torque')
+const buildDir = path.join(rootConfig.root, 'wp-content/themes/torque')
 
 const config = {
   context: srcDir,
@@ -14,7 +15,7 @@ const config = {
   },
 
   output: {
-    path: `${buildDir}/bundles`,
+    path: path.join(buildDir, './bundles'),
     publicPath: '/',
     filename: 'bundle.js',
   },
@@ -26,6 +27,9 @@ const config = {
         exclude: ['/node_modules/', 'statics'],
         use: {
           loader: 'babel-loader',
+          options: {
+            babelrc: path.join(rootConfig.root, './.babelrc'),
+          },
         },
       },
       {
@@ -33,7 +37,19 @@ const config = {
         exclude: ['statics'],
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader?sourceMap',
-          use: ['css-loader', 'postcss-loader'],
+          use: [
+            {
+              loader: 'css-loader',
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                config: {
+                  path: path.join(rootConfig.root, './postcss.config.js'),
+                },
+              },
+            },
+          ],
         }),
       },
       {
@@ -42,7 +58,22 @@ const config = {
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader?sourceMap',
           // resolve-url-loader may be chained before sass-loader if necessary
-          use: ['css-loader', 'sass-loader?sourceMap', 'postcss-loader'],
+          use: [
+            {
+              loader: 'css-loader',
+            },
+            {
+              loader: 'sass-loader?sourceMap',
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                config: {
+                  path: path.join(rootConfig.root, './postcss.config.js'),
+                },
+              },
+            },
+          ],
         }),
       },
       {
@@ -71,12 +102,21 @@ const config = {
       ignoreOrder: true,
     }),
     new CopyWebpackPlugin([
-      { from: `${srcDir}/statics/**/*`, to: `${buildDir}/statics` },
-      { from: `${srcDir}/external/**/*`, to: `${buildDir}/external` },
-      { from: `${srcDir}/parts/**/*`, to: `${buildDir}/parts` },
-      { from: `${srcDir}/style.css`, to: `${buildDir}` },
-      { from: `${srcDir}/screenshot.png`, to: `${buildDir}` },
-      { from: `${srcDir}/*.php`, to: `${buildDir}` },
+      {
+        from: path.join(srcDir, 'statics/**/*'),
+        to: path.join(buildDir, 'statics'),
+      },
+      {
+        from: path.join(srcDir, 'external/**/*'),
+        to: path.join(buildDir, 'external'),
+      },
+      {
+        from: path.join(srcDir, 'parts/**/*'),
+        to: path.join(buildDir, 'parts'),
+      },
+      { from: path.join(srcDir, 'style.css'), to: buildDir },
+      { from: path.join(srcDir, 'screenshot.png'), to: buildDir },
+      { from: path.join(srcDir, '*.php'), to: buildDir },
     ]),
   ],
 
