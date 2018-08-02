@@ -6,6 +6,7 @@ Created by Torque
 
 - [Setup](./docs/setup.md)
 - [Developing](./docs/developing.md)
+- [Torque Docker README](./docs/docker.md)
 
 ## Resources
 

@@ -28,7 +28,7 @@
     $ cd path/to/Torque-Theme
     ```
 
-5.  Install and use required Node.js version with NVM (specified in package.json engine.node)
+5.  Install and use required Node.js version with NVM (specified in nvmrc)
 
     ```sh
     $ nvm use
@@ -76,4 +76,4 @@
 
 12. Done! The site is now active on http://localhost:8000. Note, you may need to run webpack (using `yarn start`) once more to make sure your themes and plugins are compiled to wp-content.
 
-### Head over to the [Developing](./Developing) docs to learn how to add new plugins and change theme files
+### Head over to the [Developing](./developing.md) docs to learn how to add new plugins and change theme files
