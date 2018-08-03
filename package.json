@@ -9,6 +9,6 @@
   },
   "workspaces": [
     "themes/torque",
-    "plugins/floor-plans"
+    "plugins/lib/torque-plugin"
   ]
 }
