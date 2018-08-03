@@ -1,12 +1,16 @@
 # Developing
 
-If you've completed the steps in [setup](./setup.md), then starting the dev server is as easy as running
+## Quick Start
+
+If you've completed the steps in [setup](./setup.md), then starting the dev server for a workspace is as easy as running
 
 ```sh
-$ yarn start
+$ yarn start <workspace-name>
 ```
 
-Any changes to src files in plugins/ or themes/ should now be visible after visiting http://localhost:8000 or refreshing the page if you're already there.
+Any changes to src files in that workspace should now be visible after visiting http://localhost:8000 or refreshing the page if you're already there.
+
+If you need a dev server for multiple workspaces at a time then simply open a new terminal window and run `yarn start <workspace-name>` again for a different workspace.
 
 Otherwise, for more info on the project structure...
 
@@ -32,7 +36,7 @@ Exactly which directory in wp-content the files are compiled to can be set in th
 
 > Dev is done here, the rest is automatic
 
-2.  Webpack (when configured correctly) is watching for file changes, and will directly copy example.php from the src to its' respective location inside of the wp-content in our project root.
+2.  Webpack (when configured correctly and running) is watching for file changes, and will directly copy example.php from the src to its' respective location inside of the wp-content in our project root.
 
 3.  Since our wp-content is linked to the wordpress installation inside of the docker container via a bind mount, the site is updated too.
 
@@ -52,12 +56,10 @@ Exactly which directory in wp-content the files are compiled to can be set in th
 
 5.  Run `$ yarn` in the **project** root to install the new dependencies and link them to the other packages.
 
-6.  Update the `start` command in the **project** root's package.json to also start webpack for this new workspace.
-
-7.  Run
+6.  In the **project** root, run
 
     ```sh
-    $ yarn start
+    $ yarn start <new-workspace-name>
     ```
 
     and you should see your changes to wp-content on localhost.
