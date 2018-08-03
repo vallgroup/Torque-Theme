@@ -3,7 +3,7 @@
 require_once( get_template_directory() . '/api/responses/torque-api-responses-class.php');
 require_once( get_template_directory() . '/includes/validation/torque-validation-class.php');
 
-class <torque_plugin_class_name>_Example_Controller {
+class Torque_Floor_Plans_Example_Controller {
 
 	public static function get_example_args() {
 		return array(

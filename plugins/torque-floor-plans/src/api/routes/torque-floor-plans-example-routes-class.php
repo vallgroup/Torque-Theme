@@ -1,9 +1,9 @@
 <?php
 
 require_once( get_template_directory() . '/api/permissions/torque-api-permissions-class.php');
-require_once( <torque_plugin_class_name>_API_ROOT . 'controllers/<torque_plugin_slug>-example-controller-class.php');
+require_once( Torque_Floor_Plans_API_ROOT . 'controllers/torque-floor-plans-example-controller-class.php');
 
-class <torque_plugin_class_name>_Example_Routes {
+class Torque_Floor_Plans_Example_Routes {
 
   public static $resource = '/examples/';
 
@@ -19,7 +19,7 @@ class <torque_plugin_class_name>_Example_Routes {
 	  	array(
 	  		'methods'             => 'GET',
 	  		'callback'            => array( $this, 'get_example' ),
-	  		'args'                => <torque_plugin_class_name>_Example_Controller::get_examples_args(),
+	  		'args'                => Torque_Floor_Plans_Example_Controller::get_examples_args(),
 	  		'permission_callback' => array('Torque_API_Permissions', 'user_can_read'),
 	  	),
 	  ) );
@@ -28,7 +28,7 @@ class <torque_plugin_class_name>_Example_Routes {
 	  	array(
 	  		'methods'             => 'PUT',
 	  		'callback'            => array( $this, 'update_example' ),
-	  		'args'                => <torque_plugin_class_name>_Example_Controller::update_example_args(),
+	  		'args'                => Torque_Floor_Plans_Example_Controller::update_example_args(),
 	  		'permission_callback' => array('Torque_API_Permissions', 'user_can_create'),
 	  	),
 	  ) );
@@ -37,24 +37,24 @@ class <torque_plugin_class_name>_Example_Routes {
 	  	array(
 	  		'methods'             => 'DELETE',
 	  		'callback'            => array( $this, 'delete_example' ),
-	  		'args'                => <torque_plugin_class_name>_Example_Controller::delete_example_args(),
+	  		'args'                => Torque_Floor_Plans_Example_Controller::delete_example_args(),
 	  		'permission_callback' => array('Torque_API_Permissions', 'user_can_create'),
 	  	),
 	  ) );
   }
 
   public function get_example( $request ) {
-    $controller = new <torque_plugin_class_name>_Example_Controller( $request );
+    $controller = new Torque_Floor_Plans_Example_Controller( $request );
     return $controller->get_example();
   }
 
   public function update_exmaple( $request ) {
-    $controller = new <torque_plugin_class_name>_Example_Controller( $request );
+    $controller = new Torque_Floor_Plans_Example_Controller( $request );
     return $controller->update_example();
   }
 
   public function delete_example( $request ) {
-    $controller = new <torque_plugin_class_name>_Example_Controller( $request );
+    $controller = new Torque_Floor_Plans_Example_Controller( $request );
     return $controller->delete_example();
   }
 }
