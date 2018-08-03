@@ -1,36 +1,59 @@
 <?php
-/**
- * Plugin Name: Torque Floor Plans
- * Description:
- * Version:     1.0.0
- * Author:      Torque
- * Author URI:  https://torque.digital
- * License:     GPL
- *
- * @package Torque Floor Plans
- */
 
-require_once( plugin_dir_path( __DIR__ ) . 'lib/torque-plugin/torque-plugin-class.php' );
+ /**
+  * Plugin Name: Torque Floor Plans
+  * Description:
+  * Version:     1.0.0
+  * Author:      Torque
+  * Author URI:  https://torque.digital
+  * License:     GPL
+  *
+  * @package Torque Floor Plans
+  */
 
-class Torque_Floor_Plans extends Torque_Plugin {
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
 
-  public static $PLUGIN_NAME = 'Torque Floor Plans';
+class Torque_Floor_Plans {
 
-  public static $PLUGIN_SLUG = 'torque-floor-plans';
+	public static $PLUGIN_NAME = 'Torque Floor Plans';
 
-  public static $REST_API_NAMESPACE = 'floor-plans/v1/';
+	public static $PLUGIN_SLUG = 'torque_floor_plans';
 
-  public static $SHORTCODE_SLUG = 'torque_floor_plan';
+	public static $REST_API_NAMESPACE = 'floor_plans/v1/';
 
-  public function __construct() {
-    parent::__construct();
-  }
+	public static $SHORTCODE_SLUG = 'torque_floor_plan';
 
-  public function init() {}
+	public function __construct() {
+		add_action( 'plugins_loaded', array( $this, 'init' ) );
+	}
 
-  public function register_REST_routes() {}
+	/**
+   * This should be a function which registers all the plugin's required hooks.
+   */
+	public function init() {
+		// register more hooks here
 
-  public function shortcode_handler() {}
+		// add API endpoints
+		add_action( 'rest_api_init', array( $this, 'register_REST_routes' ) );
+
+		// register plugin shortcode
+		add_shortcode( static::$SHORTCODE_SLUG , array( $this, 'shortcode_handler') );
+	}
+
+	/**
+   * Call register_rest_route in this this function in a child class
+   * to automatically have them automatically added to the API.
+   */
+	public function register_REST_routes() {}
+
+	/**
+	 * Callback for the plugin shortcode
+	 */
+	public function shortcode_handler() {}
+
 }
 
 new Torque_Floor_Plans();
