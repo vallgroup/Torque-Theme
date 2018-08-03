@@ -40,10 +40,14 @@ class <torque_plugin_class_name> {
    * This should be a function which registers all the plugin's required hooks.
    */
 	public function init() {
+		// init the REST Controller
 		new <torque_plugin_class_name>_REST_Controller();
 
 		// register plugin shortcode
 		add_shortcode( self::$SHORTCODE_SLUG , array( $this, 'shortcode_handler') );
+
+		// enqueue scripts
+		add_action( 'wp_enqueue_scripts', 'enqueue_plugin_scripts' );
 	}
 
 	/**
@@ -51,6 +55,13 @@ class <torque_plugin_class_name> {
 	 */
 	public function shortcode_handler() {}
 
+	public function enqueue_plugin_scripts() {
+		wp_register_script( 'scripts', <torque_plugin_class_name>_PATH . '/bundles/bundle.js', array() , '0.0.1', true );
+		wp_enqueue_script( 'scripts' );
+
+		wp_register_style( 'style', <torque_plugin_class_name>_PATH . '/bundles/main.css' );
+		wp_enqueue_style( 'style' );
+	}
 }
 
 new <torque_plugin_class_name>();
