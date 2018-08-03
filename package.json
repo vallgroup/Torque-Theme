@@ -8,8 +8,6 @@
     "start": "bash start.sh"
   },
   "workspaces": [
-    "themes/torque",
-    "plugins/lib/torque-plugin",
-    "plugins/torque-floor-plans"
+    "themes/torque"
   ]
 }
