@@ -1,65 +1,55 @@
 <?php
 
+/**
+ * __GET STARTED__
+ *
+ * Find and replace the following:
+ *
+ * 1. <torque_plugin_class_name>
+ * 2. <torque_plugin_name>
+ * 3. <torque_plugin_slug>
+ * 4. <torque_plugin_namespace>
+ * 5. <torque_plugin_shortcode>
+ *
+ * Remove this comment block once you've successfully run the plugin
+ *
+ */
+
+ /**
+  * Plugin Name: <torque_plugin_name>
+  * Description:
+  * Version:     1.0.0
+  * Author:      Torque
+  * Author URI:  https://torque.digital
+  * License:     GPL
+  *
+  * @package <torque_plugin_name>
+  */
+
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-/**
- * We define the base class that all Torque plugins must extend.
- *
- * It is mainly responsible for defining the minimum plugin implementations,
- * but also wraps the plugin installation logic.
- */
+class <torque_plugin_class_name> {
 
-abstract class Torque_Plugin {
+	public static $PLUGIN_NAME = '<torque_plugin_name>';
 
-	/**
-	 * Make sure plugins implement these static properties
-	 * to pass validation.
-	 *
-	 * Otherwisse will trigger a fatal error on loading the plugin.
-	 */
+	public static $PLUGIN_SLUG = '<torque_plugin_slug>';
 
-	public static $PLUGIN_NAME;
+	public static $REST_API_NAMESPACE = '<torque_plugin_namespace>';
 
-	public static $PLUGIN_SLUG;
+	public static $SHORTCODE_SLUG = '<torque_plugin_shortcode>';
 
-	public static $REST_API_NAMESPACE;
-
-	public static $SHORTCODE_SLUG;
+	public function __construct() {
+		add_action( 'plugins_loaded', array( $this, 'init' ) );
+	}
 
 	/**
    * This should be a function which registers all the plugin's required hooks.
    */
-	abstract public function init();
-
-	/**
-   * Call register_rest_route in this this function in a child class
-   * to automatically have them automatically added to the API.
-   */
-	abstract public function register_REST_routes();
-
-	/**
-	 * Callback for the plugin shortcode
-	 */
-	abstract public function shortcode_handler();
-
-	/**
-	 * Important that this is called by the child class's constructor
-	 */
-	protected function __construct() {
-		if ($this->validate_plugin()) {
-			add_action( 'plugins_loaded', array( $this, 'init_plugin' ) );
-		}
-	}
-
-	/**
-	 * Register the minimum required hooks for every Torque plugin
-	 */
-	public function init_plugin() {
-		// run child init to add plugin specific hooks
-		$this->init();
+	public function init() {
+		// register more hooks here
 
 		// add API endpoints
 		add_action( 'rest_api_init', array( $this, 'register_REST_routes' ) );
@@ -69,25 +59,18 @@ abstract class Torque_Plugin {
 	}
 
 	/**
-	 * We check all the required static variables exist on the child class,
-	 * and if not we throw a fatal error
+   * Call register_rest_route in this this function in a child class
+   * to automatically have them automatically added to the API.
+   */
+	public function register_REST_routes() {}
+
+	/**
+	 * Callback for the plugin shortcode
 	 */
-	private function validate_plugin() {
-		$required_static = [
-			'PLUGIN_NAME',
-			'PLUGIN_SLUG',
-			'REST_API_NAMESPACE',
-			'SHORTCODE_SLUG'
-		];
+	public function shortcode_handler() {}
 
-		foreach ($required_static as $key) {
-			if ( ! isset(static::$$key) ) {
-	      throw new Exception('Child class '.get_called_class().' failed to define static '.$key.' property');
-	    }
-		}
-
-		return true;
-	}
 }
+
+new <torque_plugin_class_name>();
 
 ?>
