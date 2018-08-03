@@ -13,7 +13,7 @@ const config = {
   context: srcDir,
 
   entry: {
-    main: ['babel-polyfill', './js/index.js'],
+    main: ['babel-polyfill', './index.js'],
   },
 
   output: {
