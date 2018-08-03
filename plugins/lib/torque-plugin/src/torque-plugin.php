@@ -1,22 +1,5 @@
 <?php
 
-/**
- * __GET STARTED__
- *
- * 1. Find and replace the following in the entire directory:
- *
- * 	1. <torque_plugin_class_name>
- * 	2. <torque_plugin_name>
- * 	3. <torque_plugin_slug>
- * 	4. <torque_plugin_namespace>
- * 	5. <torque_plugin_shortcode>
- *
- * 2. Rename all files in this directory: torque-plugin => <torque_plugin_slug>
- *
- * 3. Remove this comment block once you've successfully run the plugin
- *
- */
-
  /**
   * Plugin Name: <torque_plugin_name>
   * Description:
@@ -33,7 +16,7 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-require( plugin_dir_path(__FILE__) . 'api/<torque_plugin_slug>-rest-controller-class.php' );
+require( plugin_dir_path(__FILE__) . '/api/<torque_plugin_slug>-rest-controller-class.php' );
 
 /**
  * Define constants for plugin's url and path
