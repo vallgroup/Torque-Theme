@@ -52,14 +52,16 @@ Exactly which directory in wp-content the files are compiled to can be set in th
 
 3.  Add a package.json to the package root and add a `{ name: ... }` property to define the workspace name along with any other config and dependencies.
 
-4.  Add a webpack.config.js to the package root and configure as you wish (most importantly the src and build directories to make sure the src is compiled and copied to wp-content)
+4.  Add `scripts: { 'start': '<start-command>' }` to your package.json, defining a start command to run the webpack watch server.
 
-5.  Run `$ yarn` in the **project** root to install the new dependencies and link them to the other packages.
+5.  Add a webpack.config.js to the package root and configure as you wish (most importantly the src and build directories to make sure the src is compiled and copied to wp-content)
 
-6.  In the **project** root, run
+6.  Run `$ yarn` in the **project** root to install the new dependencies and link them to the other packages.
+
+7.  In the **project** root, run
 
     ```sh
     $ yarn start <new-workspace-name>
     ```
 
-    and you should see your changes to wp-content on localhost.
+    and you should see your changes reflected on localhost.
