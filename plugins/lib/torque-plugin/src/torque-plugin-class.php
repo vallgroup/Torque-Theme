@@ -5,8 +5,6 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-require( plugin_dir_path( __FILE__ ) . 'torque-plugin-interface.php' );
-
 /**
  * We define the base class that all Torque plugins must extend.
  *
