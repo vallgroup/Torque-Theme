@@ -47,6 +47,7 @@ services:
        WORDPRESS_DB_NAME: torque-wp
        WORDPRESS_DB_USER_FILE: /run/secrets/torque_wp_mysql_user
        WORDPRESS_DB_PASSWORD_FILE: /run/secrets/torque_wp_mysql_pass
+       WORDPRESS_DEBUG: 1
      networks:
        - back
      secrets:
