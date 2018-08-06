@@ -11,8 +11,10 @@
 ?>
 <?php TQ::get_template_parts( array( 'parts/shared/html-header', 'parts/shared/header' ) ); ?>
 
-<h2 class="h2">
-	<?php echo 'Page not found'; ?>
-</h2>
+<main>
+	<h2 class="h2">
+		<?php echo 'Page not found'; ?>
+	</h2>
+</main>
 
 <?php TQ::get_template_parts( array( 'parts/shared/footer','parts/shared/html-footer' ) ); ?>

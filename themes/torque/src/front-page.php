@@ -16,12 +16,12 @@
 ?>
 <?php TQ::get_template_parts( array( 'parts/shared/html-header', 'parts/shared/header' ) ); ?>
 
-<div class="content">
+<main>
 
 	<h1>
 		<?php echo get_bloginfo( 'name' ); ?>
 	</h1>
 
-</div>
+</main>
 
 <?php TQ::get_template_parts( array( 'parts/shared/footer','parts/shared/html-footer' ) ); ?>
