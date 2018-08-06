@@ -14,6 +14,7 @@ const entry = document.querySelectorAll('.<torque_plugin_slug>-react-entry')
 
 entry.forEach(entry => {
   if (entry) {
-    ReactDOM.render(<App />, entry)
+    // pass through the data-site attr as props so the app knows where to send requests
+    ReactDOM.render(<App site={entry.getAttribute('data-site')} />, entry)
   }
 })
