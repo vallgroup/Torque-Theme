@@ -1,0 +1,196 @@
+/**
+ * Premise Forms CSS
+ *
+ * This file contains all the main Premise styles for form elements
+ *
+ * @package Premise WP
+ * @subpackage CSS
+ */
+
+/* Basic styles */
+.premise-field {
+	display: block;
+	box-sizing: border-box;
+	font-size: inherit;
+	margin-bottom: 1.3em;
+}
+.premise-field select,
+.premise-field textarea,
+.premise-field input {
+	display: block;
+	box-sizing: border-box;
+	font-size: 1em;
+	line-height: 1;
+	padding: .5em;
+}
+
+/* 100% width fields */
+.premise-field select,
+.premise-field textarea,
+.premise-field input[type="tel"],
+.premise-field input[type="url"],
+.premise-field input[type="text"],
+.premise-field input[type="time"],
+.premise-field input[type="week"],
+.premise-field input[type="date"],
+.premise-field input[type="month"],
+.premise-field input[type="email"],
+.premise-field input[type="phone"],
+.premise-field input[type="range"],
+.premise-field input[type="search"],
+.premise-field input[type="username"],
+.premise-field input[type="password"],
+.premise-field input[type="datetime"],
+.premise-field input[type="datetime-local"] {
+	width: 100%;
+}
+
+/* Taller fields */
+.premise-field textarea,
+.premise-field select[multiple="multiple"] {
+	min-height: 10em;
+}
+
+/* radio and checkbox */
+.premise-field input[type="radio"],
+.premise-field input[type="checkbox"] {
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 10px;
+}
+
+/* buttons */
+.premise-field input[type="reset"],
+.premise-field input[type="submit"],
+.premise-field input[type="button"] {
+	display: inline-block;
+	padding: .5em 1em;
+	border: 1px solid #ccc;
+	background-color: #fff;
+	border-radius: .3em;
+}
+
+/* wp_media Field */
+.premise-field-wp_media-wrapper {
+	position: relative;
+	/*padding-right: 6em;*/
+}
+.premise-field-wp_media-wrapper .premise-btn-remove,
+.premise-field-wp_media-wrapper .premise-btn-upload {
+	position: absolute;
+	top: 0;
+	right: 0;
+	outline: 0;
+	width: 3em;
+	/*height: 100%;*/
+	padding: .5em;
+	font-size: .85em;
+	text-align: center;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+}
+.premise-field-wp_media-wrapper .premise-btn-upload {
+	margin-right: 3em;
+	border-right: 0;
+}
+.premise-wp_media-preview {
+	display: block;
+	margin-top: .5em;
+	width: 100%;
+}
+.premise-wp_media-preview .premise-preview-thumb {
+	/*padding-top: 25%;*/
+	background-color: #fff;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+	margin-bottom: 2%;
+}
+.premise-wp_media-preview .premise-preview-thumb div div {
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+
+}
+
+/* wp_color field */
+.premise-wp_color-field .wp-picker-container {
+	display: block;
+}
+.premise-wp_color-field .wp-picker-active .wp-picker-input-wrap input {
+	float: left;
+	height: 25px; /* Force height */
+}
+
+/* FontAwesome Icon Field */
+.premise-field-fa_icon {
+	position: relative;
+	/*padding-right: 6em;*/
+}
+.premise-field-fa_icon .premise-choose-icon,
+.premise-field-fa_icon .premise-remove-icon {
+	position: absolute;
+	top: 0;
+	right: 0;
+	outline: 0;
+	width: 3em;
+	/*height: 100%;*/
+	padding: .5em;
+	font-size: .85em;
+	text-align: center;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+}
+.premise-field-fa_icon .premise-choose-icon {
+	margin-right: 3em;
+	border-right: 0;
+}
+.premise-field-fa_icon .premise-field-fa-icons-container {
+	position: absolute;
+	z-index: 2;
+	top: 100%;
+	right: 0;
+	width: 100%;
+	background: #fff;
+	border: 1px solid #ccc;
+	border-radius: .2em;
+	padding: 0;
+	margin-top: .5em;
+	box-sizing: border-box;
+}
+.premise-field-fa_icon .premise-field-fa-icons-container-inner {
+	overflow: hidden;
+	position: relative;
+	padding: 50% 0 0 0;
+	box-sizing: border-box;
+}
+.premise-field-fa_icon .premise-field-fa-icons-ul {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	padding: 1em;
+	margin: 0;
+	overflow: auto;
+	box-sizing: border-box;
+}
+.premise-field-fa_icon .premise-field-fa-icon-li {
+	display: inline-block;
+	margin: 5px;
+	transition: box-shadow .4s ease-in-out;
+}
+.premise-field-fa_icon .premise-field-fa-icon-anchor {
+	display: block;
+	padding: .5em;
+	color: #444;
+	font-size: 2em; /* override the ul font size */
+	text-align: center;
+	transition: transform .1s ease-in-out;
+}
+.premise-field-fa_icon .premise-field-fa-icon-anchor:hover {
+	transform: scale(1.8,1.8);
+	box-shadow: 0 0 1px #ccc;
+	background-color: #fff;
+}

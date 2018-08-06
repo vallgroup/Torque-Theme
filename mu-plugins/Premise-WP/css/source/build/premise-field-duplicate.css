@@ -1,0 +1,20 @@
+.pwpfd-wrapper {}
+
+.pwp-duplicate-fields .pwp-duplicate-section {
+	margin: 2em auto;
+	padding-bottom: 2em;
+	/*border-bottom: 1px solid #888;*/
+	box-shadow: 0 0 0.0125em #444;
+	padding: 1em;
+}
+
+.pwp-duplicate-fields .pwp-duplicate-section:after {
+	content: '';
+	display: table;
+	clear: both;
+}
+
+.pwp-duplicate-fields .pwp-duplicate-section .pwpfd-button {
+	display: inline-block;
+	float: right;
+}
