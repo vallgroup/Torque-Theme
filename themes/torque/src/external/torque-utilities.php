@@ -19,7 +19,6 @@
     	 *
     	 * @param 	array
     	 * @return 	void
-    	 * @author 	Keir Whitaker
     	 **/
     	public static function print_a( $a ) {
     		print( '<pre>' );
@@ -34,7 +33,6 @@
     	 *
     	 * @param 	array
     	 * @return 	void
-    	 * @author 	Keir Whitaker
     	 **/
     	public static function get_template_parts( $parts = array() ) {
     		foreach( $parts as $part ) {
@@ -48,7 +46,6 @@
     	 *
     	 * @param 	string
     	 * @return 	integer
-    	 * @author 	Keir Whitaker
     	 **/
     	public static function get_page_id_from_path( $path ) {
     		$page = get_page_by_path( $path );
@@ -65,7 +62,6 @@
     	 *
     	 * @param 	array
     	 * @return 	array
-    	 * @author 	Keir Whitaker
     	 */
     	public static function add_slug_to_body_class( $classes ) {
     		global $post;
@@ -89,7 +85,6 @@
     	 *
     	 * @param 	string
     	 * @return 	string
-    	 * @author 	Keir Whitaker
     	 */
     	public static function get_category_id( $cat_name ){
     		$term = get_term_by( 'name', $cat_name, 'category' );
