@@ -13,7 +13,7 @@
     2.  <torque_plugin_name> (eg Torque Floor Plans)
     3.  <torque_plugin_slug> (eg torque-floor-plans)
     4.  <torque_plugin_namespace> (eg floor-plans/v1/)
-    5.  <torque_plugin_shortcode> (eg floor_plan)
+    5.  <torque_plugin_shortcode> (eg torque_floor_plan)
 
 3.  Rename directory: torque-plugin => <torque_plugin_slug>
 

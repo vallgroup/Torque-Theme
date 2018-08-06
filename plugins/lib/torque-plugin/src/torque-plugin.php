@@ -47,14 +47,14 @@ class <torque_plugin_class_name> {
 		new <torque_plugin_class_name>_Shortcode();
 
 		// enqueue plugin scripts
-		add_action( 'wp_enqueue_scripts', 'enqueue_plugin_scripts' );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_plugin_scripts' ) );
 	}
 
 	public function enqueue_plugin_scripts() {
-		wp_register_script( 'scripts', <torque_plugin_class_name>_PATH . '/bundles/bundle.js', array() , '0.0.1', true );
+		wp_register_script( 'scripts', <torque_plugin_class_name>_URL . 'bundles/bundle.js', array() , '0.0.1', true );
 		wp_enqueue_script( 'scripts' );
 
-		wp_register_style( 'style', <torque_plugin_class_name>_PATH . '/bundles/main.css' );
+		wp_register_style( 'style', <torque_plugin_class_name>_URL . 'bundles/main.css' );
 		wp_enqueue_style( 'style' );
 	}
 }
