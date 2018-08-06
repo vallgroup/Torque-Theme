@@ -2,7 +2,7 @@
 
 class Torque_Floor_Plans_Shortcode {
 
-  public static $SHORTCODE_SLUG = 'torque_floor_plan';
+  public static $SHORTCODE_SLUG = 'torque_floor_plans';
 
   private $atts = array();
 

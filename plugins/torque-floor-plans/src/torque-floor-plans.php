@@ -17,6 +17,7 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
+require( plugin_dir_path(__FILE__) . '/custom-post-types/torque-floor-plan-cpt-class.php' );
 require( plugin_dir_path(__FILE__) . '/api/torque-floor-plans-rest-controller-class.php' );
 require( plugin_dir_path(__FILE__) . '/shortcode/torque-floor-plans-shortcode-class.php' );
 
@@ -40,6 +41,9 @@ class Torque_Floor_Plans {
    * This should be a function which registers all the plugin's required hooks.
    */
 	public function init() {
+		// register plugin specific CPTs
+		new Torque_Floor_Plan_CPT();
+
 		// init the REST Controller
 		new Torque_Floor_Plans_REST_Controller();
 
