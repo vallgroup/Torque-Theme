@@ -5,7 +5,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const srcDir = path.join(__dirname, 'src')
-const buildDir = path.join(projectConfig.root, 'wp-content/themes/torque')
+const buildDir = path.join(projectConfig.root, 'wp-content/themes/<torque_child_theme_slug>')
 
 const config = {
   context: srcDir,

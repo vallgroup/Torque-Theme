@@ -46,7 +46,7 @@ function custom_script_init(){
 	wp_register_script( 'scripts', get_template_directory_uri().'/bundles/bundle.js', array( 'jquery' ), '0.0.1', true );
 	wp_enqueue_script( 'scripts' );
 
-	wp_register_style( 'style', get_stylesheet_directory_uri().'/bundles/main.css' );
+	wp_register_style( 'style', get_template_directory_uri().'/bundles/main.css' );
 	wp_enqueue_style( 'style' );
 
 }
@@ -55,7 +55,7 @@ function custom_script_init(){
 /**
  * Register ACF Pro Fields with PHP
  */
-require_once get_stylesheet_directory().'/includes/acf/acf-init.php';
+require_once get_template_directory().'/includes/acf/acf-init.php';
 /**
  * Add ACF Pro Options page
  */
