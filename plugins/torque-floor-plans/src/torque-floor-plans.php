@@ -55,11 +55,9 @@ class Torque_Floor_Plans {
 	}
 
 	public function enqueue_plugin_scripts() {
-		wp_register_script( 'scripts', Torque_Floor_Plans_URL . 'bundles/bundle.js', array() , '0.0.1', true );
-		wp_enqueue_script( 'scripts' );
+		wp_enqueue_script( 'torque-floor-plans-scripts', Torque_Floor_Plans_URL . 'bundles/bundle.js', array() , '0.0.1', true );
 
-		wp_register_style( 'style', Torque_Floor_Plans_URL . 'bundles/main.css' );
-		wp_enqueue_style( 'style' );
+		wp_enqueue_style( 'torque-floor-plans-styles', Torque_Floor_Plans_URL . 'bundles/main.css' );
 	}
 }
 

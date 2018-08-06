@@ -51,11 +51,9 @@ class <torque_plugin_class_name> {
 	}
 
 	public function enqueue_plugin_scripts() {
-		wp_register_script( 'scripts', <torque_plugin_class_name>_URL . 'bundles/bundle.js', array() , '0.0.1', true );
-		wp_enqueue_script( 'scripts' );
+		wp_enqueue_script( '<torque_plugin_slug>-scripts', <torque_plugin_class_name>_URL . 'bundles/bundle.js', array() , '0.0.1', true );
 
-		wp_register_style( 'style', <torque_plugin_class_name>_URL . 'bundles/main.css' );
-		wp_enqueue_style( 'style' );
+		wp_enqueue_style( '<torque_plugin_slug>-styles', <torque_plugin_class_name>_URL . 'bundles/main.css' );
 	}
 }
 
