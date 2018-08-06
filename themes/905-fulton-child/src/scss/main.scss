@@ -1,11 +1,11 @@
-@import "partials/variables";
-@import "typography/typography";
+@import 'partials/variables';
+@import 'typography/typography';
 
-@import "elements";
+@import 'elements';
 
+@import 'parts/templates/titles/title-page';
 
-@import "parts/templates/titles/title-page";
-
+@import 'plugins/floor-plans';
 
 main {
   padding: 67px 32px;

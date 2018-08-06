@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import FloorPlanSelector from './FloorPlanSelector/FloorPlanSelector'
+import Header from './Header/Header'
+import Thumbnail from './Thumbnail/Thumbnail'
 import style from './App.scss'
 
 // props
@@ -11,7 +14,8 @@ class App extends Component {
     super(props)
 
     this.state = {
-      floorPlans: []
+      floorPlans: [],
+      selected: 0,
     }
   }
 
@@ -19,27 +23,80 @@ class App extends Component {
     this.getFloorPlans()
   }
 
+  updateSelected(newIndex) {
+    this.setState({ selected: newIndex })
+  }
+
+  getSelectedFloorPlan() {
+    return this.state.floorPlans[this.state.selected]
+  }
+
   render() {
-    console.log(this.state)
-    return <div className={style.test}>{this.props.text}</div>
+    if (!this.state.floorPlans || !this.state.floorPlans.length) {
+      return null
+    }
+
+    return (
+      <div className={style.floorPlans}>
+        <div className={style.header}>
+          <Header floorPlan={this.getSelectedFloorPlan()} />
+        </div>
+        <div className={style.selector}>
+          <div className={style.list}>
+            <FloorPlanSelector
+              floorPlans={this.state.floorPlans}
+              updateSelected={this.updateSelected.bind(this)}
+            />
+          </div>
+          <div className={style.thumbnail}>
+            <Thumbnail floorPlan={this.getSelectedFloorPlan()} />
+          </div>
+        </div>
+      </div>
+    )
   }
 
   async getFloorPlans() {
     try {
-      const floorPlansUrl = `${this.props.site}/wp-json/floor-plans/v1/floor-plans/`
+      const floorPlansUrl = `${
+        this.props.site
+      }/wp-json/floor-plans/v1/floor-plans/`
 
       const { data } = await axios.get(floorPlansUrl)
 
       if (data.success) {
-        this.setState({ floorPlans: data.floor_plans })
+        this.setState({ floorPlans: data.floor_plans, selected: 0 })
       } else {
         throw 'Failed getting floor plans'
       }
     } catch (e) {
       console.log(e)
-      this.setState({ floorPlans: [] })
+      this.setState({ floorPlans: [], selected: 0 })
     }
   }
+}
+
+export function getFloorWithAffix(floorPlan) {
+  let affix = 'th'
+
+  switch (parseInt(floorPlan.floor_number)) {
+    case 1 || -1:
+      affix = 'st'
+      break
+
+    case 2 || -2:
+      affix = 'nd'
+      break
+
+    case 3 || -3:
+      affix = 'rd'
+      break
+
+    default:
+      affix = 'th'
+  }
+
+  return `${floorPlan.floor_number}${affix} floor`
 }
 
 export default App

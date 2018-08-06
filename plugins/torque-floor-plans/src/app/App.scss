@@ -1,0 +1,27 @@
+$listWidth: 37%;
+
+.floorPlans {
+  width: 100%;
+
+  .header {
+    margin-bottom: 55px;
+    padding-left: $listWidth;
+  }
+
+  .selector {
+    .list {
+      display: inline-block;
+      vertical-align: top;
+      padding-right: 30px;
+      width: $listWidth;
+      box-sizing: border-box;
+    }
+
+    .thumbnail {
+      display: inline-block;
+      vertical-align: top;
+      width: 100% - $listWidth;
+      height: 465px;
+    }
+  }
+}

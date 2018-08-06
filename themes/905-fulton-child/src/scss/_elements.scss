@@ -6,6 +6,7 @@ button {
   background-color: transparent;
   color: $clay-brown;
   text-transform: uppercase;
+  outline: none !important;
 
   &.filled {
     border: none;

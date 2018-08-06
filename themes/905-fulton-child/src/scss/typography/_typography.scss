@@ -1,5 +1,5 @@
-@import "fonts";
-@import "../partials/variables";
+@import 'fonts';
+@import '../partials/variables';
 
 body {
   font-family: Avenir-Roman;
@@ -29,6 +29,7 @@ h2 {
 
 h3 {
   margin: 0;
+  color: $clay-brown;
 }
 
 h4 {

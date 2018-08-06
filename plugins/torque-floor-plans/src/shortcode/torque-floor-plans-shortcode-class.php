@@ -51,12 +51,12 @@ class Torque_Floor_Plans_Shortcode {
    * @return string
    */
   private function get_markup() {
-    return '<span
+    return '<div
       class="torque-floor-plans-react-entry"
       data-site="'.get_site_url().'"
       data-1="'.$this->atts['example'].'"
       data-2="'.$this->atts['another'].'" >
-      </span>';
+      </div>';
   }
 
 }
