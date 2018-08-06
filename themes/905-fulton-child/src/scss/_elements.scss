@@ -1,0 +1,27 @@
+button {
+  border: 1px solid $clay-brown;
+  padding: 0 60px;
+  height: 45px;
+  line-height: 44px;
+  background-color: transparent;
+  color: $clay-brown;
+  text-transform: uppercase;
+
+  &.filled {
+    border: none;
+    background-color: $clay-brown;
+    color: $white;
+
+    &.marine {
+      background-color: $marine;
+    }
+
+    &.nice-blue {
+      background-color: $nice-blue;
+    }
+
+    &.barney-purple {
+      background-color: $barney-purple;
+    }
+  }
+}
