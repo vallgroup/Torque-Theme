@@ -32,7 +32,8 @@ class Torque_Floor_Plan_CPT {
 			'editor',
       'excerpt',
 			'thumbnail',
-		)
+		),
+		'menu_icon'           => 'dashicons-layout',
 	);
 
 	/**

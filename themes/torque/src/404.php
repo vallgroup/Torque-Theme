@@ -12,7 +12,7 @@
 <?php TQ::get_template_parts( array( 'parts/shared/html-header', 'parts/shared/header' ) ); ?>
 
 <h2 class="h2">
-	<?php echo __('Page not found', 'wp_torque'); ?>
+	<?php echo 'Page not found'; ?>
 </h2>
 
 <?php TQ::get_template_parts( array( 'parts/shared/footer','parts/shared/html-footer' ) ); ?>

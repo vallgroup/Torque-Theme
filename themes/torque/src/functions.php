@@ -1,13 +1,14 @@
 <?php
 
 /**
- * Required external files
+ * Requires
  */
 
-require_once( 'external/torque-utilities.php' );
+require_once( 'includes/utilities/torque-utilities.php' );
+
 
 /**
- * Add html 5 support to wordpress elements
+ * Add theme support
  */
 
 add_theme_support( 'html5', array(
@@ -17,22 +18,23 @@ add_theme_support( 'html5', array(
 	'gallery',
 	'caption',
 ) );
-
-/**
- * Theme specific settings
- */
-
 add_theme_support('post-thumbnails');
 
+
+/**
+ * Nav Menus
+ */
+
 register_nav_menus(array('primary' => 'Primary Navigation'));
+
 
 /**
  * Actions and Filters
  */
 
-add_action( 'wp_enqueue_scripts', 'custom_script_init' );
-
 add_filter( 'body_class', array( 'TQ', 'add_slug_to_body_class' ) );
+
+add_action( 'wp_enqueue_scripts', 'custom_script_init' );
 
 
 /**
@@ -69,19 +71,6 @@ if( function_exists('acf_add_options_page') ) {
  * Security & cleanup wp admin
  */
 
-//remove wp version
-function theme_remove_version() {
-	return '';
-}
-
-add_filter('the_generator', 'theme_remove_version');
-
-//remove default footer text
-function remove_footer_admin () {
-	echo "";
-}
-
-add_filter('admin_footer_text', 'remove_footer_admin');
 
 //remove wordpress logo from adminbar
 function wp_logo_admin_bar_remove() {
@@ -95,12 +84,6 @@ add_action('wp_before_admin_bar_render', 'wp_logo_admin_bar_remove', 0);
 
 // Remove default Dashboard widgets
 function disable_default_dashboard_widgets() {
-
-	//remove_meta_box('dashboard_right_now', 'dashboard', 'core');
-	remove_meta_box('dashboard_activity', 'dashboard', 'core');
-	remove_meta_box('dashboard_recent_comments', 'dashboard', 'core');
-	remove_meta_box('dashboard_incoming_links', 'dashboard', 'core');
-	remove_meta_box('dashboard_plugins', 'dashboard', 'core');
 
 	remove_meta_box('dashboard_quick_press', 'dashboard', 'core');
 	remove_meta_box('dashboard_recent_drafts', 'dashboard', 'core');
@@ -129,6 +112,6 @@ add_filter( 'login_headerurl', 'my_login_logo_url' );
 
 // Change the title text
 function my_login_logo_url_title() {
-	return 'Torque Theme';
+	return get_bloginfo( 'name' );
 }
 add_filter( 'login_headertitle', 'my_login_logo_url_title' );

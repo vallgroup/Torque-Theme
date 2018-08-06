@@ -6,6 +6,5 @@
 			'theme_location'	=> 'primary'
 		));
 		?>
-
 	</div>
 </nav>

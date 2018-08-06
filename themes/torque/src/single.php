@@ -11,21 +11,27 @@
 ?>
 <?php TQ::get_template_parts( array( 'parts/shared/html-header', 'parts/shared/header' ) ); ?>
 
-<?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
+<div class="content">
+	<?php
+	if ( have_posts() ) {
+		while ( have_posts() ) {
+			the_post();
+	?>
 
-	<div class="content">
+		<?php get_template_part( 'parts/templates/titles/title', get_post_format() ); ?>
 
-		<?php the_content(); ?>
+		<?php get_template_part( 'parts/templates/content', get_post_format() ); ?>
 
-	</div>
-
-	<?php endwhile; ?>
-	<?php else: ?>
+	<?php
+		}
+	}
+	else {  ?>
 
 		<h1>
-			<?php echo __('Nothing to show yet.', 'wp_torque')?>
+			<?php echo 'Nothing to show yet.'; ?>
 		</h1>
 
-	<?php endif; ?>
+	<?php } ?>
+</div>
 
 <?php TQ::get_template_parts( array( 'parts/shared/footer','parts/shared/html-footer' ) ); ?>
