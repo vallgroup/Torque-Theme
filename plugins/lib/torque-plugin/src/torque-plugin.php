@@ -1,4 +1,5 @@
 <?php
+// entry point for backend of plugin
 
  /**
   * Plugin Name: <torque_plugin_name>
@@ -58,6 +59,7 @@ class <torque_plugin_class_name> {
 	}
 }
 
+// instantiate the plugin class to run the contructor and register all the hooks.
 new <torque_plugin_class_name>();
 
 ?>

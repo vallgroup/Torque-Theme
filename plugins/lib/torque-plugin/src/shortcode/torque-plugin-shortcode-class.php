@@ -37,6 +37,7 @@ class <torque_plugin_class_name>_Shortcode {
    */
   private function setup_atts($atts) {
     return shortcode_atts(array(
+      'id'      => 0,
       'example' => true,
       'another'           => '',
     ), $atts);
@@ -49,7 +50,12 @@ class <torque_plugin_class_name>_Shortcode {
    * @return string
    */
   private function get_markup() {
-    return '<span data-1="'.$this->atts['example'].'" data-2="'.$this->atts['another'].'" class="example-shortcode"></span>';
+    return '<span
+      id="<torque_plugin_slug>-'.$this->atts['id'].'"
+      class="<torque_plugin_slug>-react-entry"
+      data-1="'.$this->atts['example'].'"
+      data-2="'.$this->atts['another'].'" >
+      </span>';
   }
 
 }
