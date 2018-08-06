@@ -4,7 +4,7 @@
 
 1.  Copy entire torque-plugin directory into plugins.
 
-    - Include package.json and webpack.config.js.
+    - Include package.json, webpack.config.js, and other config files
     - Exclude node_modules
 
 2.  Find and replace the following in the entire directory:

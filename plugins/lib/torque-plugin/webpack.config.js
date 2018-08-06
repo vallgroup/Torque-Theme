@@ -1,6 +1,7 @@
 const projectConfig = require('../../config')
 const path = require('path')
 const webpack = require('webpack')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const srcDir = path.join(__dirname, 'src')
@@ -25,12 +26,15 @@ const config = {
   module: {
     rules: [
       {
-        test: projectConfig.webpackDefaults.js.test,
-        exclude: ['/node_modules/'],
-        use: projectConfig.webpackDefaults.js.loaders,
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader'
+        }
       },
       {
         test: projectConfig.webpackDefaults.css.test,
+        exclude: /node_modules/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader?sourceMap',
           use: projectConfig.webpackDefaults.css.loaders,
@@ -38,6 +42,7 @@ const config = {
       },
       {
         test: projectConfig.webpackDefaults.scss.test,
+        exclude: /node_modules/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader?sourceMap',
           // resolve-url-loader may be chained before sass-loader if necessary
@@ -46,10 +51,12 @@ const config = {
       },
       {
         test: projectConfig.webpackDefaults.images.test,
+        exclude: /node_modules/,
         use: projectConfig.webpackDefaults.images.loaders,
       },
       {
         test: projectConfig.webpackDefaults.fonts.test,
+        exclude: /node_modules/,
         use: projectConfig.webpackDefaults.fonts.loaders,
       },
     ],
