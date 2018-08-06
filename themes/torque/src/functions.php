@@ -8,6 +8,18 @@ require_once( 'includes/utilities/torque-utilities.php' );
 
 
 /**
+ * Set permalink structure
+ *
+ * Strangely, pretty permalink structure is required for the REST API...
+ */
+add_action('init', 'set_permalink');
+
+function set_permalink(){
+    global $wp_rewrite;
+    $wp_rewrite->set_permalink_structure('/%postname%/');
+}
+
+/**
  * Add theme support
  */
 

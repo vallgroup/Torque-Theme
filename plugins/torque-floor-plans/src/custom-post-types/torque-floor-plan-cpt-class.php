@@ -14,7 +14,7 @@ class Torque_Floor_Plan_CPT {
 	 *
 	 * @var array
 	 */
-	protected $floor_plan_labels = array(
+	public static $floor_plan_labels = array(
 			'singular'       => 'Floor Plan',
 			'plural'         => 'Floor Plans',
 			'slug'           => 'floor-plan',
@@ -40,7 +40,7 @@ class Torque_Floor_Plan_CPT {
 	 * Registers the cpt and adds metaboxes
 	 */
 	function __construct() {
-		$this->floor_plan = new PremiseCPT( $this->floor_plan_labels, $this->floor_plan_options );
+		$this->floor_plan = new PremiseCPT( self::$floor_plan_labels, $this->floor_plan_options );
 
 		pwp_add_metabox(
 			array(
@@ -48,7 +48,7 @@ class Torque_Floor_Plan_CPT {
 				'context' => 'side',
 				'priority' => 'high',
 			),
-			array( $this->floor_plan_labels['post_type_name'] ),
+			array( self::$floor_plan_labels['post_type_name'] ),
 			array(
 				array(
 					'type'    => 'number',
@@ -63,7 +63,7 @@ class Torque_Floor_Plan_CPT {
 
 		pwp_add_metabox(
 			'RSF',
-			$this->floor_plan_labels['post_type_name'],
+			self::$floor_plan_labels['post_type_name'],
 			array(
 				array(
 					'type'    => 'number',
@@ -78,7 +78,7 @@ class Torque_Floor_Plan_CPT {
 
 		pwp_add_metabox(
 			'Floor Plan Downloads',
-			array( $this->floor_plan_labels['post_type_name'] ),
+			array( self::$floor_plan_labels['post_type_name'] ),
 			array(
 				'name_prefix' => 'floor_plan_downloads',
 				array(
