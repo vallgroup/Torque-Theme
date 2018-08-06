@@ -2,10 +2,7 @@
 /**
  * The Template for displaying all single posts
  *
- * Please see /external/bootstrap-utilities.php for info on TQ::get_template_parts()
- *
- * @package 		WordPress
- * @subpackage 	Torque Theme
+ * @package 		torque
  * @author 			Torque
  */
 ?>
