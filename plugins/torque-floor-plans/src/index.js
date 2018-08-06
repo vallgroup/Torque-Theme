@@ -12,6 +12,6 @@ const entry = document.querySelectorAll('.torque-floor-plans-react-entry')
 
 entry.forEach(entry => {
   if (entry) {
-    ReactDOM.render(<App text={"Hello World"}/>, entry)
+    ReactDOM.render(<App site={entry.getAttribute('data-site')} />, entry)
   }
 })

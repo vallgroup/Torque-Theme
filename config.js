@@ -47,6 +47,25 @@ const webpackDefaults = {
       },
     ],
   },
+  scssModules: {
+    test: /\.scss$/,
+    loaders: [
+      {
+        loader: 'css-loader?modules&importLoaders=1&localIdentName="[local]__[hash:base64:5]"',
+      },
+      {
+        loader: 'sass-loader?sourceMap',
+      },
+      {
+        loader: 'postcss-loader',
+        options: {
+          config: {
+            path: path.join(root, './postcss.config.js'),
+          },
+        },
+      },
+    ],
+  },
   images: {
     test: /\.(png|jpg|gif|svg)$/,
     loaders: {

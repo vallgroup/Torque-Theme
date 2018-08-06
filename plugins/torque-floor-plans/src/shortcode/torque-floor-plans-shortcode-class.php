@@ -46,11 +46,14 @@ class Torque_Floor_Plans_Shortcode {
    * Using the atts and content saved to the instance,
    * we should return some markup here that the shortcoded will be returned as.
    *
+   * Note we pass the site url through to allow our axios url to depend on the WP site.
+   *
    * @return string
    */
   private function get_markup() {
     return '<span
       class="torque-floor-plans-react-entry"
+      data-site="'.get_site_url().'"
       data-1="'.$this->atts['example'].'"
       data-2="'.$this->atts['another'].'" >
       </span>';

@@ -8,6 +8,7 @@
     "build": "webpack --mode=production"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "babel-runtime": "^6.26.0",
     "path": "^0.12.7",
