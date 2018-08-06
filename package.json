@@ -9,6 +9,7 @@
   },
   "workspaces": [
     "themes/torque",
+    "themes/905-fulton-child",
     "plugins/torque-floor-plans"
   ]
 }
