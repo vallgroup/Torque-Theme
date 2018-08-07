@@ -5,7 +5,8 @@
  */
 
 require_once( 'includes/utilities/torque-utilities.php' );
-
+require_once( 'includes/torque-nav-menus-class.php' );
+require_once( 'includes/torque-theme-support-class.php' );
 
 /**
  * Set permalink structure
@@ -23,22 +24,18 @@ function set_permalink(){
  * Add theme support
  */
 
-add_theme_support( 'html5', array(
-	'comment-list',
-	'search-form',
-	'comment-form',
-	'gallery',
-	'caption',
-) );
-add_theme_support('post-thumbnails');
-add_post_type_support( 'page', 'excerpt' );
+ if ( class_exists('Torque_Theme_Support') ) {
+   Torque_Theme_Support::add_all();
+ }
 
 
 /**
  * Nav Menus
  */
 
-register_nav_menus(array('primary' => 'Primary Navigation'));
+if ( class_exists('Torque_Nav_Menus') ) {
+  Torque_Nav_Menus::register_all();
+}
 
 
 /**
@@ -47,14 +44,14 @@ register_nav_menus(array('primary' => 'Primary Navigation'));
 
 add_filter( 'body_class', array( 'TQ', 'add_slug_to_body_class' ) );
 
-add_action( 'wp_enqueue_scripts', 'custom_script_init' );
+add_action( 'wp_enqueue_scripts', 'torque_custom_script_init' );
 
 
 /**
  * Scripts
  */
 
-function custom_script_init(){
+function torque_custom_script_init(){
 
 	wp_enqueue_script( 'torque-theme-scripts',
 		get_template_directory_uri().'/bundles/bundle.js',
