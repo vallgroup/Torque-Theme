@@ -5,6 +5,7 @@
  */
 
 require_once( 'includes/utilities/torque-utilities.php' );
+require_once( 'includes/customizer/torque-customizer-class.php' );
 require_once( 'includes/torque-nav-menus-class.php' );
 require_once( 'includes/torque-theme-support-class.php' );
 
@@ -35,6 +36,14 @@ function set_permalink(){
 
 if ( class_exists('Torque_Nav_Menus') ) {
   Torque_Nav_Menus::register_all();
+}
+
+/**
+ * Customizer
+ */
+
+if ( class_exists('Torque_Customizer') ) {
+  new Torque_Customizer();
 }
 
 
