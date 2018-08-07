@@ -1,10 +1,5 @@
 <nav>
 	<div id="primaryNav">
-		<?php
-		wp_nav_menu( array(
-			'menu'          	=> 'primary',
-			'theme_location'	=> 'primary'
-		));
-		?>
+		<?php get_template_part('parts/shared/header-parts/menu-items/menu-items', 'inline'); ?>
 	</div>
 </nav>

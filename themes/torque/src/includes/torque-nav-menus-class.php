@@ -20,6 +20,17 @@ class Torque_Nav_Menus {
   }
 
   /**
+   * This slug will be used in all header nav menu templates
+   * to get the primary menu for the site.
+   *
+   * We pass it through a filter to allow child themes to easily update this slug
+   * if for some reason it has to be different
+   */
+  public static function get_default_primary_location_slug() {
+    return apply_filters('torque_nav_menus_primary_location_slug', 'primary');
+  }
+
+  /**
    * Pass menus through a filter so children can add/modify them
    */
   public static function get_menus() {
@@ -28,6 +39,23 @@ class Torque_Nav_Menus {
     );
 
     return apply_filters('torque_nav_menus', $menus );
+  }
+
+  /**
+   * Get nav menu items by location
+   */
+  public static function get_nav_menu_items_by_location( $location, $args = [] ) {
+
+      $locations = get_nav_menu_locations();
+
+      // Get object id by location
+      $object = wp_get_nav_menu_object( $locations[$location] );
+
+      // Get menu items by menu name
+      $menu_items = wp_get_nav_menu_items( $object->name, $args );
+
+      // Return menu post objects
+      return $menu_items;
   }
 }
 
