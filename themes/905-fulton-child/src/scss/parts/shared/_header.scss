@@ -1,0 +1,39 @@
+$logoWidth: 177px;
+$logoMarginRight: 50px;
+
+nav {
+  margin: 0 auto;
+  padding: 70px $desktopPaddingSides 45px $desktopPaddingSides;
+  max-width: $contentMaxWidth2;
+
+  .relative-container {
+    position: relative;
+
+    img {
+      margin-right: $logoMarginRight;
+      width: $logoWidth;
+      height: 135px;
+    }
+
+    .torque-menu-items-inline {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      padding-left: $logoWidth + $logoMarginRight;
+      width: 100%;
+      box-sizing: border-box;
+      text-align: center;
+
+      .torque-menu-item-wrapper {
+        margin-right: 12px;
+        margin-left: 12px;
+
+        a {
+          color: $marine;
+          text-transform: uppercase;
+        }
+      }
+    }
+  }
+}

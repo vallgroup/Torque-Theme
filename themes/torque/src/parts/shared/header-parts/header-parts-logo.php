@@ -2,7 +2,7 @@
 
 require_once( get_template_directory() . '/includes/customizer/torque-customizer-class.php' );
 
-$logo_src = get_theme_mod( Torque_Customizer::$logo_setting_slug )
+$logo_src = get_theme_mod( Torque_Customizer::$logo_setting_slug );
 
 if ( $logo_src ) {
 ?>
@@ -11,4 +11,5 @@ if ( $logo_src ) {
 
 <?php
 }
+
 ?>
