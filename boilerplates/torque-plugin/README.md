@@ -19,7 +19,7 @@
 
 4.  Rename all files in this directory: {torque-plugin}-etc-class.php => {<torque_plugin_slug>}-etc-class.php
 
-5.  Register workspace in package.json in **project** root
+5.  Register workspace in package.json in **project** root and add it to the setup.sh initial build script.
 
 6.  Open new terminal, and in **project** root, run:
 
