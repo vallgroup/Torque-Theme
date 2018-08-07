@@ -1,0 +1,22 @@
+.torque-gallery-layout {
+  .torque-gallery-column {
+    display: inline-block;
+    margin-bottom: 20px;
+    height: 576px;
+
+    &.torque-gallery-column-10 {
+      height: 542px;
+    }
+
+    &:first-child:not(.torque-gallery-column-10) {
+      padding-right: 25px;
+      box-sizing: border-box;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}
