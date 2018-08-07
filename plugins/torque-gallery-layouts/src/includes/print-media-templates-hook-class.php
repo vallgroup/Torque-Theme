@@ -13,13 +13,14 @@ class Print_Media_Templates_Hook {
     // matching the shortcode name
     ?>
     <script type="text/html" id="tmpl-gallery-layout-setting">
+    <h2 style="display: inline-block;">Torque Custom Settings</h2>
     <label class="setting">
       <span>Torque Gallery Layout</span>
       <select data-setting="torque_layout">
+        <option value="0">No Custom Layout</option>
+        <option value="1">1 (Full Width)</option>
         <option value="6|4">6|4</option>
         <option value="4|6">4|6</option>
-        <option value="1">1 (Full Width)</option>
-        <option value="0">No Custom Layout</option>
       </select>
     </label>
     </script>
@@ -29,8 +30,8 @@ class Print_Media_Templates_Hook {
     jQuery(document).ready(function(){
 
       // add your shortcode attribute and its default value to the
-      // gallery settings list; $.extend should work as well...
-      _.extend(wp.media.gallery.defaults, {
+      // gallery settings list;
+      $.extend(wp.media.gallery.defaults, {
         torque_layout: '0'
       });
 
