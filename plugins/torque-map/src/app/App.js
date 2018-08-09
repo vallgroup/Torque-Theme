@@ -7,7 +7,9 @@ import TorqueMap from './Map/Map'
 
 class App extends Component {
   render() {
-    return <TorqueMap apiKey={`AIzaSyDPF2QsUSJKHsmGoPcjIgRySglSZgD-asA`} />
+    return <TorqueMap
+    	apiKey={`AIzaSyDPF2QsUSJKHsmGoPcjIgRySglSZgD-asA`}
+    	center={'905 Fulton Market Chicago, IL'} />
   }
 }
 
