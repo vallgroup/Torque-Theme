@@ -15,7 +15,6 @@ export class TorqueMap extends React.Component {
 	}
 
 	render() {
-		console.log( style )
 		return (
 			<div
 				onClick={this.onMapClick.bind(this)}
@@ -33,7 +32,7 @@ export class TorqueMap extends React.Component {
 		        marker={this.state.activeMarker}
 	          visible={this.state.showingInfoWindow}>
             <div>
-              <h1>{this.state.selectedPlace.name}</h1>
+              <h3>{this.state.selectedPlace.name}</h3>
             </div>
 	        </InfoWindow>
 	      </Map>
@@ -42,7 +41,6 @@ export class TorqueMap extends React.Component {
 	}
 
 	onMarkerClick(props, marker, e) {
-		console.log( 'marker clicked' )
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
@@ -51,7 +49,6 @@ export class TorqueMap extends React.Component {
 	}
 
   onMapClick(props) {
-  	console.log( 'map clicked' )
     if (this.state.showingInfoWindow) {
       this.setState({
         showingInfoWindow: false,
