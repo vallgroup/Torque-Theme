@@ -1,5 +1,14 @@
 <?php
 
+require_once( get_stylesheet_directory() . '/includes/widgets/<torque_child_theme_slug>-widgets-class.php');
+
+/**
+ * Child Theme Widgets
+ */
+
+if ( class_exists( '<torque_child_theme_class_prefix>_Widgets' ) ) {
+  new <torque_child_theme_class_prefix>_Widgets();
+}
 
 // enqueue child styles after parent styles, both style.css and main.css
 // so child styles always get priority

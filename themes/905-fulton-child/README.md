@@ -11,8 +11,9 @@
 
     1.  905 Fulton (eg 905 Fulton)
     2.  905-fulton-child (eg 905-fulton-child) **Note:** best practise is to include -child at the end
-    3.   (eg https://github.com/vallgroup/Torque-Theme)
-    4.  Fulton (eg Fulton)
+    3.  Fulton (eg Fulton)
+    4.  (eg https://github.com/vallgroup/Torque-Theme)
+    5.  Fulton (eg Fulton)
 
 3.  Rename directory: torque-child-theme => 905-fulton-child
 
