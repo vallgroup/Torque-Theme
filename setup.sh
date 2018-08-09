@@ -5,6 +5,9 @@ yarn config set workspaces-experimental true
 # install dependencies
 yarn
 
+# stop any previously running docker containers
+docker-compose down
+
 # download and build docker images
 docker-compose up -d
 
@@ -18,6 +21,17 @@ yarn workspace torque-gallery-layouts build
 # copy across mu-plugins
 mkdir wp-content/mu-plugins
 cp -r mu-plugins/* wp-content/mu-plugins
+
+# copy across uploads
+mkdir wp-content/uploads
+cp -r uploads/* wp-content/uploads
+
+# remove unwanted default plugins and themes
+rm -R wp-content/themes/twentyfifteen
+rm -R wp-content/themes/twentysixteen
+rm -R wp-content/themes/twentyseventeen
+rm -R wp-content/plugins/akismet
+rm wp-content/plugins/hello.php
 
 # start watch server
 yarn start torque-theme
