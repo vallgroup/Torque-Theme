@@ -5,7 +5,9 @@
   "author": "Torque",
   "license": "ISC",
   "scripts": {
-    "start": "bash start.sh"
+    "setup": "bash setup.sh",
+    "start": "bash start.sh",
+    "rebuild": "bash rebuild.sh"
   },
   "workspaces": [
     "themes/torque",

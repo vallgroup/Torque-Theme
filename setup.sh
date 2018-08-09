@@ -15,5 +15,9 @@ yarn workspace torque-floor-plans build
 yarn workspace torque-availability build
 yarn workspace torque-gallery-layouts build
 
+# copy across mu-plugins
+mkdir wp-content/mu-plugins
+cp -r mu-plugins/* wp-content/mu-plugins
+
 # start watch server
 yarn start torque-theme

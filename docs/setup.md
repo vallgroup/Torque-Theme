@@ -43,10 +43,10 @@
 
 8.  Start docker daemon (run the application you downloaded in the last step)
 
-9.  Run setup script
+9.  Run setup script (if asked for babel-preset-react version choose 7.0.0-alpha.20)
 
     ```sh
-    $ bash setup.sh
+    $ yarn setup
     ```
 
     This command will:
@@ -59,15 +59,14 @@
       2.  PhpMyAdmin - access at http://localhost:8080
       3.  A PHP server running a Wordpress installation - access at http://localhost:8000
     - Build all the workspaces in wp-content
+    - Copy mu-plugins over to wp-content
     - Run Webpack in development and watch mode for the 'torque-theme' workspace. This will watch the files and compile and update them as necessary in wp-content inside the docker container. Simply refresh the browser to see the changes reflected.
 
-10. Copy mu-plugins directory in the root into wp-content (for the moment we dont want to be changing anything here, so it should be sufficient to just copy it once and not worry about any watch servers)
-
-11. Complete Wordpress install (only if this is the first time you've started the docker containers):
+10. Complete Wordpress install (only if this is the first time you've started the docker containers):
 
     - Visit http://localhost:8000
     - Complete install process. The database will be connected automatically via docker-compose, so you'll only need to choose a language and set up a user.
 
-12. Done! The site is now active on http://localhost:8000. Note, you may need to run webpack for each workspace (using `yarn start <workspace-name>`) once more to make sure your themes and plugins are properly compiled to wp-content.
+11. Done! The site is now active on http://localhost:8000. Note, you may need to run webpack for each workspace (using `yarn start <workspace-name>`) once more to make sure your themes and plugins are properly compiled to wp-content.
 
 ### Head over to the [Developing](./developing.md) docs to learn how to add new plugins and change theme files
