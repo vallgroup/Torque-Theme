@@ -20,6 +20,14 @@ if ( class_exists( 'Fulton_Widgets' ) ) {
  }
 
 
+// remove admin menus that we dont want
+add_action('admin_init', function() {
+  remove_menu_page('edit.php');
+  remove_menu_page('edit-comments.php');
+});
+
+
+
 // enqueue child styles after parent styles
 add_action( 'wp_enqueue_scripts', 'torque_enqueue_child_styles' );
 function torque_enqueue_child_styles() {
