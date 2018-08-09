@@ -19,7 +19,7 @@
 3.  Install NVM (if `nvm version` does not return a version)
 
     ```sh
-    $ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+    $ brew install nvm
     ```
 
 4.  Clone repo if you haven't already, and `cd` in your terminal to the project root
