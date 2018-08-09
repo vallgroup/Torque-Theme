@@ -1,0 +1,34 @@
+.page-hero {
+  position: relative;
+  margin-right: -$desktopMainPaddingSides;
+  margin-left: -$desktopMainPaddingSides;
+
+  img {
+    width: 100%;
+  }
+
+  .page-hero-title-wrapper {
+    position: absolute;
+    top: 30%;
+    left: 0;
+    transform: translateY(-50%);
+    padding: 0 2%;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+    color: $white;
+  }
+
+  .page-hero-content-wrapper {
+    position: relative;
+    z-index: 10;
+    margin: 0 auto;
+    margin-top: -150px;
+    padding: 60px 100px;
+    width: 60%;
+    text-align: center;
+    box-sizing: border-box;
+    background-color: $clay-brown;
+    color: $white;
+  }
+}
