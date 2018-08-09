@@ -5,6 +5,7 @@
 If you've completed the steps in [setup](./setup.md), then starting the dev server for a workspace is as easy as running
 
 ```sh
+$ nvm use
 $ yarn start <workspace-name>
 ```
 
@@ -12,7 +13,15 @@ Any changes to src files in that workspace should now be visible after visiting 
 
 If you need a dev server for multiple workspaces at a time then simply open a new terminal window and run `yarn start <workspace-name>` again for a different workspace.
 
-Otherwise, for more info on the project structure...
+## Refreshing wp-content
+
+If wp-content is getting a bit messy (eg because moving or deleting files dont get synced), or if you've just pulled some new commits from the repo, then run:
+
+```sh
+$ yarn rebuild
+```
+
+to rebuild all the plugin and theme files (preserving uploads).
 
 ## Why Yarn Workspaces and Webpack?
 
