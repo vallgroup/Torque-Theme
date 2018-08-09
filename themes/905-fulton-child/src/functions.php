@@ -1,5 +1,15 @@
 <?php
 
+require_once( get_stylesheet_directory() . '/includes/widgets/905-fulton-child-widgets-class.php');
+
+/**
+ * Child Theme Widgets
+ */
+
+if ( class_exists( 'Fulton_Widgets' ) ) {
+  new Fulton_Widgets();
+}
+
 
 // enqueue child styles after parent styles
 add_action( 'wp_enqueue_scripts', 'torque_enqueue_child_styles' );

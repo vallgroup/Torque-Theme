@@ -6,6 +6,7 @@
 
 require_once( 'includes/utilities/torque-utilities.php' );
 require_once( 'includes/customizer/torque-customizer-class.php' );
+require_once( 'includes/widgets/torque-widgets-class.php' );
 require_once( 'includes/torque-nav-menus-class.php' );
 require_once( 'includes/torque-theme-support-class.php' );
 
@@ -46,6 +47,13 @@ if ( class_exists('Torque_Customizer') ) {
   new Torque_Customizer();
 }
 
+/**
+ * Widgets
+ */
+
+if ( class_exists('Torque_Widgets') ) {
+  new Torque_Widgets();
+}
 
 /**
  * Actions and Filters

@@ -1,8 +1,10 @@
 <?php
 
-require_once( get_template_directory() . '/includes/customizer/torque-customizer-class.php' );
+require_once( get_template_directory() . '/includes/customizer/customizer-tabs/tabs/torque-customizer-tab-site-identity-class.php' );
 
-$logo_src = get_theme_mod( Torque_Customizer::$logo_white_setting_slug );
+$tab_settings = Torque_Customizer_Tab_Site_Identity::get_settings();
+
+$logo_src = get_theme_mod( $tab_settings['logo_white_setting'] );
 
 if ( $logo_src ) {
 ?>

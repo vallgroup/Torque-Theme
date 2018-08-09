@@ -1,38 +1,20 @@
 footer {
-  width: 100%;
   background-color: $marine;
 
   .footer-content-wrapper {
-    margin: 0 auto;
     padding: 75px $desktopPaddingSides 60px $desktopPaddingSides;
     max-width: $contentMaxWidth2;
 
-    .fulton-footer-col {
-      display: inline-block;
-      vertical-align: top;
+    .torque-footer-col {
       padding-right: 25px;
-      width: 24%;
-      box-sizing: border-box;
+      color: $white;
 
-      h5.footer-col-title {
-        color: $white;
+      p {
+        margin: 0;
+      }
+
+      h4 {
         text-transform: uppercase;
-      }
-
-      .footer-logo {
-        margin-bottom: 35px;
-        width: 175px;
-        max-width: 100%;
-
-        img {
-          max-width: 100%;
-          height: auto;
-          object-fit: contain;
-        }
-      }
-
-      .footer-address {
-        color: $white;
       }
     }
   }
