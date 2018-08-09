@@ -8,20 +8,32 @@ button {
   text-transform: uppercase;
   outline: none !important;
 
-  &.filled {
+  &:hover {
     border: none;
     background-color: $clay-brown;
     color: $white;
+  }
 
-    &.marine {
+  &.marine {
+    border-color: $marine;
+
+    &:hover {
       background-color: $marine;
     }
+  }
 
-    &.nice-blue {
+  &.nice-blue {
+    border-color: $nice-blue;
+
+    &:hover {
       background-color: $nice-blue;
     }
+  }
 
-    &.barney-purple {
+  &.barney-purple {
+    border-color: $barney-purple;
+
+    &:hover {
       background-color: $barney-purple;
     }
   }
