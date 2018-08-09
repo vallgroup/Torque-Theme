@@ -12,6 +12,10 @@
     "themes/905-fulton-child",
     "plugins/torque-floor-plans",
     "plugins/torque-gallery-layouts",
-    "plugins/torque-availability"
-  ]
+    "plugins/torque-availability",
+    "plugins/torque-map"
+  ],
+  "dependencies": {
+    "google-maps-react": "^2.0.2"
+  }
 }
