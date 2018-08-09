@@ -24,23 +24,23 @@ class Torque_Map_Example_Routes {
 	  	),
 	  ) );
 
-    register_rest_route( $this->namespace, self::$resource, array(
-	  	array(
-	  		'methods'             => 'PUT',
-	  		'callback'            => array( $this, 'update_example' ),
-	  		'args'                => Torque_Map_Example_Controller::update_example_args(),
-	  		'permission_callback' => array('Torque_API_Permissions', 'user_can_create'),
-	  	),
-	  ) );
+   //  register_rest_route( $this->namespace, self::$resource, array(
+	  // 	array(
+	  // 		'methods'             => 'PUT',
+	  // 		'callback'            => array( $this, 'update_example' ),
+	  // 		'args'                => Torque_Map_Example_Controller::update_example_args(),
+	  // 		'permission_callback' => array('Torque_API_Permissions', 'user_can_create'),
+	  // 	),
+	  // ) );
 
-	  register_rest_route( $this->namespace, self::$resource, array(
-	  	array(
-	  		'methods'             => 'DELETE',
-	  		'callback'            => array( $this, 'delete_example' ),
-	  		'args'                => Torque_Map_Example_Controller::delete_example_args(),
-	  		'permission_callback' => array('Torque_API_Permissions', 'user_can_create'),
-	  	),
-	  ) );
+	  // register_rest_route( $this->namespace, self::$resource, array(
+	  // 	array(
+	  // 		'methods'             => 'DELETE',
+	  // 		'callback'            => array( $this, 'delete_example' ),
+	  // 		'args'                => Torque_Map_Example_Controller::delete_example_args(),
+	  // 		'permission_callback' => array('Torque_API_Permissions', 'user_can_create'),
+	  // 	),
+	  // ) );
   }
 
   public function get_example( $request ) {
@@ -48,15 +48,15 @@ class Torque_Map_Example_Routes {
     return $controller->get_example();
   }
 
-  public function update_exmaple( $request ) {
-    $controller = new Torque_Map_Example_Controller( $request );
-    return $controller->update_example();
-  }
+  // public function update_exmaple( $request ) {
+  //   $controller = new Torque_Map_Example_Controller( $request );
+  //   return $controller->update_example();
+  // }
 
-  public function delete_example( $request ) {
-    $controller = new Torque_Map_Example_Controller( $request );
-    return $controller->delete_example();
-  }
+  // public function delete_example( $request ) {
+  //   $controller = new Torque_Map_Example_Controller( $request );
+  //   return $controller->delete_example();
+  // }
 }
 
 ?>
