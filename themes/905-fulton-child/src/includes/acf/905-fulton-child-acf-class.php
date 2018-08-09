@@ -57,6 +57,17 @@ class Fulton_ACF {
       					'type' => 'textarea',
       					'rows' => 4,
       				),
+              array(
+      					'key' => 'field_5b6c6adb7b88d',
+      					'label' => 'Align',
+      					'name' => 'align',
+      					'type' => 'radio',
+      					'choices' => array(
+      						'left' => 'Left',
+      						'right' => 'Right',
+      					),
+      					'default_value' => 'right',
+      				),
       			),
       		),
       	),
