@@ -115,7 +115,6 @@ class Fulton_ACF {
       			'label' => 'Title',
       			'name' => 'title',
       			'type' => 'text',
-      			'required' => 1,
       		),
       		array(
       			'key' => 'field_5b6c7e6c81047',

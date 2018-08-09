@@ -9,10 +9,11 @@
 
 <main>
 
-		<?php
-			get_template_part( 'parts/acf/page-hero' );
-			get_template_part( 'parts/acf/content-section', 'loop' );
-		?>
+		<div class="hero-wrapper" >
+		<?php get_template_part( 'parts/acf/page-hero' ); ?>
+		</div>
+
+		<?php get_template_part( 'parts/acf/content-section', 'loop' ); ?>
 
 </main>
 

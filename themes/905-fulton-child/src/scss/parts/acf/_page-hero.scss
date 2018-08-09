@@ -1,3 +1,7 @@
+.hero-wrapper {
+  margin-bottom: 70px;
+}
+
 .page-hero {
   position: relative;
   margin-right: -$desktopMainPaddingSides;
@@ -30,5 +34,9 @@
     box-sizing: border-box;
     background-color: $clay-brown;
     color: $white;
+
+    h2 {
+      font-size: 30px;
+    }
   }
 }

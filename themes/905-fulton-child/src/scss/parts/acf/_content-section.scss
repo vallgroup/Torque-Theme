@@ -24,9 +24,17 @@
     background-color: $marine;
     text-align: left;
 
+    h4 {
+      margin-bottom: 10px;
+    }
+
     .content-section-content {
       color: $white;
     }
+  }
+
+  button {
+    margin-top: 10px;
   }
 
   &.content-section-align-left {
