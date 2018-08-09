@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 
+# allow yarn workspaces
 yarn config set workspaces-experimental true
 
 # install dependencies
 yarn
 
 # stop any previously running docker containers
-docker-compose down
+docker-compose stop
 
 # download and build docker images
 docker-compose up -d
