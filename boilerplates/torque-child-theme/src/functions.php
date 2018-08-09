@@ -1,6 +1,7 @@
 <?php
 
 require_once( get_stylesheet_directory() . '/includes/widgets/<torque_child_theme_slug>-widgets-class.php');
+require_once( get_stylesheet_directory() . '/includes/acf/<torque_child_theme_slug>-acf-class.php');
 
 /**
  * Child Theme Widgets
@@ -9,6 +10,15 @@ require_once( get_stylesheet_directory() . '/includes/widgets/<torque_child_them
 if ( class_exists( '<torque_child_theme_class_prefix>_Widgets' ) ) {
   new <torque_child_theme_class_prefix>_Widgets();
 }
+
+/**
+ * Child Theme ACF
+ */
+
+ if ( class_exists( '<torque_child_theme_class_prefix>_ACF' ) ) {
+   new <torque_child_theme_class_prefix>_ACF();
+ }
+
 
 // enqueue child styles after parent styles, both style.css and main.css
 // so child styles always get priority
