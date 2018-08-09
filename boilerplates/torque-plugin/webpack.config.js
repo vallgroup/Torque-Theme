@@ -41,12 +41,12 @@ const config = {
         }),
       },
       {
-        test: projectConfig.webpackDefaults.scss.test,
+        test: projectConfig.webpackDefaults.scssModules.test,
         exclude: /node_modules/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader?sourceMap',
           // resolve-url-loader may be chained before sass-loader if necessary
-          use: projectConfig.webpackDefaults.scss.loaders,
+          use: projectConfig.webpackDefaults.scssModules.loaders,
         }),
       },
       {
