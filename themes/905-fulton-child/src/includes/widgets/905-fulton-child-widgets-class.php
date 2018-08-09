@@ -9,7 +9,7 @@ class Fulton_Widgets {
   }
 
   public function modify_parent_sidebars( $sidebars ) {
-    unset($sidebars['primary-sidebar']);
+    unset($sidebars['primary']);
     return $sidebars;
   }
 }

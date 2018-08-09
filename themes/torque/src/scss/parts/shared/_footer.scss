@@ -1,0 +1,14 @@
+footer {
+  width: 100%;
+
+  .footer-content-wrapper {
+    margin: 0 auto;
+
+    .torque-footer-col {
+      display: inline-block;
+      vertical-align: top;
+      width: 24%;
+      box-sizing: border-box;
+    }
+  }
+}

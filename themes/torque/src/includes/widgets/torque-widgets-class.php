@@ -13,7 +13,7 @@ class Torque_Widgets {
 
   public static function get_sidebars() {
     $sidebars = array(
-      'primary-sidebar'  => array(
+      'primary'  => array(
         'name'          => 'Primary Sidebar'
       ),
       'footer-col-1'  => array(
