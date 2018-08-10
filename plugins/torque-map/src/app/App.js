@@ -32,17 +32,16 @@ const pois = [
 
 const markerIcons = {
   dinner: {
-    url: 'http://localhost:8000/wp-content/uploads/2018/08/dinner-pin@2x.png',
+    url: '/wp-content/uploads/2018/08/dinner-pin@2x.png',
   },
   drinks: {
-    url: 'http://localhost:8000/wp-content/uploads/2018/08/drinks-pin@2x.png',
+    url: '/wp-content/uploads/2018/08/drinks-pin@2x.png',
   },
   shopping: {
-    url: 'http://localhost:8000/wp-content/uploads/2018/08/shopping-pin@2x.png',
+    url: '/wp-content/uploads/2018/08/shopping-pin@2x.png',
   },
   entertainment: {
-    url:
-      'http://localhost:8000/wp-content/uploads/2018/08/entertainment-pin@2x.png',
+    url: '/wp-content/uploads/2018/08/entertainment-pin@2x.png',
   },
 }
 
@@ -75,8 +74,7 @@ class App extends Component {
         <PointsOfInterest
           pois={pois}
           searchNearby={this.state.searchNearby}
-          updatePOIS={this.updatePOIS.bind(this)}
-        />
+          updatePOIS={this.updatePOIS.bind(this)} />
 
         {/*Display the map*/}
         <TorqueMap
@@ -86,20 +84,18 @@ class App extends Component {
             name: '905 Fulton Market',
             icon: {
               url:
-                'http://localhost:8000/wp-content/uploads/2018/08/905-location-pin@2x.png',
+                '/wp-content/uploads/2018/08/905-location-pin@2x.png',
               width: 69,
               height: 92,
             },
           }}
           searchNearby={this.state.searchNearby}
           onNearbySearch={this.updatePOIList.bind(this)}
-          markersIcon={markerIcons[this.state.searchNearby]}
-        />
+          markersIcon={markerIcons[this.state.searchNearby]} />
 
         <ListPOIS
           list={this.state.poiList}
-          showDistanceFrom={this.state.mapCenter}
-        />
+          showDistanceFrom={this.state.mapCenter} />
       </div>
     )
   }
