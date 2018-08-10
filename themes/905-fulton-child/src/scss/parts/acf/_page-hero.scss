@@ -67,11 +67,9 @@
 
     @include respond-to(mobile) {
       margin-top: -50px;
-      padding: 30px 5%;
-    }
-
-    h2 {
       margin-bottom: 20px;
+      padding: 30px 5%;
+      width: 80%;
     }
   }
 }

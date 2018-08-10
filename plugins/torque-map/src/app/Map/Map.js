@@ -3,6 +3,8 @@ import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react'
 import style from './Map.scss'
 import MapShape from './Shape'
 
+import Geocode from '../Geocode/Geocode'
+
 export class TorqueMap extends React.Component {
   constructor(props) {
     super(props)
@@ -16,7 +18,6 @@ export class TorqueMap extends React.Component {
     }
 
     this.map = null
-    this.geocoder = null
     this.placesServices = null
   }
 
@@ -108,7 +109,7 @@ export class TorqueMap extends React.Component {
         className={`torque-map-container ${style.torqueMap}`}>
         <Map
           google={this.props.google}
-          zoom={13}
+          zoom={15}
           center={this.state.mapCenter}
           ref={mapObject => (this.map = mapObject && mapObject.map)}>
           {this.props.center &&
@@ -132,44 +133,22 @@ export class TorqueMap extends React.Component {
   }
 
   setMapCenterFromProps() {
-    // check if we have lat and lng already
-    const _center = Object.keys(this.props.center)
-    if (
-      2 === _center.length &&
-      -1 !== _center.indexOf('lat') &&
-      -1 !== _center.indexOf('lng')
-    ) {
-      this.updateMapCenter({
-        lat: this.props.center.lat,
-        lng: this.props.center.lng,
-      })
-    }
-    // we dont have lat and lng, let's try to get them
-    else {
-      this.geocode(this.props.center)
-    }
-  }
-
-  geocode(place) {
-    place = place || null
-
-    if (!place) {
+    if (!this.props.center) {
       return
     }
 
-    if (!this.geocoder) {
-      this.geocoder = new this.props.google.maps.Geocoder()
+    if (!this.props.center.lat
+    	|| !this.props.center.lng) {
+    	this.geocode()
+    } else {
+      this.updateMapCenter(this.props.center)
     }
+  }
 
-    const address = { address: place }
-    this.geocoder.geocode(address, (results, status) => {
-      if ('OK' === status) {
-        this.updateMapCenter({
-          lat: results[0].geometry.location.lat(),
-          lng: results[0].geometry.location.lng(),
-        })
-      }
-    })
+  async geocode() {
+    const geoClient = new Geocode();
+    const coordinates = await geoClient.geocode({address:this.props.center})
+    this.updateMapCenter(coordinates)
   }
 
   nearbySearch(keyword) {
