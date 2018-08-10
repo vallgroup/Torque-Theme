@@ -4,6 +4,10 @@
   display: block;
   margin: 35px auto;
   text-align: center;
+
+  @include respond-to(tablet) {
+    margin-top: 25px;
+  }
 }
 
 .torque-map-poi {
@@ -16,9 +20,13 @@
   letter-spacing: 2.6px;
   text-align: center;
   text-transform: uppercase;
-  padding-left: 40px;
-  padding-right: 40px;
   margin-right: 23px;
+
+  @include respond-to(tablet) {
+    margin-top: 10px;
+    margin-right: 8px;
+    font-size: 13px;
+  }
 
   &:last-child {
     margin-right: 0px;
@@ -46,6 +54,10 @@
     width: 50%;
     display: inline-block;
 
+    @include respond-to(mobile) {
+      width: 100%;
+    }
+
     & > div {
       display: inline-block;
       text-transform: uppercase;
@@ -53,7 +65,13 @@
     }
 
     & .torque-map-pois-list-item-name {
+      padding-right: 10px;
       width: 350px;
+      box-sizing: border-box;
+
+      @include respond-to(tablet) {
+        width: 230px;
+      }
     }
 
     & .torque-map-pois-list-item-distance {
