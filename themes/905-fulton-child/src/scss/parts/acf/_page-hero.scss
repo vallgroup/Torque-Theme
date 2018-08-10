@@ -31,7 +31,7 @@
     color: $white;
 
     @include respond-to(mobile) {
-      top: 5%;
+      top: 10%;
       transform: none;
     }
   }
