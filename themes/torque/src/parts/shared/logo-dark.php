@@ -9,8 +9,10 @@ $logo_src = get_theme_mod( $tab_settings['logo_setting'] );
 if ( $logo_src ) {
 ?>
 
-  <a href="<?php echo get_home_url(); ?>" style="display: inline-block;">
-    <img class="torque-logo torque-header-logo" src="<?php echo $logo_src; ?>" />
+  <a href="<?php echo get_home_url(); ?>">
+    <div>
+      <img class="torque-logo torque-header-logo" src="<?php echo $logo_src; ?>" />
+    </div>
   </a>
 
 <?php
