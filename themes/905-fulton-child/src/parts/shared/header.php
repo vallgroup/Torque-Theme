@@ -15,3 +15,22 @@
 
   </div>
 </nav>
+
+<script type="text/javascript">
+	(($) => {
+		$(document).ready(() => {
+			const navToggle = $('#mobile-nav-toggle')
+			const nav = $('#navigation')
+
+			navToggle.on('click', e => {
+				e.preventDefault()
+
+				if(nav.hasClass('active')) {
+					nav.removeClass('active')
+				} else {
+					nav.addClass('active')
+				}
+			})
+		})
+	})(jQuery)
+</script>
