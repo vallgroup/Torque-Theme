@@ -10,6 +10,78 @@ nav {
     padding: 20px $tabletPaddingSides;
   }
 
+  @include respond-to(mobile) {
+    padding: 0;
+
+    & .relative-container {
+      padding: $mobilePaddingSides;
+
+      &:after {
+        content: '';
+        display: block;
+        clear: both;
+      }
+    }
+
+    & .site-logo {
+      position: relative;
+      z-index:1;
+      float:left;
+      width: 60px;
+    }
+
+    & .mobile-nav-toggle {
+      float: right;
+      display: block;
+      width: 30px;
+      padding: 5px 0;
+      position: relative;
+      z-index: 2;
+      margin-top: 20px;
+
+      & span {
+        width: 100%;
+        box-sizing: border-box;
+        height: 3px;
+        background: $clay-brown;
+        margin-bottom: 4px;
+        display: block;
+      }
+    }
+
+    & .navigation {
+      position: absolute;
+      top: -100px;
+      left: 0;
+      z-index:0;
+      width: 100%;
+      padding-top: 100px;
+      background: #fff;
+      overflow: hidden;
+      opacity: 0;
+      visibility: hidden;
+      transition: all .3s ease-in-out;
+      padding-bottom: 20px;
+      border-bottom: 3px solid $clay-brown;
+
+      &.active {
+        top: 0;
+        opacity: 1;
+        visibility: visible;
+      }
+
+      & .torque-menu-items-inline {
+        // width: 100%;
+      }
+
+      & .torque-menu-item-wrapper {
+        display: block;
+        width: 100%;
+        text-align: center;
+      }
+    }
+  }
+
   .relative-container {
     position: relative;
 

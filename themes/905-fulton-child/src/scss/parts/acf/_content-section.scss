@@ -50,6 +50,7 @@
 
   button {
     margin-top: 10px;
+    line-height: 1;
   }
 
   &.content-section-align-left {
@@ -68,5 +69,15 @@
 
   &:last-child {
     margin-bottom: 0px;
+  }
+}
+
+.cta-section {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+
+  @include respond-to(tablet) {
+    width: 60%;
   }
 }
