@@ -8,6 +8,11 @@ $white: #fff;
 
 // layout
 
+// note we had to do this 'widescreen first'
+$widescreenBreakpoint: 1400px;
+$desktopBreakpoint: 1024px;
+$tabletBreakpoint: 768px;
+
 $contentMaxWidth: 1076px;
 $contentMaxWidth2: 1180px;
 

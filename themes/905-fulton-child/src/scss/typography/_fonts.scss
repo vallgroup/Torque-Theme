@@ -1,9 +1,6 @@
-/*
-@font-face {
-  font-family: SequelSans-RomanBody;
-  src: url('../../statics/fonts/Sequel-Sans/SequelSans-RomanBody.otf')
-    format('opentype');
-  font-weight: normal;
-  font-style: normal;
-}
-*/
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,700,900');
+@import url('https://fonts.googleapis.com/css?family=Dancing+Script');
+
+$Avenir: 'Nunito', sans-serif;
+$AvenirRoman: 'Nunito', sans-serif;
+$ArzetiScript: 'Dancing Script', cursive;

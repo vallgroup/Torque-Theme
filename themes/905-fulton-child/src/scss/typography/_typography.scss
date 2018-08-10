@@ -1,8 +1,7 @@
 @import 'fonts';
-@import '../partials/variables';
 
 body {
-  font-family: Avenir-Roman;
+  font-family: $AvenirRoman;
   font-size: 18px;
   font-weight: normal;
   font-style: normal;
@@ -10,37 +9,99 @@ body {
   line-height: normal;
   letter-spacing: 0.4px;
   color: $marine;
+
+  @include respond-to(desktop) {
+    font-size: 16px;
+  }
+
+  @include respond-to(tablet) {
+    font-size: 14px;
+  }
 }
 
 h1 {
   margin: 0;
-  font-family: ArzetiScript;
+  font-family: $ArzetiScript;
   font-size: 192px;
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
   line-height: normal;
   letter-spacing: 0.2px;
+
+  @include respond-to(desktop) {
+    font-size: 140px;
+  }
+
+  @include respond-to(tablet) {
+    font-size: 100px;
+  }
+
+  @include respond-to(mobile) {
+    font-size: 60px;
+  }
 }
 
 h2 {
   margin: 0;
-  font-family: Avenir;
+  font-family: $Avenir;
   font-size: 36px;
   font-weight: 900;
   font-style: normal;
   font-stretch: normal;
   line-height: normal;
   letter-spacing: 5px;
+
+  @include respond-to(desktop) {
+    font-size: 30px;
+  }
+
+  @include respond-to(tablet) {
+    font-size: 28px;
+  }
+
+  @include respond-to(mobile) {
+    font-size: 22px;
+  }
 }
 
 h3 {
   margin: 0;
+  font-family: $Avenir;
+  font-size: 24px;
+  font-weight: 900;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 2.6px;
   color: $clay-brown;
+
+  @include respond-to(tablet) {
+    font-size: 22px;
+  }
+
+  @include respond-to(mobile) {
+    font-size: 20px;
+  }
 }
 
 h4 {
   margin: 0;
+  font-family: $Avenir;
+  font-size: 16px;
+  font-weight: 900;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 2.6px;
+
+  @include respond-to(tablet) {
+    font-size: 15px;
+  }
+
+  @include respond-to(mobile) {
+    font-size: 14px;
+  }
 }
 
 a {
