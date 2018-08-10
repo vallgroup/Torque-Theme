@@ -8,6 +8,18 @@ button {
   text-transform: uppercase;
   outline: none !important;
 
+  @include respond-to(desktop) {
+    padding: 0 40px;
+  }
+
+  @include respond-to(tablet) {
+    padding: 0 30px;
+  }
+
+  @include respond-to(mobile) {
+    padding: 0 20px;
+  }
+
   &:hover,
   &.active {
     background-color: $clay-brown;
