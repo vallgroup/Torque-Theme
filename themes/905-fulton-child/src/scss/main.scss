@@ -11,10 +11,15 @@
 @import 'parts/acf/content-section';
 @import 'parts/acf/page-hero';
 
+@import 'plugins/gallery-layout';
 @import 'plugins/floor-plans';
 @import 'plugins/torque-map';
 
 main {
   padding: 67px $desktopMainPaddingSides;
   padding-top: 0px;
+
+  @include respond-to(tablet) {
+    padding: 0px $tabletMainPaddingSides 20px $tabletMainPaddingSides;
+  }
 }

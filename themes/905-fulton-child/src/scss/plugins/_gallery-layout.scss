@@ -1,0 +1,7 @@
+.torque-gallery-layout .torque-gallery-column {
+  @include respond-to(tablet) {
+    padding: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+  }
+}

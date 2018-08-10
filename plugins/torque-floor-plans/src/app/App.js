@@ -37,18 +37,18 @@ class App extends Component {
     }
 
     return (
-      <div className={style.floorPlans}>
-        <div className={style.header}>
+      <div className={`torque-floor-plans ${style.floorPlans}`}>
+        <div className={`torque-floor-plans-header-wrapper ${style.header}`}>
           <Header floorPlan={this.getSelectedFloorPlan()} />
         </div>
-        <div className={style.selector}>
-          <div className={style.list}>
+        <div className={`torque-floor-plans-selector ${style.selector}`}>
+          <div className={`torque-floor-plans-list ${style.list}`}>
             <FloorPlanSelector
               floorPlans={this.state.floorPlans}
               updateSelected={this.updateSelected.bind(this)}
             />
           </div>
-          <div className={style.thumbnail}>
+          <div className={`torque-floor-plans-thumbnail ${style.thumbnail}`}>
             <Thumbnail floorPlan={this.getSelectedFloorPlan()} />
           </div>
         </div>
