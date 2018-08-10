@@ -11,18 +11,22 @@ const pois = [
   {
     name: 'Dinner',
     keyword: 'dinner',
+    color: 'clay-brown',
   },
   {
     name: 'Drinks',
     keyword: 'drinks',
+    color: 'marine',
   },
   {
     name: 'Shopping',
     keyword: 'shopping',
+    color: 'nice-blue',
   },
   {
     name: 'Entertainament',
     keyword: 'entertainment',
+    color: 'barney-purple',
   },
 ]
 
@@ -68,7 +72,11 @@ class App extends Component {
   render() {
     return (
       <div className={`torque-map`}>
-        <PointsOfInterest pois={pois} updatePOIS={this.updatePOIS.bind(this)} />
+        <PointsOfInterest
+          pois={pois}
+          searchNearby={this.state.searchNearby}
+          updatePOIS={this.updatePOIS.bind(this)}
+        />
 
         {/*Display the map*/}
         <TorqueMap
