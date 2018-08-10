@@ -51,6 +51,7 @@ h2 {
   font-stretch: normal;
   line-height: normal;
   letter-spacing: 5px;
+  text-transform: uppercase;
 
   @include respond-to(desktop) {
     font-size: 30px;
@@ -75,6 +76,7 @@ h3 {
   line-height: normal;
   letter-spacing: 2.6px;
   color: $clay-brown;
+  text-transform: uppercase;
 
   @include respond-to(tablet) {
     font-size: 22px;
