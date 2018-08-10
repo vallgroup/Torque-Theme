@@ -2,6 +2,10 @@
 
 @import 'parts/shared/footer';
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
 }
