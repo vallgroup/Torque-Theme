@@ -5,12 +5,30 @@ footer {
     padding: 75px $desktopPaddingSides 60px $desktopPaddingSides;
     max-width: $contentMaxWidth2;
 
+    @include respond-to(tablet) {
+      padding: 50px $tabletPaddingSides 10px $tabletPaddingSides;
+    }
+
     .torque-footer-col {
       padding-right: 25px;
       color: $white;
 
+      @include respond-to(tablet) {
+        display: inline-block;
+        margin-bottom: 50px;
+        width: 49%;
+        padding-right: 20px;
+      }
+
+      @include respond-to(mobile) {
+        margin-bottom: 40px;
+        width: 100%;
+        padding-right: 0px;
+      }
+
       p {
         margin: 0;
+        word-wrap: break-word;
       }
 
       h4 {
