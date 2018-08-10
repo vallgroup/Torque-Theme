@@ -17,6 +17,21 @@ const pois = [{
 	keyword: 'entertainment',
 }];
 
+const markerIcons = {
+	dinner: {
+		url: 'http://localhost:8000/wp-content/uploads/2018/08/dinner-pin@2x.png',
+	},
+	drinks: {
+		url: 'http://localhost:8000/wp-content/uploads/2018/08/drinks-pin@2x.png',
+	},
+	shopping: {
+		url: 'http://localhost:8000/wp-content/uploads/2018/08/shopping-pin@2x.png',
+	},
+	entertainment: {
+		url: 'http://localhost:8000/wp-content/uploads/2018/08/entertainment-pin@2x.png',
+	}
+}
+
 class App extends Component {
 	constructor(props) {
 		super(props)
@@ -46,7 +61,8 @@ class App extends Component {
 		    	}
 	    	}}
 	    	searchNearby={this.state.searchNearby}
-	    	onNearbySearch={this.updatePOIList.bind(this)} />
+	    	onNearbySearch={this.updatePOIList.bind(this)}
+	    	markersIcon={markerIcons[this.state.searchNearby]} />
 
 	    <ListPOIS
 	    	list={this.state.poiList}
