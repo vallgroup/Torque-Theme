@@ -4,6 +4,7 @@ import style from './Map.scss'
 import MapShape from './Shape'
 
 import Geocode from '../Geocode/Geocode'
+import NearbySearch from '../NearbySearch/NearbySearch'
 
 export class TorqueMap extends React.Component {
   constructor(props) {
@@ -26,9 +27,13 @@ export class TorqueMap extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    // Typical usage (don't forget to compare props):
+    // check if we have a new search term
     if (this.props.searchNearby !== prevProps.searchNearby) {
-      this.nearbySearch(this.props.searchNearby)
+      // make sure we have the map and term before running the search
+      if (this.map
+        && this.props.searchNearby) {
+        this.nearbySearch()
+      }
     }
   }
 
@@ -151,36 +156,18 @@ export class TorqueMap extends React.Component {
     this.updateMapCenter(coordinates)
   }
 
-  nearbySearch(keyword) {
-    if (!this.map) {
-      return
-    }
-
-    if (!this.placesServices) {
-      this.placesServices = new this.props.google.maps.places.PlacesService(
-        this.map
-      )
-    }
-
-    this.placesServices.nearbySearch(
-      {
-        keyword: keyword,
-        location: this.state.mapCenter,
-        radius: 8000,
-      },
-      this.doneWithNearbySearch.bind(this)
-    )
-  }
-
-  doneWithNearbySearch(results, status, pagination) {
-    if ('OK' === status && 0 < results.length) {
-      this.setState({ markers: results })
-      if (
-        this.props.onNearbySearch &&
-        'function' === typeof this.props.onNearbySearch
-      ) {
-        this.props.onNearbySearch(results, this.state.mapCenter)
-      }
+  async nearbySearch() {
+    const searchClient = new NearbySearch(this.map)
+    const results = await searchClient.search({
+      keyword: this.props.searchNearby,
+      location: this.state.mapCenter,
+      radius: 1000,
+    })
+    // add markers and call our callback
+    this.setState({ markers: results })
+    if (this.props.onNearbySearch &&
+      'function' === typeof this.props.onNearbySearch) {
+      this.props.onNearbySearch(results, this.state.mapCenter)
     }
   }
 }
