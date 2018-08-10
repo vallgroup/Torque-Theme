@@ -8,6 +8,10 @@
     display: inline-block;
     width: 75%;
 
+    @include respond-to(mobile) {
+      width: 100%;
+    }
+
     img {
       width: 100%;
     }
@@ -23,6 +27,17 @@
     box-sizing: border-box;
     background-color: $marine;
     text-align: left;
+
+    @include respond-to(mobile) {
+      position: relative;
+      z-index: 10;
+      margin: 0 auto;
+      margin-top: -50px;
+      padding: 30px 5%;
+      transform: none;
+      width: 80%;
+      text-align: center;
+    }
 
     h4 {
       margin-bottom: 10px;
@@ -44,6 +59,10 @@
       right: unset;
       left: 0;
       text-align: left;
+
+      @include respond-to(mobile) {
+        text-align: center;
+      }
     }
   }
 
