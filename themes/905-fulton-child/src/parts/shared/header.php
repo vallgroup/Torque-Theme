@@ -18,6 +18,7 @@
 
 <script type="text/javascript">
 	(($) => {
+		// bind toggle nav
 		$(document).ready(() => {
 			const navToggle = $('#mobile-nav-toggle')
 			const nav = $('#navigation')
@@ -31,6 +32,13 @@
 					nav.addClass('active')
 				}
 			})
+		})
+
+		// lazy load background
+		$(window).load(() => {
+			const body = $('body')
+
+			body.css('background-image', 'url(/wp-content/uploads/2018/08/shutterstock-219154477-1.jpg)')
 		})
 	})(jQuery)
 </script>
