@@ -81,6 +81,12 @@ nav {
         display: block;
         width: 100%;
         text-align: center;
+
+        & .torque-menu-item {
+          font-size: 18px;
+          line-height: 2;
+          font-weight: bold;
+        }
       }
     }
   }
