@@ -56,6 +56,19 @@ function torque_enqueue_child_scripts() {
     );
 }
 
+add_action( 'wp_head', 'torque_google_analytics' );
+function torque_google_analytics() {
+  ?>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123762672-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
+    gtag('config', 'UA-123762672-1');
+  </script>
+  <?php
+}
 
 ?>
