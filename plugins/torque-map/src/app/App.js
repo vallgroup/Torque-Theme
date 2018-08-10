@@ -24,7 +24,7 @@ const pois = [
     color: 'nice-blue',
   },
   {
-    name: 'Entertainament',
+    name: 'Entertainment',
     keyword: 'entertainment',
     color: 'barney-purple',
   },
