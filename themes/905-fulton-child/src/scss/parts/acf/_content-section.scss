@@ -76,8 +76,9 @@
   display: block;
   margin-left: auto;
   margin-right: auto;
+  width: 60%;
 
-  @include respond-to(tablet) {
-    width: 60%;
+  @include respond-to(mobile) {
+    width: 90%;
   }
 }
