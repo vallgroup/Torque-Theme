@@ -1,0 +1,53 @@
+.content-section {
+  position: relative;
+  margin-bottom: 60px;
+  width: 100%;
+  text-align: left;
+
+  .content-section-image-wrapper {
+    display: inline-block;
+    width: 75%;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  .content-section-content-wrapper {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    padding: 50px 5%;
+    width: 33%;
+    box-sizing: border-box;
+    background-color: $marine;
+    text-align: left;
+
+    h4 {
+      margin-bottom: 10px;
+    }
+
+    .content-section-content {
+      color: $white;
+    }
+  }
+
+  button {
+    margin-top: 10px;
+  }
+
+  &.content-section-align-left {
+    text-align: right;
+
+    .content-section-content-wrapper {
+      right: unset;
+      left: 0;
+      text-align: left;
+    }
+  }
+
+  &:last-child {
+    margin-bottom: 0px;
+  }
+}

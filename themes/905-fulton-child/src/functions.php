@@ -1,6 +1,7 @@
 <?php
 
 require_once( get_stylesheet_directory() . '/includes/widgets/905-fulton-child-widgets-class.php');
+require_once( get_stylesheet_directory() . '/includes/acf/905-fulton-child-acf-class.php');
 
 /**
  * Child Theme Widgets
@@ -9,6 +10,22 @@ require_once( get_stylesheet_directory() . '/includes/widgets/905-fulton-child-w
 if ( class_exists( 'Fulton_Widgets' ) ) {
   new Fulton_Widgets();
 }
+
+/**
+ * Child Theme ACF
+ */
+
+ if ( class_exists( 'Fulton_ACF' ) ) {
+   new Fulton_ACF();
+ }
+
+
+// remove admin menus that we dont want
+add_action('admin_init', function() {
+  remove_menu_page('edit.php');
+  remove_menu_page('edit-comments.php');
+});
+
 
 
 // enqueue child styles after parent styles
@@ -38,5 +55,7 @@ function torque_enqueue_child_scripts() {
         true
     );
 }
+
+
 
 ?>

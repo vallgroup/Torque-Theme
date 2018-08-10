@@ -6,11 +6,13 @@
 @import 'parts/templates/titles/title-page';
 @import 'parts/shared/header';
 @import 'parts/shared/footer';
+@import 'parts/acf/content-section';
+@import 'parts/acf/page-hero';
 
 @import 'plugins/floor-plans';
 @import 'plugins/torque-map';
 
 main {
-  padding: 67px 32px;
+  padding: 67px $desktopMainPaddingSides;
   padding-top: 0px;
 }
