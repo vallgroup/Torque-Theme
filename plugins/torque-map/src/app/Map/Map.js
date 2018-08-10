@@ -41,7 +41,7 @@ export class TorqueMap extends React.Component {
 		return (
 			<div
 				onClick={this.onMapClick.bind(this)}
-				className={style.torqueMap}>
+				className={`torque-map-container ${style.torqueMap}`}>
 
 				<Map
 					google={this.props.google}
