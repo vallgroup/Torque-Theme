@@ -19,7 +19,8 @@ class PointsOfInterest extends React.Component {
 							<div
 								key={index}
 								className={`torque-map-poi ${styles.torqueMapPOI}`}
-								onClick={() => this.props.updatePOIS(poi.keyword)}>
+								onClick={() => this.props.updatePOIS(poi.keyword)}
+								dataName={poi.name}>
 								{poi.name}
 							</div>
 						)
