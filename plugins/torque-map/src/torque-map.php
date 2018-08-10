@@ -17,8 +17,8 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-require( plugin_dir_path(__FILE__) . '/api/torque-map-rest-controller-class.php' );
-require( plugin_dir_path(__FILE__) . '/shortcode/torque-map-shortcode-class.php' );
+//require( plugin_dir_path(__FILE__) . '/api/torque-map-rest-controller-class.php' );
+//require( plugin_dir_path(__FILE__) . '/shortcode/torque-map-shortcode-class.php' );
 
 /**
  * Define constants for plugin's url and path
@@ -41,10 +41,10 @@ class Torque_Map {
    */
 	public function init() {
 		// init the REST Controller
-		new Torque_Map_REST_Controller();
+		//new Torque_Map_REST_Controller();
 
 		// register plugin shortcode
-		new Torque_Map_Shortcode();
+		//new Torque_Map_Shortcode();
 
 		// enqueue plugin scripts
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_plugin_scripts' ) );
