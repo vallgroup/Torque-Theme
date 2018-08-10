@@ -29,14 +29,13 @@ export class TorqueMap extends React.Component {
 	componentDidUpdate(prevProps) {
 	  // Typical usage (don't forget to compare props):
 	  if (this.props.searchNearby !== prevProps.searchNearby) {
-	  	console.log('I ran')
 	    this.nearbySearch(this.props.searchNearby)
 	  }
 	}
 
 	render() {
 		// console.log(this.map)
-		console.log(this.props)
+		// console.log(this.props)
 		// console.log(this.state)
 		return (
 			<div
@@ -117,10 +116,6 @@ export class TorqueMap extends React.Component {
     }
   }
 
-  onCategoryClick() {
-  	this.nearbySearch()
-  }
-
   setMapCenterFromProps() {
   	// check if we have lat and lng already
   	const _center = Object.keys(this.props.center);
@@ -181,17 +176,19 @@ export class TorqueMap extends React.Component {
 			location: this.state.mapCenter,
 			radius: 8000,
 		},
-		(results, status, pagination) => {
-			if ('OK' === status
-				&& 0 < results.length) {
-  			this.setState({markers: results})
-  			if (this.props.onNearbySearch
-  				&& 'function' === typeof this.props.onNearbySearch) {
-  				this.props.onNearbySearch(results, this.state.mapCenter)
-  			}
-			}
-		})
+		this.doneWithNearbySearch.bind(this))
   }
+
+  doneWithNearbySearch(results, status, pagination) {
+		if ('OK' === status
+			&& 0 < results.length) {
+			this.setState({markers: results})
+			if (this.props.onNearbySearch
+				&& 'function' === typeof this.props.onNearbySearch) {
+				this.props.onNearbySearch(results, this.state.mapCenter)
+			}
+		}
+	}
 }
 
 export default GoogleApiWrapper(

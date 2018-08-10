@@ -71,14 +71,12 @@ class App extends Component {
   }
 
   updatePOIS(keyword) {
-  	console.log(keyword)
   	this.setState({
   		searchNearby: keyword,
   	})
   }
 
   updatePOIList(list, mapCenter) {
-  	console.log(list)
   	this.setState({
   		poiList: list,
   		mapCenter: mapCenter
