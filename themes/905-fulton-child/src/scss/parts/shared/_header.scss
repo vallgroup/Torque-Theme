@@ -95,6 +95,8 @@ nav {
     position: relative;
 
     img {
+      position: relative;
+      z-index: 15;
       margin-right: $logoMarginRight;
       width: $logoWidth;
       height: 135px;

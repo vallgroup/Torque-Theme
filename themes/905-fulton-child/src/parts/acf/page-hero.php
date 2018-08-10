@@ -6,8 +6,10 @@
     <?php get_template_part( 'parts/acf/page-hero', 'title' ); ?>
   </div>
 
-  <div class="page-hero-content-wrapper" >
-    <?php get_template_part( 'parts/acf/page-hero', 'content' ); ?>
+  <div class="page-hero-mobile-helper">
+    <div class="page-hero-content-wrapper" >
+      <?php get_template_part( 'parts/acf/page-hero', 'content' ); ?>
+    </div>
   </div>
 
 </div>

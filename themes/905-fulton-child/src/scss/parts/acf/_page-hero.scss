@@ -8,6 +8,11 @@
   margin-left: -$desktopMainPaddingSides;
   min-height: 300px;
 
+  @include respond-to(tablet) {
+    margin-right: -$tabletMainPaddingSides;
+    margin-left: -$tabletMainPaddingSides;
+  }
+
   img {
     width: 100%;
     height: 100%;
@@ -28,6 +33,13 @@
     @include respond-to(mobile) {
       top: 5%;
       transform: none;
+    }
+  }
+
+  .page-hero-mobile-helper {
+    @include respond-to(mobile) {
+      padding: 0px $tabletMainPaddingSides;
+      box-sizing: border-box;
     }
   }
 
@@ -55,6 +67,7 @@
 
     @include respond-to(mobile) {
       margin-top: -50px;
+      margin-bottom: 20px;
       padding: 30px 5%;
       width: 80%;
     }
