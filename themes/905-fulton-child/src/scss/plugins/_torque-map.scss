@@ -1,3 +1,78 @@
+@import 'partials/variables';
+
+.torque-map-pois {
+	display: block;
+	margin: 35px auto;
+	text-align: center;
+}
+
 .torque-map-poi {
 	line-height: 47px;
+	font-family: Avenir;
+  font-size: 16px;
+  font-weight: 900;
+  font-style: normal;
+  font-stretch: normal;
+  letter-spacing: 2.6px;
+  text-align: center;
+  color: #ffffff;
+  text-transform: uppercase;
+  padding-left: 40px;
+  padding-right: 40px;
+  margin-right: 23px;
+
+  &:first-child {
+  	background-color: $clay-brown;
+  }
+
+  &:nth-child(2n) {
+  	background-color: $marine;
+  }
+
+  &:nth-child(3n) {
+  	background-color: $nice-blue;
+  }
+
+  &:last-child {
+  	background-color: $barney-purple;
+  	margin-right: 0px;
+  }
+}
+
+%containerWidth {
+	max-width: 975px;
+	margin-right: auto;
+	margin-left: auto;
+	display: block;
+}
+
+.torque-map-container {
+	@extend %containerWidth;
+}
+
+
+.torque-map-pois-list {
+	@extend %containerWidth;
+	text-align: center;
+	margin-top: 80px;
+	margin-bottom: 105px;
+
+	.torque-map-pois-list-item {
+		width: 50%;
+		display: inline-block;
+
+		& > div {
+			display: inline-block;
+			text-transform: uppercase;
+			text-align: left;
+		}
+
+		& .torque-map-pois-list-item-name {
+			width: 350px;
+		}
+
+		& .torque-map-pois-list-item-distance {
+			text-align: right;
+		}
+	}
 }
