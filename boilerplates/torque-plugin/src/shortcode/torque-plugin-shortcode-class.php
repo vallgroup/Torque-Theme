@@ -14,7 +14,8 @@ class <torque_plugin_class_name>_Shortcode {
    * Add the shortcode and link it to our callback
    */
   public function __construct() {
-
+    // use this array to attributes and display them in the front end
+    // for private attributes go to setup_atts()
     $this->$expected_args = array(
       'example' => true,
     );
@@ -43,7 +44,11 @@ class <torque_plugin_class_name>_Shortcode {
    * @return array       Attributes combined with our defaults
    */
   private function setup_atts($atts) {
-    return shortcode_atts( $this->$expected_args, $atts );
+    return shortcode_atts( array_merge( $this->$expected_args,
+      // these are your arguments that do not show up in the front end.
+      array(
+        '' => ''
+      ) ), $atts );
   }
 
   /**
