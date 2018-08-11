@@ -4,6 +4,8 @@ class <torque_plugin_class_name>_Shortcode {
 
   public static $SHORTCODE_SLUG = '<torque_plugin_shortcode>';
 
+  protected $expected_args = array();
+
   private $atts = array();
 
 	private $content = '';
@@ -12,6 +14,11 @@ class <torque_plugin_class_name>_Shortcode {
    * Add the shortcode and link it to our callback
    */
   public function __construct() {
+
+    $this->$expected_args = array(
+      'example' => true,
+    );
+
 		add_shortcode( self::$SHORTCODE_SLUG , array( $this, 'shortcode_handler') );
 	}
 
@@ -36,10 +43,7 @@ class <torque_plugin_class_name>_Shortcode {
    * @return array       Attributes combined with our defaults
    */
   private function setup_atts($atts) {
-    return shortcode_atts(array(
-      'example' => true,
-      'another'           => '',
-    ), $atts);
+    return shortcode_atts( $this->$expected_args, $atts );
   }
 
   /**
@@ -51,11 +55,14 @@ class <torque_plugin_class_name>_Shortcode {
    * @return string
    */
   private function get_markup() {
+    $exp_args = '';
+    foreach ( $this->$expected_args as $key => $arg ) {
+      $exp_args .= ' data-'.esc_attr( $key ).'="'.$arg.'"';
+    }
     return '<span
-      class="<torque_plugin_slug>-react-entry"
+      class="torque-map-react-entry"
       data-site="'.get_site_url().'"
-      data-1="'.$this->atts['example'].'"
-      data-2="'.$this->atts['another'].'" >
+      '.$exp_args.'>
       </span>';
   }
 
