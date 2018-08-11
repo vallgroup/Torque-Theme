@@ -4,7 +4,7 @@ class Torque_Map_Shortcode {
 
   public static $SHORTCODE_SLUG = 'torque_map';
 
-  public $expected_args = array();
+  protected $expected_args = array();
 
   private $atts = array();
 
@@ -15,8 +15,10 @@ class Torque_Map_Shortcode {
    */
   public function __construct() {
 
-    $this->$expected_args = array(
-      'example' => true,
+    $this->expected_args = array(
+      'center' => '',
+      'centerMarker' => '',
+      'key' => '',
     );
 
 		add_shortcode( self::$SHORTCODE_SLUG , array( $this, 'shortcode_handler') );
@@ -43,7 +45,7 @@ class Torque_Map_Shortcode {
    * @return array       Attributes combined with our defaults
    */
   private function setup_atts($atts) {
-    return shortcode_atts( $this->$expected_args, $atts );
+    return shortcode_atts( $this->expected_args, $atts );
   }
 
   /**
@@ -56,7 +58,7 @@ class Torque_Map_Shortcode {
    */
   private function get_markup() {
     $exp_args = '';
-    foreach ( $this->$expected_args as $key => $arg ) {
+    foreach ( $this->atts as $key => $arg ) {
       $exp_args .= ' data-'.esc_attr( $key ).'="'.$arg.'"';
     }
     return '<span

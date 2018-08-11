@@ -61,7 +61,7 @@ class <torque_plugin_class_name>_Shortcode {
    */
   private function get_markup() {
     $exp_args = '';
-    foreach ( $this->$expected_args as $key => $arg ) {
+    foreach ( $this->$atts as $key => $arg ) {
       $exp_args .= ' data-'.esc_attr( $key ).'="'.$arg.'"';
     }
     return '<span
