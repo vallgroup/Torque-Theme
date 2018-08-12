@@ -24,7 +24,8 @@ class Torque_Map_TinyMCE {
 	}
 
 	public function mce_plugin( $plugin_array ) {
-		$plugin_array['torque_map'] = Torque_Map_PATH . 'shortcode/torque-map-tinymce-plugin.js';
+		// var_dump(Torque_Map_PATH . 'shortcode/torque-map-tinymce-plugin.js');
+		$plugin_array['torque_map'] = '/wp-content/plugins/torque-map/shortcode/torque-map-tinymce-plugin.js';
 		return $plugin_array;
 	}
 
@@ -44,7 +45,7 @@ class Torque_Map_TinyMCE {
 		if ( ! isset( get_current_screen()->id )
 			|| get_current_screen()->base != 'post' )
       return;
-		include_once Torque_Map_PATH . 'shortcode/editor-torque-map-template.html';
+		include_once 'torque-map-tinymce-editor.html';
 	}
 }
 

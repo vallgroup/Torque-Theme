@@ -19,6 +19,7 @@
 			// gets called everytime the shortcode is
 			// loaded in the Visual tab of the WYSISWYG
 			getContent: function() {
+				console.log( this.shortcode )
 				// build options
 				var options     = {...this.shortcode.attrs.named};
 				// insert template into editor
@@ -32,12 +33,41 @@
 				// build options
 				var shortcode_data = wp.shortcode.next(shortcode_string, data);
 				var values         = shortcode_data.shortcode.attrs.named;
+				wp.mce.torque_map.popupwindow(tinyMCE.activeEditor, values)
+			},
 
-				// open the dialog
-				// new BcorpPageBuilderRow(
-				// 	tinyMCE.get('content'),
-				// 	{row, columns}
-				// );
+			popupwindow: function(editor, values, onsubmit_callback){
+				values = values || [];
+				if(typeof onsubmit_callback !== 'function'){
+					onsubmit_callback = function( e ) {
+						// Insert content when the window form is submitted (this also replaces during edit, handy!)
+						var args = {
+								tag     : shortcode_string,
+								type    : 'closed',
+								content : '',
+								attrs : {
+									map_id: e.data.map_id,
+								}
+							};
+						editor.insertContent( wp.shortcode.string( args ) );
+					};
+				}
+				editor.windowManager.open( {
+					title: 'Torque Map',
+					body: [
+						{
+							type: 'listbox',
+							name: 'map_id',
+							label: 'Map ID',
+							values: [{
+								text: 'Hello',
+								value: 'There',
+							}],
+							value: values.map_id
+						},
+					],
+					onsubmit: onsubmit_callback
+				} );
 			}
 		}; // torque_map
 
@@ -47,4 +77,20 @@
 			wp.mce.torque_map
 		);
 	});
+
+
+	tinymce.PluginManager.add( 'torque_map', function( editor ) {
+		editor.addButton( 'torque_map_button', {
+			text: 'Torque Map',
+			icon: false,
+			onclick: function() {
+				wp.mce.torque_map.popupwindow(editor);
+			}
+		});
+	});
 }(jQuery));
+
+
+/* global tinymce */
+// ( function() {
+// })();
