@@ -4,9 +4,12 @@
  */
 class Toruqe_Map_CPT {
 
+	/**
+	 * register our post type and meta boxes
+	 */
 	function __construct() {
 		if ( class_exists( 'PremiseCPT' ) ) {
-			$torque_maps = new PremiseCPT( array(
+			new PremiseCPT( array(
 				'plural'         => 'Maps',
 				'singular'       => 'Map',
 				'post_type_name' => 'torque_map',
@@ -17,12 +20,16 @@ class Toruqe_Map_CPT {
 				'show_ui'              => true,
 				'show_in_rest'         => true,
 			));
+			// must run at init, otherwise the filter for pois will not work.
+			add_action( 'init', array( $this, 'register_mb' ) );
 		}
-
-		// must run at init, otherwise the filter for pois will not work.
-		add_action( 'init', array( $this, 'register_mb' ) );
 	}
 
+	/**
+	 * output the shortcode string
+	 *
+	 * @return string the shortcode string
+	 */
 	public function output_sc_string() {
 		global $post;
 		?>
@@ -30,6 +37,11 @@ class Toruqe_Map_CPT {
 		<?php
 	}
 
+	/**
+	 * add the metaboxes to the post type
+	 *
+	 * @return void
+	 */
 	public function register_mb() {
 
 		pwp_add_metabox( array(
