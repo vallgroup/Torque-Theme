@@ -75,15 +75,15 @@
   display: block;
 }
 
-.torque-map-container {
+.torque-map {
   @extend %containerWidth;
+  margin-bottom: 105px;
 }
 
 .torque-map-pois-list {
   @extend %containerWidth;
   text-align: center;
   margin-top: 80px;
-  margin-bottom: 105px;
 
   .torque-map-pois-list-item {
     width: 50%;
