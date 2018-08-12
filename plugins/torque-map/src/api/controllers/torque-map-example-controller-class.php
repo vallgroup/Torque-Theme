@@ -28,8 +28,10 @@ class Torque_Map_Controller {
 
 			if ($map) {
         return Torque_API_Responses::Success_Response( array(
-          'map_details'	=> $this->get_map_shaped( $map ),
-          'pois'	      => $this->get_pois_shaped( $map ),
+          'api_key'          => $this->get_api_key(),
+          'map_details'	     => $this->get_map_shaped( $map ),
+          'pois'	           => $this->get_pois_shaped( $map ),
+          'display_poi_list' => $this->maybe_display_poi_list(),
         ) );
 			}
 
@@ -40,6 +42,28 @@ class Torque_Map_Controller {
 		} catch (Exception $e) {
 			return Torque_API_Responses::Error_Response( $e );
 		}
+	}
+
+	public function get_api_key() {
+		/**
+		 * Filters the api key to use for google maps.
+		 * Allows the theme to add an api key by simply
+		 * registering the fiilter
+		 *
+		 * @var string
+		 */
+		$key = apply_filters( 'torque_map_api_key', '' );
+		return $key;
+	}
+
+	public function maybe_display_poi_list() {
+		/**
+		 * Filters whether or not to display the pois list under the map
+		 *
+		 * @var bool
+		 */
+		$bool = apply_filters( 'torque_map_display_pois_list', false );
+		return $bool;
 	}
 
 	private function get_map_shaped( $map ) {
@@ -64,7 +88,7 @@ class Torque_Map_Controller {
 		return $map_resp;
 	}
 
-	public function get_pois_shaped( $map ) {
+	private function get_pois_shaped( $map ) {
 		$context = array( 'context' => 'post', 'id' => $map->ID );
 		$number_of_pois = apply_filters( 'torque_map_pois_allowed', 0 );
 
