@@ -11,15 +11,16 @@ class PointsOfInterest extends React.PureComponent {
               poi.keyword === this.props.searchNearby ? 'active' : ''
 
             return (
-              <button
+              <div
                 key={index}
-                className={`torque-map-poi ${styles.torqueMapPOI} ${
-                  poi.color
-                } ${active}`}
-                onClick={() => this.props.updatePOIS(poi.keyword)}
-                dataname={poi.name}>
-                {poi.name}
-              </button>
+                className={`torque-map-poi ${styles.torqueMapPOI} ${active}`}
+                data-poi={poi.name.toLowerCase().trim().replace(/[^\w\d]/, '-')}>
+                <button
+                  onClick={() => this.props.updatePOIS(poi)}
+                  dataname={poi.name}>
+                  {poi.name}
+                </button>
+              </div>
             )
           })}
       </div>

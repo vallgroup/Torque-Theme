@@ -3,30 +3,11 @@
 require_once( get_template_directory() . '/api/responses/torque-api-responses-class.php');
 require_once( get_template_directory() . '/includes/validation/torque-validation-class.php');
 
-class Torque_Map_Example_Controller {
+class Torque_Map_Controller {
 
-	public static function get_example_args() {
+	public static function get_map_args() {
 		return array(
       'id' => array(
-        'validate_callback' => array( 'Torque_Validation', 'int' ),
-      ),
-    );
-	}
-
-	public static function update_example_args() {
-		return array(
-			'id' => array(
-        'validate_callback' => array( 'Torque_Validation', 'int' ),
-      ),
-      'name' => array(
-        'validate_callback' => array( 'Torque_Validation', 'string' ),
-      ),
-    );
-	}
-
-	public static function delete_example_args() {
-		return array(
-			'id' => array(
         'validate_callback' => array( 'Torque_Validation', 'int' ),
       ),
     );
@@ -39,13 +20,16 @@ class Torque_Map_Example_Controller {
 		$this->request = $request;
 	}
 
-	public function get_examples() {
-		try {
-			$example = get_example( $this->request['id'] );
+	public function get_map() {
+		$_id = isset( $this->request['id'] ) ? (int) $this->request['id'] : 0;
 
-			if ($example) {
+		try {
+			$map = get_post( $_id );
+
+			if ($map) {
         return Torque_API_Responses::Success_Response( array(
-          'example'	=> $example
+          'map_details'	=> $this->get_map_shaped( $map ),
+          'pois'	      => $this->get_pois_shaped( $map ),
         ) );
 			}
 
@@ -58,35 +42,43 @@ class Torque_Map_Example_Controller {
 		}
 	}
 
-	public function update_example() {
-		try {
-      $example_id = update_example( $this->request['id'], $this->request['name'] );
-
-			if ($example_id) {
-				return Torque_API_Responses::Success_Response( array(
-					'id'			=> $example_id
-	    	) );
-			} else {
-				return Torque_API_Responses::Failure_Response( array(
-					'id'			=> 0
-	    	));
-			}
-
-		} catch (Exception $e) {
-			return Torque_API_Responses::Error_Response( $e );
+	private function get_map_shaped( $map ) {
+		// get the map meta
+		$context = array( 'context' => 'post', 'id' => $map->ID );
+		$map_dets = premise_get_value( 'torque_map', $context );
+		// if we have a size for our center marker
+		// convert it into separate params: widht and height
+		if ( isset( $map_dets['center_marker'] )
+			&& isset( $map_dets['center_marker']['size'] ) ) {
+			$trimmed_size = str_replace( ' ', '', trim( $map_dets['center_marker']['size'] ) );
+			$width_height = explode( ',', $trimmed_size );
+			$map_dets['center_marker']['width'] = (int) $width_height[0];
+			$map_dets['center_marker']['height'] = (int) $width_height[1];
 		}
+		// build the map details
+		$map_resp = array_merge( array(
+			'id' => $map->ID,
+			'title' => $map->post_title,
+		), $map_dets );
+
+		return $map_resp;
 	}
 
-	public function delete_example() {
-		try {
-			if (delete_example( $this->request['id'] )) {
-				return Torque_API_Responses::Success_Response();
-			} else {
-				return Torque_API_Responses::Failure_Response();
-			}
+	public function get_pois_shaped( $map ) {
+		$context = array( 'context' => 'post', 'id' => $map->ID );
+		$number_of_pois = apply_filters( 'torque_map_pois_allowed', 0 );
 
-		} catch (Exception $e) {
-			return Torque_API_Responses::Error_Response( $e );
+		$pois = array();
+		for ($i=0; $i < $number_of_pois; $i++) {
+			$pois[$i] = premise_get_value( 'torque_map_pois_'.$i, $context );
+			if ( isset( $pois[$i]['marker'] )
+				&& isset( $pois[$i]['marker']['size'] ) ) {
+				$trimmed_size = str_replace( ' ', '', trim( $pois[$i]['marker']['size'] ) );
+				$width_height = explode( ',', $trimmed_size );
+				$pois[$i]['marker']['width'] = (int) $width_height[0];
+				$pois[$i]['marker']['height'] = (int) $width_height[1];
+			}
 		}
+		return $pois;
 	}
 }

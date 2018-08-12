@@ -17,8 +17,9 @@ class Torque_Map_Shortcode {
 
     $this->expected_args = array(
       'center' => '',
-      'centerMarker' => '',
-      'key' => '',
+      'center_marker' => '', // mixed
+      'api_key' => '',
+      'map_id' => '',
     );
 
 		add_shortcode( self::$SHORTCODE_SLUG , array( $this, 'shortcode_handler') );
@@ -27,7 +28,7 @@ class Torque_Map_Shortcode {
   /**
    * The callback for the shortcode, should output some markup to be displayed.
    *
-   * @param  array $atts    Attributes found when parsing shortcode
+   * @param  array $atts     Attributes found when parsing shortcode
    * @param  string $content Children found inside enclosing shortcode tags
    * @return string
    */
@@ -59,6 +60,8 @@ class Torque_Map_Shortcode {
   private function get_markup() {
     $exp_args = '';
     foreach ( $this->atts as $key => $arg ) {
+      if ( empty( $arg ) )
+        continue;
       $exp_args .= ' data-'.esc_attr( $key ).'="'.$arg.'"';
     }
     return '<span
