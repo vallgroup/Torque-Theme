@@ -120,6 +120,13 @@ class Torque_Map {
 	}
 
 	public function maybe_add_pois() {
+		/**
+		 * Filters the number of pois allowed for the map
+		 * Allows theme to register number of pois it uses
+		 * in design
+		 *
+		 * @var int
+		 */
 		$number_of_pois = apply_filters( 'torque_map_pois_allowed', 0 );
 		for ($i=0; $i < $number_of_pois; $i++) {
 			$this->poi_mb( $i );
