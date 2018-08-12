@@ -13,10 +13,12 @@ class App extends Component {
     super(props)
 
     this.state = {
+      apiKey: '',
       map: null,
       pois: [],
       selectedPOI: {},
-      searchNearby: '',
+      poiList: [],
+      displayPOIList: false,
       mapCenter: null,
     }
   }
@@ -28,29 +30,32 @@ class App extends Component {
   render() {
     return (
       <div className={`torque-map`}>
-        <PointsOfInterest
-          pois={this.state.pois}
-          searchNearby={this.state.selectedPOI.keyword}
-          updatePOIS={this.updatePOIS.bind(this)} />
+        {/* if we have points of interest, show them */}
+        {0 < this.state.pois.length
+          && <PointsOfInterest
+            pois={this.state.pois}
+            searchNearby={this.state.selectedPOI.keyword}
+            updatePOIS={this.updatePOIS.bind(this)} />}
 
-        {/*Display the map*/}
+        {/* Display the map when we have a map in state */}
         {this.state.map
-          &&
-        <TorqueMap
-          apiKey={`AIzaSyDPF2QsUSJKHsmGoPcjIgRySglSZgD-asA`}
-          center={this.state.map.center}
-          centerMarker={{
-            name: this.state.map.title,
-            icon: this.state.map.center_marker,
-          }}
-          searchNearby={this.state.selectedPOI.keyword}
-          onNearbySearch={this.updatePOIList.bind(this)}
-          markersIcon={this.state.selectedPOI.marker} />
-        }
+          && <TorqueMap
+            apiKey={this.state.apiKey}
+            center={this.state.map.center}
+            centerMarker={{
+              name: this.state.map.title,
+              icon: this.state.map.center_marker,
+            }}
+            searchNearby={this.state.selectedPOI.keyword}
+            onNearbySearch={this.updatePOIList.bind(this)}
+            markersIcon={this.state.selectedPOI.marker} />}
 
-        <ListPOIS
-          list={this.state.poiList}
-          showDistanceFrom={this.state.mapCenter} />
+        {/* Display the poi list if we have one */}
+        {this.state.displayPOIList
+          && 0 < this.state.poiList.length
+          && <ListPOIS
+            list={this.state.poiList}
+            showDistanceFrom={this.state.mapCenter} />}
       </div>
     )
   }
@@ -67,8 +72,10 @@ class App extends Component {
       const mapPost = await axios.get(url)
       if (mapPost.data.success) {
         this.setState({
+          apiKey: mapPost.data.api_key,
           map: mapPost.data.map_details,
           pois: mapPost.data.pois,
+          displayPOIList: mapPost.data.display_poi_list,
         })
       }
     } catch(err) {
