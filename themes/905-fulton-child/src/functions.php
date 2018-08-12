@@ -26,7 +26,10 @@ add_action('admin_init', function() {
   remove_menu_page('edit-comments.php');
 });
 
-
+// add allowed pois for theme
+add_filter( 'torque_map_pois_allowed', function($n) {
+  return 4;
+});
 
 // enqueue child styles after parent styles
 add_action( 'wp_enqueue_scripts', 'torque_enqueue_child_styles' );
