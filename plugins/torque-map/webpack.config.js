@@ -71,6 +71,7 @@ const config = {
     }),
     new CopyWebpackPlugin([
       { from: path.join(srcDir, '**/*.php'), to: buildDir },
+      { from: path.join(srcDir, '**/*.js'), to: buildDir },
     ]),
   ],
 

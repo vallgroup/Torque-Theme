@@ -1,5 +1,7 @@
 <?php
 
+require( Torque_Map_PATH . 'shortcode/torque-map-tinymce-class.php' );
+
 class Torque_Map_Shortcode {
 
   public static $SHORTCODE_SLUG = 'torque_map';
@@ -25,6 +27,15 @@ class Torque_Map_Shortcode {
     );
 
 		add_shortcode( self::$SHORTCODE_SLUG , array( $this, 'shortcode_handler') );
+
+    add_action( 'load-post.php'    ,  array(
+      Torque_Map_TinyMCE::get_inst(),
+      'init' ),
+    20 );
+    // add_action( 'load-post-new.php',  array(
+    //   Torque_Map_TinyMCE::get_inst(),
+    //   'init' ),
+    // 20 );
 	}
 
   /**
