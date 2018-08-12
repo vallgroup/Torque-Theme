@@ -4,6 +4,8 @@ class Torque_Map_Shortcode {
 
   public static $SHORTCODE_SLUG = 'torque_map';
 
+  protected $expected_args = array();
+
   private $atts = array();
 
 	private $content = '';
@@ -12,13 +14,21 @@ class Torque_Map_Shortcode {
    * Add the shortcode and link it to our callback
    */
   public function __construct() {
+
+    $this->expected_args = array(
+      'center' => '',
+      'center_marker' => '', // mixed
+      'api_key' => '',
+      'map_id' => '',
+    );
+
 		add_shortcode( self::$SHORTCODE_SLUG , array( $this, 'shortcode_handler') );
 	}
 
   /**
    * The callback for the shortcode, should output some markup to be displayed.
    *
-   * @param  array $atts    Attributes found when parsing shortcode
+   * @param  array $atts     Attributes found when parsing shortcode
    * @param  string $content Children found inside enclosing shortcode tags
    * @return string
    */
@@ -36,10 +46,7 @@ class Torque_Map_Shortcode {
    * @return array       Attributes combined with our defaults
    */
   private function setup_atts($atts) {
-    return shortcode_atts(array(
-      'example' => true,
-      'another'           => '',
-    ), $atts);
+    return shortcode_atts( $this->expected_args, $atts );
   }
 
   /**
@@ -51,11 +58,16 @@ class Torque_Map_Shortcode {
    * @return string
    */
   private function get_markup() {
+    $exp_args = '';
+    foreach ( $this->atts as $key => $arg ) {
+      if ( empty( $arg ) )
+        continue;
+      $exp_args .= ' data-'.esc_attr( $key ).'="'.$arg.'"';
+    }
     return '<span
       class="torque-map-react-entry"
       data-site="'.get_site_url().'"
-      data-1="'.$this->atts['example'].'"
-      data-2="'.$this->atts['another'].'" >
+      '.$exp_args.'>
       </span>';
   }
 

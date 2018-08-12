@@ -16,8 +16,11 @@ class FloorPlanSelector extends PureComponent {
   }
 
   renderRSF(floorPlan) {
+    const formatted = floorPlan.rsf.replace(/\d(?=(\d{3})$)/g, '$&,')
     return (
-      <div className={`${style.optionBlock}`}>{`${floorPlan.rsf} RSF`}</div>
+      <div className={`${style.optionBlock}`}>
+        {`${formatted} RSF`}
+      </div>
     )
   }
 

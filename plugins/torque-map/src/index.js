@@ -13,8 +13,16 @@ if (!global._babelPolyfill) {
 const entry = document.querySelectorAll('.torque-map-react-entry')
 
 entry.forEach(entry => {
+
   if (entry) {
     // pass through the data-site attr as props so the app knows where to send requests
-    ReactDOM.render(<App site={entry.getAttribute('data-site')} />, entry)
+    ReactDOM.render(<App
+    	site={entry.getAttribute('data-site')}
+    	center={entry.getAttribute('data-center')}
+    	centerMarker={entry.getAttribute('data-center_marker')}
+    	apiKey={entry.getAttribute('data-api_key')}
+    	mapID={entry.getAttribute('data-map_id')} />,
+    	entry
+    )
   }
 })

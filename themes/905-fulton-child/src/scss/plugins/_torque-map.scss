@@ -22,6 +22,41 @@
   text-transform: uppercase;
   margin-right: 23px;
 
+  button {
+    border-width: 2px;
+    transition: all .4s ease-in-out;
+  }
+
+  &[data-poi="drinks"] button {
+    border-color: $marine;
+    color:  $marine;
+
+    &:hover {
+      background-color: $marine;
+      color: $white;
+    }
+  }
+
+  &[data-poi="shopping"] button {
+    border-color: $nice-blue;
+    color:  $nice-blue;
+
+    &:hover {
+      background-color: $nice-blue;
+      color: $white;
+    }
+  }
+
+  &[data-poi="entertainment"] button {
+    border-color: $barney-purple;
+    color:  $barney-purple;
+
+    &:hover {
+      background-color: $barney-purple;
+      color: $white;
+    }
+  }
+
   @include respond-to(tablet) {
     margin-top: 10px;
     margin-right: 8px;
@@ -40,15 +75,15 @@
   display: block;
 }
 
-.torque-map-container {
+.torque-map {
   @extend %containerWidth;
+  margin-bottom: 105px;
 }
 
 .torque-map-pois-list {
   @extend %containerWidth;
   text-align: center;
   margin-top: 80px;
-  margin-bottom: 105px;
 
   .torque-map-pois-list-item {
     width: 50%;

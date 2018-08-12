@@ -183,8 +183,7 @@ class PWP_Metabox {
         if ( wp_is_post_revision( $post_id ) ) {
             return;
         }
-        // var_dump( $this->option_names );exit();
-        foreach ( $this->option_names as $option ) {
+        foreach ( (array) $this->option_names as $option ) {
             /**
              * allows you to validate your own data.
              *
@@ -193,7 +192,9 @@ class PWP_Metabox {
             $data = ( isset( $_POST[ $option ] ) ) ? apply_filters( 'pwp_metabox_sanitize_option', $_POST[ $option ], $post ) : false;
 
             // save the option
-            update_post_meta( $post_id, $option, $data );
+            if ( $data ) {
+                update_post_meta( $post_id, $option, $data );
+            }
         }
     }
 

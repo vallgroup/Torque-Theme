@@ -26,7 +26,18 @@ add_action('admin_init', function() {
   remove_menu_page('edit-comments.php');
 });
 
-
+// add api key for torque map
+add_filter( 'torque_map_api_key', function($k) {
+  return 'AIzaSyDPF2QsUSJKHsmGoPcjIgRySglSZgD-asA';
+});
+// add allowed pois for theme
+add_filter( 'torque_map_pois_allowed', function($n) {
+  return 4;
+});
+// whether to display the POI list or not
+add_filter( 'torque_map_display_pois_list', function($n) {
+  return true;
+});
 
 // enqueue child styles after parent styles
 add_action( 'wp_enqueue_scripts', 'torque_enqueue_child_styles' );
@@ -56,6 +67,19 @@ function torque_enqueue_child_scripts() {
     );
 }
 
+add_action( 'wp_head', 'torque_google_analytics' );
+function torque_google_analytics() {
+  ?>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123762672-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
+    gtag('config', 'UA-123762672-1');
+  </script>
+  <?php
+}
 
 ?>

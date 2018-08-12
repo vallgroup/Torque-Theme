@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 import TorqueMap from './Map/Map'
 import PointsOfInterest from './PointsOfInterest/PointsOfInterest'
 import ListPOIS from './PointsOfInterest/ListPOIS'
@@ -7,57 +8,84 @@ import ListPOIS from './PointsOfInterest/ListPOIS'
  * I'm guessing we'll eventually want to generalise and have these things
  * set from the back end? We can rely on the pin images being in the media gallery
  */
-const pois = [
-  {
-    name: 'Dinner',
-    keyword: 'dinner',
-    color: 'clay-brown',
-  },
-  {
-    name: 'Drinks',
-    keyword: 'drinks',
-    color: 'marine',
-  },
-  {
-    name: 'Shopping',
-    keyword: 'shopping',
-    color: 'nice-blue',
-  },
-  {
-    name: 'Entertainament',
-    keyword: 'entertainment',
-    color: 'barney-purple',
-  },
-]
-
-const markerIcons = {
-  dinner: {
-    url: '/wp-content/uploads/2018/08/dinner-pin@2x.png',
-  },
-  drinks: {
-    url: '/wp-content/uploads/2018/08/drinks-pin@2x.png',
-  },
-  shopping: {
-    url: '/wp-content/uploads/2018/08/shopping-pin@2x.png',
-  },
-  entertainment: {
-    url: '/wp-content/uploads/2018/08/entertainment-pin@2x.png',
-  },
-}
-
 class App extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      searchNearby: '',
+      apiKey: '',
+      map: null,
+      pois: [],
+      selectedPOI: {},
+      poiList: [],
+      displayPOIList: false,
       mapCenter: null,
     }
   }
 
-  updatePOIS(keyword) {
+  componentWillMount() {
+    this.getTheMapDetails()
+  }
+
+  render() {
+    return (
+      <div className={`torque-map`}>
+        {/* if we have points of interest, show them */}
+        {0 < this.state.pois.length
+          && <PointsOfInterest
+            pois={this.state.pois}
+            searchNearby={this.state.selectedPOI.keyword}
+            updatePOIS={this.updatePOIS.bind(this)} />}
+
+        {/* Display the map when we have a map in state */}
+        {this.state.map
+          && <TorqueMap
+            apiKey={this.state.apiKey}
+            center={this.state.map.center}
+            centerMarker={{
+              name: this.state.map.title,
+              icon: this.state.map.center_marker,
+            }}
+            searchNearby={this.state.selectedPOI.keyword}
+            onNearbySearch={this.updatePOIList.bind(this)}
+            markersIcon={this.state.selectedPOI.marker} />}
+
+        {/* Display the poi list if we have one */}
+        {this.state.displayPOIList
+          && 0 < this.state.poiList.length
+          && <ListPOIS
+            list={this.state.poiList}
+            showDistanceFrom={this.state.mapCenter} />}
+      </div>
+    )
+  }
+
+  getTheMapDetails() {
+    if (this.props.mapID) {
+      this.ajaxMapDetails();
+    }
+  }
+
+  async ajaxMapDetails() {
+    try {
+      const url = this.props.site + `/wp-json/torque-map/v1/map/${this.props.mapID}`
+      const mapPost = await axios.get(url)
+      if (mapPost.data.success) {
+        this.setState({
+          apiKey: mapPost.data.api_key,
+          map: mapPost.data.map_details,
+          pois: mapPost.data.pois,
+          displayPOIList: mapPost.data.display_poi_list,
+        })
+      }
+    } catch(err) {
+      console.error(err)
+    }
+  }
+
+  updatePOIS(poi) {
     this.setState({
-      searchNearby: keyword,
+      selectedPOI: poi,
     })
   }
 
@@ -66,38 +94,6 @@ class App extends Component {
       poiList: list,
       mapCenter: mapCenter,
     })
-  }
-
-  render() {
-    return (
-      <div className={`torque-map`}>
-        <PointsOfInterest
-          pois={pois}
-          searchNearby={this.state.searchNearby}
-          updatePOIS={this.updatePOIS.bind(this)} />
-
-        {/*Display the map*/}
-        <TorqueMap
-          apiKey={`AIzaSyDPF2QsUSJKHsmGoPcjIgRySglSZgD-asA`}
-          center={'905 Fulton Market Chicago, IL'}
-          centerMarker={{
-            name: '905 Fulton Market',
-            icon: {
-              url:
-                '/wp-content/uploads/2018/08/905-location-pin@2x.png',
-              width: 69,
-              height: 92,
-            },
-          }}
-          searchNearby={this.state.searchNearby}
-          onNearbySearch={this.updatePOIList.bind(this)}
-          markersIcon={markerIcons[this.state.searchNearby]} />
-
-        <ListPOIS
-          list={this.state.poiList}
-          showDistanceFrom={this.state.mapCenter} />
-      </div>
-    )
   }
 }
 

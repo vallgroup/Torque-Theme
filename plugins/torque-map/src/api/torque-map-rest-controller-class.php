@@ -21,7 +21,7 @@ class Torque_Map_REST_Controller {
   // Register our routes.
   public function register_routes() {
 
-    $example_routes = new Torque_Map_Example_Routes( $this->namespace );
+    $example_routes = new Torque_Map_Routes( $this->namespace );
     $example_routes->register_routes();
   }
 }

@@ -2,26 +2,7 @@
 
 ## GET STARTED
 
-1.  Copy entire torque-plugin directory into plugins.
-
-    - Include package.json, webpack.config.js, and other config files
-    - Exclude node_modules if for some reason it exists
-
-2.  Find and replace the following in the entire directory:
-
-    1.  <torque_plugin_class_name> (eg Torque_Floor_Plans) **Note: aim to always prefix with Torque**
-    2.  <torque_plugin_name> (eg Torque Floor Plans)
-    3.  <torque_plugin_slug> (eg torque-floor-plans)
-    4.  <torque_plugin_namespace> (eg floor-plans/v1/)
-    5.  <torque_plugin_shortcode> (eg torque_floor_plan)
-
-3.  Rename directory: torque-plugin => <torque_plugin_slug>
-
-4.  Rename all files in this directory: {torque-plugin}-etc-class.php => {<torque_plugin_slug>}-etc-class.php
-
-5.  Register workspace in package.json in **project** root and add it to the setup.sh initial build script.
-
-6.  Open new terminal, and in **project** root, run:
+1.  Open new terminal, and in **project** root, run:
 
     ```sh
     $ yarn
@@ -36,3 +17,14 @@
     ```
 
     to compile files to wp-content and start webpack
+
+
+## Filters
+
+Filters available for the theme to control some of the map's layout and functionality:
+
+*Filter* | *Function* | *Value Type*
+--- | --- | ---
+`torque_map_api_key` | Set the API key to use for google maps | string
+`torque_map_pois_allowed` | Define how many Points Of Interest are allowed per map. Defaults to 0. | int
+`torque_map_display_pois_list` | Whether the map should display a list of POIs below the map when a POI is searched for. Defaults to false. | bool
