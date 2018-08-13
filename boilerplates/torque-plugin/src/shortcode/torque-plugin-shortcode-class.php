@@ -48,7 +48,7 @@ class <torque_plugin_class_name>_Shortcode {
       // these are your arguments that do not show up in the front end.
       array(
         '' => ''
-      ) ), $atts );
+      ) ), $atts, self::$SHORTCODE_SLUG );
   }
 
   /**
