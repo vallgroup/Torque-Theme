@@ -32,10 +32,10 @@ class Torque_Map_Shortcode {
       Torque_Map_TinyMCE::get_inst(),
       'init' ),
     20 );
-    // add_action( 'load-post-new.php',  array(
-    //   Torque_Map_TinyMCE::get_inst(),
-    //   'init' ),
-    // 20 );
+    add_action( 'load-post-new.php',  array(
+      Torque_Map_TinyMCE::get_inst(),
+      'init' ),
+    20 );
 	}
 
   /**
