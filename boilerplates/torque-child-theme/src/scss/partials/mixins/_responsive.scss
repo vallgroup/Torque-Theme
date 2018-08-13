@@ -1,0 +1,39 @@
+@import '../variables';
+
+@mixin respond-to($media) {
+  @if $media == tablet {
+    @media only screen and (min-width: $MobileMaxWidth + 1px) {
+      @content;
+    }
+  }
+  @elseif $media == desktop {
+    @media only screen and (min-width: $TabletMaxWidth + 1px) {
+      @content;
+    }
+  }
+}
+
+@mixin respond-to-max($media) {
+  @if $media == tablet {
+    @media only screen and (max-width: $MobileMaxWidth) {
+      @content;
+    }
+  }
+  @elseif $media == desktop {
+    @media only screen and (max-width: $TabletMaxWidth) {
+      @content;
+    }
+  }
+}
+
+@mixin respond-to-custom($widthPX) {
+  @media only screen and (min-width: $widthPX) {
+    @content;
+  }
+}
+
+@mixin respond-to-max-custom($widthPX) {
+  @media only screen and (max-width: $widthPX) {
+    @content;
+  }
+}
