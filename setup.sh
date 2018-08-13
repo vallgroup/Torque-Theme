@@ -14,6 +14,7 @@ docker-compose up -d
 
 # build workspaces into wp-content
 yarn workspace torque-theme build
+yarn workspace e-wacker-child build
 yarn workspace torque-floor-plans build
 yarn workspace torque-availability build
 yarn workspace torque-gallery-layouts build
