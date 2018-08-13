@@ -19,9 +19,11 @@ class Torque_Map_Shortcode {
 
     $this->expected_args = array(
       'map_id' => '',
+      'zoom'   => '',
+      'center' => '',
+      'title'  => '',
       // TODO add ability to pass params to shortcode
       // to create maps on the fly
-      // 'center' => '',
       // 'center_marker' => '', // mixed
       // 'api_key' => '',
     );
@@ -32,10 +34,10 @@ class Torque_Map_Shortcode {
       Torque_Map_TinyMCE::get_inst(),
       'init' ),
     20 );
-    // add_action( 'load-post-new.php',  array(
-    //   Torque_Map_TinyMCE::get_inst(),
-    //   'init' ),
-    // 20 );
+    add_action( 'load-post-new.php',  array(
+      Torque_Map_TinyMCE::get_inst(),
+      'init' ),
+    20 );
 	}
 
   /**

@@ -28,6 +28,7 @@ class App extends Component {
   }
 
   render() {
+    console.log( this.state )
     return (
       <div className={`torque-map`}>
         {/* if we have points of interest, show them */}
@@ -42,6 +43,7 @@ class App extends Component {
           && <TorqueMap
             apiKey={this.state.apiKey}
             center={this.state.map.center}
+            zoom={this.state.map.zoom}
             centerMarker={{
               name: this.state.map.title,
               icon: this.state.map.center_marker,
@@ -61,6 +63,7 @@ class App extends Component {
   }
 
   getTheMapDetails() {
+    console.log( this.props )
     if (this.props.mapID) {
       this.ajaxMapDetails();
     }
@@ -70,6 +73,7 @@ class App extends Component {
     try {
       const url = this.props.site + `/wp-json/torque-map/v1/map/${this.props.mapID}`
       const mapPost = await axios.get(url)
+      console.log(mapPost)
       if (mapPost.data.success) {
         this.setState({
           apiKey: mapPost.data.api_key,

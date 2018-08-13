@@ -60,6 +60,13 @@ class Toruqe_Map_CPT {
 			),
 			array(
 				'context'     => 'post',
+				'type'        => 'number',
+				'name'        => '[zoom]',
+				'label'       => 'Zoom',
+				'placeholder' => '12',
+			),
+			array(
+				'context'     => 'post',
 				'type'        => 'wp_media',
 				'name'        => '[center_marker][url]',
 				'label'       => 'Center Marker Icon',

@@ -19,7 +19,6 @@
 			// gets called everytime the shortcode is
 			// loaded in the Visual tab of the WYSISWYG
 			getContent: function() {
-				console.log( this.shortcode )
 				// build options
 				var options     = {...this.shortcode.attrs.named};
 				// insert template into editor
@@ -47,25 +46,40 @@
 								content : '',
 								attrs : {
 									map_id: e.data.map_id,
+									title: e.data.title,
+									center: e.data.center,
+									zoom: e.data.zoom,
 								}
 							};
 						editor.insertContent( wp.shortcode.string( args ) );
 					};
 				}
+				var formBody = ( values.map_id )
+					? [{
+						type: 'textbox',
+						name: 'map_id',
+						label: 'Map ID',
+						value: values.map_id
+					},]
+					: [{
+						type: 'textbox',
+						name: 'title',
+						label: 'Title',
+						value: values.title
+					},{
+						type: 'textbox',
+						name: 'center',
+						label: 'Center',
+						value: values.center
+					},{
+						type: 'textbox',
+						name: 'zoom',
+						label: 'Zoom',
+						value: values.zoom
+					},];
 				editor.windowManager.open( {
 					title: 'Torque Map',
-					body: [
-						{
-							type: 'listbox',
-							name: 'map_id',
-							label: 'Map ID',
-							values: [{
-								text: 'Hello',
-								value: 'There',
-							}],
-							value: values.map_id
-						},
-					],
+					body: formBody,
 					onsubmit: onsubmit_callback
 				} );
 			}
