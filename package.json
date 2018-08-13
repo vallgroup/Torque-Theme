@@ -11,7 +11,7 @@
   },
   "workspaces": [
     "themes/torque",
-    "themes/905-fulton-child",
+    "themes/Torque-905-Fulton",
     "plugins/torque-floor-plans",
     "plugins/torque-gallery-layouts",
     "plugins/torque-availability",
