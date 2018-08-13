@@ -1,0 +1,14 @@
+.torque-burger-menu {
+  display: inline-block;
+
+  .torque-burger-menu-line {
+    width: 23px;
+    height: 2px;
+    background-color: black;
+    margin-bottom: 5px;
+
+    &:last-child {
+      margin-bottom: 0px;
+    }
+  }
+}
