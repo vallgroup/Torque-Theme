@@ -2,6 +2,8 @@
 
 class Torque_Nav_Menus {
 
+  public static $nav_menus_filter_handle = 'torque_nav_menus';
+
   public static function register_all() {
     register_nav_menus( self::get_menus() );
   }
@@ -38,7 +40,7 @@ class Torque_Nav_Menus {
       'primary' => 'Primary Navigation'
     );
 
-    return apply_filters('torque_nav_menus', $menus );
+    return apply_filters( self::$nav_menus_filter_handle, $menus );
   }
 
   /**
