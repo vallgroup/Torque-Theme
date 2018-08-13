@@ -1,6 +1,6 @@
 # Developing
 
-## Quick Start
+## Quick Start
 
 If you've completed the steps in [setup](./setup.md), then starting the dev server for a workspace is as easy as running
 
@@ -13,7 +13,7 @@ Any changes to src files in that workspace should now be visible after visiting 
 
 If you need a dev server for multiple workspaces at a time then simply open a new terminal window and run `yarn start <workspace-name>` again for a different workspace.
 
-## Refreshing wp-content
+### Refreshing wp-content
 
 If wp-content is getting a bit messy (eg because moving or deleting files dont get synced), or if you've just pulled some new commits from the repo, then run:
 
@@ -31,15 +31,38 @@ Each branch will contain settings/files specific to that client's wp installatio
 
 This means that each client branch should **always be ahead of master** once the client specific settings have been pushed, and **never behind master**. Any changes made to the default wp installation or environment, to the plugins, or to the torque theme itself, should be made to the master branch and then merged in to the client branch.
 
+Alternatively, since we won't want to do a full merge from a client branch to master and overwrite all the default settings, you can commit **just the changes you want to send to master** with no client specific files included, and use `git cherry-pick <commit-hash>` to merge those changes into master.
+
 ### Creating a new client branch
 
-Make sure to update the following settings when creating your client specific branch.
+1.  Create a new branch from master with the project name as the branch name.
 
-1.  `MYSQL_DATABASE` and `WORDPRESS_DB_NAME` with the new client specific db name.
-2.  Add the theme's workspace to the root `package.json`
-3.  Add the theme to the `rebuild.sh` script
+2.  Add your child theme to the themes directory. It will be automatically gitignored, so make sure the child theme has its' own repo.
 
-## Why Yarn Workspaces and Webpack?
+3.  Update the following:
+
+    1.  In the docker-compose file, **at the very least** change:
+
+        - The docker container names
+          (eg db -> child-theme-db, phpmyadmin -> child-theme-phpmyadmin, wordpress -> child-theme-wordpress).
+          We want a separate database and WP installation for each client, so we need to make sure docker is creating new containers for each.
+        - The docker container names anywhere else they appear in the file.
+          Best to do a search for the old container name within the file using your IDE, some of them are not so obvious
+          (eg defining the wordpress db host uses the db container name)
+        - The network names
+          (eg back -> child-theme-back)
+        - The db volume name
+          (eg db_data -> child_theme_db_data)
+
+    2.  In the docker-compose file you should also change the db name (in MYSQL_DATABASE and WORDPRESS_DB_NAME), although this is not compulsory.
+    3.  Add the theme's workspace to the root `package.json`
+    4.  Add the theme's build command to the `setup.sh` script
+
+4.  Then repeat steps 9, 10 and 11 from [setup](./setup.md) to get your new wordpress installation up and running.
+
+## Further Dev Info
+
+### Why Yarn Workspaces and Webpack?
 
 > [See Yarn official site](https://yarnpkg.com/lang/en/docs/workspaces/)
 
@@ -47,7 +70,7 @@ The main benefit to us of using these workspaces is that we can define a separat
 
 We have some default config files (eg .babelrc) in the project root which the separate webpack configs can use, but if they need something more specific (eg config for a React project), then they can define their own in their respective package root directory.
 
-## Compilation to wp-content
+### Compilation to wp-content
 
 Our docker container takes its' wp-content from the wp-content directory in our project root, but we dont want to update that directly since it could be overwritten by docker and we would lose it for good ([see](./docker.md#updating-wp-content)).
 
@@ -67,7 +90,7 @@ Exactly which directory in wp-content the files are compiled to can be set in th
 
 **Note:** This would be the same process for js or scss files, except they would also be transformed/compiled/minified by webpack during the copy process.
 
-## Creating a new package using yarn workspaces and webpack
+### Creating a new package using yarn workspaces and webpack
 
 > See themes/torque/ for a good example of a configured workspace
 
