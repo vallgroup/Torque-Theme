@@ -1,6 +1,6 @@
 # Developing
 
-## Quick Start
+## Quick Start
 
 If you've completed the steps in [setup](./setup.md), then starting the dev server for a workspace is as easy as running
 
