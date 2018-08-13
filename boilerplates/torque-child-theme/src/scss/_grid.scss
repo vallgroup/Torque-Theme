@@ -1,0 +1,171 @@
+@import 'partials/mixins/grid';
+@import 'partials/mixins/responsive';
+
+// Add a new one only when you need it. Trying to keep css minimal
+//
+// Note: the boilerplate grid globals assume mobile first.
+
+.row {
+  @include row();
+}
+
+.col1 {
+  @include col(1);
+}
+
+.col2 {
+  @include col(2);
+}
+
+.col3 {
+  @include col(3);
+}
+
+.col3x2 {
+  @include col(3 / 2);
+}
+
+.col4 {
+  @include col(4);
+}
+.inline-col4-top {
+  @include inline-col(4, top);
+}
+
+.inline-col4-middle {
+  @include inline-col(4, middle);
+}
+
+.col5 {
+  @include col(5);
+}
+
+.col6 {
+  @include col(6);
+}
+
+.col4x3 {
+  @include col(4 / 3);
+}
+
+.inline-col4x3-middle {
+  @include inline-col(4 / 3, middle);
+}
+
+// globals with media queries
+
+.col1-tablet {
+  @include respond-to(tablet) {
+    @include col(1);
+  }
+}
+
+.col2-tablet {
+  @include respond-to(tablet) {
+    @include col(2);
+  }
+}
+
+.col3-tablet {
+  @include respond-to(tablet) {
+    @include col(3);
+  }
+}
+
+.col3x2-tablet {
+  @include respond-to(tablet) {
+    @include col(3 / 2);
+  }
+}
+
+.col4-tablet {
+  @include respond-to(tablet) {
+    @include col(4);
+  }
+}
+
+.col4x3-tablet {
+  @include respond-to(tablet) {
+    @include col(4 / 3);
+  }
+}
+
+.col6-tablet {
+  @include respond-to(tablet) {
+    @include col(6);
+  }
+}
+
+.inline-col2-middle-tablet {
+  @include respond-to(tablet) {
+    @include inline-col(2, middle) {
+      float: none;
+    }
+  }
+}
+
+.inline-col3-top-tablet {
+  @include respond-to(tablet) {
+    @include inline-col(3, top) {
+      float: none;
+    }
+  }
+}
+
+.inline-col3-middle-tablet {
+  @include respond-to(tablet) {
+    @include inline-col(3, middle) {
+      float: none;
+    }
+  }
+}
+
+.inline-col3x2-middle-tablet {
+  @include respond-to(tablet) {
+    @include inline-col(3 / 2, middle) {
+      float: none;
+    }
+  }
+}
+
+.col1-desktop {
+  @include respond-to(desktop) {
+    @include col(1);
+  }
+}
+
+.col2-desktop {
+  @include respond-to(desktop) {
+    @include col(2);
+  }
+}
+
+.col3-desktop {
+  @include respond-to(desktop) {
+    @include col(3);
+  }
+}
+
+.col4-desktop {
+  @include respond-to(desktop) {
+    @include col(4);
+  }
+}
+
+.col6-desktop {
+  @include respond-to(desktop) {
+    @include col(6);
+  }
+}
+
+.col4x3-desktop {
+  @include respond-to(desktop) {
+    @include col(4 / 3);
+  }
+}
+
+.col3x2-desktop {
+  @include respond-to(desktop) {
+    @include col(1.5);
+  }
+}
