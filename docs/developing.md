@@ -23,6 +23,22 @@ $ yarn rebuild
 
 to rebuild all the plugin and theme files (preserving uploads).
 
+## Working on specific client projects (eg with child themes)
+
+We will have a separate branch in the main 'Torque-Theme' repo for each separate client.
+
+Each branch will contain settings/files specific to that client's wp installation (eg uploads, workspace definition in package.json, db name), but the child theme itself will be gitignored and stored in its own repo.
+
+This means that each client branch should **always be ahead of master** once the client specific settings have been pushed, and **never behind master**. Any changes made to the default wp installation or environment, to the plugins, or to the torque theme itself, should be made to the master branch and then merged in to the client branch.
+
+### Creating a new client branch
+
+Make sure to update the following settings when creating your client specific branch.
+
+1.  `MYSQL_DATABASE` and `WORDPRESS_DB_NAME` with the new client specific db name.
+2.  Add the theme's workspace to the root `package.json`
+3.  Add the theme to the `rebuild.sh` script
+
 ## Why Yarn Workspaces and Webpack?
 
 > [See Yarn official site](https://yarnpkg.com/lang/en/docs/workspaces/)
