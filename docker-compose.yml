@@ -41,6 +41,7 @@ services:
        - "8000:80"
      volumes:
        - ./wp-content:/var/www/html/wp-content
+       - ./php.ini:/var/www/html/php.ini
      restart: always
      environment:
        WORDPRESS_DB_HOST: e-wacker-db:3306

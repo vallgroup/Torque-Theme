@@ -8,7 +8,9 @@
     "setup": "bash setup.sh",
     "start": "bash start.sh",
     "rebuild": "bash rebuild.sh",
-    "switch": "bash switch.sh"
+    "switch": "bash switch.sh",
+    "logs:php": "bash logs.sh wordpress",
+    "logs:mysql": "bash logs.sh mysql:5.7"
   },
   "workspaces": [
     "themes/torque",
