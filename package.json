@@ -7,7 +7,8 @@
   "scripts": {
     "setup": "bash setup.sh",
     "start": "bash start.sh",
-    "rebuild": "bash rebuild.sh"
+    "rebuild": "bash rebuild.sh",
+    "switch": "bash switch.sh"
   },
   "workspaces": [
     "themes/torque",
