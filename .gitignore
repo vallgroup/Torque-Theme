@@ -4,4 +4,8 @@
 **/node_modules/**
 yarn-error.log
 
-/themes/905-fulton-child
+
+# ignore all child themes, leave torque parent theme
+themes/*
+!themes/torque
+themes/torque/node_modules/
