@@ -7,4 +7,5 @@ yarn-error.log
 
 # ignore all child themes, leave torque parent theme
 themes/*
-!themes/torque/*
+!themes/torque
+themes/torque/node_modules/
