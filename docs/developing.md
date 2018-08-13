@@ -13,7 +13,7 @@ Any changes to src files in that workspace should now be visible after visiting 
 
 If you need a dev server for multiple workspaces at a time then simply open a new terminal window and run `yarn start <workspace-name>` again for a different workspace.
 
-## Refreshing wp-content
+### Refreshing wp-content
 
 If wp-content is getting a bit messy (eg because moving or deleting files dont get synced), or if you've just pulled some new commits from the repo, then run:
 
