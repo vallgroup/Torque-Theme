@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Torque child theme for <torque_child_theme_client_name>",
   "author": "Torque",
-  "license": "GPL",
+  "license": "ISC",
   "scripts": {
     "start": "webpack --mode=development --watch",
     "build": "webpack --mode=production"
