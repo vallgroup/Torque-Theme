@@ -66,6 +66,15 @@ class App extends Component {
     console.log( this.props )
     if (this.props.mapID) {
       this.ajaxMapDetails();
+    } else {
+      this.setState({
+        apiKey: this.props.apiKey,
+        map: {
+          center: this.props.center,
+          zoom: this.props.zoom,
+          title: this.props.title,
+        }
+      })
     }
   }
 

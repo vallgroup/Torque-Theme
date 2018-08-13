@@ -40,16 +40,27 @@
 				if(typeof onsubmit_callback !== 'function'){
 					onsubmit_callback = function( e ) {
 						// Insert content when the window form is submitted (this also replaces during edit, handy!)
+						var _attr = {}
+						if ( e.data.map_id ) {
+							_attr.map_id = e.data.map_id;
+						}
+						if ( e.data.title ) {
+							_attr.title = e.data.title;
+						}
+						if ( e.data.center ) {
+							_attr.center = e.data.center;
+						}
+						if ( e.data.zoom ) {
+							_attr.zoom = e.data.zoom;
+						}
+						if ( e.data.api_key ) {
+							_attr.api_key = e.data.api_key;
+						}
 						var args = {
 								tag     : shortcode_string,
 								type    : 'closed',
 								content : '',
-								attrs : {
-									map_id: e.data.map_id,
-									title: e.data.title,
-									center: e.data.center,
-									zoom: e.data.zoom,
-								}
+								attrs : _attr,
 							};
 						editor.insertContent( wp.shortcode.string( args ) );
 					};
@@ -76,6 +87,11 @@
 						name: 'zoom',
 						label: 'Zoom',
 						value: values.zoom
+					},{
+						type: 'textbox',
+						name: 'api_key',
+						label: 'API Key',
+						value: values.api_key
 					},];
 				editor.windowManager.open( {
 					title: 'Torque Map',

@@ -22,10 +22,10 @@ class Torque_Map_Shortcode {
       'zoom'   => '',
       'center' => '',
       'title'  => '',
+      'api_key' => '',
       // TODO add ability to pass params to shortcode
       // to create maps on the fly
       // 'center_marker' => '', // mixed
-      // 'api_key' => '',
     );
 
 		add_shortcode( self::$SHORTCODE_SLUG , array( $this, 'shortcode_handler') );
