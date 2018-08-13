@@ -47,6 +47,7 @@
 								content : '',
 								attrs : {
 									map_id: e.data.map_id,
+									center: e.data.center,
 								}
 							};
 						editor.insertContent( wp.shortcode.string( args ) );
@@ -56,14 +57,24 @@
 					title: 'Torque Map',
 					body: [
 						{
-							type: 'listbox',
+							type: 'textbox',
 							name: 'map_id',
 							label: 'Map ID',
-							values: [{
-								text: 'Hello',
-								value: 'There',
-							}],
+							// values: [{
+							// 	text: 'Hello',
+							// 	value: 'There',
+							// }],
 							value: values.map_id
+						},
+						{
+							type: 'textbox',
+							name: 'center',
+							label: 'Center',
+							// values: [{
+							// 	text: 'Hello',
+							// 	value: 'There',
+							// }],
+							value: values.center
 						},
 					],
 					onsubmit: onsubmit_callback
