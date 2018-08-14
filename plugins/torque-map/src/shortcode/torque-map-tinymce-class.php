@@ -16,11 +16,11 @@ class Torque_Map_TinyMCE {
 
 	public function init() {
 		add_filter( "mce_external_plugins" , array( $this, 'mce_plugin' ) );
-    add_filter( "mce_buttons"          , array( $this, 'mce_button' ) );
-
     add_action( 'admin_footer'         , array( $this, 'insert_editor' ) );
-
     add_action( 'print_media_templates', array( $this, 'media_templates' ) );
+
+		if ( apply_filters( 'torque_map_tinymce_plugin_button', false ) )
+    	add_filter( "mce_buttons"          , array( $this, 'mce_button' ) );
 	}
 
 	public function mce_plugin( $plugin_array ) {

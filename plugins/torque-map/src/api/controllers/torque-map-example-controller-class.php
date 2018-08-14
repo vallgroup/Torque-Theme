@@ -76,8 +76,10 @@ class Torque_Map_Controller {
 			&& isset( $map_dets['center_marker']['size'] ) ) {
 			$trimmed_size = str_replace( ' ', '', trim( $map_dets['center_marker']['size'] ) );
 			$width_height = explode( ',', $trimmed_size );
-			$map_dets['center_marker']['width'] = (int) $width_height[0];
-			$map_dets['center_marker']['height'] = (int) $width_height[1];
+			if ( isset( $width_height[1] ) ) {
+				$map_dets['center_marker']['width'] = (int) $width_height[0];
+				$map_dets['center_marker']['height'] = (int) $width_height[1];
+			}
 		}
 		// build the map details
 		$map_resp = array_merge( array(
@@ -94,13 +96,23 @@ class Torque_Map_Controller {
 
 		$pois = array();
 		for ($i=0; $i < $number_of_pois; $i++) {
-			$pois[$i] = premise_get_value( 'torque_map_pois_'.$i, $context );
+			$_poi = premise_get_value( 'torque_map_pois_'.$i, $context );
+
+			if ( empty( $_poi['name'] )
+				|| empty( $_poi['keyword'] ) ) {
+				continue;
+			}
+
+			$pois[$i] = $_poi;
+
 			if ( isset( $pois[$i]['marker'] )
 				&& isset( $pois[$i]['marker']['size'] ) ) {
 				$trimmed_size = str_replace( ' ', '', trim( $pois[$i]['marker']['size'] ) );
 				$width_height = explode( ',', $trimmed_size );
-				$pois[$i]['marker']['width'] = (int) $width_height[0];
-				$pois[$i]['marker']['height'] = (int) $width_height[1];
+				if ( isset( $width_height[1] ) ) {
+					$pois[$i]['marker']['width'] = (int) $width_height[0];
+					$pois[$i]['marker']['height'] = (int) $width_height[1];
+				}
 			}
 		}
 		return $pois;

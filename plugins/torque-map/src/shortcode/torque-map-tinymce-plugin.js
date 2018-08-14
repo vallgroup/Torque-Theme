@@ -19,7 +19,6 @@
 			// gets called everytime the shortcode is
 			// loaded in the Visual tab of the WYSISWYG
 			getContent: function() {
-				console.log( this.shortcode )
 				// build options
 				var options     = {...this.shortcode.attrs.named};
 				// insert template into editor
@@ -41,31 +40,62 @@
 				if(typeof onsubmit_callback !== 'function'){
 					onsubmit_callback = function( e ) {
 						// Insert content when the window form is submitted (this also replaces during edit, handy!)
+						var _attr = {}
+						if ( e.data.map_id ) {
+							_attr.map_id = e.data.map_id;
+						}
+						if ( e.data.title ) {
+							_attr.title = e.data.title;
+						}
+						if ( e.data.center ) {
+							_attr.center = e.data.center;
+						}
+						if ( e.data.zoom ) {
+							_attr.zoom = e.data.zoom;
+						}
+						if ( e.data.api_key ) {
+							_attr.api_key = e.data.api_key;
+						}
 						var args = {
 								tag     : shortcode_string,
 								type    : 'closed',
 								content : '',
-								attrs : {
-									map_id: e.data.map_id,
-								}
+								attrs : _attr,
 							};
 						editor.insertContent( wp.shortcode.string( args ) );
 					};
 				}
+				var formBody = ( values.map_id )
+					? [{
+						type: 'textbox',
+						name: 'map_id',
+						label: 'Map ID',
+						value: values.map_id
+					},]
+					: [{
+						type: 'textbox',
+						name: 'title',
+						label: 'Title',
+						value: values.title
+					},{
+						type: 'textbox',
+						name: 'center',
+						label: 'Center',
+						value: values.center
+					},{
+						type: 'textbox',
+						name: 'zoom',
+						label: 'Zoom',
+						value: values.zoom
+					},{
+						type: 'textbox',
+						name: 'api_key',
+						label: 'API Key',
+						value: values.api_key
+					},];
 				editor.windowManager.open( {
 					title: 'Torque Map',
-					body: [
-						{
-							type: 'listbox',
-							name: 'map_id',
-							label: 'Map ID',
-							values: [{
-								text: 'Hello',
-								value: 'There',
-							}],
-							value: values.map_id
-						},
-					],
+					body: formBody,
 					onsubmit: onsubmit_callback
 				} );
 			}
