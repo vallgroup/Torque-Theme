@@ -15,7 +15,7 @@
       ?>
 
         <div
-          class="torque-mega-menu-item torque-mega-menu-parent-item children-open"
+          class="torque-mega-menu-item torque-mega-menu-parent-item"
           data-id="<?php echo $item->ID; ?>"
         >
 
