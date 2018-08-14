@@ -31,6 +31,7 @@ class Torque_Map_Controller {
           'api_key'          => $this->get_api_key(),
           'map_details'	     => $this->get_map_shaped( $map ),
           'pois'	           => $this->get_pois_shaped( $map ),
+          'pois_location'    => $this->pois_location(),
           'display_poi_list' => $this->maybe_display_poi_list(),
         ) );
 			}
@@ -64,6 +65,16 @@ class Torque_Map_Controller {
 		 */
 		$bool = apply_filters( 'torque_map_display_pois_list', false );
 		return $bool;
+	}
+
+	public function pois_location() {
+		/**
+		 * Filters the location for the POI buttons
+		 *
+		 * @var string top|bottom
+		 */
+		$location = apply_filters( 'torque_map_pois_location', 'top' );
+		return $location;
 	}
 
 	private function get_map_shaped( $map ) {

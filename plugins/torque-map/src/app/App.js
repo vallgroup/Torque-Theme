@@ -18,6 +18,7 @@ class App extends Component {
       pois: [],
       selectedPOI: {},
       poiList: [],
+      poisLocation: '',
       displayPOIList: false,
       mapCenter: null,
     }
@@ -31,12 +32,11 @@ class App extends Component {
     console.log( this.state )
     return (
       <div className={`torque-map`}>
-        {/* if we have points of interest, show them */}
-        {0 < this.state.pois.length
-          && <PointsOfInterest
-            pois={this.state.pois}
-            searchNearby={this.state.selectedPOI.keyword}
-            updatePOIS={this.updatePOIS.bind(this)} />}
+        {/* if we have points of interest
+        & the poisLocation is not equal to bottom, show them */}
+        {0 < this.state.poisLocation.length
+          && 'bottom' !== this.state.poisLocation
+          && this.showPOIs()}
 
         {/* Display the map when we have a map in state */}
         {this.state.map
@@ -58,7 +58,22 @@ class App extends Component {
           && <ListPOIS
             list={this.state.poiList}
             showDistanceFrom={this.state.mapCenter} />}
+
+        {/* Display the poisLocation below the map */}
+        {'bottom' === this.state.poisLocation
+          && this.showPOIs()}
       </div>
+    )
+  }
+
+  showPOIs() {
+    return (
+      0 < this.state.pois.length
+        && <PointsOfInterest
+          pois={this.state.pois}
+          location={this.state.poisLocation}
+          searchNearby={this.state.selectedPOI.keyword}
+          updatePOIS={this.updatePOIS.bind(this)} />
     )
   }
 
@@ -88,6 +103,7 @@ class App extends Component {
           apiKey: mapPost.data.api_key,
           map: mapPost.data.map_details,
           pois: mapPost.data.pois,
+          poisLocation: mapPost.data.pois_location,
           displayPOIList: mapPost.data.display_poi_list,
         })
       }

@@ -4,7 +4,9 @@ import styles from './PointsOfInterest.scss'
 class PointsOfInterest extends React.PureComponent {
   render() {
     return (
-      <div className={`torque-map-pois`}>
+      <div
+        className={`torque-map-pois`}
+        data-location={this.props.location}>
         {this.props.pois &&
           this.props.pois.map((poi, index) => {
             const active =
