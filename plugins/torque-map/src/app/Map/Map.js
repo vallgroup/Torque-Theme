@@ -114,7 +114,7 @@ export class TorqueMap extends React.Component {
         className={`torque-map-container ${style.torqueMap}`}>
         <Map
           google={this.props.google}
-          zoom={15}
+          zoom={+this.props.zoom || 12}
           center={this.state.mapCenter}
           ref={mapObject => (this.map = mapObject && mapObject.map)}>
           {this.props.center &&
