@@ -90,43 +90,4 @@
   		$term = get_term_by( 'name', $cat_name, 'category' );
   		return $term->term_id;
   	}
-
-		/**
-		 * Gets nav menu items with children moved to
-		 * 'children' property on parent menu item object.
-		 *
-		 * Note: currently only supports depth of 1.
-		 *
-		 * @param  int|string|WP_Term $menu Same as what can be passed to wp_get_nav_menu_items
-		 * @return array Array of parent nav menu items with children under children property.
-		 */
-		public static function get_nav_menu_items_nested( $menu ) {
-			$items = wp_get_nav_menu_items( $menu );
-			$children = [];
-
-			foreach ($items as $key => $menu_item) {
-			  // if the element is a child,
-			  // add it to tmp child array sorted by parent id,
-			  // and remove from items
-			  if ($menu_item->menu_item_parent !== '0') {
-			    $children[$menu_item->menu_item_parent][] = $menu_item;
-			    unset($items[$key]);
-			  }
-			  // otherwise initialise a children array on the parent object
-			  else {
-			    $menu_item->children = [];
-			  }
-			}
-
-			foreach ($items as $key => &$parent) {
-			  $parent_id = (string)$parent->ID;
-
-			  if ( array_key_exists( $parent_id, $children ) ) {
-			    $parent->children = $children[$parent_id];
-			  }
-			}
-
-			return $items;
-		}
-
   }
