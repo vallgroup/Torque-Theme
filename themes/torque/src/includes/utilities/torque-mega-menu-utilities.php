@@ -14,7 +14,10 @@
       foreach ($parent_items_array as $key => $item) {
       ?>
 
-        <div class="torque-mega-menu-item torque-mega-menu-parent-item">
+        <div
+          class="torque-mega-menu-item torque-mega-menu-parent-item children-open"
+          data-id="<?php echo $parent->ID; ?>"
+        >
 
           <?php
           do_action( self::$pre_parent_item_handle, $item );
@@ -50,7 +53,11 @@
        foreach ($items as $key => $item) {
        ?>
 
-         <div class="torque-mega-menu-item torque-mega-menu-child-item">
+         <div
+           class="torque-mega-menu-item torque-mega-menu-child-item"
+           data-id="<?php echo $item->ID; ?>"
+           data-parent-id="<?php echo $parent_item->ID; ?>"
+         >
 
            <?php
            do_action( self::$pre_child_item_handle, $item );
