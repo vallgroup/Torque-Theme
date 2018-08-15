@@ -5,6 +5,12 @@ require_once( get_template_directory() . '/includes/validation/torque-validation
 
 class Torque_Map_Controller {
 
+	public static $API_KEY_FILTER = 'torque_map_api_key';
+
+	public static $DISPLAY_POIS_FILTER = 'torque_map_display_pois_list';
+
+	public static $POIS_LOCATION = 'torque_map_pois_location';
+
 	public static function get_map_args() {
 		return array(
       'id' => array(
@@ -53,7 +59,7 @@ class Torque_Map_Controller {
 		 *
 		 * @var string
 		 */
-		$key = apply_filters( 'torque_map_api_key', '' );
+		$key = apply_filters( self::$API_KEY_FILTER, '' );
 		return $key;
 	}
 
@@ -63,7 +69,7 @@ class Torque_Map_Controller {
 		 *
 		 * @var bool
 		 */
-		$bool = apply_filters( 'torque_map_display_pois_list', false );
+		$bool = apply_filters( self::$DISPLAY_POIS_FILTER, false );
 		return $bool;
 	}
 
@@ -73,7 +79,7 @@ class Torque_Map_Controller {
 		 *
 		 * @var string top|bottom
 		 */
-		$location = apply_filters( 'torque_map_pois_location', 'top' );
+		$location = apply_filters( self::$POIS_LOCATION, 'top' );
 		return $location;
 	}
 
@@ -103,7 +109,7 @@ class Torque_Map_Controller {
 
 	private function get_pois_shaped( $map ) {
 		$context = array( 'context' => 'post', 'id' => $map->ID );
-		$number_of_pois = apply_filters( 'torque_map_pois_allowed', 0 );
+		$number_of_pois = apply_filters( Toruqe_Map_CPT::$POIS_ALLOWED_FILTER, 0 );
 
 		$pois = array();
 		for ($i=0; $i < $number_of_pois; $i++) {
