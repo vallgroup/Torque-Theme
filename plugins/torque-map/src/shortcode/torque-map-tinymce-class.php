@@ -6,6 +6,13 @@ class Torque_Map_TinyMCE {
 
 	public static $instance = NULL;
 
+	/**
+	 * Filter whether to display the tinymce plugin button or not.
+	 *
+	 * @var string
+	 */
+	public static $TINYMCE_PLUGIN_BUTTON_FILTER = 'torque_map_tinymce_plugin_button';
+
 	function __construct() {}
 
 	public static function get_inst() {
@@ -19,7 +26,7 @@ class Torque_Map_TinyMCE {
     add_action( 'admin_footer'         , array( $this, 'insert_editor' ) );
     add_action( 'print_media_templates', array( $this, 'media_templates' ) );
 
-		if ( apply_filters( 'torque_map_tinymce_plugin_button', false ) )
+		if ( apply_filters( self::$TINYMCE_PLUGIN_BUTTON_FILTER, false ) )
     	add_filter( "mce_buttons"          , array( $this, 'mce_button' ) );
 	}
 
