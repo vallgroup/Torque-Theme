@@ -9,6 +9,7 @@
     "start": "bash start.sh",
     "rebuild": "bash rebuild.sh",
     "switch": "bash switch.sh",
+    "uploads": "bash uploads.sh",
     "logs:php": "bash logs.sh wordpress",
     "logs:mysql": "bash logs.sh mysql:5.7"
   },
