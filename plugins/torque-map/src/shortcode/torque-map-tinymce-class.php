@@ -26,7 +26,7 @@ class Torque_Map_TinyMCE {
     add_action( 'admin_footer'         , array( $this, 'insert_editor' ) );
     add_action( 'print_media_templates', array( $this, 'media_templates' ) );
 
-		if ( apply_filters( self::$TINYMCE_PLUGIN_BUTTON_FILTER, false ) )
+		if ( apply_filters( self::$TINYMCE_PLUGIN_BUTTON_FILTER, true ) )
     	add_filter( "mce_buttons"          , array( $this, 'mce_button' ) );
 	}
 

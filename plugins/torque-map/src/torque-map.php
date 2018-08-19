@@ -35,16 +35,16 @@ class Torque_Map {
 
 	public static $instance = NULL;
 
-	/**
-	 * left empty on purpose
-	 */
-	public function __construct() {}
-
 	public static function get_inst() {
 		!self::$instance AND self::$instance = new self;
 
 		return self::$instance;
 	}
+
+	/**
+	 * left empty on purpose
+	 */
+	public function __construct() {}
 
 	/**
    * This should be a function which registers all the plugin's required hooks.
