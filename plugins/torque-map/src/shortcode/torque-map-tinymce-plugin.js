@@ -59,10 +59,7 @@
               tag: shortcode_string,
               type: 'closed',
               content: '',
-              attrs: {
-                map_id: e.data.map_id,
-                center: e.data.center,
-              },
+              attrs: _attr,
             }
             editor.insertContent(wp.shortcode.string(args))
           }
@@ -104,28 +101,7 @@
             ]
         editor.windowManager.open({
           title: 'Torque Map',
-          body: [
-            {
-              type: 'textbox',
-              name: 'map_id',
-              label: 'Map ID',
-              // values: [{
-              // 	text: 'Hello',
-              // 	value: 'There',
-              // }],
-              value: values.map_id,
-            },
-            {
-              type: 'textbox',
-              name: 'center',
-              label: 'Center',
-              // values: [{
-              // 	text: 'Hello',
-              // 	value: 'There',
-              // }],
-              value: values.center,
-            },
-          ],
+          body: formBody,
           onsubmit: onsubmit_callback,
         })
       },

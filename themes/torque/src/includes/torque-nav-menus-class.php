@@ -50,8 +50,9 @@ class Torque_Nav_Menus {
    */
   public static function get_nav_menu_items_by_location( $location, $args = [] ) {
 
-      $locations = get_nav_menu_locations();
+    $locations = get_nav_menu_locations();
 
+    if ($locations && array_key_exists( $location, $locations )) {
       // Get object id by location
       $object = wp_get_nav_menu_object( $locations[$location] );
 
@@ -60,6 +61,10 @@ class Torque_Nav_Menus {
 
       // Return menu post objects
       return $menu_items;
+      
+    } else {
+      return [];
+    }
   }
 }
 
