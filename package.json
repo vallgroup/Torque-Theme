@@ -19,6 +19,7 @@
     "plugins/torque-floor-plans",
     "plugins/torque-gallery-layouts",
     "plugins/torque-availability",
-    "plugins/torque-map"
+    "plugins/torque-map",
+    "plugins/torque-building-facts"
   ]
 }
