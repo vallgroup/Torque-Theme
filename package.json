@@ -19,8 +19,5 @@
     "plugins/torque-gallery-layouts",
     "plugins/torque-availability",
     "plugins/torque-map"
-  ],
-  "dependencies": {
-    "google-maps-react": "^2.0.2"
-  }
+  ]
 }
