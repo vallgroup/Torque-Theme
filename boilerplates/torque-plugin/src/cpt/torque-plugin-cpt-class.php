@@ -16,6 +16,7 @@ class <torque_plugin_class_name>_CPT {
 				'slug'           => 'torque-example'
 			), array(
 				'supports'             => array( 'title' ),
+				'menu_icon'            => 'dashicons-admin-post',
 				'public'               => false,
 				'show_ui'              => true,
 				'show_in_rest'         => true,
