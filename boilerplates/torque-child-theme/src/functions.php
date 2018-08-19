@@ -1,7 +1,16 @@
 <?php
 
+require_once( get_stylesheet_directory() . '/includes/<torque_child_theme_slug>-nav-menus-class.php');
 require_once( get_stylesheet_directory() . '/includes/widgets/<torque_child_theme_slug>-widgets-class.php');
 require_once( get_stylesheet_directory() . '/includes/acf/<torque_child_theme_slug>-acf-class.php');
+
+/**
+ * Child Theme Nav Menus
+ */
+
+ if ( class_exists( '<torque_child_theme_class_prefix>_Nav_Menus' ) ) {
+   new <torque_child_theme_class_prefix>_Nav_Menus();
+ }
 
 /**
  * Child Theme Widgets

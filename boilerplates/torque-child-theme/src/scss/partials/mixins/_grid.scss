@@ -1,0 +1,81 @@
+//
+// Column Grid
+//
+// Build column layouts
+//
+// We include this in the child boilerplate rather than the parent
+// so that each child theme can use it in its' own way with its own breakpoint mixins to define globals
+
+/**
+ * used to wrap floating columns. Apply this to the container of your floating columns to ensure that elements around the grid in your html do not get distorted.
+ *
+ * @param  {mixed} $offset: 0px can be px or %. used to offset the row on bot left and right to account for the columns margin.
+ * @return {string}             the css required to prperly clear floats around floating columns and offset their margins
+ */
+@mixin row($offset: null) {
+  // set the offset
+  @if ($offset) {
+    margin-left: $offset + %;
+    margin-right: $offset + %;
+  }
+  // insert the content
+  @content;
+  display: block;
+  // clear floats required
+  // so this runs last
+  &:after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+}
+
+// column grid
+@mixin col($cols: 2, $gutter: null) {
+  display: block;
+  float: left;
+  min-height: 1px;
+  width: get-col-width($cols, $gutter);
+  // add gutter if any
+  @if ($gutter) {
+    margin-left: ($gutter * -1) + %;
+    margin-right: ($gutter * -1) + %;
+  }
+  @content;
+  // always goes last
+  box-sizing: border-box;
+}
+
+@function get-col-width($n, $gutter: null) {
+  $width: (100 / $n);
+  @if ($gutter) {
+    $width: ($width - $gutter);
+  }
+  @return $width + %;
+}
+
+// inline grid
+@mixin inline-col($cols: 1, $valign: top) {
+  display: inline-block;
+  // set the width
+  width: get-inline-col-width($cols);
+  // set vertical-align
+  @if ($valign == top) {
+    vertical-align: top;
+  }
+  @elseif ( $valign == middle ) {
+    vertical-align: middle;
+  }
+  @elseif ( $valign == bottom ) {
+    vertical-align: bottom;
+  }
+  // set margins
+
+  // output any content - allows overrides
+  @content;
+  box-sizing: border-box;
+}
+
+@function get-inline-col-width($n) {
+  @return ((100 / $n) - 0.1) + %;
+}

@@ -5,6 +5,15 @@
 class Toruqe_Map_CPT {
 
 	/**
+	 * Filters the number of pois allowed for the map
+	 * Allows theme to register number of pois it uses
+	 * in design
+	 *
+	 * @var int
+	 */
+	public static $POIS_ALLOWED_FILTER = 'torque_map_pois_allowed';
+
+	/**
 	 * register our post type and meta boxes
 	 */
 	function __construct() {
@@ -60,6 +69,13 @@ class Toruqe_Map_CPT {
 			),
 			array(
 				'context'     => 'post',
+				'type'        => 'number',
+				'name'        => '[zoom]',
+				'label'       => 'Zoom',
+				'placeholder' => '12',
+			),
+			array(
+				'context'     => 'post',
 				'type'        => 'wp_media',
 				'name'        => '[center_marker][url]',
 				'label'       => 'Center Marker Icon',
@@ -78,14 +94,8 @@ class Toruqe_Map_CPT {
 	}
 
 	public function maybe_add_pois() {
-		/**
-		 * Filters the number of pois allowed for the map
-		 * Allows theme to register number of pois it uses
-		 * in design
-		 *
-		 * @var int
-		 */
-		$number_of_pois = apply_filters( 'torque_map_pois_allowed', 0 );
+
+		$number_of_pois = apply_filters( self::$POIS_ALLOWED_FILTER, 0 );
 		for ($i=0; $i < $number_of_pois; $i++) {
 			$this->poi_mb( $i );
 		}

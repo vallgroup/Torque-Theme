@@ -7,11 +7,14 @@
   "scripts": {
     "setup": "bash setup.sh",
     "start": "bash start.sh",
-    "rebuild": "bash rebuild.sh"
+    "rebuild": "bash rebuild.sh",
+    "switch": "bash switch.sh",
+    "uploads": "bash uploads.sh",
+    "logs:php": "bash logs.sh wordpress",
+    "logs:mysql": "bash logs.sh mysql:5.7"
   },
   "workspaces": [
     "themes/torque",
-    "themes/905-fulton-child",
     "plugins/torque-floor-plans",
     "plugins/torque-gallery-layouts",
     "plugins/torque-availability",
