@@ -28,6 +28,8 @@ define( '<torque_plugin_class_name>_URL', plugin_dir_url(__FILE__) );
 
 class <torque_plugin_class_name> {
 
+	public static $instance = NULL;
+
 	public static $PLUGIN_NAME = '<torque_plugin_name>';
 
 	public static $PLUGIN_SLUG = '<torque_plugin_slug>';
