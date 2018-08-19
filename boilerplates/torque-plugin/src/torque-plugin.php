@@ -35,6 +35,8 @@ add_action( 'plugins_loaded', array( <torque_plugin_class_name>::get_inst(), 'in
 
 class <torque_plugin_class_name> {
 
+	public static $instance = NULL;
+
 	public static $PLUGIN_NAME = '<torque_plugin_name>';
 
 	public static $PLUGIN_SLUG = '<torque_plugin_slug>';
