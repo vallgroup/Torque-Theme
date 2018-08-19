@@ -1,5 +1,7 @@
 <?php
 
+require( <torque_plugin_class_name>_PATH . 'shortcode/<torque_plugin_slug>-tinymce-class.php' );
+
 class <torque_plugin_class_name>_Shortcode {
 
   public static $SHORTCODE_SLUG = '<torque_plugin_shortcode>';
@@ -21,6 +23,15 @@ class <torque_plugin_class_name>_Shortcode {
     );
 
 		add_shortcode( self::$SHORTCODE_SLUG , array( $this, 'shortcode_handler') );
+
+    add_action( 'load-post.php'    ,  array(
+      <torque_plugin_class_name>_TinyMCE::get_inst(),
+      'init' ),
+    20 );
+    add_action( 'load-post-new.php',  array(
+      <torque_plugin_class_name>_TinyMCE::get_inst(),
+      'init' ),
+    20 );
 	}
 
   /**
@@ -48,8 +59,9 @@ class <torque_plugin_class_name>_Shortcode {
       // these are your arguments that do not show up in the front end.
       array(
         '' => ''
-      ) ), $atts );
+      ) ), $atts, self::$SHORTCODE_SLUG );
   }
+
 
   /**
    * Using the atts and content saved to the instance,
@@ -61,16 +73,17 @@ class <torque_plugin_class_name>_Shortcode {
    */
   private function get_markup() {
     $exp_args = '';
-    foreach ( $this->$atts as $key => $arg ) {
+    foreach ( $this->atts as $key => $arg ) {
+      if ( empty( $arg ) )
+        continue;
       $exp_args .= ' data-'.esc_attr( $key ).'="'.$arg.'"';
     }
     return '<span
-      class="torque-map-react-entry"
+      class="<torque_plugin_slug>-react-entry"
       data-site="'.get_site_url().'"
       '.$exp_args.'>
       </span>';
   }
-
 }
 
 ?>

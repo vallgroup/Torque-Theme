@@ -2,7 +2,7 @@
 /**
  * Handle registratioin of tinymce plugin for shortcode
  */
-class Torque_Map_TinyMCE {
+class <torque_plugin_class_name>_TinyMCE {
 
 	public static $instance = NULL;
 
@@ -11,7 +11,7 @@ class Torque_Map_TinyMCE {
 	 *
 	 * @var string
 	 */
-	public static $TINYMCE_PLUGIN_BUTTON_FILTER = 'torque_map_tinymce_plugin_button';
+	public static $TINYMCE_PLUGIN_BUTTON_FILTER = '<torque_plugin_shortcode>_tinymce_plugin_button';
 
 	function __construct() {}
 
@@ -31,18 +31,18 @@ class Torque_Map_TinyMCE {
 	}
 
 	public function mce_plugin( $plugin_array ) {
-		$plugin_array['torque_map'] = '/wp-content/plugins/torque-map/shortcode/torque-map-tinymce-plugin.js';
+		$plugin_array['<torque_plugin_shortcode>'] = '/wp-content/plugins/<torque_plugin_slug>/shortcode/<torque_plugin_slug>-tinymce-plugin.js';
 		return $plugin_array;
 	}
 
 	public function mce_button( $buttons ) {
-    array_push( $buttons, 'torque_map_button' );
+    array_push( $buttons, '<torque_plugin_shortcode>_button' );
 		return $buttons;
 	}
 
 	public function insert_editor( $hook ) {
 		?>
-		<div id="torque-map-builder" style="display:none;">
+		<div id="<torque_plugin_slug>-builder" style="display:none;">
 		</div>
 		<?php
 	}
@@ -51,7 +51,7 @@ class Torque_Map_TinyMCE {
 		if ( ! isset( get_current_screen()->id )
 			|| get_current_screen()->base != 'post' )
       return;
-		include_once 'torque-map-tinymce-editor.html';
+		include_once '<torque_plugin_slug>-tinymce-editor.html';
 	}
 }
 
