@@ -31,7 +31,6 @@ class Torque_Map_TinyMCE {
 	}
 
 	public function mce_plugin( $plugin_array ) {
-		// var_dump(Torque_Map_PATH . 'shortcode/torque-map-tinymce-plugin.js');
 		$plugin_array['torque_map'] = '/wp-content/plugins/torque-map/shortcode/torque-map-tinymce-plugin.js';
 		return $plugin_array;
 	}
