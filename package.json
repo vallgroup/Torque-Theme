@@ -20,6 +20,7 @@
     "plugins/torque-availability",
     "plugins/torque-map",
     "plugins/torque-building-facts",
-    "plugins/torque-staff"
+    "plugins/torque-staff",
+    "plugins/torque-button"
   ]
 }

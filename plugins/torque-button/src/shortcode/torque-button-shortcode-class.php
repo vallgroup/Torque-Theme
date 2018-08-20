@@ -1,10 +1,10 @@
 <?php
 
-require( <torque_plugin_class_name>_PATH . 'shortcode/<torque_plugin_slug>-tinymce-class.php' );
+require( Torque_Button_PATH . 'shortcode/torque-button-tinymce-class.php' );
 
-class <torque_plugin_class_name>_Shortcode {
+class Torque_Button_Shortcode {
 
-  public static $SHORTCODE_SLUG = '<torque_plugin_shortcode>';
+  public static $SHORTCODE_SLUG = 'torque_button';
 
   protected $expected_args = array();
 
@@ -19,17 +19,20 @@ class <torque_plugin_class_name>_Shortcode {
     // use this array to attributes and display them in the front end
     // for private attributes go to setup_atts()
     $this->expected_args = array(
-      'example' => true,
+      'text'        => '',
+      'link'        => '',
+      'new_tab'     => false,
+      'is_download' => false
     );
 
 		add_shortcode( self::$SHORTCODE_SLUG , array( $this, 'shortcode_handler') );
 
     add_action( 'load-post.php'    ,  array(
-      <torque_plugin_class_name>_TinyMCE::get_inst(),
+      Torque_Button_TinyMCE::get_inst(),
       'init' ),
     20 );
     add_action( 'load-post-new.php',  array(
-      <torque_plugin_class_name>_TinyMCE::get_inst(),
+      Torque_Button_TinyMCE::get_inst(),
       'init' ),
     20 );
 	}
@@ -57,9 +60,8 @@ class <torque_plugin_class_name>_Shortcode {
   private function setup_atts($atts) {
     return shortcode_atts( array_merge( $this->expected_args,
       // these are your arguments that do not show up in the front end.
-      array(
-        '' => ''
-      ) ), $atts, self::$SHORTCODE_SLUG );
+      array()
+    ), $atts, self::$SHORTCODE_SLUG );
   }
 
 
@@ -72,17 +74,25 @@ class <torque_plugin_class_name>_Shortcode {
    * @return string
    */
   private function get_markup() {
-    $exp_args = '';
-    foreach ( $this->atts as $key => $arg ) {
-      if ( empty( $arg ) )
-        continue;
-      $exp_args .= ' data-'.esc_attr( $key ).'="'.$arg.'"';
+    $classes = '';
+    $a_atts = '';
+
+    $a_atts .= 'href="'.$this->atts['link'].'" ';
+
+    if ($this->atts['is_download'] || $this->atts['new_tab']) {
+      $classes .= 'button-icon ';
     }
-    return '<span
-      class="<torque_plugin_slug>-react-entry"
-      data-site="'.get_site_url().'"
-      '.$exp_args.'>
-      </span>';
+
+    if ($this->atts['new_tab']) {
+      $a_atts .= 'target="_blank" ';
+      $classes .= 'new-tab ';
+    }
+
+    if ($this->atts['is_download']) {
+      $classes .= 'download';
+    }
+
+    return '<a '.$a_atts.'><button class="torque-button '.$classes.'">'.$this->atts['text'].'</button></a>';
   }
 }
 

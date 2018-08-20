@@ -7,7 +7,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const srcDir = path.join(__dirname, 'src')
 const buildDir = path.join(
   projectConfig.root,
-  'wp-content/plugins/<torque_plugin_slug>'
+  'wp-content/plugins/torque-button'
 )
 
 const config = {

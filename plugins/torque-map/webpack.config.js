@@ -5,10 +5,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const srcDir = path.join(__dirname, 'src')
-const buildDir = path.join(
-  projectConfig.root,
-  'wp-content/plugins/torque-map'
-)
+const buildDir = path.join(projectConfig.root, 'wp-content/plugins/torque-map')
 
 const config = {
   context: srcDir,
@@ -29,8 +26,8 @@ const config = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader'
-        }
+          loader: 'babel-loader',
+        },
       },
       {
         test: projectConfig.webpackDefaults.css.test,
@@ -70,9 +67,9 @@ const config = {
       ignoreOrder: true,
     }),
     new CopyWebpackPlugin([
+      { from: path.join(srcDir, 'shortcode/*.js'), to: buildDir },
+      { from: path.join(srcDir, 'shortcode/*.html'), to: buildDir },
       { from: path.join(srcDir, '**/*.php'), to: buildDir },
-      { from: path.join(srcDir, '**/*.js'), to: buildDir },
-      { from: path.join(srcDir, '**/*.html'), to: buildDir },
     ]),
   ],
 
