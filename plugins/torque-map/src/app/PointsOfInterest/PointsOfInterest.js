@@ -4,9 +4,7 @@ import styles from './PointsOfInterest.scss'
 class PointsOfInterest extends React.PureComponent {
   render() {
     return (
-      <div
-        className={`torque-map-pois`}
-        data-location={this.props.location}>
+      <div className={`torque-map-pois`} data-location={this.props.location}>
         {this.props.pois &&
           this.props.pois.map((poi, index) => {
             const active =
@@ -16,7 +14,10 @@ class PointsOfInterest extends React.PureComponent {
               <div
                 key={index}
                 className={`torque-map-poi ${styles.torqueMapPOI} ${active}`}
-                data-poi={poi.name.toLowerCase().trim().replace(/[^\w\d]/, '-')}>
+                data-poi={poi.name
+                  .toLowerCase()
+                  .trim()
+                  .replace(/[^\w\d]/, '-')}>
                 <button
                   onClick={() => this.props.updatePOIS(poi)}
                   dataname={poi.name}>
@@ -25,6 +26,11 @@ class PointsOfInterest extends React.PureComponent {
               </div>
             )
           })}
+
+        {this.props.poisTitle &&
+          this.props.poisTitle !== '' && (
+            <h3 className={`torque-map-pois-title`}>{this.props.poisTitle}</h3>
+          )}
       </div>
     )
   }

@@ -18,6 +18,7 @@ class App extends Component {
       pois: [],
       selectedPOI: {},
       poiList: [],
+      poisTitle: '',
       poisLocation: '',
       displayPOIList: false,
       mapCenter: null,
@@ -35,6 +36,7 @@ class App extends Component {
         {/* if we have points of interest
         & the poisLocation is not equal to bottom, show them */}
         {0 < this.state.poisLocation.length &&
+          'middle' !== this.state.poisLocation &&
           'bottom' !== this.state.poisLocation &&
           this.showPOIs()}
 
@@ -77,6 +79,7 @@ class App extends Component {
       0 < this.state.pois.length && (
         <PointsOfInterest
           pois={this.state.pois}
+          poisTitle={this.state.poisTitle}
           location={this.state.poisLocation}
           searchNearby={this.state.selectedPOI.keyword}
           updatePOIS={this.updatePOIS.bind(this)}
@@ -112,6 +115,7 @@ class App extends Component {
           apiKey: mapPost.data.api_key,
           map: mapPost.data.map_details,
           pois: mapPost.data.pois,
+          poisTitle: mapPost.data.pois_title,
           poisLocation: mapPost.data.pois_location,
           displayPOIList: mapPost.data.display_poi_list,
         })
