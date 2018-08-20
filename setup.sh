@@ -18,6 +18,9 @@ yarn workspace torque-floor-plans build
 yarn workspace torque-availability build
 yarn workspace torque-gallery-layouts build
 yarn workspace torque-map build
+yarn workspace torque-building-facts build
+yarn workspace torque-staff build
+yarn workspace torque-button build
 
 # copy across mu-plugins
 mkdir wp-content/mu-plugins
