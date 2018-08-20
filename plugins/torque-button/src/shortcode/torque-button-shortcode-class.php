@@ -58,7 +58,7 @@ class Torque_Button_Shortcode {
    * @return array       Attributes combined with our defaults
    */
   private function setup_atts($atts) {
-    return shortcode_atts( array_merge( $this->$expected_args,
+    return shortcode_atts( array_merge( $this->expected_args,
       // these are your arguments that do not show up in the front end.
       array()
     ), $atts, self::$SHORTCODE_SLUG );
@@ -74,17 +74,25 @@ class Torque_Button_Shortcode {
    * @return string
    */
   private function get_markup() {
-    $exp_args = '';
-    foreach ( $this->atts as $key => $arg ) {
-      if ( empty( $arg ) )
-        continue;
-      $exp_args .= ' data-'.esc_attr( $key ).'="'.$arg.'"';
+    $classes = '';
+    $a_atts = '';
+
+    $a_atts .= 'href="'.$this->atts['link'].'" ';
+
+    if ($this->atts['is_download'] || $this->atts['new_tab']) {
+      $classes .= 'button-icon ';
     }
-    return '<span
-      class="torque-button-react-entry"
-      data-site="'.get_site_url().'"
-      '.$exp_args.'>
-      </span>';
+
+    if ($this->atts['new_tab']) {
+      $a_atts .= 'target="_blank" ';
+      $classes .= 'new-tab ';
+    }
+
+    if ($this->atts['is_download']) {
+      $classes .= 'download';
+    }
+
+    return '<a '.$a_atts.'><button class="torque-button '.$classes.'">'.$this->atts['text'].'</button></a>';
   }
 }
 
