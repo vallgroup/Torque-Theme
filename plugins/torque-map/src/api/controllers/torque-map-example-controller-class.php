@@ -33,10 +33,12 @@ class Torque_Map_Controller {
 			$map = get_post( $_id );
 
 			if ($map) {
+				$pois = $this->get_pois_shaped( $map );
         return Torque_API_Responses::Success_Response( array(
           'api_key'          => $this->get_api_key(),
           'map_details'	     => $this->get_map_shaped( $map ),
-          'pois'	           => $this->get_pois_shaped( $map ),
+          'pois'	           => $pois['pois'],
+					'pois_title'			 => $pois['title'],
           'pois_location'    => $this->pois_location(),
           'display_poi_list' => $this->maybe_display_poi_list(),
         ) );
@@ -111,6 +113,14 @@ class Torque_Map_Controller {
 		$context = array( 'context' => 'post', 'id' => $map->ID );
 		$number_of_pois = apply_filters( Toruqe_Map_CPT::$POIS_ALLOWED_FILTER, 0 );
 
+		$return = array();
+
+		// get the pois title
+		if ($number_of_pois > 0) {
+			$return['title'] = premise_get_value( 'pois_section_title', $context );
+		}
+
+		// get the pois
 		$pois = array();
 		for ($i=0; $i < $number_of_pois; $i++) {
 			$_poi = premise_get_value( 'torque_map_pois_'.$i, $context );
@@ -132,6 +142,9 @@ class Torque_Map_Controller {
 				}
 			}
 		}
-		return $pois;
+
+		$return['pois'] = $pois;
+
+		return $return;
 	}
 }
