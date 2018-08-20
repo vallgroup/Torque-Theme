@@ -18,6 +18,7 @@ class App extends Component {
       pois: [],
       selectedPOI: {},
       poiList: [],
+      poisTitle: '',
       poisLocation: '',
       displayPOIList: false,
       mapCenter: null,
@@ -29,18 +30,19 @@ class App extends Component {
   }
 
   render() {
-    console.log( this.state )
+    console.log(this.state)
     return (
       <div className={`torque-map`}>
         {/* if we have points of interest
         & the poisLocation is not equal to bottom, show them */}
-        {0 < this.state.poisLocation.length
-          && 'bottom' !== this.state.poisLocation
-          && this.showPOIs()}
+        {0 < this.state.poisLocation.length &&
+          'middle' !== this.state.poisLocation &&
+          'bottom' !== this.state.poisLocation &&
+          this.showPOIs()}
 
         {/* Display the map when we have a map in state */}
-        {this.state.map
-          && <TorqueMap
+        {this.state.map && (
+          <TorqueMap
             apiKey={this.state.apiKey}
             center={this.state.map.center}
             zoom={this.state.map.zoom}
@@ -50,37 +52,46 @@ class App extends Component {
             }}
             searchNearby={this.state.selectedPOI.keyword}
             onNearbySearch={this.updatePOIList.bind(this)}
-            markersIcon={this.state.selectedPOI.marker} />}
+            markersIcon={this.state.selectedPOI.marker}
+          />
+        )}
+
+        {/* Display the poisLocation below the map but above pois */}
+        {'middle' === this.state.poisLocation && this.showPOIs()}
 
         {/* Display the poi list if we have one */}
-        {this.state.displayPOIList
-          && 0 < this.state.poiList.length
-          && <ListPOIS
-            list={this.state.poiList}
-            showDistanceFrom={this.state.mapCenter} />}
+        {this.state.displayPOIList &&
+          0 < this.state.poiList.length && (
+            <ListPOIS
+              list={this.state.poiList}
+              showDistanceFrom={this.state.mapCenter}
+            />
+          )}
 
         {/* Display the poisLocation below the map */}
-        {'bottom' === this.state.poisLocation
-          && this.showPOIs()}
+        {'bottom' === this.state.poisLocation && this.showPOIs()}
       </div>
     )
   }
 
   showPOIs() {
     return (
-      0 < this.state.pois.length
-        && <PointsOfInterest
+      0 < this.state.pois.length && (
+        <PointsOfInterest
           pois={this.state.pois}
+          poisTitle={this.state.poisTitle}
           location={this.state.poisLocation}
           searchNearby={this.state.selectedPOI.keyword}
-          updatePOIS={this.updatePOIS.bind(this)} />
+          updatePOIS={this.updatePOIS.bind(this)}
+        />
+      )
     )
   }
 
   getTheMapDetails() {
-    console.log( this.props )
+    console.log(this.props)
     if (this.props.mapID) {
-      this.ajaxMapDetails();
+      this.ajaxMapDetails()
     } else {
       this.setState({
         apiKey: this.props.apiKey,
@@ -88,14 +99,15 @@ class App extends Component {
           center: this.props.center,
           zoom: this.props.zoom,
           title: this.props.title,
-        }
+        },
       })
     }
   }
 
   async ajaxMapDetails() {
     try {
-      const url = this.props.site + `/wp-json/torque-map/v1/map/${this.props.mapID}`
+      const url =
+        this.props.site + `/wp-json/torque-map/v1/map/${this.props.mapID}`
       const mapPost = await axios.get(url)
       console.log(mapPost)
       if (mapPost.data.success) {
@@ -103,11 +115,12 @@ class App extends Component {
           apiKey: mapPost.data.api_key,
           map: mapPost.data.map_details,
           pois: mapPost.data.pois,
+          poisTitle: mapPost.data.pois_title,
           poisLocation: mapPost.data.pois_location,
           displayPOIList: mapPost.data.display_poi_list,
         })
       }
-    } catch(err) {
+    } catch (err) {
       console.error(err)
     }
   }

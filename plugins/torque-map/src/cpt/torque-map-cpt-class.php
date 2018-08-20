@@ -96,6 +96,19 @@ class Toruqe_Map_CPT {
 	public function maybe_add_pois() {
 
 		$number_of_pois = apply_filters( self::$POIS_ALLOWED_FILTER, 0 );
+
+		if ($number_of_pois > 0) {
+			pwp_add_metabox( 'Point of Interest Section Title', array( 'torque_map' ), array(
+				array(
+					'context'     => 'post',
+					'type'        => 'text',
+					'name'        => 'pois_section_title',
+					'label'       => 'Section Title',
+					'placeholder' => 'Click a Category',
+				),
+			), 'pois_section_title');
+		}
+
 		for ($i=0; $i < $number_of_pois; $i++) {
 			$this->poi_mb( $i );
 		}
