@@ -21,7 +21,7 @@ class Torque_Button_Shortcode {
     $this->expected_args = array(
       'text'        => '',
       'link'        => '',
-      'new_tab'     => true,
+      'new_tab'     => false,
       'is_download' => false
     );
 
