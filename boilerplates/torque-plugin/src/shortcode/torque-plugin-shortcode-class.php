@@ -18,7 +18,7 @@ class <torque_plugin_class_name>_Shortcode {
   public function __construct() {
     // use this array to attributes and display them in the front end
     // for private attributes go to setup_atts()
-    $this->$expected_args = array(
+    $this->expected_args = array(
       'example' => true,
     );
 
