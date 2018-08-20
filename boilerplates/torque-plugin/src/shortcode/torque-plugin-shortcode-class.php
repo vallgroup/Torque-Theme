@@ -55,7 +55,7 @@ class <torque_plugin_class_name>_Shortcode {
    * @return array       Attributes combined with our defaults
    */
   private function setup_atts($atts) {
-    return shortcode_atts( array_merge( $this->$expected_args,
+    return shortcode_atts( array_merge( $this->expected_args,
       // these are your arguments that do not show up in the front end.
       array(
         '' => ''
