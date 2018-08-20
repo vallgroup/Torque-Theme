@@ -29,8 +29,8 @@ const config = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader'
-        }
+          loader: 'babel-loader',
+        },
       },
       {
         test: projectConfig.webpackDefaults.css.test,
@@ -70,6 +70,8 @@ const config = {
       ignoreOrder: true,
     }),
     new CopyWebpackPlugin([
+      { from: path.join(srcDir, 'shortcode/*.js'), to: buildDir },
+      { from: path.join(srcDir, 'shortcode/*.html'), to: buildDir },
       { from: path.join(srcDir, '**/*.php'), to: buildDir },
     ]),
   ],
