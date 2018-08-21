@@ -84,7 +84,7 @@ class Torque_Button_Shortcode {
     }
 
     if ($this->atts['new_tab']) {
-      $a_atts .= 'target="_blank" ';
+      $a_atts .= 'target="_blank" rel="noopener" ';
       $classes .= 'new-tab ';
     }
 
