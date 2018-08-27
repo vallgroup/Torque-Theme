@@ -2,11 +2,7 @@
 
 set -e
 
-GREEN='\033[0;32m'
-RED='\033[0;31m'
-BLUE='\033[1;34m'
-PURPLE='\033[0;35m'
-NC='\033[0m'
+source ./cli/lib/colors.sh
 
 chmod +x ./cli/uploads.sh
 
@@ -26,7 +22,7 @@ fi
 
 # make sure user knows uncomitted uploads will be lost
 
-echo -e "${RED}\nWarning: Uploads not committed to the repo will be lost."
+echo -e "${RED}\nWarning: Uploads in wp-content not committed to the repo will be lost."
 echo -e "${PURPLE}Proceed? [y\N] ${NC}"
 
 read proceed

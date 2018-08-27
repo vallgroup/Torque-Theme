@@ -2,9 +2,7 @@
 
 # $ bash start.sh <workspace-name>
 
-GREEN='\033[0;32m'
-PURPLE='\033[0;35m'
-NC='\033[0m'
+source ./cli/lib/colors.sh
 
 # checks the docker containers are running,
 # otherwise starts them up
