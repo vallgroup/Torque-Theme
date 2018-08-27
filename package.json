@@ -5,13 +5,13 @@
   "author": "Torque",
   "license": "ISC",
   "scripts": {
-    "setup": "bash setup.sh",
-    "start": "bash start.sh",
-    "rebuild": "bash rebuild.sh",
-    "switch": "bash switch.sh",
-    "uploads": "bash uploads.sh",
-    "logs:php": "bash logs.sh wordpress",
-    "logs:mysql": "bash logs.sh mysql:5.7"
+    "setup": "bash cli/setup.sh",
+    "start": "bash cli/start.sh",
+    "rebuild": "bash cli/rebuild.sh",
+    "switch": "bash cli/switch.sh",
+    "uploads": "bash cli/uploads.sh",
+    "logs:php": "bash cli/logs.sh wordpress",
+    "logs:mysql": "bash cli/logs.sh mysql:5.7"
   },
   "workspaces": [
     "themes/torque",
