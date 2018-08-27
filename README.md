@@ -46,6 +46,8 @@ $ yarn uploads <optional from_repo|from_wp_content>
 
 You can use this to keep uploads up to date between wp-content and the repo.
 
+Args:
+
 - none: Passing no argument will copy uploads from wp-content to repo so they can be committed and saved.
 - from_repo: Copies uploads from repo to wp-content
 - from_wp_content: Copies uploads from wp-content to repo
