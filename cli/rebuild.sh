@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -x
+
 # save any uploads outside of wp-content
 mkdir uploads
 cp -r wp-content/uploads/* uploads
@@ -8,5 +10,5 @@ cp -r wp-content/uploads/* uploads
 rm -R wp-content
 
 # run setup script again, rebuilding wp-content from scratch
-chmod +x ./setup.sh
-./setup.sh
+chmod +x ./cli/setup.sh
+./cli/setup.sh

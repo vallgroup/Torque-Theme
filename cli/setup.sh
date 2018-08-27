@@ -13,7 +13,9 @@ docker-compose stop
 docker-compose up -d
 
 # build workspaces into wp-content
+# #themes
 yarn workspace torque-theme build
+#plugins
 yarn workspace torque-floor-plans build
 yarn workspace torque-availability build
 yarn workspace torque-gallery-layouts build
@@ -36,6 +38,3 @@ rm -R wp-content/themes/twentysixteen
 rm -R wp-content/themes/twentyseventeen
 rm -R wp-content/plugins/akismet
 rm wp-content/plugins/hello.php
-
-# start watch server
-yarn start torque-theme
