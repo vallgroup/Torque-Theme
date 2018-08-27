@@ -29,8 +29,8 @@ mkdir wp-content/mu-plugins
 cp -r mu-plugins/* wp-content/mu-plugins
 
 # copy across uploads
-mkdir wp-content/uploads
-cp -r uploads/* wp-content/uploads
+chmod +x ./cli/uploads.sh
+./cli/uploads.sh from_repo
 
 # remove unwanted default plugins and themes
 rm -R wp-content/themes/twentyfifteen

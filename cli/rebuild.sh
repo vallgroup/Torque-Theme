@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
+chmod +x ./cli/uploads.sh
+
 # save any uploads outside of wp-content
-mkdir uploads
-cp -r wp-content/uploads/* uploads
+./cli/uploads.sh from_wp_content
 
 # delete wp-content
 rm -R wp-content

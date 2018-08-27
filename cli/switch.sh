@@ -8,7 +8,7 @@ BLUE='\033[1;34m'
 PURPLE='\033[0;35m'
 NC='\033[0m'
 
-UPLOADS_DIR="wp-content/uploads"
+chmod +x ./cli/uploads.sh
 
 # check we have branch set
 
@@ -43,25 +43,13 @@ fi
 docker-compose stop
 
 # remove uploads from gitignore wp-content directory
-if [ -d "$UPLOADS_DIR" ]
-then
-  rm -R $UPLOADS_DIR
-fi
+./cli/uploads.sh remove
 
 # switch to new env
 git checkout $branch
 
-# copy across new uploads if they exist and uploads dir is not empty
-if [ -d "uploads" ] && [ ! -z "$(ls -A uploads)" ]
-then
-  # make directory in wp content if it doesnt exist
-  if [ ! -d "$UPLOADS_DIR" ]
-  then
-    mkdir $UPLOADS_DIR
-  fi
-
-  cp -r uploads/* wp-content/uploads
-fi
+# copy across new uploads
+./cli/uploads.sh from_repo
 
 
 echo -e "${GREEN}Success: New environment ready${NC}"
