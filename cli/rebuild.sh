@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -x
-
 # save any uploads outside of wp-content
 mkdir uploads
 cp -r wp-content/uploads/* uploads
