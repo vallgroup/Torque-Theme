@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
-import axios from 'axios'
-import TorqueMap from './Map/Map'
-import PointsOfInterest from './PointsOfInterest/PointsOfInterest'
-import ListPOIS from './PointsOfInterest/ListPOIS'
+import React, { Component } from "react";
+import axios from "axios";
+import TorqueMap from "./Map/Map";
+import PointsOfInterest from "./PointsOfInterest/PointsOfInterest";
+import ListPOIS from "./PointsOfInterest/ListPOIS";
 
 /**
  * I'm guessing we'll eventually want to generalise and have these things
@@ -10,34 +10,33 @@ import ListPOIS from './PointsOfInterest/ListPOIS'
  */
 class App extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
-      apiKey: '',
+      apiKey: "",
       map: null,
       pois: [],
       selectedPOI: {},
       poiList: [],
-      poisTitle: '',
-      poisLocation: '',
+      poisTitle: "",
+      poisLocation: "",
       displayPOIList: false,
-      mapCenter: null,
-    }
+      mapCenter: null
+    };
   }
 
   componentWillMount() {
-    this.getTheMapDetails()
+    this.getTheMapDetails();
   }
 
   render() {
-    console.log(this.state)
     return (
       <div className={`torque-map`}>
         {/* if we have points of interest
         & the poisLocation is not equal to bottom, show them */}
         {0 < this.state.poisLocation.length &&
-          'middle' !== this.state.poisLocation &&
-          'bottom' !== this.state.poisLocation &&
+          "middle" !== this.state.poisLocation &&
+          "bottom" !== this.state.poisLocation &&
           this.showPOIs()}
 
         {/* Display the map when we have a map in state */}
@@ -48,7 +47,7 @@ class App extends Component {
             zoom={this.state.map.zoom}
             centerMarker={{
               name: this.state.map.title,
-              icon: this.state.map.center_marker,
+              icon: this.state.map.center_marker
             }}
             searchNearby={this.state.selectedPOI.keyword}
             onNearbySearch={this.updatePOIList.bind(this)}
@@ -57,7 +56,7 @@ class App extends Component {
         )}
 
         {/* Display the poisLocation below the map but above pois */}
-        {'middle' === this.state.poisLocation && this.showPOIs()}
+        {"middle" === this.state.poisLocation && this.showPOIs()}
 
         {/* Display the poi list if we have one */}
         {this.state.displayPOIList &&
@@ -69,9 +68,9 @@ class App extends Component {
           )}
 
         {/* Display the poisLocation below the map */}
-        {'bottom' === this.state.poisLocation && this.showPOIs()}
+        {"bottom" === this.state.poisLocation && this.showPOIs()}
       </div>
-    )
+    );
   }
 
   showPOIs() {
@@ -85,31 +84,29 @@ class App extends Component {
           updatePOIS={this.updatePOIS.bind(this)}
         />
       )
-    )
+    );
   }
 
   getTheMapDetails() {
-    console.log(this.props)
     if (this.props.mapID) {
-      this.ajaxMapDetails()
+      this.ajaxMapDetails();
     } else {
       this.setState({
         apiKey: this.props.apiKey,
         map: {
           center: this.props.center,
           zoom: this.props.zoom,
-          title: this.props.title,
-        },
-      })
+          title: this.props.title
+        }
+      });
     }
   }
 
   async ajaxMapDetails() {
     try {
       const url =
-        this.props.site + `/wp-json/torque-map/v1/map/${this.props.mapID}`
-      const mapPost = await axios.get(url)
-      console.log(mapPost)
+        this.props.site + `/wp-json/torque-map/v1/map/${this.props.mapID}`;
+      const mapPost = await axios.get(url);
       if (mapPost.data.success) {
         this.setState({
           apiKey: mapPost.data.api_key,
@@ -117,26 +114,26 @@ class App extends Component {
           pois: mapPost.data.pois,
           poisTitle: mapPost.data.pois_title,
           poisLocation: mapPost.data.pois_location,
-          displayPOIList: mapPost.data.display_poi_list,
-        })
+          displayPOIList: mapPost.data.display_poi_list
+        });
       }
     } catch (err) {
-      console.error(err)
+      console.error(err);
     }
   }
 
   updatePOIS(poi) {
     this.setState({
-      selectedPOI: poi,
-    })
+      selectedPOI: poi
+    });
   }
 
   updatePOIList(list, mapCenter) {
     this.setState({
       poiList: list,
-      mapCenter: mapCenter,
-    })
+      mapCenter: mapCenter
+    });
   }
 }
 
-export default App
+export default App;
