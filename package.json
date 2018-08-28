@@ -14,13 +14,7 @@
     "logs:mysql": "bash cli/logs.sh mysql:5.7"
   },
   "workspaces": [
-    "themes/torque",
-    "plugins/torque-floor-plans",
-    "plugins/torque-gallery-layouts",
-    "plugins/torque-availability",
-    "plugins/torque-map",
-    "plugins/torque-building-facts",
-    "plugins/torque-staff",
-    "plugins/torque-button"
+    "themes/*",
+    "plugins/*"
   ]
 }
