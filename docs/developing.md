@@ -103,7 +103,7 @@ Exactly which directory in wp-content the files are compiled to can be set in th
 
 5.  Add a webpack.config.js to the package root and configure as you wish (most importantly the src and build directories to make sure the src is compiled and copied to wp-content)
 
-6.  Add workspace to 'workspaces' array in package.json in **project** root, and to setup.sh.
+6.  Add workspace to 'workspaces' array in package.json in **project** root, and to cli/lib.workspaces.sh
 
 7.  Run `$ yarn` in the **project** root to install the new dependencies and link them to the other packages.
 

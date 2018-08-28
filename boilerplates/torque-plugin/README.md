@@ -19,7 +19,7 @@
 
 4.  Rename all files in this directory: {torque-plugin}-etc-class.php => {<torque_plugin_slug>}-etc-class.php
 
-5.  Register workspace in package.json in **project** root and add it to the setup.sh initial build script.
+5.  Add '<torque_child_theme_slug>' to cli/lib/workspaces.sh
 
 6.  Open new terminal, and in **project** root, run:
 
