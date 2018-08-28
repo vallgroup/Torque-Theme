@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 source ./cli/lib/colors.sh
+source ./cli/lib/workspaces.sh
 
 build() {
   echo -e "${BLUE}Building $1...${NC}"
@@ -30,17 +31,10 @@ docker-compose stop
 docker-compose up -d
 
 # build workspaces into wp-content
-# #themes
-build torque-theme
-build e-wacker-child
-#plugins
-build torque-floor-plans
-build torque-availability
-build torque-gallery-layouts
-build torque-map
-build torque-building-facts
-build torque-staff
-build torque-button
+for workspace in "${workspaces[@]}"
+do
+   build $workspace
+done
 
 # copy across mu-plugins
 echo -e "${BLUE}Copying mu-plugins...${NC}"

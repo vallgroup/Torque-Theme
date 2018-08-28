@@ -55,8 +55,7 @@ Alternatively, since we won't want to do a full merge from a client branch to ma
           (eg db_data -> child_theme_db_data)
 
     2.  In the docker-compose file you should also change the db name (in MYSQL_DATABASE and WORDPRESS_DB_NAME), although this is not compulsory.
-    3.  Add the theme's workspace to the root `package.json`
-    4.  Add the theme's build command to the `setup.sh` script
+    3.  Add the theme's build command to the `setup.sh` script
 
 4.  Then repeat steps 9, 10 and 11 from [setup](./setup.md) to get your new wordpress installation up and running.
 
@@ -104,7 +103,7 @@ Exactly which directory in wp-content the files are compiled to can be set in th
 
 5.  Add a webpack.config.js to the package root and configure as you wish (most importantly the src and build directories to make sure the src is compiled and copied to wp-content)
 
-6.  Add workspace to 'workspaces' array in package.json in **project** root, and to setup.sh.
+6.  Add workspace to 'workspaces' array in package.json in **project** root, and to cli/lib.workspaces.sh
 
 7.  Run `$ yarn` in the **project** root to install the new dependencies and link them to the other packages.
 

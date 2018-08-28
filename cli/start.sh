@@ -3,6 +3,7 @@
 # $ bash start.sh <workspace-name>
 
 source ./cli/lib/colors.sh
+source ./cli/lib/workspaces.sh
 
 # checks the docker containers are running,
 # otherwise starts them up
@@ -15,7 +16,9 @@ workspace=$1
 # if user did not pass a workspace argument then we want to as for it as input
 if [ -z "$workspace" ]
 then
-  # no workspace passed
+  echo -e "${BLUE}Registered workspaces:${NC}"
+  printf '  %s\n' "${workspaces[@]}"
+
   echo -e "${PURPLE}Enter workspace name:${NC}"
   read workspace
 fi
