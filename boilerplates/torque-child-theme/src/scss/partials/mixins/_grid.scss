@@ -24,7 +24,7 @@
   // clear floats required
   // so this runs last
   &:after {
-    content: '';
+    content: "";
     display: block;
     clear: both;
   }
@@ -44,6 +44,27 @@
   @content;
   // always goes last
   box-sizing: border-box;
+
+  @if ($cols != 1) {
+    // allow ourselves the possibility of not clearing
+    &:not(.no-clear) {
+      //
+      // make sure if we have previous col class set on an element
+      // eg for a different screen size
+      // then we remove that first.
+      //
+      // otherwise we could end up with a clear left on :nth-child(2) and :nth-child(3)
+      // for exmaple
+      //
+      &:nth-child(n) {
+        clear: unset;
+      }
+
+      &:nth-child(#{$cols}n + 1) {
+        clear: left;
+      }
+    }
+  }
 }
 
 @function get-col-width($n, $gutter: null) {
