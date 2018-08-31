@@ -13,4 +13,10 @@ header#header-style-1 {
       }
     }
   }
+
+  .torque-header-menu-items-mobile {
+    @include respond-to(desktop) {
+      display: none;
+    }
+  }
 }
