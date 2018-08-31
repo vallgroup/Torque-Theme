@@ -1,4 +1,5 @@
 header#header-style-1 {
+  position: relative;
   height: 100px;
 
   .torque-header-content-wrapper {
@@ -36,6 +37,19 @@ header#header-style-1 {
     }
 
     .torque-header-menu-items-inline-wrapper {
+    }
+  }
+
+  .torque-header-menu-items-mobile {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: auto;
+
+    &.active {
+      display: block;
     }
   }
 }
