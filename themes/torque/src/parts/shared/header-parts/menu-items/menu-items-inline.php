@@ -6,16 +6,23 @@ $menu_items = Torque_Nav_Menus::get_nav_menu_items_by_location( Torque_Nav_Menus
 
 if ($menu_items) {
 
+  global $wp;
+  $current_url = home_url( add_query_arg( array(), $wp->request ) );
+
 ?>
   <div class="torque-menu-items-inline" >
     <?php
 
     foreach ($menu_items as $menu_item) {
+
+      $active_class = $menu_item->url === $current_url || $menu_item->url === $current_url.'/'
+        ? 'active'
+        : '';
     ?>
 
-      <div class="torque-menu-item-wrapper">
+      <div class="torque-menu-item-wrapper <?php echo $active_class; ?>">
         <a href="<?php echo $menu_item->url; ?>">
-          <div class="torque-menu-item">
+          <div class="torque-menu-item <?php echo $active_class; ?>">
             <?php echo $menu_item->title; ?>
           </div>
         </a>
