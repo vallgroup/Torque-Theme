@@ -41,15 +41,21 @@ header#header-style-1 {
   }
 
   .torque-header-menu-items-mobile {
-    display: none;
     position: absolute;
     left: 0;
     top: 0;
     width: 100%;
     height: auto;
+    max-height: 0px;
+    overflow: hidden;
+    transition: all 0.5s;
 
     &.active {
-      display: block;
+      max-height: 100vh;
+    }
+
+    &:not(.active) {
+      padding: 0;
     }
   }
 }
