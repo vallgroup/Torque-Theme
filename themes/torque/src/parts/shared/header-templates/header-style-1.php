@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Headre Template 1:
+ * Header Template 1:
  *
  * Logo - Burger menu with mobile opening from top of screen (mobile & tablet)
  * Logo - Menu items inline (desktop)
@@ -29,7 +29,7 @@ $background_color = $tq_header_style_1_color && $tq_header_style_1_color !== ''
     </div>
 
     <div class="col2 col3x2-tablet torque-header-burger-menu-wrapper">
-      <?php get_template_part( 'parts/elements/element', 'burger-menu'); ?>
+      <?php get_template_part( 'parts/elements/element', 'burger-menu-squeeze'); ?>
     </div>
 
     <div class="col2 col3-tablet col4x3-desktop torque-header-menu-items-inline-wrapper">

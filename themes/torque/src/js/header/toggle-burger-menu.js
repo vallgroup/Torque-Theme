@@ -7,6 +7,7 @@
 		navToggle.on('click', e => {
 			e.preventDefault()
 			nav.toggleClass('active')
+			navToggle.toggleClass('active')
 		})
 	})
 })(jQuery)
