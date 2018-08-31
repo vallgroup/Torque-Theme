@@ -61,12 +61,12 @@ export class TorqueMap extends React.Component {
   }
 
   renderCenterMarker() {
-    console.log(this.props.centerMarker);
     return (
       <Marker
         onClick={this.onMarkerClick.bind(this)}
         name={this.props.centerMarker.name}
         position={this.state.mapCenter}
+        zIndex={this.props.google.maps.Marker.MAX_ZINDEX + 1}
         icon={
           this.props.centerMarker.icon && {
             url: this.props.centerMarker.icon.url,
