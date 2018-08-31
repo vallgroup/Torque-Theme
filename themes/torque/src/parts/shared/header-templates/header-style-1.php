@@ -1,4 +1,15 @@
-<header id="header-style-1" class="torque-header">
+<?php
+
+$background_color = $tq_header_style_1_color && $tq_header_style_1_color !== ''
+  ? $tq_header_style_1_color
+  : 'transparent'
+
+?>
+
+<header
+  id="header-style-1"
+  class="torque-header"
+  style="background-color: <?php echo $background_color; ?>">
 
   <div class="row torque-header-content-wrapper torque-navigation-toggle">
 
