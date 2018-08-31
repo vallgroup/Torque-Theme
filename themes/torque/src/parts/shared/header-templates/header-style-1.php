@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Headre Template 1:
+ *
+ * Logo - Burger menu with mobile opening from top of screen (mobile & tablet)
+ * Logo - Menu items inline (desktop)
+ *
+ *
+ * Note: styles for this which require a media query 
+ * can be found in the child theme boilerplate.
+ */
+
 $background_color = $tq_header_style_1_color && $tq_header_style_1_color !== ''
   ? $tq_header_style_1_color
   : 'transparent'
