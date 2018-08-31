@@ -1,0 +1,41 @@
+header#header-style-1 {
+  height: 100px;
+
+  .torque-header-content-wrapper {
+    padding: 15px 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+
+    .torque-header-logo-wrapper {
+      height: 100%;
+
+      div {
+        width: 120px;
+        height: 100%;
+      }
+
+      img {
+        height: 100%;
+        width: auto;
+        max-width: 100%;
+        object-fit: contain;
+      }
+    }
+
+    .torque-header-burger-menu-wrapper {
+      position: relative;
+      height: 100%;
+
+      .torque-burger-menu {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+
+    .torque-header-menu-items-inline-wrapper {
+    }
+  }
+}
