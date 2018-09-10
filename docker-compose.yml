@@ -18,7 +18,7 @@ services:
        - torque_wp_mysql_user
        - torque_wp_mysql_pass
 
-   phpmyadmin:
+   s333-phpmyadmin:
     depends_on:
       - s333-db
     image: phpmyadmin/phpmyadmin
@@ -33,7 +33,7 @@ services:
     secrets:
       - torque_wp_mysql_root
 
-   wordpress:
+   s222-wordpress:
      depends_on:
        - s333-db
      image: wordpress:latest
