@@ -17,10 +17,10 @@ class Torque_Careers_CPT {
 	 * @var array
 	 */
 	public static $example_labels = array(
-			'singular'       => 'Example',
-			'plural'         => 'Examples',
-			'slug'           => 'torque-example',
-			'post_type_name' => 'torque_example',
+			'singular'       => 'Career',
+			'plural'         => 'Careers',
+			'slug'           => 'torque-career',
+			'post_type_name' => 'torque_career',
 	);
 
 	/**
@@ -32,9 +32,8 @@ class Torque_Careers_CPT {
 		'supports' => array(
 			'title',
 			'editor',
-			'thumbnail',
 		),
-		'menu_icon'           => 'dashicons-businessman',
+		'menu_icon'           => 'dashicons-welcome-learn-more',
 	);
 
 	/**
@@ -44,27 +43,6 @@ class Torque_Careers_CPT {
 		if ( class_exists( 'PremiseCPT' ) ) {
 			new PremiseCPT( self::$example_labels, $this->example_options );
 		}
-
-		pwp_add_metabox(
-			'Example Meta',
-			array( self::$example_labels['post_type_name'] ),
-			array(
-				'name_prefix' => 'example_meta',
-				array(
-					'type'    => 'text',
-					'context' => 'post',
-					'name'    => '[tel]',
-					'label'   => 'Telephone',
-				),
-				array(
-					'type'    => 'text',
-					'context' => 'post',
-					'name'    => '[email]',
-					'label'   => 'Email',
-				),
-			),
-			'example_meta'
-		);
 	}
 }
 
