@@ -1,6 +1,7 @@
 <?php
 
-require( Torque_Careers_PATH . '/cpt/torque-careers-cpt-class.php' );
+require( Torque_Careers_PATH . 'cpt/torque-careers-cpt-class.php' );
+require( Torque_Careers_PATH . 'cpt/torque-job-application-cpt-class.php' );
 
 
 /**

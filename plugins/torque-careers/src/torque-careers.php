@@ -60,6 +60,7 @@ class Torque_Careers {
 		// comment out class names to exclude
 		Torque_Careers_Autoloader::autoload( array(
 			'Torque_Careers_CPT',
+			'Torque_Job_Application_CPT',
 		) );
 
 		// enqueue plugin scripts

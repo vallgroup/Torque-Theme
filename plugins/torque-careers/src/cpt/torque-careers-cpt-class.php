@@ -5,18 +5,18 @@
 class Torque_Careers_CPT {
 
 	/**
-	 * Holds the example cpt object
+	 * Holds the careers cpt object
 	 *
 	 * @var Object
 	 */
-	protected $example = null;
+	protected $careers = null;
 
 	/**
-	 * Holds the labels needed to build the example custom post type.
+	 * Holds the labels needed to build the careers custom post type.
 	 *
 	 * @var array
 	 */
-	public static $example_labels = array(
+	public static $careers_labels = array(
 			'singular'       => 'Career',
 			'plural'         => 'Careers',
 			'slug'           => 'torque-career',
@@ -24,11 +24,11 @@ class Torque_Careers_CPT {
 	);
 
 	/**
-	 * Holds options for the example custom post type
+	 * Holds options for the careers custom post type
 	 *
 	 * @var array
 	 */
-	protected $example_options = array(
+	protected $careers_options = array(
 		'supports' => array(
 			'title',
 			'editor',
@@ -41,7 +41,7 @@ class Torque_Careers_CPT {
 	 */
 	function __construct() {
 		if ( class_exists( 'PremiseCPT' ) ) {
-			new PremiseCPT( self::$example_labels, $this->example_options );
+			new PremiseCPT( self::$careers_labels, $this->careers_options );
 		}
 	}
 }
