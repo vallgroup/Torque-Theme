@@ -1,3 +1,7 @@
-<nav>
-	<?php get_template_part('parts/shared/header-parts/menu-items/menu-items', 'inline'); ?>
-</nav>
+<?php
+
+$tq_header_style_1_color = '';
+
+include( locate_template( '/parts/shared/header-templates/header-style-1.php' , false, false ) );
+
+?>

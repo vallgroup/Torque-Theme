@@ -1,0 +1,22 @@
+header#header-style-1 {
+  .torque-header-content-wrapper {
+
+    .torque-header-burger-menu-wrapper {
+      @include respond-to(desktop) {
+        display: none;
+      }
+    }
+
+    .torque-header-menu-items-inline-wrapper {
+      @include respond-to-max(desktop) {
+        display: none;
+      }
+    }
+  }
+
+  .torque-header-menu-items-mobile {
+    @include respond-to(desktop) {
+      display: none;
+    }
+  }
+}

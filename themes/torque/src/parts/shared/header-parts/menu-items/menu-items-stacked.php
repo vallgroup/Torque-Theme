@@ -10,7 +10,7 @@ if ($menu_items) {
   $current_url = home_url( add_query_arg( array(), $wp->request ) );
 
 ?>
-  <div class="torque-menu-items-inline" >
+  <div class="torque-menu-items-stacked" >
     <?php
 
     foreach ($menu_items as $menu_item) {
@@ -27,7 +27,6 @@ if ($menu_items) {
           </div>
         </a>
       </div>
-
     <?php
     }
 
