@@ -1,7 +1,7 @@
 <?php
 
 require_once( get_template_directory() . '/api/permissions/torque-api-permissions-class.php');
-require_once( Torque_Map_API_ROOT . 'controllers/torque-map-example-controller-class.php');
+require_once( Torque_Map_API_ROOT . 'controllers/torque-map-controller-class.php');
 
 class Torque_Map_Routes {
 

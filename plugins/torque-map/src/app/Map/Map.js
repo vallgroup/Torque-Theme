@@ -71,7 +71,7 @@ export class TorqueMap extends React.Component {
           this.props.centerMarker.icon && {
             url: this.props.centerMarker.icon.url,
             anchor: new this.props.google.maps.Point(
-              this.props.centerMarker.icon.width,
+              this.props.centerMarker.icon.width / 2,
               this.props.centerMarker.icon.height
             ),
             scaledSize: new this.props.google.maps.Size(
