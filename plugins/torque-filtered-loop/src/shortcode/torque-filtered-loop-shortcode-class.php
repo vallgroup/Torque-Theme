@@ -6,6 +6,8 @@ class Torque_Filtered_Loop_Shortcode {
 
   public static $SHORTCODE_SLUG = 'torque_filtered_loop';
 
+  public static $LOOP_TEMPLATE_FILTER_HANDLE = 'torque_filtered_loop_loop_template';
+
   protected $expected_args = array();
 
   private $atts = array();
@@ -19,7 +21,8 @@ class Torque_Filtered_Loop_Shortcode {
     // use this array to attributes and display them in the front end
     // for private attributes go to setup_atts()
     $this->expected_args = array(
-      'example' => true,
+      'tax'           => '',
+      'parent'        => ''
     );
 
 		add_shortcode( self::$SHORTCODE_SLUG , array( $this, 'shortcode_handler') );
@@ -55,11 +58,14 @@ class Torque_Filtered_Loop_Shortcode {
    * @return array       Attributes combined with our defaults
    */
   private function setup_atts($atts) {
-    return shortcode_atts( array_merge( $this->expected_args,
-      // these are your arguments that do not show up in the front end.
-      array(
-        '' => ''
-      ) ), $atts, self::$SHORTCODE_SLUG );
+
+    return shortcode_atts( array_merge(
+        $this->expected_args,
+        // these are your arguments that do not show up in the front end.
+        array(
+          'loop-template' => 'template-'.apply_filters( self::$LOOP_TEMPLATE_FILTER_HANDLE, "0" ),
+        )
+      ), $atts, self::$SHORTCODE_SLUG );
   }
 
 
@@ -77,7 +83,9 @@ class Torque_Filtered_Loop_Shortcode {
       if ( empty( $arg ) )
         continue;
       $exp_args .= ' data-'.esc_attr( $key ).'="'.$arg.'"';
+      echo '<br>';
     }
+
     return '<span
       class="torque-filtered-loop-react-entry"
       data-site="'.get_site_url().'"
