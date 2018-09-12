@@ -2,7 +2,7 @@
 
 define( 'Torque_Map_API_ROOT', dirname(__FILE__) . '/' );
 
-require_once( Torque_Map_API_ROOT . 'routes/torque-map-example-routes-class.php');
+require_once( Torque_Map_API_ROOT . 'routes/torque-map-routes-class.php');
 
 /**
 * The plugin API class
