@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.2.0] 09.13.2018
+## [1.3.0] 09.13.2018
 
 ### Added
 
@@ -8,6 +8,17 @@
 - Pagination template
 - Header 1 Template
 - Burger Menu animations
+
+## [1.2.0] 08.20.2018
+
+### Added
+
+- Base templates which were used for 905 Fulton site parent theme
+- Map plugin
+- Floor plans plugin
+- Availability plugin
+- Button plugin
+- Gallery layout plugin
 
 ## [1.1.0] 08.04.2018
 
@@ -23,3 +34,7 @@
 - Grunt
 
 ## [1.0.0] 08.02.2017
+
+### Added
+
+- this is where Pam left off, there was some initial templates and src files compiled with grunt
