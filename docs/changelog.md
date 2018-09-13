@@ -1,11 +1,16 @@
 # Changelog
 
-## Version 1.1.0 08.02.2018
+## [1.0.0] - 08.04.2018
 
-- Remove Grunt
-- Add Docker
-- Add Webpack support
+### Added
+
+- Docker
+- Webpack support
 - Structure project with Yarn workspaces (https://yarnpkg.com/blog/2017/08/02/introducing-workspaces/)
-- Add documentation
+- Documentation
 
-## Version 1.0.0 08.04.2017
+### Removed
+
+- Grunt
+
+## [1.0.0] - 08.02.2017
