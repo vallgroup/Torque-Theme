@@ -1,4 +1,4 @@
-# Torque Plugin Boilerplate
+# <torque_plugin_name>
 
 ## GET STARTED
 
