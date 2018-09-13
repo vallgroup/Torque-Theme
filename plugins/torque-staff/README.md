@@ -4,8 +4,6 @@ Registers a 'Staff' CPT, allowing the theme to include loops of staff members.
 
 ## Filters
 
-Filters available for the theme to control some of the map's layout and functionality:
-
 <!-- prettier-ignore-start -->
 
 *Filter* | *Function* | *Value Type*

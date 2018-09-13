@@ -37,6 +37,8 @@
 
     to compile files to wp-content and start webpack
 
+8.  Delete the README up to here and fill in the rest.
+
 # Changelog
 
 ## [1.0.0]
