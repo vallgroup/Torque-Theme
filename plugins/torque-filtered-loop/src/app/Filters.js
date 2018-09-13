@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-class Filters extends React.PureComponent {
+class Filters extends React.Component {
   constructor(props) {
     super(props);
 
@@ -10,6 +10,10 @@ class Filters extends React.PureComponent {
     };
   }
 
+  // If the terms change, we filter the terms by any parent Id that we might get.
+  //
+  // Doing it only when terms change and saving it on the state
+  // just saves us from running the filter unecessarily
   componentDidUpdate(prevProps) {
     if (prevProps.terms !== this.props.terms) {
       this.setState({ terms: this.filterTermsByParent() });
@@ -31,9 +35,8 @@ class Filters extends React.PureComponent {
                 isActive ? "active" : ""
               }`}
               onClick={() => this.props.updateActiveTerm(term.id)}
-            >
-              {term.name}
-            </button>
+              dangerouslySetInnerHTML={{ __html: term.name }}
+            />
           );
         })}
       </div>
@@ -52,5 +55,12 @@ class Filters extends React.PureComponent {
     });
   }
 }
+
+Filters.propTypes = {
+  terms: PropTypes.array.isRequired,
+  activeTerm: PropTypes.number.isRequired,
+  updateActiveTerm: PropTypes.func.isRequired,
+  parentId: PropTypes.number
+};
 
 export default Filters;

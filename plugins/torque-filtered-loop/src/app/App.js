@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import Filters from "./Filters";
+import Posts from "./Posts/Posts";
 
 class App extends Component {
   constructor(props) {
@@ -9,6 +10,7 @@ class App extends Component {
 
     this.state = {
       terms: [],
+      posts: [],
       parentId: 0,
       activeTerm: 0
     };
@@ -27,18 +29,24 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state);
     if (!this.state.terms.length) {
       return null;
     }
 
     return (
-      <Filters
-        terms={this.state.terms}
-        activeTerm={this.state.activeTerm}
-        updateActiveTerm={this.updateActiveTerm}
-        parentId={this.state.parentId}
-      />
+      <div className={"torque-filtered-loop"}>
+        <Filters
+          terms={this.state.terms}
+          activeTerm={this.state.activeTerm}
+          updateActiveTerm={this.updateActiveTerm}
+          parentId={this.state.parentId}
+        />
+        <Posts
+          posts={this.state.posts}
+          loopTemplate={this.props.loopTemplate}
+          parentId={this.state.parentId}
+        />
+      </div>
     );
   }
 
@@ -63,11 +71,11 @@ class App extends Component {
 
   async getPosts() {
     try {
-      const url = `${this.props.site}/wp-json/wp/v2/posts?${this.props.tax}=${
-        this.state.activeTerm
-      }`;
+      //prettier-ignore
+      const url = `${this.props.site}/wp-json/wp/v2/posts?${this.props.tax}=${this.state.activeTerm}&_embed`;
       const response = await axios.get(url);
-      console.log(response.data);
+
+      this.setState({ posts: response.data });
     } catch (e) {
       console.warn(e);
     }
