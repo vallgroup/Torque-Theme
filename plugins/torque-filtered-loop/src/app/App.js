@@ -11,6 +11,7 @@ class App extends Component {
     this.state = {
       terms: [],
       posts: [],
+      postsCache: {},
       parentId: 0,
       activeTerm: 0
     };
@@ -71,11 +72,16 @@ class App extends Component {
 
   async getPosts() {
     try {
+      if (this.getPostsFromCache()) {
+        return;
+      }
+
       //prettier-ignore
-      const url = `${this.props.site}/wp-json/wp/v2/posts?${this.props.tax}=${this.state.activeTerm}&_embed`;
+      const url = `${this.props.site}/wp-json/wp/v2/posts?${this.props.tax}=${this.state.activeTerm}&_embed&posts_per_page=50`;
       const response = await axios.get(url);
 
       this.setState({ posts: response.data });
+      this.addPostsToCache(response.data);
     } catch (e) {
       console.warn(e);
     }
@@ -94,6 +100,30 @@ class App extends Component {
     }
 
     return parentId;
+  }
+
+  /**
+   * Cacheing functions
+   */
+
+  getPostsFromCache() {
+    const { postsCache, activeTerm } = this.state;
+
+    if (Object.keys(postsCache).includes(activeTerm.toString())) {
+      this.setState({ posts: postsCache[activeTerm] });
+      return true;
+    }
+
+    return false;
+  }
+
+  addPostsToCache(posts) {
+    this.setState(({ postsCache, activeTerm }) => {
+      const newPostsCache = Object.assign({}, postsCache);
+      newPostsCache[activeTerm] = posts;
+
+      return { postsCache: newPostsCache };
+    });
   }
 }
 
