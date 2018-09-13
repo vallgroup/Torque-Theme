@@ -36,3 +36,13 @@
     ```
 
     to compile files to wp-content and start webpack
+
+# Changelog
+
+## [1.0.0]
+
+### Added
+
+### Changed
+
+### Removed
