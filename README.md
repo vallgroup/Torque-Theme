@@ -1,4 +1,4 @@
-# TORQUE THEME 1.1.0
+# TORQUE THEME
 
 Created by Torque
 
