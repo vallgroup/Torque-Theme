@@ -14,7 +14,7 @@ Registers a 'Staff' CPT, allowing the theme to include loops of staff members.
 
 # Changelog
 
-## [1.1.0]
+## [1.1.0] 9/13/2018
 
 ### Added
 
