@@ -1,22 +1,6 @@
-# Torque Plugin Boilerplate
+# Torque Map
 
-## GET STARTED
-
-1.  Open new terminal, and in **project** root, run:
-
-    ```sh
-    $ yarn
-    ```
-
-    to install/link dependencies.
-
-2.  In **project** root, run:
-
-    ```sh
-    $ yarn start <torque_plugin_slug>
-    ```
-
-    to compile files to wp-content and start webpack
+Allows users to create their own custom maps, complete with custom pointers and points of interest filters (POIs), and include them in their wordpress site with a shortcode.
 
 ## Filters
 
