@@ -1,38 +1,29 @@
-# Torque Plugin Boilerplate
+# Torque Map
 
-## GET STARTED
+Registers a 'Staff' CPT, allowing the theme to include loops of staff members.
 
-1.  Copy entire torque-plugin directory into plugins.
+## Filters
 
-    - Include package.json, webpack.config.js, and other config files
-    - Exclude node_modules if for some reason it exists
+Filters available for the theme to control some of the map's layout and functionality:
 
-2.  Find and replace the following in the entire directory:
+<!-- prettier-ignore-start -->
 
-    1.  Torque_Staff (eg Torque_Floor_Plans) **Note: aim to always prefix with Torque**
-    2.  Torque Staff (eg Torque Floor Plans)
-    3.  torque-staff (eg torque-floor-plans)
-    4.  torque-staff/v1/ (eg floor-plans/v1/)
-    5.  torque_staff (eg torque_floor_plan)
+*Filter* | *Function* | *Value Type*
+--- | --- | ---
+`torque_staff_exclude_metaboxes` | Hide Staff CPT metaboxes by passing an array of strings, each referring to a metabox name | Array[string]
 
-3.  Rename directory: torque-plugin => torque-staff
+<!-- prettier-ignore-end -->
 
-4.  Rename all files in this directory: {torque-plugin}-etc-class.php => {torque-staff}-etc-class.php
+# Changelog
 
-5.  Register workspace in package.json in **project** root and add it to the setup.sh initial build script.
+## [1.1.0]
 
-6.  Open new terminal, and in **project** root, run:
+### Added
 
-    ```sh
-    $ yarn
-    ```
+- Filter to allow the theme to exclude certain metaboxes
 
-    to install/link dependencies.
+## [1.0.0]
 
-7.  In **project** root, run:
+### Added
 
-    ```sh
-    $ yarn start torque-staff
-    ```
-
-    to compile files to wp-content and start webpack
+- Staff CPT with Role, Tel, and Email metaboxes

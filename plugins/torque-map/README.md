@@ -20,7 +20,7 @@ Filters available for the theme to control some of the map's layout and function
 
 # Changelog
 
-## [1.1.0]
+## [1.0.1]
 
 ### Changed
 
