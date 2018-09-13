@@ -1,6 +1,15 @@
 # Changelog
 
-## [1.0.0] - 08.04.2018
+## [1.2.0] 09.13.2018
+
+### Added
+
+- Documentation and changelog for all plugins to date
+- Pagination template
+- Header 1 Template
+- Burger Menu animations
+
+## [1.1.0] 08.04.2018
 
 ### Added
 
@@ -13,4 +22,4 @@
 
 - Grunt
 
-## [1.0.0] - 08.02.2017
+## [1.0.0] 08.02.2017
