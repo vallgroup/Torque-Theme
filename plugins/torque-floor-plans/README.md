@@ -1,38 +1,23 @@
-# Torque Plugin Boilerplate
+# Torque Floor Plans
 
-## GET STARTED
+Registers a Floor Plans CPT allowing you to assign a floor, description, and downloadable PDF.
+A Floor Plans React app can then be included via a shortcode in the Wordpress site allowing the user to browse floors and the floor plans assigned to each floor.
 
-1.  Copy entire torque-plugin directory into plugins.
+## Filters
 
-    - Include package.json and webpack.config.js.
-    - Exclude node_modules
+<!-- prettier-ignore-start -->
 
-2.  Find and replace the following in the entire directory:
+*Filter* | *Function* | *Value Type*
+--- | --- | ---
 
-    1.  Torque_Floor_Plans (eg Torque_Floor_Plans) **Note: aim to always prefix with Torque**
-    2.  Torque Floor Plans (eg Torque Floor Plans)
-    3.  torque-floor-plans (eg torque-floor-plans)
-    4.  floor-plans/v1/ (eg floor-plans/v1/)
-    5.  torque_floor_plan (eg torque_floor_plan)
+<!-- prettier-ignore-end -->
 
-3.  Rename directory: torque-plugin => torque-floor-plans
+# Changelog
 
-4.  Rename all files in this directory: {torque-plugin}-etc-class.php => {torque-floor-plans}-etc-class.php
+## [1.0.0]
 
-5.  Register workspace in package.json in **project** root
+### Added
 
-6.  Open new terminal, and in **project** root, run:
-
-    ```sh
-    $ yarn
-    ```
-
-    to install/link dependencies.
-
-7.  In **project** root, run:
-
-    ```sh
-    $ yarn start torque-floor-plans
-    ```
-
-    to compile files to wp-content and start webpack
+- React app, includable via Shortcode
+- Floor Plans CPT w/ metaboxes
+- Custom API for passing floor plans to front end.
