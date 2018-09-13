@@ -83,7 +83,6 @@ class Torque_Filtered_Loop_Shortcode {
       if ( empty( $arg ) )
         continue;
       $exp_args .= ' data-'.esc_attr( $key ).'="'.$arg.'"';
-      echo '<br>';
     }
 
     return '<span
