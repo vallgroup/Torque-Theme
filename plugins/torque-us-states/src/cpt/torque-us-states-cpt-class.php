@@ -7,7 +7,11 @@ require_once( Torque_US_States_PATH . 'includes/torque-us-states-functions-class
 
 class Torque_US_States_CPT {
 
+	// filter handle for choosing which post types to display the state selector on
 	public static $POST_TYPES_STATE_ASSIGNER_FILTER_HANDLE = 'torque_us_states_post_types_state_assigner';
+
+	// option handle for saving the array of post types
+	public static $POST_TYPES_WITH_STATE_ASSIGNER_OPTION_HANDLE = 'torque_us_states_post_types_with_state_assigner';
 
 	/**
 	 * Holds the us_states cpt object
@@ -22,8 +26,8 @@ class Torque_US_States_CPT {
 	 * @var array
 	 */
 	public static $us_states_labels = array(
-			'singular'       => 'State',
-			'plural'         => 'States',
+			'singular'       => 'US State',
+			'plural'         => 'US States',
 			'slug'           => 'torque-us-state',
 			'post_type_name' => 'torque_us_state',
 	);
@@ -80,6 +84,9 @@ class Torque_US_States_CPT {
 		//
 		$post_types = apply_filters( self::$POST_TYPES_STATE_ASSIGNER_FILTER_HANDLE, array() );
 
+		// update option to keep track of which post types can be assigned a state post
+		$this->save_post_types_with_state_assigner_option( $post_types );
+
 		if ( ! sizeof($post_types) ) {
 			return;
 		}
@@ -100,6 +107,25 @@ class Torque_US_States_CPT {
 				'assigned_state'
 			);
 		}
+	}
+
+	private function save_post_types_with_state_assigner_option( $post_types_with_state_assigner ) {
+		$post_types = array();
+
+		$post_types_db = get_post_types(
+			array(
+				'public'		=> true
+			),
+			'objects'
+		);
+
+		foreach ($post_types_with_state_assigner as $post_type) {
+			if ( isset( $post_types_db[$post_type] ) ) {
+				$post_types[$post_type] = $post_types_db[$post_type]->label;
+			}
+		}
+
+		update_option( self::$POST_TYPES_WITH_STATE_ASSIGNER_OPTION_HANDLE, $post_types );
 	}
 
 	private function get_unassigned_state_options() {
