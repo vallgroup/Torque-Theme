@@ -12,4 +12,6 @@ declare -a workspaces=(
   "torque-building-facts"
   "torque-staff"
   "torque-button"
+  "torque-filtered-loop"
+  "torque-careers"
 )

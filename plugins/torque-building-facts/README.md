@@ -1,38 +1,20 @@
-# Torque Plugin Boilerplate
+# Torque Building Facts
 
-## GET STARTED
+Registers a 'Building Facts' CPT.
 
-1.  Copy entire torque-plugin directory into plugins.
+## Filters
 
-    - Include package.json, webpack.config.js, and other config files
-    - Exclude node_modules if for some reason it exists
+<!-- prettier-ignore-start -->
 
-2.  Find and replace the following in the entire directory:
+*Filter* | *Function* | *Value Type*
+--- | --- | ---
 
-    1.  Torque_Building_Facts (eg Torque_Floor_Plans) **Note: aim to always prefix with Torque**
-    2.  Torque Building Facts (eg Torque Floor Plans)
-    3.  torque-building-facts (eg torque-floor-plans)
-    4.  torque-building-facts/v1/ (eg floor-plans/v1/)
-    5.  torque_building_facts (eg torque_floor_plan)
+<!-- prettier-ignore-end -->
 
-3.  Rename directory: torque-plugin => torque-building-facts
+# Changelog
 
-4.  Rename all files in this directory: {torque-plugin}-etc-class.php => {torque-building-facts}-etc-class.php
+## [1.0.0]
 
-5.  Register workspace in package.json in **project** root and add it to the setup.sh initial build script.
+### Added
 
-6.  Open new terminal, and in **project** root, run:
-
-    ```sh
-    $ yarn
-    ```
-
-    to install/link dependencies.
-
-7.  In **project** root, run:
-
-    ```sh
-    $ yarn start torque-building-facts
-    ```
-
-    to compile files to wp-content and start webpack
+- Add Building Facts CPT supporting title and editor

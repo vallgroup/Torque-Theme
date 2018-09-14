@@ -1,0 +1,27 @@
+# Torque Filtered Loop
+
+Adds a React app (includable via a shortcode) that exposes a front end interface for filtering posts by term.
+
+Currently, the user is able to set a taxonomy, a parent term to limit filter options by, and choose a template for the resulting post loop.
+
+## Filters
+
+<!-- prettier-ignore-start -->
+
+*Filter* | *Function* | *Value Type*
+--- | --- | ---
+`torque_filtered_loop_tinymce_plugin_button` | Display the tinyMCE button | bool (true)
+`torque_filtered_loop_loop_template` | Allows the theme to decide which template to use for the post loop | string
+
+<!-- prettier-ignore-end -->
+
+# Changelog
+
+## [1.0.0]
+
+### Added
+
+- Add Shortcode with tinyMCE form for setting the tax and parent term.
+- Add React app to filter posts and display loop.
+- Add caching layer to the React App so posts from one term are only fetched once.
+- Add template-0

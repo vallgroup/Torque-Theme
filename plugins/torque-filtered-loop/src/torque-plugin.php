@@ -2,14 +2,14 @@
 // entry point for backend of plugin
 
  /**
-  * Plugin Name: Torque Staff
+  * Plugin Name: Torque Filtered Loop
   * Description:
-  * Version:     1.1.0
+  * Version:     1.0.0
   * Author:      Torque
   * Author URI:  https://torque.digital
   * License:     GPL
   *
-  * @package Torque Staff
+  * @package Torque Filtered Loop
   */
 
 // If this file is called directly, abort.
@@ -20,26 +20,26 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * Define constants for plugin's url and path
  */
-define( 'Torque_Staff_PATH', plugin_dir_path(__FILE__) );
-define( 'Torque_Staff_URL', plugin_dir_url(__FILE__) );
+define( 'Torque_Filtered_Loop_PATH', plugin_dir_path(__FILE__) );
+define( 'Torque_Filtered_Loop_URL', plugin_dir_url(__FILE__) );
 
 /**
  * Require autoloader for plugin classes
  */
-require( Torque_Staff_PATH . '/autoload.php' );
+require( Torque_Filtered_Loop_PATH . '/autoload.php' );
 
 /**
  * Register plugin
  */
-add_action( 'plugins_loaded', array( Torque_Staff::get_inst(), 'init' ) );
+add_action( 'plugins_loaded', array( Torque_Filtered_Loop::get_inst(), 'init' ) );
 
-class Torque_Staff {
+class Torque_Filtered_Loop {
 
 	public static $instance = NULL;
 
-	public static $PLUGIN_NAME = 'Torque Staff';
+	public static $PLUGIN_NAME = 'Torque Filtered Loop';
 
-	public static $PLUGIN_SLUG = 'torque-staff';
+	public static $PLUGIN_SLUG = 'torque-filtered-loop';
 
 	public static function get_inst() {
 		!self::$instance AND self::$instance = new self;
@@ -58,8 +58,8 @@ class Torque_Staff {
 	public function init() {
 
 		// comment out class names to exclude
-		Torque_Staff_Autoloader::autoload( array(
-			'Torque_Staff_CPT',
+		Torque_Filtered_Loop_Autoloader::autoload( array(
+			'Torque_Filtered_Loop_Shortcode',
 		) );
 
 		// enqueue plugin scripts
@@ -67,21 +67,17 @@ class Torque_Staff {
 	}
 
 	public function enqueue_plugin_scripts() {
-		/*
-		 We dont use any js right now
-
-		 wp_enqueue_script(
-				'torque-staff-scripts',
-				Torque_Staff_URL . 'bundles/bundle.js',
-				array() ,
-				'0.0.1',
-				true
-			);
-		*/
+		wp_enqueue_script(
+			'torque-filtered-loop-scripts',
+			Torque_Filtered_Loop_URL . 'bundles/bundle.js',
+			array() ,
+			'0.0.1',
+			true
+		);
 
 		wp_enqueue_style(
-			'torque-staff-styles',
-			Torque_Staff_URL . 'bundles/main.css'
+			'torque-filtered-loop-styles',
+			Torque_Filtered_Loop_URL . 'bundles/main.css'
 		);
 	}
 }
