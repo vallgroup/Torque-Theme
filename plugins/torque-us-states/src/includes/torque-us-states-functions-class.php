@@ -46,6 +46,25 @@ class Torque_US_States_Functions {
 		return $unassigned_states;
 	}
 
+	public static function get_assigned_states(): array {
+		$assigned_codes = self::get_assigned_state_codes();
+
+		if ( ! sizeof($assigned_codes) ) {
+			return [];
+		}
+
+		$assigned_states = [];
+
+		foreach (self::$states as $state_code => $state_name) {
+
+			if ( in_array($state_code, $assigned_codes) ) {
+				$assigned_states[$state_code] = $state_name;
+			}
+		}
+
+		return $assigned_states;
+	}
+
 	public static function get_state_posts() {
 		$query = new WP_Query( array(
 			'post_type'					=> Torque_US_States_CPT::$us_states_labels['post_type_name'],

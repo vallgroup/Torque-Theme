@@ -7,6 +7,8 @@ require_once( Torque_US_States_PATH . 'includes/torque-us-states-functions-class
 
 class Torque_US_States_CPT {
 
+	public static $POST_TYPES_STATE_ASSIGNER_FILTER_HANDLE = 'torque_us_states_post_types_state_assigner';
+
 	/**
 	 * Holds the us_states cpt object
 	 *
@@ -60,14 +62,47 @@ class Torque_US_States_CPT {
 					'context' => 'post',
 					'name'    => 'state_code',
 					'label'   => 'Unassigned States',
-					'options'	=> $this->get_state_options()
+					'options'	=> $this->get_unassigned_state_options()
 				),
 			),
 			'state_code'
 		);
+
+		// needs to run after theme setup so we can apply the filter in functions.php
+		// and so we can be sure the other post types are set up
+		add_action( 'after_setup_theme', array($this, 'add_state_assignment_metabox_to_other_post_types') );
 	}
 
-	private function get_state_options() {
+	public function add_state_assignment_metabox_to_other_post_types() {
+		//
+		// we want to get passed an array of post type names
+		// to add the state assignment metabox to
+		//
+		$post_types = apply_filters( self::$POST_TYPES_STATE_ASSIGNER_FILTER_HANDLE, array() );
+
+		if ( ! sizeof($post_types) ) {
+			return;
+		}
+
+		foreach ($post_types as $post_type) {
+			pwp_add_metabox(
+				'Assign to a US State',
+				array( $post_type ),
+				array(
+					array(
+						'type'    => 'select',
+						'context' => 'post',
+						'name'    => 'assigned_state',
+						'label'   => 'Assigned States',
+						'options'	=> $this->get_assigned_state_options()
+					),
+				),
+				'assigned_state'
+			);
+		}
+	}
+
+	private function get_unassigned_state_options() {
 		$unassigned_states = Torque_US_States_Functions::get_unassigned_states();
 
 		// we need to add the current post's selected state back in to the dropdown
@@ -82,6 +117,10 @@ class Torque_US_States_CPT {
 
 
 		return array_flip($unassigned_states);
+	}
+
+	private function get_assigned_state_options() {
+		return  array_flip(Torque_US_States_Functions::get_assigned_states());
 	}
 }
 

@@ -1,43 +1,10 @@
 # Torque US States
 
-## GET STARTED
+Adds a US State CPT which allows one 'State' post at a time to be assigned to each of the US States.
 
-1.  Copy entire torque-plugin directory into plugins.
+We also expose a filter which enables the theme to add a metabox to any post type, allowing the post to be assigned to a state.
 
-    - Include package.json, webpack.config.js, and other config files
-    - Exclude node_modules if for some reason it exists
-
-2.  Find and replace the following in the entire directory:
-
-    1.  Torque_US_States (eg Torque_Floor_Plans) **Note: aim to always prefix with Torque**
-    2.  Torque US States (eg Torque Floor Plans)
-    3.  torque-us-states (eg torque-floor-plans)
-    4.  us-states/v1/ (eg floor-plans/v1/)
-    5.  torque_us_states (eg torque_floor_plan)
-
-3.  Rename directory: torque-plugin => torque-us-states
-
-4.  Rename all files in this directory: {torque-plugin}-etc-class.php => {torque-us-states}-etc-class.php
-
-5.  Add '<torque_child_theme_slug>' to cli/lib/workspaces.sh
-
-6.  Open new terminal, and in **project** root, run:
-
-    ```sh
-    $ yarn
-    ```
-
-    to install/link dependencies.
-
-7.  In **project** root, run:
-
-    ```sh
-    $ yarn start torque-us-states
-    ```
-
-    to compile files to wp-content and start webpack
-
-8.  Delete the README up to here and fill in the rest.
+A React app can then be included with a shortcode which will allow the user to filter posts by selecting a state from a map.
 
 ## Filters
 
@@ -45,16 +12,17 @@
 
 *Filter* | *Function* | *Value Type*
 --- | --- | ---
-`example_filter_slug` | Filter does loads of really cool stuff | Array[string]
+`torque_us_states_post_types_state_assigner` | Allows the theme to pass an array of post_type names for which a state selector metabox will appear | Array[string]
 
 <!-- prettier-ignore-end -->
 
 # Changelog
 
-## [1.0.0] <date>
+## [1.0.0] 09/14/2018
 
 ### Added
 
-### Changed
-
-### Removed
+- US State CPT
+- Filter for deciding which post types to show a state selector metabox on
+- React App for filtering posts
+- Shortcode with TinyMCE form
