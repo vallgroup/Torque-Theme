@@ -22,7 +22,7 @@ A React app can then be included with a shortcode which will allow the user to f
 
 ### Added
 
-- US State CPT
-- Filter for deciding which post types to show a state selector metabox on
 - React App for filtering posts
-- Shortcode with TinyMCE form
+- Shortcode with TinyMCE form for selecting post type for the app
+- Filter for deciding which post types to show a state selector metabox on
+- US State CPT

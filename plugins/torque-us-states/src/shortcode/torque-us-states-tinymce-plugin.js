@@ -20,7 +20,10 @@
       // Examine the text in the response
       response.json().then(function(data) {
         if (data.success) {
-          postTypeOptions = data.options.post_types;
+          postTypes = data.options.post_types;
+          postTypeOptions = Object.keys(postTypes).map(postType => {
+            return { text: postTypes[postType], value: postType };
+          });
         }
       });
     });
@@ -64,15 +67,15 @@
       },
 
       popupwindow: function(editor, values, onsubmit_callback) {
-        console.log(postTypeOptions);
         values = values || [];
+
         if (typeof onsubmit_callback !== "function") {
           onsubmit_callback = function(e) {
             // Insert content when the window form is submitted (this also replaces during edit, handy!)
             var _attr = {};
 
-            if (e.data.postType) {
-              _attr.postType = e.data.postType;
+            if (e.data.post_type) {
+              _attr.post_type = e.data.post_type;
             }
 
             var args = {
@@ -81,16 +84,17 @@
               content: "",
               attrs: _attr
             };
+
             editor.insertContent(wp.shortcode.string(args));
           };
         }
+
         var formBody = [
           {
-            type: "selectbox",
-            name: "postType",
+            type: "listbox",
+            name: "post_type",
             label: "Post Type",
-            value: values.postType,
-            options: Object.keys(postTypeOptions)
+            values: postTypeOptions
           }
         ];
 
