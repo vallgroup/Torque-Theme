@@ -59,6 +59,7 @@ class Torque_US_States {
 
 		// comment out class names to exclude
 		Torque_US_States_Autoloader::autoload( array(
+			'Torque_US_States_REST_Controller',
 			'Torque_US_States_Shortcode',
 			'Torque_US_States_CPT',
 		) );

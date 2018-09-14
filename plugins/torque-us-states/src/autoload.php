@@ -1,8 +1,8 @@
 <?php
 
+require( Torque_US_States_PATH . '/api/torque-us-states-rest-controller-class.php' );
 require( Torque_US_States_PATH . '/shortcode/torque-us-states-shortcode-class.php' );
 require( Torque_US_States_PATH . '/cpt/torque-us-states-cpt-class.php' );
-
 
 /**
  * Autoload all other classes
