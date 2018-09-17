@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Map from "./Map/Map";
+import Loop from "./Loop/Loop";
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      states: [],
-      posts: [],
+      states: {},
       currentState: ""
     };
 
@@ -21,12 +21,16 @@ class App extends Component {
 
   render() {
     const { states, currentState, posts } = this.state;
+    const { site, postType } = this.props;
     return (
-      <Map
-        states={states}
-        currentState={currentState}
-        updateCurrentState={this.updateCurrentState}
-      />
+      <div className={"torque-us-states-wrapper"}>
+        <Map
+          states={states}
+          currentState={currentState}
+          updateCurrentState={this.updateCurrentState}
+        />
+        <Loop currentState={currentState} site={site} postType={postType} />
+      </div>
     );
   }
 
