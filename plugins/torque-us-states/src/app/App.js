@@ -11,6 +11,8 @@ class App extends Component {
       posts: [],
       currentState: ""
     };
+
+    this.updateCurrentState = this.updateCurrentState.bind(this);
   }
 
   componentDidMount() {
@@ -19,7 +21,17 @@ class App extends Component {
 
   render() {
     const { states, currentState, posts } = this.state;
-    return <Map states={states} currentState={currentState} />;
+    return (
+      <Map
+        states={states}
+        currentState={currentState}
+        updateCurrentState={this.updateCurrentState}
+      />
+    );
+  }
+
+  updateCurrentState(stateCode) {
+    this.setState({ currentState: stateCode });
   }
 
   async getStates() {
