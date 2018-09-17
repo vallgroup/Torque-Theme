@@ -19,7 +19,8 @@ class Torque_US_States_Options_Controller {
 	public function get_options() {
 		try {
 			$options = array(
-				'post_types' => get_option( Torque_US_States_CPT::$POST_TYPES_WITH_STATE_ASSIGNER_OPTION_HANDLE )
+				'post_types' => get_option( Torque_US_States_CPT::$POST_TYPES_WITH_STATE_ASSIGNER_OPTION_HANDLE ),
+				'link_source_options' => get_option( Torque_US_States_CPT::$LOOP_LINK_SOURCE_META_KEY_OPTION_HANDLE )
 			);
 
 			if ($options && sizeof($options)) {

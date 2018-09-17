@@ -19,6 +19,9 @@ class Torque_US_States_Loop_Controller {
 			'state'					  => array(
         'validate_callback' => array( 'Torque_Validation', 'string' ),
       ),
+			'loop_link_source_meta_key'	=> array(
+				'validate_callback' => array( 'Torque_Validation', 'string' ),
+			)
 		);
 	}
 
@@ -44,9 +47,14 @@ class Torque_US_States_Loop_Controller {
 			$posts = $query->posts;
 
 			if ($posts && sizeof($posts)) {
+
 				// add extra properties to post
 				foreach ($posts as &$post) {
 					$post->featured_image = get_the_post_thumbnail_url($post);
+
+					if ($this->request['loop_link_source_meta_key']) {
+						$post->custom_link = get_post_meta( $post->ID, $this->request['loop_link_source_meta_key'] );
+					}
 				}
 
 				$post_type = get_post_type_object( $post_type_name );

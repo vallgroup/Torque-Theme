@@ -9,9 +9,12 @@ class Torque_US_States_CPT {
 
 	// filter handle for choosing which post types to display the state selector on
 	public static $POST_TYPES_STATE_ASSIGNER_FILTER_HANDLE = 'torque_us_states_post_types_state_assigner';
-
 	// option handle for saving the array of post types
 	public static $POST_TYPES_WITH_STATE_ASSIGNER_OPTION_HANDLE = 'torque_us_states_post_types_with_state_assigner';
+
+	public static $LOOP_LINK_SOURCE_META_KEY_FILTER_HANDLE = 'torque_us_states_loop_link_source_meta_key';
+	public static $LOOP_LINK_SOURCE_META_KEY_OPTION_HANDLE = 'torque_us_states_loop_link_source_meta_key';
+
 
 	/**
 	 * Holds the us_states cpt object
@@ -75,6 +78,8 @@ class Torque_US_States_CPT {
 		// needs to run after theme setup so we can apply the filter in functions.php
 		// and so we can be sure the other post types are set up
 		add_action( 'after_setup_theme', array($this, 'add_state_assignment_metabox_to_other_post_types') );
+
+		add_action( 'after_setup_theme', array($this, 'get_link_source_meta_key') );
 	}
 
 	public function add_state_assignment_metabox_to_other_post_types() {
@@ -107,6 +112,16 @@ class Torque_US_States_CPT {
 				'assigned_state'
 			);
 		}
+	}
+
+	/**
+	 * This allows the theme to pass allowed meta key slugs
+	 * so the user can use a meta box to define the loop post link
+	 */
+	public function get_link_source_meta_key() {
+		$meta_keys = apply_filters( self::$LOOP_LINK_SOURCE_META_KEY_FILTER_HANDLE, array() );
+
+		update_option( self::$LOOP_LINK_SOURCE_META_KEY_OPTION_HANDLE, $meta_keys );
 	}
 
 	private function save_post_types_with_state_assigner_option( $post_types_with_state_assigner ) {

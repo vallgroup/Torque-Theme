@@ -20,6 +20,7 @@ class Torque_US_States_Shortcode {
     // for private attributes go to setup_atts()
     $this->expected_args = array(
       'post_type' => 'post',
+      'link_text' => 'View'
     );
 
 		add_shortcode( self::$SHORTCODE_SLUG , array( $this, 'shortcode_handler') );

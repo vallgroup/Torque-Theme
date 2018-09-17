@@ -7,6 +7,7 @@
     const origin = window.location.origin;
 
     let postTypeOptions = [];
+    let linkSourceOptions = [];
     fetch(origin + "/index.php/wp-json/us-states/v1/options").then(function(
       response
     ) {
@@ -23,6 +24,14 @@
           postTypes = data.options.post_types;
           postTypeOptions = Object.keys(postTypes).map(postType => {
             return { text: postTypes[postType], value: postType };
+          });
+
+          linkSources = data.options.link_source_options;
+          linkSourceOptions = Object.keys(linkSources).map(linkSource => {
+            return {
+              text: `Metabox - ${linkSources[linkSource]}`,
+              value: linkSource
+            };
           });
         }
       });
@@ -78,6 +87,14 @@
               _attr.post_type = e.data.post_type;
             }
 
+            if (e.data.link_text) {
+              _attr.link_text = e.data.link_text;
+            }
+
+            if (e.data.link_source) {
+              _attr.link_source = e.data.link_source;
+            }
+
             var args = {
               tag: shortcode_string,
               type: "closed",
@@ -95,6 +112,22 @@
             name: "post_type",
             label: "Post Type",
             values: postTypeOptions
+          },
+          {
+            type: "textbox",
+            name: "link_text",
+            label: "Loop CTA Text",
+            value: values.link_text,
+            placeholder: "View"
+          },
+          {
+            type: "listbox",
+            name: "link_source",
+            label: "Loop CTA Link Source",
+            values: [
+              { text: "Default Permalink", value: "permalink" },
+              ...linkSourceOptions
+            ]
           }
         ];
 
