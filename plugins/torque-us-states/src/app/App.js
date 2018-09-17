@@ -24,12 +24,22 @@ class App extends Component {
     const { site, postType } = this.props;
     return (
       <div className={"torque-us-states-wrapper"}>
-        <Map
-          states={states}
-          currentState={currentState}
-          updateCurrentState={this.updateCurrentState}
-        />
-        <Loop currentState={currentState} site={site} postType={postType} />
+        <div className={"torque-us-states-map-wrapper"}>
+          <Map
+            states={states}
+            currentState={currentState}
+            updateCurrentState={this.updateCurrentState}
+          />
+        </div>
+
+        <div className={"torque-us-states-loop-wrapper"}>
+          <Loop
+            currentState={currentState}
+            site={site}
+            postType={postType}
+            currentStateName={this.getCurrentStateName()}
+          />
+        </div>
       </div>
     );
   }
@@ -51,6 +61,16 @@ class App extends Component {
       }
     } catch (e) {
       console.warn(e);
+    }
+  }
+
+  getCurrentStateName() {
+    const { currentState, states } = this.state;
+
+    if (!states[currentState]) {
+      return "";
+    } else {
+      return states[currentState].post_title;
     }
   }
 }

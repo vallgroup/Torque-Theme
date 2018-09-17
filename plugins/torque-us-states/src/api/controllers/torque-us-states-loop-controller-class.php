@@ -31,8 +31,10 @@ class Torque_US_States_Loop_Controller {
 
 	public function get_posts() {
 		try {
+			$post_type_name = $this->request['post_type'] ?? 'post';
+
 			$query = new WP_Query( array(
-				'post_type'				=> $this->request['post_type'],
+				'post_type'				=> $post_type_name,
 				'posts_per_page'	=> $this->request['per_page'] ?? -1,
 				'paged'						=> $this->request['paged'],
 				'meta_key'				=> 'assigned_state',
@@ -47,8 +49,11 @@ class Torque_US_States_Loop_Controller {
 					$post->featured_image = get_the_post_thumbnail_url($post);
 				}
 
+				$post_type = get_post_type_object( $post_type_name );
+
         return Torque_API_Responses::Success_Response( array(
-          'posts'	=> $posts
+					'post_type'		=> $post_type,
+					'posts'				=> $posts
         ) );
 			}
 
