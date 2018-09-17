@@ -1,2 +1,10 @@
 .state {
+  &.notEmpty {
+    fill: #632240;
+  }
+
+  &:hover,
+  .selected {
+    fill: #a8473d;
+  }
 }

@@ -588,11 +588,16 @@ class Map extends React.PureComponent {
 
     const stateCodes = Object.keys(states);
 
+    const notEmpty = stateCodes.includes(stateCode);
+    const active = stateCodes === currentState;
+
     return classnames(
       styles.state,
       {
-        [styles.notEmpty]: stateCodes.includes(stateCode),
-        [styles.selected]: stateCodes === currentState
+        [styles.notEmpty]: notEmpty,
+        ["not-empty"]: notEmpty,
+        [styles.selected]: active,
+        ["active"]: active
       },
       "torque-us-state"
     );
@@ -606,7 +611,7 @@ class Map extends React.PureComponent {
 }
 
 Map.propTypes = {
-  states: PropTypes.array.isRequired,
+  states: PropTypes.object.isRequired,
   currentState: PropTypes.string.isRequired
 };
 
