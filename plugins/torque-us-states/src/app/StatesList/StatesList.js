@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
+import styles from "./StatesList.scss";
 
 class StatesList extends React.PureComponent {
   constructor(props) {
@@ -29,8 +30,11 @@ class StatesList extends React.PureComponent {
   getStateClassName(stateCode) {
     const { currentState } = this.props;
 
-    return classnames("torque-us-states-state-list-state", {
-      active: stateCode === currentState
+    const active = stateCode === currentState;
+
+    return classnames(styles.state, "torque-us-states-state-list-state", {
+      [styles.active]: active,
+      active: active
     });
   }
 

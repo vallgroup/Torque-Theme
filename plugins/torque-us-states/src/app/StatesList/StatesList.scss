@@ -1,0 +1,9 @@
+@import "../scss/variables";
+
+.state {
+  color: $defaultNotEmpty;
+
+  &.active {
+    color: $defaultActive;
+  }
+}

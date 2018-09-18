@@ -8,8 +8,7 @@ class Loop extends React.Component {
 
     this.state = {
       posts: [],
-      post_type: {},
-      loading: false
+      post_type: {}
     };
 
     this.renderPost = this.renderPost.bind(this);
@@ -29,7 +28,7 @@ class Loop extends React.Component {
           dangerouslySetInnerHTML={{ __html: this.getLoopTitle() }}
         />
         <div className={"torque-us-states-loop"}>
-          {!this.state.loading && this.state.posts.map(this.renderPost)}
+          {this.state.posts.map(this.renderPost)}
         </div>
       </React.Fragment>
     );
@@ -76,8 +75,6 @@ class Loop extends React.Component {
   async getPosts() {
     const { currentState, site, postType, loopLinkSourceMetaKey } = this.props;
 
-    this.setState({ loading: true });
-
     try {
       const url = `${site}/index.php/wp-json/us-states/v1/loop`;
 
@@ -92,15 +89,14 @@ class Loop extends React.Component {
       if (response.data.success) {
         this.setState({
           posts: response.data.posts,
-          post_type: response.data.post_type,
-          loading: false
+          post_type: response.data.post_type
         });
       } else {
         throw `No posts found for ${currentState}`;
       }
     } catch (e) {
       console.warn(e);
-      this.setState({ posts: [], loading: false });
+      this.setState({ posts: [] });
     }
   }
 }
