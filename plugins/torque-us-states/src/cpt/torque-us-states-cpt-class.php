@@ -77,7 +77,7 @@ class Torque_US_States_CPT {
 
 		// needs to run after theme setup so we can apply the filter in functions.php
 		// and so we can be sure the other post types are set up
-		add_action( 'after_setup_theme', array($this, 'add_state_assignment_metabox_to_other_post_types') );
+		add_action( 'init', array($this, 'add_state_assignment_metabox_to_other_post_types'), 100 );
 
 		add_action( 'after_setup_theme', array($this, 'get_link_source_meta_key') );
 	}
@@ -127,16 +127,11 @@ class Torque_US_States_CPT {
 	private function save_post_types_with_state_assigner_option( $post_types_with_state_assigner ) {
 		$post_types = array();
 
-		$post_types_db = get_post_types(
-			array(
-				'public'		=> true
-			),
-			'objects'
-		);
+		foreach ($post_types_with_state_assigner as $post_type_name) {
+			$post_type = get_post_type_object( $post_type_name );
 
-		foreach ($post_types_with_state_assigner as $post_type) {
-			if ( isset( $post_types_db[$post_type] ) ) {
-				$post_types[$post_type] = $post_types_db[$post_type]->label;
+			if ( $post_type ) {
+				$post_types[$post_type_name] = $post_type->label;
 			}
 		}
 
