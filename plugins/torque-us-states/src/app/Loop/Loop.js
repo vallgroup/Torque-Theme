@@ -63,13 +63,21 @@ class Loop extends React.Component {
         />
         <p
           className={"loop-post-excerpt"}
-          dangerouslySetInnerHTML={{ __html: post.post_excerpt }}
+          dangerouslySetInnerHTML={{ __html: this.getExcerpt(post) }}
         />
         <a href={post.custom_link || ""} target="_blank">
           <button>{linkText}</button>
         </a>
       </div>
     );
+  }
+
+  getExcerpt(post) {
+    if (post.post_excerpt) {
+      return post.post_excerpt;
+    } else {
+      return post.post_content.substring(0, 100);
+    }
   }
 
   async getPosts() {

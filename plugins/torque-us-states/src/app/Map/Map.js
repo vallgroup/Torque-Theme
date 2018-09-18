@@ -661,7 +661,8 @@ class Map extends React.PureComponent {
 
   getOutlineClass(usesStroke) {
     return classnames(styles.outline, "torque-us-state-outline", {
-      [styles.usesStroke]: usesStroke
+      [styles.usesStroke]: usesStroke,
+      ["uses-stroke"]: usesStroke
     });
   }
 

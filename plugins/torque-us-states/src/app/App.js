@@ -32,17 +32,17 @@ class App extends Component {
     return (
       <div className={"torque-us-states-wrapper"}>
         <div className={"torque-us-states-map-wrapper"}>
-          {instructionalText && (
-            <div className={"torque-us-states-instructional-text"}>
-              {instructionalText}
-            </div>
-          )}
-
           <Map
             states={states}
             currentState={currentState}
             updateCurrentState={this.updateCurrentState}
           />
+
+          {instructionalText && (
+            <div className={"torque-us-states-instructional-text"}>
+              {instructionalText}
+            </div>
+          )}
 
           <div className={"torque-us-states-states-list-wrapper"}>
             <StatesList
