@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import Map from "./Map/Map";
 import Loop from "./Loop/Loop";
+import StatesList from "./StatesList/StatesList";
 
 class App extends Component {
   constructor(props) {
@@ -42,6 +43,14 @@ class App extends Component {
             currentState={currentState}
             updateCurrentState={this.updateCurrentState}
           />
+
+          <div className={"torque-us-states-states-list-wrapper"}>
+            <StatesList
+              states={states}
+              currentState={currentState}
+              updateCurrentState={this.updateCurrentState}
+            />
+          </div>
         </div>
 
         <div className={"torque-us-states-loop-wrapper"}>
