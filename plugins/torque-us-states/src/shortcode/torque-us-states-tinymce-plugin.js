@@ -87,6 +87,10 @@
               _attr.post_type = e.data.post_type;
             }
 
+            if (e.data.instructional_text) {
+              _attr.instructional_text = e.data.instructional_text;
+            }
+
             if (e.data.link_text) {
               _attr.link_text = e.data.link_text;
             }
@@ -112,6 +116,13 @@
             name: "post_type",
             label: "Post Type",
             values: postTypeOptions
+          },
+          {
+            type: "textbox",
+            name: "instructional_text",
+            label: "App Instructional Text",
+            value: values.instructional_text,
+            placeholder: "Click on a state to filter posts below"
           },
           {
             type: "textbox",

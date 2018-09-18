@@ -18,6 +18,7 @@ entry.forEach(entry => {
       <App
         site={entry.getAttribute("data-site")}
         postType={entry.getAttribute("data-post_type")}
+        instructionalText={entry.getAttribute("data-instructional_text")}
         linkText={entry.getAttribute("data-link_text")}
         loopLinkSourceMetaKey={entry.getAttribute(
           "data-loop_link_source_meta_key"

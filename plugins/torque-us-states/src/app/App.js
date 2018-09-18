@@ -21,10 +21,22 @@ class App extends Component {
 
   render() {
     const { states, currentState, posts } = this.state;
-    const { site, postType, linkText, loopLinkSourceMetaKey } = this.props;
+    const {
+      site,
+      postType,
+      instructionalText,
+      linkText,
+      loopLinkSourceMetaKey
+    } = this.props;
     return (
       <div className={"torque-us-states-wrapper"}>
         <div className={"torque-us-states-map-wrapper"}>
+          {instructionalText && (
+            <div className={"torque-us-states-instructional-text"}>
+              {instructionalText}
+            </div>
+          )}
+
           <Map
             states={states}
             currentState={currentState}
