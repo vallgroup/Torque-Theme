@@ -11,6 +11,8 @@ class Loop extends React.Component {
       post_type: {},
       loading: false
     };
+
+    this.renderPost = this.renderPost.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -41,9 +43,11 @@ class Loop extends React.Component {
     }
   }
 
-  renderPost(post) {
+  renderPost(post, index) {
+    const { linkText } = this.props;
+
     return (
-      <div className={"torque-us-states-loop-post"}>
+      <div key={index} className={"torque-us-states-loop-post"}>
         {post.featured_image && (
           <div className={"featured-image-wrapper"}>
             <div
@@ -62,13 +66,15 @@ class Loop extends React.Component {
           className={"loop-post-excerpt"}
           dangerouslySetInnerHTML={{ __html: post.post_excerpt }}
         />
-        <button>View Website</button>
+        <a href={post.custom_link || ""} target="_blank">
+          <button>{linkText}</button>
+        </a>
       </div>
     );
   }
 
   async getPosts() {
-    const { currentState, site, postType } = this.props;
+    const { currentState, site, postType, loopLinkSourceMetaKey } = this.props;
 
     this.setState({ loading: true });
 
@@ -78,7 +84,8 @@ class Loop extends React.Component {
       const response = await axios.get(url, {
         params: {
           post_type: postType,
-          state: currentState
+          state: currentState,
+          loop_link_source_meta_key: loopLinkSourceMetaKey
         }
       });
 
@@ -102,7 +109,9 @@ Loop.propTypes = {
   currentState: PropTypes.string,
   currentStateName: PropTypes.string,
   site: PropTypes.string.isRequired,
-  postType: PropTypes.string.isRequired
+  postType: PropTypes.string.isRequired,
+  linkText: PropTypes.string.isRequired,
+  loopLinkSourceMetaKey: PropTypes.string.isRequired
 };
 
 export default Loop;

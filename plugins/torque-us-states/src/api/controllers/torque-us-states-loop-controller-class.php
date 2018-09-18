@@ -50,13 +50,16 @@ class Torque_US_States_Loop_Controller {
 
 				// add extra properties to post
 				foreach ($posts as &$post) {
-					$post->featured_image = get_the_post_thumbnail_url($post);
+					$post->featured_image = get_the_post_thumbnail_url( $post );
 
 					if ($this->request['loop_link_source_meta_key']) {
 						$post->custom_link = get_post_meta( $post->ID, $this->request['loop_link_source_meta_key'] );
+					} else {
+						$post->custom_link = get_the_permalink( $post );
 					}
 				}
 
+				// get post type details
 				$post_type = get_post_type_object( $post_type_name );
 
         return Torque_API_Responses::Success_Response( array(

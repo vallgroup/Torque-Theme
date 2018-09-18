@@ -21,7 +21,7 @@ class App extends Component {
 
   render() {
     const { states, currentState, posts } = this.state;
-    const { site, postType } = this.props;
+    const { site, postType, linkText, loopLinkSourceMetaKey } = this.props;
     return (
       <div className={"torque-us-states-wrapper"}>
         <div className={"torque-us-states-map-wrapper"}>
@@ -35,9 +35,11 @@ class App extends Component {
         <div className={"torque-us-states-loop-wrapper"}>
           <Loop
             currentState={currentState}
+            currentStateName={this.getCurrentStateName()}
             site={site}
             postType={postType}
-            currentStateName={this.getCurrentStateName()}
+            linkText={linkText}
+            loopLinkSourceMetaKey={loopLinkSourceMetaKey}
           />
         </div>
       </div>
