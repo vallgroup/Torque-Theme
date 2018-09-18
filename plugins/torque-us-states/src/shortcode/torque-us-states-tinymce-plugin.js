@@ -21,17 +21,24 @@
       // Examine the text in the response
       response.json().then(function(data) {
         if (data.success) {
+          // build post type options
           postTypes = data.options.post_types;
           postTypeOptions = Object.keys(postTypes).map(postType => {
             return { text: postTypes[postType], value: postType };
           });
 
+          // build link source options
           linkSources = data.options.link_source_options;
           linkSourceOptions = Object.keys(linkSources).map(linkSource => {
             return {
               text: `Metabox - ${linkSources[linkSource]}`,
               value: linkSource
             };
+          });
+
+          linkSourceOptions.unshift({
+            text: "Default Permalink",
+            value: "permalink"
           });
         }
       });
@@ -115,7 +122,8 @@
             type: "listbox",
             name: "post_type",
             label: "Post Type",
-            values: postTypeOptions
+            values: postTypeOptions,
+            value: values.post_type
           },
           {
             type: "textbox",
@@ -135,10 +143,8 @@
             type: "listbox",
             name: "link_source",
             label: "Loop CTA Link Source",
-            values: [
-              { text: "Default Permalink", value: "permalink" },
-              ...linkSourceOptions
-            ]
+            values: linkSourceOptions,
+            value: values.link_source
           }
         ];
 
