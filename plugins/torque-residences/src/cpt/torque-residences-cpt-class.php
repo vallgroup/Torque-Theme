@@ -53,7 +53,7 @@ class Torque_Residences_CPT {
 					'type'    => 'text',
 					'context' => 'post',
 					'name'    => 'residence_website_url',
-					'label'   => 'Website URL',
+					'label'   => 'Website URL (if http:// is not included then this will be treated as a relative url to the current site)',
 				),
 			),
 			'residence_website_url'
