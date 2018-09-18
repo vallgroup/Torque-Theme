@@ -53,7 +53,7 @@ class Torque_US_States_Loop_Controller {
 					$post->featured_image = get_the_post_thumbnail_url( $post );
 
 					if ($this->request['loop_link_source_meta_key']) {
-						$post->custom_link = get_post_meta( $post->ID, $this->request['loop_link_source_meta_key'] );
+						$post->custom_link = get_post_meta( $post->ID, $this->request['loop_link_source_meta_key'], true );
 					} else {
 						$post->custom_link = get_the_permalink( $post );
 					}
