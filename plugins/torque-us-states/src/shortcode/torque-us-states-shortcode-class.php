@@ -22,7 +22,7 @@ class Torque_US_States_Shortcode {
       'post_type'                   => 'post',
       'instructional_text'          => '',
       'link_text'                   => 'View',
-      'loop_link_source_meta_key'   => '',
+      'link_source'                 => '',
     );
 
 		add_shortcode( self::$SHORTCODE_SLUG , array( $this, 'shortcode_handler') );
