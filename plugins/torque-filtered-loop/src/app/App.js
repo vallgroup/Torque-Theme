@@ -20,7 +20,12 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.getTerms();
+    this.init();
+  }
+
+  async init() {
+    await this.getTerms();
+    this.getPosts();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -76,15 +81,59 @@ class App extends Component {
         return;
       }
 
-      //prettier-ignore
-      const url = `${this.props.site}/wp-json/wp/v2/posts?${this.props.tax}=${this.state.activeTerm}&_embed&posts_per_page=50`;
-      const response = await axios.get(url);
+      const response = await axios.get(
+        `${this.props.site}/wp-json/wp/v2/posts`,
+        {
+          params: this.getRequestParams()
+        }
+      );
 
       this.setState({ posts: response.data });
       this.addPostsToCache(response.data);
     } catch (e) {
       console.warn(e);
     }
+  }
+
+  getRequestParams() {
+    const { parentId, activeTerm } = this.state;
+    const { tax } = this.props;
+
+    let params = {};
+
+    if (parentId) {
+      //
+      // if we have a parent Id,
+      // then if we have an active term we want to filter with that,
+      // otherwise we want to filter on the parent term and get all posts
+      //
+      params = activeTerm
+        ? {
+            [tax]: activeTerm
+          }
+        : {
+            [tax]: parentId
+          };
+    } else {
+      //
+      // if theres no parent term
+      // then if we have an active term we filter on that
+      // otherwise we get all posts
+      params = activeTerm
+        ? {
+            [tax]: activeTerm
+          }
+        : {};
+    }
+
+    return Object.assign(
+      {},
+      {
+        _embed: true,
+        posts_per_page: 100
+      },
+      params
+    );
   }
 
   getParentId(terms) {
