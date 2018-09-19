@@ -8,6 +8,13 @@ class Filters extends React.Component {
     this.state = {
       terms: this.filterTermsByParent()
     };
+
+    this.allTerm = {
+      id: 0,
+      name: "All"
+    };
+
+    this.renderFilterButton = this.renderFilterButton.bind(this);
   }
 
   // If the terms change, we filter the terms by any parent Id that we might get.
@@ -25,21 +32,24 @@ class Filters extends React.Component {
 
     return (
       <div className={"torque-filtered-loop-filters"}>
-        {terms.map((term, index) => {
-          const isActive = term.id === this.props.activeTerm;
-
-          return (
-            <button
-              key={index}
-              className={`torque-filtered-loop-filter-button ${
-                isActive ? "active" : ""
-              }`}
-              onClick={() => this.props.updateActiveTerm(term.id)}
-              dangerouslySetInnerHTML={{ __html: term.name }}
-            />
-          );
-        })}
+        {this.renderFilterButton(this.allTerm, -1)}
+        {terms.map(this.renderFilterButton)}
       </div>
+    );
+  }
+
+  renderFilterButton(term, index) {
+    const isActive = term.id === this.props.activeTerm;
+
+    return (
+      <button
+        key={index}
+        className={`torque-filtered-loop-filter-button ${
+          isActive ? "active" : ""
+        }`}
+        onClick={() => this.props.updateActiveTerm(term.id)}
+        dangerouslySetInnerHTML={{ __html: term.name }}
+      />
     );
   }
 
