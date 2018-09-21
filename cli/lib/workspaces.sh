@@ -5,6 +5,7 @@
 
 declare -a workspaces=(
   "torque-theme"
+  "e-wacker-child"
   "torque-floor-plans"
   "torque-availability"
   "torque-gallery-layouts"
