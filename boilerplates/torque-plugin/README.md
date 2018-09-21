@@ -1,4 +1,4 @@
-# Torque Plugin Boilerplate
+# <torque_plugin_name>
 
 ## GET STARTED
 
@@ -36,3 +36,25 @@
     ```
 
     to compile files to wp-content and start webpack
+
+8.  Delete the README up to here and fill in the rest.
+
+## Filters
+
+<!-- prettier-ignore-start -->
+
+*Filter* | *Function* | *Value Type*
+--- | --- | ---
+`example_filter_slug` | Filter does loads of really cool stuff | Array[string]
+
+<!-- prettier-ignore-end -->
+
+# Changelog
+
+## [1.0.0] <date>
+
+### Added
+
+### Changed
+
+### Removed
