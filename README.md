@@ -1,4 +1,4 @@
-# TORQUE THEME 1.1.0
+# TORQUE THEME
 
 Created by Torque
 
@@ -61,4 +61,4 @@ Get a live output of the logs in the shell from php and mysql respectively.
 
 ## Resources
 
-- [Changelog](./docs/changelog.md)
+- [Changelog](https://github.com/vallgroup/Torque-Theme/releases)

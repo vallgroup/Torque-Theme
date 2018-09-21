@@ -1,38 +1,24 @@
-# Torque Plugin Boilerplate
+# Torque Careers
 
-## GET STARTED
+Registers two CPTs:
 
-1.  Copy entire torque-plugin directory into plugins.
+1.  Careers - a public CPT allowing the user to post job openings, and allowing the theme to display them in a loop.
+2.  Job Applicatons - a private CPT for storing submitted job applications in the db. This comes with a class exposing an interface for saving and finding the job applications in the db.
 
-    - Include package.json, webpack.config.js, and other config files
-    - Exclude node_modules if for some reason it exists
+## Filters
 
-2.  Find and replace the following in the entire directory:
+<!-- prettier-ignore-start -->
 
-    1.  Torque_Careers (eg Torque_Floor_Plans) **Note: aim to always prefix with Torque**
-    2.  Torque Careers (eg Torque Floor Plans)
-    3.  torque-careers (eg torque-floor-plans)
-    4.  careers/v1/ (eg floor-plans/v1/)
-    5.  torque_careers (eg torque_floor_plan)
+*Filter* | *Function* | *Value Type*
+--- | --- | ---
 
-3.  Rename directory: torque-plugin => torque-careers
+<!-- prettier-ignore-end -->
 
-4.  Rename all files in this directory: {torque-plugin}-etc-class.php => {torque-careers}-etc-class.php
+# Changelog
 
-5.  Add '<torque_child_theme_slug>' to cli/lib/workspaces.sh
+## [1.0.0]
 
-6.  Open new terminal, and in **project** root, run:
+### Added
 
-    ```sh
-    $ yarn
-    ```
-
-    to install/link dependencies.
-
-7.  In **project** root, run:
-
-    ```sh
-    $ yarn start torque-careers
-    ```
-
-    to compile files to wp-content and start webpack
+- Add Careers CPT
+- Add Job Applications CPT with save application interface.

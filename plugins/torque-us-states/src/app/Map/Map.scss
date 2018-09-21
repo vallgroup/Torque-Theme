@@ -1,0 +1,12 @@
+@import "../scss/variables";
+
+.state {
+  &.notEmpty {
+    fill: #632240;
+  }
+
+  &.active,
+  &:hover {
+    fill: #a8473d;
+  }
+}

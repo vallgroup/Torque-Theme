@@ -1,11 +1,11 @@
 <?php
 
 require_once( get_template_directory() . '/api/permissions/torque-api-permissions-class.php');
-require_once( Torque_Map_API_ROOT . 'controllers/torque-map-example-controller-class.php');
+require_once( Torque_US_States_API_ROOT . 'controllers/torque-us-states-states-controller-class.php');
 
-class Torque_Map_Routes {
+class Torque_US_States_States_Routes {
 
-  public static $resource = '/map/(?P<id>[\d]+)';
+  public static $resource = '/states/';
 
   private $namespace;
 
@@ -18,16 +18,16 @@ class Torque_Map_Routes {
     register_rest_route( $this->namespace, self::$resource , array(
 	  	array(
 	  		'methods'             => 'GET',
-	  		'callback'            => array( $this, 'get_map' ),
-	  		'args'                => Torque_Map_Controller::get_map_args(),
+	  		'callback'            => array( $this, 'get_states' ),
+	  		'args'                => Torque_US_States_States_Controller::get_states_args(),
 	  		// 'permission_callback' => array('Torque_API_Permissions', 'user_can_read'),
 	  	),
 	  ) );
   }
 
-  public function get_map( $request ) {
-    $controller = new Torque_Map_Controller( $request );
-    return $controller->get_map();
+  public function get_states( $request ) {
+    $controller = new Torque_US_States_States_Controller( $request );
+    return $controller->get_states();
   }
 }
 
