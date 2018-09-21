@@ -61,7 +61,50 @@ class Torque_Nav_Menus {
 
       // Return menu post objects
       return $menu_items;
-      
+
+    } else {
+      return [];
+    }
+  }
+
+
+  /**
+   * Get nav menu items by location and return them as a tree
+   * Example: [
+   *   // with children
+   *   ID => [
+   *     'menu' => Menu Object
+   *     'children' => Array of Menu Objects
+   *   ],
+   *   // without children
+   *   ID => [
+   *     'menu' => Menu Object
+   *   ]
+   * ]
+   */
+  public static function get_nav_menu_items_as_tree_by_location( $location, $args = [] ) {
+
+    $locations = get_nav_menu_locations();
+
+    if ($locations && array_key_exists( $location, $locations )) {
+      // Get object id by location
+      $object = wp_get_nav_menu_object( $locations[$location] );
+
+      // Get menu items by menu name
+      $menu_items = wp_get_nav_menu_items( $object->name, $args );
+
+    $tree = [];
+    foreach ( $menu_items as $key => $menu ) {
+      if( 0 == $menu->menu_item_parent ) {
+        $tree[$menu->ID]['menu'] = $menu;
+      } else {
+        $tree[$menu->menu_item_parent]['children'][]['menu'] = $menu;
+      }
+    }
+
+      // Return menu post objects
+      return $tree;
+
     } else {
       return [];
     }
