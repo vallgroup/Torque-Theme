@@ -1,5 +1,7 @@
 /secrets/
 /wp-content/
+/uploads/
+/wp-content/uploads/
 **/node_modules
 **/node_modules/**
 yarn-error.log
