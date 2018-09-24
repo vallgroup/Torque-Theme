@@ -2,7 +2,11 @@
 
 require_once( get_template_directory() . '/includes/torque-nav-menus-class.php');
 
-$menu_items = Torque_Nav_Menus::get_nav_menu_items_by_location( Torque_Nav_Menus::get_default_primary_location_slug() );
+// if menu items isnt set by the including file,
+// get the primary menu items
+if ( ! isset($menu_items) ) {
+  $menu_items = Torque_Nav_Menus::get_nav_menu_items_by_location( Torque_Nav_Menus::get_default_primary_location_slug() );
+}
 
 if ($menu_items) {
 
