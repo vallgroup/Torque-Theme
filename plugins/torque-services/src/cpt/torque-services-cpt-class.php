@@ -32,7 +32,6 @@ class Torque_Services_CPT {
 		'supports' => array(
 			'title',
 			'editor',
-			'thumbnail',
 		),
 		'menu_icon'           => 'dashicons-businessman',
 	);
