@@ -7,7 +7,7 @@ source ./cli/lib/workspaces.sh
 
 # checks the docker containers are running,
 # otherwise starts them up
-docker-compose up -d
+docker-compose up -d --remove-orphans
 
 # runs 'start' script for workspace <workspace-nanme>
 # as defined in the package.json for that workspace
