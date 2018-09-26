@@ -17,4 +17,5 @@ declare -a workspaces=(
   "torque-us-states"
   "torque-residences"
   "torque-services"
+  "torque-contact-form"
 )
