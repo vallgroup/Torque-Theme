@@ -20,27 +20,35 @@ class Torque_Contact_Form_Form {
 
     // allow child theme to hide (or add) fields
     $this->fields = apply_filters( self::$FIELDS_FILTER_HANDLE, array(
-      'tq-name'       => array(
+      'tq-name'               => array(
         'name'  => 'Name',
         'type'  => 'text'
       ),
-      'tq-email'      => array(
+      'tq-email'              => array(
         'name'  => 'Email',
         'type'  => 'email'
       ),
-      'tq-state'      => array(
+      'tq-state'              => array(
         'name'  => 'State',
         'type'  => 'text'
       ),
-      'tq-zip'   => array(
+      'tq-zip'                => array(
         'name'  => 'Zip Code',
         'type'  => 'text'
       ),
-      'tq-phone'      => array(
+      'tq-phone'              => array(
         'name'  => 'Phone',
         'type'  => 'tel'
       ),
-      'tq-message'    => array(
+      'tq-resident-investor'  => array(
+        'name'    => 'I am a:',
+        'type'    => 'radio',
+        'options' => array(
+          'resident'  => 'Resident',
+          'investor'  => 'Investor'
+        )
+      ),
+      'tq-message'            => array(
         'name'  => 'Message',
         'type'  => 'textarea'
       ),

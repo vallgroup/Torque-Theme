@@ -6,7 +6,8 @@ class Torque_Contact_Form_Field_Factory {
     'text',
     'textarea',
     'email',
-    'tel'
+    'tel',
+    'radio'
   );
 
   public static function create_new( $id, $options ) {
@@ -29,6 +30,9 @@ class Torque_Contact_Form_Field_Factory {
 
       case 'tel':
         return self::create_tel_field($id, $options);
+
+      case 'radio':
+        return self::create_radio_field($id, $options);
     }
   }
 
@@ -76,11 +80,33 @@ class Torque_Contact_Form_Field_Factory {
     return self::wrap_field($id, $options, $content);
   }
 
+  private static function create_radio_field($id, $options) {
+    ob_start();
+    ?>
+    <fieldset id="<?php echo $id; ?>">
+    <?php
+      if ($options['options']) {
+        foreach ($options['options'] as $value => $label) {
+          ?>
+          <input type="radio" id="<?php echo $value; ?>" name="<?php echo $id; ?>" value="<?php echo $value; ?>">
+          <label for="<?php echo $value; ?>"><?php echo $label; ?></label>
+          <?php
+        }
+      }
+    ?>
+    </fieldset>
+    <?php
+
+    $content = ob_get_clean();
+
+    return self::wrap_field($id, $options, $content);
+  }
+
   private static function wrap_field($id, $options, $content) {
     ob_start();
 
     $name = $options['name'] ?? '';
-    
+
     ?>
 
     <div class="input-wrapper">
