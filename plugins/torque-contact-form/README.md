@@ -8,7 +8,7 @@ Adds a shortcode for displaying a contact form on pages. The child theme will de
 
 *Filter* | *Function* | *Value Type*
 --- | --- | ---
-`example_filter_slug` | Filter does loads of really cool stuff | Array[string]
+`'torque_contact_form_fields_filter'` | Allows the child theme control over the form fields, giving the ability to add new ones or hide defaults | Array
 
 <!-- prettier-ignore-end -->
 
@@ -18,6 +18,6 @@ Adds a shortcode for displaying a contact form on pages. The child theme will de
 
 ### Added
 
-### Changed
-
-### Removed
+- Plugin config
+- All form classes - email, field factory, template and root class
+- Shortcode with tinyMCE
