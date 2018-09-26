@@ -89,7 +89,7 @@ class Torque_Contact_Form_Field_Factory {
         foreach ($options['options'] as $value => $label) {
           ?>
           <div class="radio-wrapper">
-            <input type="radio" id="<?php echo $value; ?>" name="<?php echo $id; ?>" value="<?php echo $value; ?>" <?php checked( $value, $_POST[$id] ); ?>>
+            <input type="radio" id="<?php echo $value; ?>" name="<?php echo $id; ?>" value="<?php echo $value; ?>" <?php checked( $value, $_POST[$id] ?? '' ); ?>>
             <label for="<?php echo $value; ?>"><?php echo $label; ?></label>
           </div>
           <?php
@@ -111,7 +111,7 @@ class Torque_Contact_Form_Field_Factory {
 
     ?>
 
-    <div class="input-wrapper">
+    <div id="<?php echo $id; ?>" class="input-wrapper">
       <label for="<?php echo $id; ?>"><?php echo $name; ?></label>
       <?php echo $content; ?>
     </div>

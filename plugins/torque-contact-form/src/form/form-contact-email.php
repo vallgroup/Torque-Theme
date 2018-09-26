@@ -20,7 +20,6 @@ class Torque_Contact_Form_Email {
     $headers = array('Content-Type: text/html; charset=UTF-8');
 
     // send mail
-    var_dump($message);
     wp_mail( $this->recipient, $subject, $message, $headers );
 
     // remove html filter to avoid conflicts
