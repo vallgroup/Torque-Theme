@@ -39,7 +39,7 @@ class Torque_Contact_Form_Field_Factory {
   private static function create_text_field($id, $options) {
     ob_start();
     ?>
-    <input type="text" name="<?php echo $id; ?>" id="<?php echo $id; ?>" />
+    <input type="text" name="<?php echo $id; ?>" id="<?php echo $id; ?>" placeholder="<?php echo $options['name']; ?>"/>
     <?php
 
     $content = ob_get_clean();
@@ -50,7 +50,7 @@ class Torque_Contact_Form_Field_Factory {
   private static function create_textarea_field($id, $options) {
     ob_start();
     ?>
-    <textarea name="<?php echo $id; ?>" id="<?php echo $id; ?>" ></textarea>
+    <textarea name="<?php echo $id; ?>" id="<?php echo $id; ?>" placeholder="<?php echo $options['name']; ?>"></textarea>
     <?php
 
     $content = ob_get_clean();
@@ -61,7 +61,7 @@ class Torque_Contact_Form_Field_Factory {
   private static function create_email_field($id, $options) {
     ob_start();
     ?>
-    <input type="email" name="<?php echo $id; ?>" id="<?php echo $id; ?>" />
+    <input type="email" name="<?php echo $id; ?>" id="<?php echo $id; ?>" placeholder="<?php echo $options['name']; ?>"/>
     <?php
 
     $content = ob_get_clean();
@@ -72,7 +72,7 @@ class Torque_Contact_Form_Field_Factory {
   private static function create_tel_field($id, $options) {
     ob_start();
     ?>
-    <input type="tel" name="<?php echo $id; ?>" id="<?php echo $id; ?>" />
+    <input type="tel" name="<?php echo $id; ?>" id="<?php echo $id; ?>" placeholder="<?php echo $options['name']; ?>"/>
     <?php
 
     $content = ob_get_clean();
@@ -88,8 +88,10 @@ class Torque_Contact_Form_Field_Factory {
       if ($options['options']) {
         foreach ($options['options'] as $value => $label) {
           ?>
-          <input type="radio" id="<?php echo $value; ?>" name="<?php echo $id; ?>" value="<?php echo $value; ?>">
-          <label for="<?php echo $value; ?>"><?php echo $label; ?></label>
+          <div class="radio-wrapper">
+            <input type="radio" id="<?php echo $value; ?>" name="<?php echo $id; ?>" value="<?php echo $value; ?>" <?php checked( $value, $_POST[$id] ); ?>>
+            <label for="<?php echo $value; ?>"><?php echo $label; ?></label>
+          </div>
           <?php
         }
       }
