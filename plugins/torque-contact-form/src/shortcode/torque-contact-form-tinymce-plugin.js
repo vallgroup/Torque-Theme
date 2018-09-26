@@ -58,7 +58,7 @@
           {
             type: "textbox",
             name: "recipient_email",
-            label: "Recipient Email",
+            label: "Recipient Email (defaults to site admin email)",
             value: values.recipient_email
           }
         ];
