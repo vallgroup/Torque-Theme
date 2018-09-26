@@ -1,34 +1,54 @@
 <?php
 
-// allow html content
-function tq_careers_form_set_html_content_type() {
-  return 'text/html';
+class Torque_Contact_Form_Email {
+
+  private $recipient = '';
+
+  private $fields = array();
+
+  public function __construct($recipient, $fields) {
+    $this->recipient = $recipient;
+    $this->fields = $fields;
+  }
+
+  public function send() {
+    // allow html content
+    add_filter( 'wp_mail_content_type', array($this, 'set_html_content_type'));
+
+    $message = $this->create_message();
+    $subject = 'New Message';
+    $headers = array('Content-Type: text/html; charset=UTF-8');
+
+    // send mail
+    var_dump($message);
+    wp_mail( $this->recipient, $subject, $message, $headers );
+
+    // remove html filter to avoid conflicts
+    remove_filter( 'wp_mail_content_type', array($this, 'set_html_content_type'));
+  }
+
+  /**
+   * We need this as a separate function so we can remove the filter too
+   */
+  public function set_html_content_type() {
+    return 'text/html';
+  }
+
+  private function create_message() {
+    ob_start();
+    ?>
+
+    <h1>New Message</h1>
+
+    <?php
+    foreach ($this->fields as $id => $options) {
+    ?>
+      <p><?php echo $options['name']; ?>: <?php echo $_POST[$id]; ?></p>
+    <?php
+    }
+
+    return ob_get_clean();
+  }
 }
-add_filter( 'wp_mail_content_type', 'tq_careers_form_set_html_content_type');
-
-
-ob_start();
-?>
-
-<h1>New Message</h1>
-<p>Name: <?php echo $_POST['tq-name']; ?></p>
-<p>Email: <?php echo $_POST['tq-email']; ?></p>
-<p>Company: <?php echo $_POST['tq-company']; ?></p>
-<p>Current State: <?php echo $_POST['tq-state']; ?></p>
-<p>Current Zip: <?php echo $_POST['tq-zip']; ?></p>
-<p>Phone: <?php echo $_POST['tq-phone']; ?></p>
-<p>Message: <?php echo $_POST['tq-message']; ?></p>
-
-<?php
-$message = ob_get_clean();
-$recipient = get_field('contact_page_form_recipient', 'option');
-$subject = 'New Message';
-$headers = array('Content-Type: text/html; charset=UTF-8');
-
-// send mail
-wp_mail( $recipient, $subject, $message, $headers );
-
-// remove html filter to avoid conflicts
-remove_filter( 'wp_mail_content_type', 'tq_careers_form_set_html_content_type');
 
 ?>

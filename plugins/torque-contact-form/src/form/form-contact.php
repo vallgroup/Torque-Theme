@@ -2,6 +2,7 @@
 
 require_once( Torque_Contact_Form_PATH . '/form/form-contact-template.php' );
 require_once( Torque_Contact_Form_PATH . '/form/form-contact-field.php' );
+require_once( Torque_Contact_Form_PATH . '/form/form-contact-email.php' );
 
 class Torque_Contact_Form_Form {
 
@@ -40,6 +41,9 @@ class Torque_Contact_Form_Form {
         'name'  => 'Phone',
         'type'  => 'tel'
       ),
+      /*
+       Example radio buttons option
+
       'tq-resident-investor'  => array(
         'name'    => 'I am a:',
         'type'    => 'radio',
@@ -48,6 +52,7 @@ class Torque_Contact_Form_Form {
           'investor'  => 'Investor'
         )
       ),
+      */
       'tq-message'            => array(
         'name'  => 'Message',
         'type'  => 'textarea'
@@ -83,7 +88,8 @@ class Torque_Contact_Form_Form {
         }
 
         // form is validated - send email
-        include locate_template( 'parts/forms/form-contact-email.php', false, false );
+        $email = new Torque_Contact_Form_Email($this->recipient, $this->fields);
+        $email->send();
 
         $message = array(
           'success' => true,
