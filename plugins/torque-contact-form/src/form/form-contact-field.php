@@ -9,26 +9,30 @@ class Torque_Contact_Form_Field_Factory {
     'tel'
   );
 
-  public static function create_new( $type, $name ) {
+  public static function create_new( $id, $options ) {
+    $type = $options['type'] ?? false;
+
+    if ( ! $type ) {
+      return;
+    }
+
     switch( $type ) {
 
       case 'text':
-        return self::create_text_field($name);
+        return self::create_text_field($id, $options);
 
       case 'textarea':
-        return self::create_textarea_field($name);
+        return self::create_textarea_field($id, $options);
 
       case 'email':
-        return self::create_email_field($name);
+        return self::create_email_field($id, $options);
 
       case 'tel':
-        return self::create_tel_field($name);
+        return self::create_tel_field($id, $options);
     }
   }
 
-  private static function create_text_field($name) {
-    $id = self::create_field_id($name);
-
+  private static function create_text_field($id, $options) {
     ob_start();
     ?>
     <input type="text" name="<?php echo $id; ?>" id="<?php echo $id; ?>" />
@@ -36,12 +40,10 @@ class Torque_Contact_Form_Field_Factory {
 
     $content = ob_get_clean();
 
-    return self::wrap_field($name, $content);
+    return self::wrap_field($id, $options, $content);
   }
 
-  private static function create_textarea_field($name) {
-    $id = self::create_field_id($name);
-
+  private static function create_textarea_field($id, $options) {
     ob_start();
     ?>
     <textarea name="<?php echo $id; ?>" id="<?php echo $id; ?>" ></textarea>
@@ -49,12 +51,10 @@ class Torque_Contact_Form_Field_Factory {
 
     $content = ob_get_clean();
 
-    return self::wrap_field($name, $content);
+    return self::wrap_field($id, $options, $content);
   }
 
-  private static function create_email_field($name) {
-    $id = self::create_field_id($name);
-
+  private static function create_email_field($id, $options) {
     ob_start();
     ?>
     <input type="email" name="<?php echo $id; ?>" id="<?php echo $id; ?>" />
@@ -62,12 +62,10 @@ class Torque_Contact_Form_Field_Factory {
 
     $content = ob_get_clean();
 
-    return self::wrap_field($name, $content);
+    return self::wrap_field($id, $options, $content);
   }
 
-  private static function create_tel_field($name) {
-    $id = self::create_field_id($name);
-
+  private static function create_tel_field($id, $options) {
     ob_start();
     ?>
     <input type="tel" name="<?php echo $id; ?>" id="<?php echo $id; ?>" />
@@ -75,26 +73,23 @@ class Torque_Contact_Form_Field_Factory {
 
     $content = ob_get_clean();
 
-    return self::wrap_field($name, $content);
+    return self::wrap_field($id, $options, $content);
   }
 
-  private static function wrap_field($name, $content) {
+  private static function wrap_field($id, $options, $content) {
     ob_start();
 
-    $id = self::create_field_id($name);
+    $name = $options['name'] ?? '';
+    
     ?>
 
     <div class="input-wrapper">
-      <label for="<?php echo self::create_field_id($name); ?>"><?php echo $name; ?></label>
+      <label for="<?php echo $id; ?>"><?php echo $name; ?></label>
       <?php echo $content; ?>
     </div>
 
     <?php
     return ob_get_clean();
-  }
-
-  public static function create_field_id($name) {
-    return 'tq-'.str_replace(' ', '-', strtolower($name) );
   }
 }
 

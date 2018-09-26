@@ -20,13 +20,30 @@ class Torque_Contact_Form_Form {
 
     // allow child theme to hide (or add) fields
     $this->fields = apply_filters( self::$FIELDS_FILTER_HANDLE, array(
-      'Name'       => 'text',
-      'Email'      => 'email',
-      'Company'    => 'text',
-      'State'      => 'text',
-      'Zip Code'   => 'text',
-      'Phone'      => 'tel',
-      'Message'    => 'textarea'
+      'tq-name'       => array(
+        'name'  => 'Name',
+        'type'  => 'text'
+      ),
+      'tq-email'      => array(
+        'name'  => 'Email',
+        'type'  => 'email'
+      ),
+      'tq-state'      => array(
+        'name'  => 'State',
+        'type'  => 'text'
+      ),
+      'tq-zip'   => array(
+        'name'  => 'Zip Code',
+        'type'  => 'text'
+      ),
+      'tq-phone'      => array(
+        'name'  => 'Phone',
+        'type'  => 'tel'
+      ),
+      'tq-message'    => array(
+        'name'  => 'Message',
+        'type'  => 'textarea'
+      ),
     ));
   }
 
@@ -43,8 +60,8 @@ class Torque_Contact_Form_Form {
     if (isset($_POST[self::$HIDDEN_FIELD_NAME])) {
       // form was submitted
       try {
-        foreach ($this->fields as $field) {
-          if ( ! isset($_POST[$field]) ) {
+        foreach ($this->fields as $field_id => $field_options) {
+          if ( ! isset( $_POST[$field_id] ) ) {
             throw new Exception('All form fields are required');
           }
         }

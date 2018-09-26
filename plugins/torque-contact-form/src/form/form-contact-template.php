@@ -81,11 +81,11 @@ class Torque_Contact_Form_Form_Template {
 
   private function the_fields() {
 
-    foreach ($this->fields as $name => $type) {
+    foreach ($this->fields as $id => $options) {
 
-      if ( in_array( $type, Torque_Contact_Form_Field_Factory::$supported_field_types ) ) {
+      if ( $options['type'] && in_array( $options['type'], Torque_Contact_Form_Field_Factory::$supported_field_types ) ) {
 
-        echo Torque_Contact_Form_Field_Factory::create_new($type, $name);
+        echo Torque_Contact_Form_Field_Factory::create_new($id, $options);
 
       }
     }
