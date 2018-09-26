@@ -1,9 +1,6 @@
 <?php
 
-require( Torque_Contact_Form_PATH . '/api/torque-contact-form-rest-controller-class.php' );
 require( Torque_Contact_Form_PATH . '/shortcode/torque-contact-form-shortcode-class.php' );
-require( Torque_Contact_Form_PATH . '/cpt/torque-contact-form-cpt-class.php' );
-
 
 /**
  * Autoload all other classes

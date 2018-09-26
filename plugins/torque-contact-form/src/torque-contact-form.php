@@ -59,9 +59,7 @@ class Torque_Contact_Form {
 
 		// comment out class names to exclude
 		Torque_Contact_Form_Autoloader::autoload( array(
-			'Torque_Contact_Form_REST_Controller',
 			'Torque_Contact_Form_Shortcode',
-			'Torque_Contact_Form_CPT',
 		) );
 
 		// enqueue plugin scripts
