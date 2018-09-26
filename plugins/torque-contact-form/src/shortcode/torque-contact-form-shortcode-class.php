@@ -1,6 +1,7 @@
 <?php
 
 require( Torque_Contact_Form_PATH . 'shortcode/torque-contact-form-tinymce-class.php' );
+require( Torque_Contact_Form_PATH . 'form/form-contact.php' );
 
 class Torque_Contact_Form_Shortcode {
 
@@ -67,22 +68,11 @@ class Torque_Contact_Form_Shortcode {
    * Using the atts and content saved to the instance,
    * we should return some markup here that the shortcoded will be returned as.
    *
-   * Note we pass the site url through to allow our axios url to depend on the WP site.
-   *
    * @return string
    */
   private function get_markup() {
-    $exp_args = '';
-    foreach ( $this->atts as $key => $arg ) {
-      if ( empty( $arg ) )
-        continue;
-      $exp_args .= ' data-'.esc_attr( $key ).'="'.$arg.'"';
-    }
-    return '<span
-      class="torque-contact-form-react-entry"
-      data-site="'.get_site_url().'"
-      '.$exp_args.'>
-      </span>';
+    $form = new Torque_Contact_Form_Form( $this->atts['recipient_email'] );
+    return $form->get_form_markup();
   }
 }
 
