@@ -19,8 +19,10 @@ class Torque_Contact_Form_Shortcode {
   public function __construct() {
     // use this array to attributes and display them in the front end
     // for private attributes go to setup_atts()
+    //
+    // recipient email defaults to site admin email
     $this->expected_args = array(
-      'recipient_email' => '',
+      'recipient_email' => get_bloginfo('admin_email'),
     );
 
 		add_shortcode( self::$SHORTCODE_SLUG , array( $this, 'shortcode_handler') );
