@@ -4,7 +4,7 @@
  /**
   * Plugin Name: Torque US States
   * Description:
-  * Version:     1.0.0
+  * Version:     1.0.1
   * Author:      Torque
   * Author URI:  https://torque.digital
   * License:     GPL
