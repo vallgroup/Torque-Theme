@@ -82,16 +82,26 @@ function torque_custom_script_init(){
 }
 
 
+
 /**
- * Register ACF Pro Fields with PHP
+ * ACF
  */
+
+
 require_once get_template_directory().'/includes/acf/acf-init.php';
-/**
- * Add ACF Pro Options page
- */
+require_once get_template_directory().'/includes/acf/torque-acf-search-class.php';
+
+// Add ACF Pro Options page
 if( function_exists('acf_add_options_page') ) {
 	acf_add_options_page();
 }
+
+// Extend WP search to search ACF content
+if ( class_exists('Torque_ACF_Search') ) {
+  new Torque_ACF_Search();
+}
+
+
 
 
 
@@ -123,6 +133,9 @@ function disable_default_dashboard_widgets() {
 add_action('admin_menu', 'disable_default_dashboard_widgets');
 
 remove_action('welcome_panel', 'wp_welcome_panel');
+
+
+
 
 /**
  * Custom login
