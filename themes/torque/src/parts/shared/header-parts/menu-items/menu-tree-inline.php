@@ -33,32 +33,36 @@ if ($menu_items) {
 function torque_build_menu_tree_html( $menu_item ) {
   global $current_url;
   // check if the menu is active
-  $active_class = $menu_item['menu']->url === $current_url || $menu_item['menu']->url === $current_url.'/'
-    ? ' active'
-    : '';
+  if (array_key_exists('menu', $menu_item)) {
 
-  $is_parent = isset( $menu_item['children'] ) && ! empty( $menu_item['children'] );
+    $active_class = $menu_item['menu']->url === $current_url || $menu_item['menu']->url === $current_url.'/'
+      ? ' active'
+      : '';
 
-  $parent_class = $is_parent ? ' parent' : '';
-  ?>
-  <div class="torque-menu-item-wrapper<?php echo $active_class, $parent_class; ?>">
-    <a href="<?php echo $menu_item['menu']->url; ?>">
-      <div class="torque-menu-item <?php echo $active_class; ?>">
-        <?php echo $menu_item['menu']->title; ?>
-      </div>
-    </a>
-    <?php
-    // check for children to display
-    if ( $is_parent ) {
-      ?><div class="torque-menu-item-children-wrapper"><?php
-      foreach ( $menu_item['children'] as $child_menu ) {
-        torque_build_menu_tree_html( $child_menu );
-      }
-      ?></div><?php
-    }
+    $is_parent = isset( $menu_item['children'] ) && ! empty( $menu_item['children'] );
+
+    $parent_class = $is_parent ? ' parent' : '';
     ?>
-  </div>
-  <?php
+    <div class="torque-menu-item-wrapper<?php echo $active_class, $parent_class; ?>">
+      <a href="<?php echo $menu_item['menu']->url; ?>">
+        <div class="torque-menu-item <?php echo $active_class; ?>">
+          <?php echo $menu_item['menu']->title; ?>
+        </div>
+      </a>
+      <?php
+      // check for children to display
+      if ( $is_parent ) {
+        ?><div class="torque-menu-item-children-wrapper"><?php
+        foreach ( $menu_item['children'] as $child_menu ) {
+          torque_build_menu_tree_html( $child_menu );
+        }
+        ?></div><?php
+      }
+      ?>
+    </div>
+    <?php
+
+  }
 }
 
 ?>
