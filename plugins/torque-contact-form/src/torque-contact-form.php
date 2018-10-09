@@ -2,14 +2,14 @@
 // entry point for backend of plugin
 
  /**
-  * Plugin Name: Torque US States
+  * Plugin Name: Torque Contact Form
   * Description:
-  * Version:     1.0.1
+  * Version:     1.0.0
   * Author:      Torque
   * Author URI:  https://torque.digital
   * License:     GPL
   *
-  * @package Torque US States
+  * @package Torque Contact Form
   */
 
 // If this file is called directly, abort.
@@ -20,26 +20,26 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * Define constants for plugin's url and path
  */
-define( 'Torque_US_States_PATH', plugin_dir_path(__FILE__) );
-define( 'Torque_US_States_URL', plugin_dir_url(__FILE__) );
+define( 'Torque_Contact_Form_PATH', plugin_dir_path(__FILE__) );
+define( 'Torque_Contact_Form_URL', plugin_dir_url(__FILE__) );
 
 /**
  * Require autoloader for plugin classes
  */
-require( Torque_US_States_PATH . '/autoload.php' );
+require( Torque_Contact_Form_PATH . '/autoload.php' );
 
 /**
  * Register plugin
  */
-add_action( 'plugins_loaded', array( Torque_US_States::get_inst(), 'init' ) );
+add_action( 'plugins_loaded', array( Torque_Contact_Form::get_inst(), 'init' ) );
 
-class Torque_US_States {
+class Torque_Contact_Form {
 
 	public static $instance = NULL;
 
-	public static $PLUGIN_NAME = 'Torque US States';
+	public static $PLUGIN_NAME = 'Torque Contact Form';
 
-	public static $PLUGIN_SLUG = 'torque-us-states';
+	public static $PLUGIN_SLUG = 'torque-contact-form';
 
 	public static function get_inst() {
 		!self::$instance AND self::$instance = new self;
@@ -58,10 +58,8 @@ class Torque_US_States {
 	public function init() {
 
 		// comment out class names to exclude
-		Torque_US_States_Autoloader::autoload( array(
-			'Torque_US_States_REST_Controller',
-			'Torque_US_States_Shortcode',
-			'Torque_US_States_CPT',
+		Torque_Contact_Form_Autoloader::autoload( array(
+			'Torque_Contact_Form_Shortcode',
 		) );
 
 		// enqueue plugin scripts
@@ -70,16 +68,16 @@ class Torque_US_States {
 
 	public function enqueue_plugin_scripts() {
 		wp_enqueue_script(
-			'torque-us-states-scripts',
-			Torque_US_States_URL . 'bundles/bundle.js',
+			'torque-contact-form-scripts',
+			Torque_Contact_Form_URL . 'bundles/bundle.js',
 			array() ,
 			'0.0.1',
 			true
 		);
 
 		wp_enqueue_style(
-			'torque-us-states-styles',
-			Torque_US_States_URL . 'bundles/main.css'
+			'torque-contact-form-styles',
+			Torque_Contact_Form_URL . 'bundles/main.css'
 		);
 	}
 }

@@ -1,22 +1,13 @@
 {
-  "name": "torque-us-states",
-  "version": "1.0.1",
+  "name": "torque-contact-form",
+  "version": "1.0.0",
   "author": "Torque",
   "license": "ISC",
   "scripts": {
     "start": "webpack --mode=development --watch",
     "build": "webpack --mode=production"
   },
-  "dependencies": {
-    "axios": "^0.18.0",
-    "babel-polyfill": "^6.26.0",
-    "babel-runtime": "^6.26.0",
-    "classnames": "^2.2.6",
-    "path": "^0.12.7",
-    "prop-types": "^15.6.2",
-    "react": "^16.4.2",
-    "react-dom": "16.4.2"
-  },
+  "dependencies": {},
   "devDependencies": {
     "autoprefixer": "^9.0.2",
     "babel-cli": "^6.26.0",
