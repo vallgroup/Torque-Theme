@@ -26,7 +26,8 @@ export class TorqueMap extends React.Component {
     this.setMapCenterFromProps();
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
+    console.log(this.props, this.state);
     // check if we have a new search term
     if (this.props.searchNearby !== prevProps.searchNearby) {
       // make sure we have the map and term before running the search
