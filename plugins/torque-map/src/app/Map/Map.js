@@ -87,6 +87,7 @@ export class TorqueMap extends React.Component {
 
   renderMarkers() {
     return this.state.markers.map((marker, index) => {
+      console.log(marker);
       return (
         <Marker
           key={index}
@@ -96,7 +97,7 @@ export class TorqueMap extends React.Component {
             url: this.props.markersIcon
               ? this.props.markersIcon.url
               : marker.icon,
-            anchor: new this.props.google.maps.Point(39, 54),
+            anchor: new this.props.google.maps.Point(39 / 2, 54),
             size: new google.maps.Size(39, 54),
             scaledSize: new google.maps.Size(39, 54)
           }}
