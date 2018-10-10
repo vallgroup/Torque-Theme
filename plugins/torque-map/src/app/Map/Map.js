@@ -15,7 +15,8 @@ export class TorqueMap extends React.Component {
       selectedPlace: {},
       activeMarker: {},
       showingInfoWindow: false,
-      markers: []
+      markers: [],
+      markerIcon: props.selectedPOIIcon
     };
 
     this.map = null;
@@ -165,7 +166,7 @@ export class TorqueMap extends React.Component {
       radius: 1000
     });
     // add markers and call our callback
-    this.setState({ markers: results });
+    this.setState({ markers: results, markerIcon: this.props.selectedPOIIcon });
     if (
       this.props.onNearbySearch &&
       "function" === typeof this.props.onNearbySearch
