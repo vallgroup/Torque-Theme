@@ -1,22 +1,22 @@
-import React from 'react'
-import axios from 'axios'
+import React from "react";
+import axios from "axios";
 
 export default class ListPOIS extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
-      list: [],
-    }
+      list: []
+    };
   }
 
   componentDidMount() {
-    this.initListState()
+    this.initListState();
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.list !== prevProps.list) {
-      this.initListState()
+      this.initListState();
     }
   }
 
@@ -40,38 +40,38 @@ export default class ListPOIS extends React.Component {
                   </div>
                 )}
               </div>
-            )
+            );
           })}
       </div>
-    )
+    );
   }
 
   initListState() {
     if (!this.props.list) {
-      return
+      return;
     }
 
     const destinations = this.props.list.map(poi => {
-      return poi.geometry.location //new google.maps.LatLng(lat,lng)
-    })
+      return poi.geometry.location; //new google.maps.LatLng(lat,lng)
+    });
 
     if (this.props.showDistanceFrom) {
-      this.getDistances(this.props.showDistanceFrom, destinations)
+      this.getDistances(this.props.showDistanceFrom, destinations);
     }
 
     this.setState({
-      list: this.props.list,
-    })
+      list: this.props.list
+    });
   }
 
   getDistances(origin, destinations) {
-    var service = new google.maps.DistanceMatrixService()
+    var service = new google.maps.DistanceMatrixService();
     return service.getDistanceMatrix(
       {
         origins: [new google.maps.LatLng(origin.lat, origin.lng)],
         destinations: destinations,
         unitSystem: google.maps.UnitSystem.IMPERIAL,
-        travelMode: 'DRIVING',
+        travelMode: "DRIVING"
         // transitOptions: TransitOptions,
         // drivingOptions: DrivingOptions,
         // avoidHighways: Boolean,
@@ -79,16 +79,16 @@ export default class ListPOIS extends React.Component {
       },
       resp => {
         if (resp.rows && 0 < resp.rows.length) {
-          let destinations = this.state.list
+          let destinations = this.state.list;
           for (var i = 0; i < resp.rows[0].elements.length; i++) {
-            destinations[i].distance = resp.rows[0].elements[i].distance.text
+            destinations[i].distance = resp.rows[0].elements[i].distance.text;
           }
 
           this.setState({
-            list: destinations,
-          })
+            list: destinations
+          });
         }
       }
-    )
+    );
   }
 }
