@@ -1,8 +1,15 @@
 import React, { Component } from "react";
 import axios from "axios";
+import ScrollableAnchor, {
+  goToAnchor,
+  configureAnchors
+} from "react-scrollable-anchor";
 import Map from "./Map/Map";
 import Loop from "./Loop/Loop";
 import StatesList from "./StatesList/StatesList";
+
+const LOOP_ANCHOR_ID = "torque-us-states-loop-anchor";
+configureAnchors({ offset: -60, scrollDuration: 200 });
 
 class App extends Component {
   constructor(props) {
@@ -55,21 +62,25 @@ class App extends Component {
           </div>
         </div>
 
-        <div className={"torque-us-states-loop-wrapper"}>
-          <Loop
-            currentState={currentState}
-            currentStateName={this.getCurrentStateName()}
-            site={site}
-            postType={postType}
-            linkText={linkText}
-            loopLinkSourceMetaKey={loopLinkSourceMetaKey}
-          />
-        </div>
+        <ScrollableAnchor id={LOOP_ANCHOR_ID}>
+          <div className={"torque-us-states-loop-wrapper"}>
+            <Loop
+              currentState={currentState}
+              currentStateName={this.getCurrentStateName()}
+              site={site}
+              postType={postType}
+              linkText={linkText}
+              loopLinkSourceMetaKey={loopLinkSourceMetaKey}
+            />
+          </div>
+        </ScrollableAnchor>
       </div>
     );
   }
 
   updateCurrentState(stateCode) {
+    goToAnchor(LOOP_ANCHOR_ID);
+
     this.setState({ currentState: stateCode });
   }
 
