@@ -15,7 +15,8 @@ export class TorqueMap extends React.Component {
       selectedPlace: {},
       activeMarker: {},
       showingInfoWindow: false,
-      markers: []
+      markers: [],
+      markerIcon: props.selectedPOIIcon
     };
 
     this.map = null;
@@ -26,7 +27,8 @@ export class TorqueMap extends React.Component {
     this.setMapCenterFromProps();
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
+    console.log(this.props, this.state);
     // check if we have a new search term
     if (this.props.searchNearby !== prevProps.searchNearby) {
       // make sure we have the map and term before running the search
@@ -86,6 +88,7 @@ export class TorqueMap extends React.Component {
 
   renderMarkers() {
     return this.state.markers.map((marker, index) => {
+      console.log(marker);
       return (
         <Marker
           key={index}
@@ -95,7 +98,7 @@ export class TorqueMap extends React.Component {
             url: this.props.markersIcon
               ? this.props.markersIcon.url
               : marker.icon,
-            anchor: new this.props.google.maps.Point(39, 54),
+            anchor: new this.props.google.maps.Point(39 / 2, 54),
             size: new google.maps.Size(39, 54),
             scaledSize: new google.maps.Size(39, 54)
           }}
@@ -163,7 +166,7 @@ export class TorqueMap extends React.Component {
       radius: 1000
     });
     // add markers and call our callback
-    this.setState({ markers: results });
+    this.setState({ markers: results, markerIcon: this.props.selectedPOIIcon });
     if (
       this.props.onNearbySearch &&
       "function" === typeof this.props.onNearbySearch
