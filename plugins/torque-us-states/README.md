@@ -20,6 +20,12 @@ A React app can then be included with a shortcode which will allow the user to f
 
 # Changelog
 
+## [1.0.2] 10/30/2018
+
+### Changed
+
+- Page scrolls to loop when a valid state is clicked
+
 ## [1.0.1] 10/02/2018
 
 ### Changed
