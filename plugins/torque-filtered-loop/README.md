@@ -17,6 +17,12 @@ Currently, the user is able to set a taxonomy, a parent term to limit filter opt
 
 # Changelog
 
+## [1.0.1]
+
+### Changed
+
+- Fixed bug in posts params. posts_per_page -> per_page
+
 ## [1.0.0]
 
 ### Added
