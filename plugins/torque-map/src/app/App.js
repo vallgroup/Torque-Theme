@@ -17,6 +17,7 @@ class App extends Component {
       map: null,
       pois: [],
       selectedPOI: {},
+      selectedPOIIcon: {},
       poiList: [],
       poisTitle: "",
       poisLocation: "",
@@ -51,7 +52,7 @@ class App extends Component {
             }}
             searchNearby={this.state.selectedPOI.keyword}
             onNearbySearch={this.updatePOIList.bind(this)}
-            markersIcon={this.state.selectedPOI.marker}
+            markersIcon={this.state.selectedPOIIcon}
           />
         )}
 
@@ -107,6 +108,7 @@ class App extends Component {
       const url =
         this.props.site + `/wp-json/torque-map/v1/map/${this.props.mapID}`;
       const mapPost = await axios.get(url);
+      console.log(mapPost.data);
       if (mapPost.data.success) {
         this.setState({
           apiKey: mapPost.data.api_key,
@@ -129,9 +131,14 @@ class App extends Component {
   }
 
   updatePOIList(list, mapCenter) {
-    this.setState({
-      poiList: list,
-      mapCenter: mapCenter
+    this.setState(({ selectedPOI }) => {
+      return {
+        poiList: list,
+        mapCenter: mapCenter,
+        // update the icon here rather than when clicking the new POI,
+        // so the icon doesnt change before the network request completes
+        selectedPOIIcon: selectedPOI.marker
+      };
     });
   }
 }

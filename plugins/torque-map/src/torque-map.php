@@ -4,7 +4,7 @@
  /**
   * Plugin Name: Torque Map
   * Description:
-  * Version:     1.0.1
+  * Version:     1.0.2
   * Author:      Torque
   * Author URI:  https://torque.digital
   * License:     GPL

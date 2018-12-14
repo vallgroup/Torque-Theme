@@ -20,6 +20,13 @@ Filters available for the theme to control some of the map's layout and function
 
 # Changelog
 
+## [1.0.2] 9/12/2018
+
+### Changed
+
+- fix the markers point anchors so they dont move relative to the map on zoom.
+- make sure the marker icons dont change before we have the new results from the nearby search
+
 ## [1.0.1] 9/12/2018
 
 ### Changed
