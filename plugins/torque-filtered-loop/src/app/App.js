@@ -130,7 +130,7 @@ class App extends Component {
       {},
       {
         _embed: true,
-        posts_per_page: 100
+        per_page: 100
       },
       params
     );
