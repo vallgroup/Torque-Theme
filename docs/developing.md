@@ -55,7 +55,6 @@ Alternatively, since we won't want to do a full merge from a client branch to ma
           (eg db_data -> child_theme_db_data)
 
     2.  In the docker-compose file you should also change the db name (in MYSQL_DATABASE and WORDPRESS_DB_NAME), although this is not compulsory.
-    3.  Add the theme's build command to the `setup.sh` script
 
 4.  Then repeat steps 9, 10 and 11 from [setup](./setup.md) to get your new wordpress installation up and running.
 
