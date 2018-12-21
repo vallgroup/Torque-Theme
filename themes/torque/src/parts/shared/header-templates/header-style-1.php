@@ -11,21 +11,25 @@
  * can be found in the child theme boilerplate.
  */
 
-$background_color = $tq_header_style_1_color && $tq_header_style_1_color !== ''
+$background_color = isset($tq_header_style_1_color) && $tq_header_style_1_color !== ''
   ? $tq_header_style_1_color
-  : 'transparent'
+  : 'transparent';
+
+$logo_dark_light = isset($tq_header_style_1_logo) && $tq_header_style_1_logo === 'white' ? 'white' : 'dark';
+
+$extra_classes = isset($tq_header_style_1_classes) ? $tq_header_style_1_classes : '';
 
 ?>
 
 <header
   id="header-style-1"
-  class="torque-header"
+  class="torque-header <?php echo $extra_classes; ?>"
   style="background-color: <?php echo $background_color; ?>">
 
   <div class="row torque-header-content-wrapper torque-navigation-toggle">
 
     <div class="col2 col3-tablet col4-desktop torque-header-logo-wrapper">
-      <?php get_template_part( 'parts/shared/logo', 'dark'); ?>
+      <?php get_template_part( 'parts/shared/logo', $logo_dark_light); ?>
     </div>
 
     <div class="col2 col3x2-tablet torque-header-burger-menu-wrapper">
