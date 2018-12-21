@@ -135,6 +135,15 @@ add_action('admin_menu', 'disable_default_dashboard_widgets');
 remove_action('welcome_panel', 'wp_welcome_panel');
 
 
+// properly hash acf password fields
+function tq_encrypt_passwords( $value, $post_id, $field  )
+{
+    $value = wp_hash_password( $value );
+
+    return $value;
+}
+add_filter('acf/update_value/type=password', 'tq_encrypt_passwords', 10, 3);
+
 
 
 /**
