@@ -19,6 +19,7 @@ entry.forEach(entry => {
         site={entry.getAttribute("data-site")}
         tax={entry.getAttribute("data-tax")}
         parent={entry.getAttribute("data-parent")}
+        firstTerm={entry.getAttribute("data-first_term")}
         loopTemplate={entry.getAttribute("data-loop-template")}
       />,
       entry

@@ -22,7 +22,8 @@ class Torque_Filtered_Loop_Shortcode {
     // for private attributes go to setup_atts()
     $this->expected_args = array(
       'tax'           => '',
-      'parent'        => ''
+      'parent'        => '',
+      'first_term'    => '',
     );
 
 		add_shortcode( self::$SHORTCODE_SLUG , array( $this, 'shortcode_handler') );
