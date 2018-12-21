@@ -49,6 +49,10 @@
               _attr.parent = e.data.parent;
             }
 
+            if (e.data.first_term) {
+              _attr.first_term = e.data.first_term;
+            }
+
             var args = {
               tag: shortcode_string,
               type: "closed",
@@ -62,14 +66,20 @@
           {
             type: "textbox",
             name: "tax",
-            label: "Taxonomy For Filter",
+            label: "Taxonomy Slug For Filter",
             value: values.tax
           },
           {
             type: "textbox",
             name: "parent",
-            label: "Parent Term (optional)",
+            label: "Parent Term Slug (optional)",
             value: values.parent
+          },
+          {
+            type: "textbox",
+            name: "first_term",
+            label: "Show First From Term ID (optional)",
+            value: values.first_term
           }
         ];
 
