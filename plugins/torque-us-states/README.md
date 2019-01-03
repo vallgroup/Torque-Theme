@@ -20,6 +20,12 @@ A React app can then be included with a shortcode which will allow the user to f
 
 # Changelog
 
+## [1.0.1] 10/02/2018
+
+### Changed
+
+- Added an extra wrapper div to the top section to allow for backgrounds
+
 ## [1.0.0] 09/14/2018
 
 ### Added
