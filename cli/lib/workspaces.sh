@@ -4,6 +4,7 @@
 # to get a list of the workspace names so we dont have to define it here
 
 declare -a workspaces=(
+  "waldos"
   "torque-theme"
   "torque-floor-plans"
   "torque-availability"
