@@ -118,6 +118,7 @@ export class TorqueMap extends React.Component {
           zoom={+this.props.zoom || 12}
           center={this.state.mapCenter}
           ref={mapObject => (this.map = mapObject && mapObject.map)}
+          styles={this.props.styles}
         >
           {this.props.center &&
             this.props.centerMarker &&
