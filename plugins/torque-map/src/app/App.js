@@ -15,6 +15,7 @@ class App extends Component {
     this.state = {
       apiKey: "",
       map: null,
+      styles: null,
       pois: [],
       selectedPOI: {},
       selectedPOIIcon: {},
@@ -53,6 +54,7 @@ class App extends Component {
             searchNearby={this.state.selectedPOI.keyword}
             onNearbySearch={this.updatePOIList.bind(this)}
             markersIcon={this.state.selectedPOIIcon}
+            styles={this.state.styles}
           />
         )}
 
@@ -60,13 +62,12 @@ class App extends Component {
         {"middle" === this.state.poisLocation && this.showPOIs()}
 
         {/* Display the poi list if we have one */}
-        {this.state.displayPOIList &&
-          0 < this.state.poiList.length && (
-            <ListPOIS
-              list={this.state.poiList}
-              showDistanceFrom={this.state.mapCenter}
-            />
-          )}
+        {this.state.displayPOIList && 0 < this.state.poiList.length && (
+          <ListPOIS
+            list={this.state.poiList}
+            showDistanceFrom={this.state.mapCenter}
+          />
+        )}
 
         {/* Display the poisLocation below the map */}
         {"bottom" === this.state.poisLocation && this.showPOIs()}
@@ -113,6 +114,7 @@ class App extends Component {
         this.setState({
           apiKey: mapPost.data.api_key,
           map: mapPost.data.map_details,
+          styles: JSON.parse(mapPost.data.map_styles),
           pois: mapPost.data.pois,
           poisTitle: mapPost.data.pois_title,
           poisLocation: mapPost.data.pois_location,
