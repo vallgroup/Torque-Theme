@@ -91,6 +91,16 @@ class Toruqe_Map_CPT {
 		), 'torque_map');
 
 		$this->maybe_add_pois();
+
+		pwp_add_metabox( 'Map Styles', array( 'torque_map' ), array(
+			array(
+				'context'     => 'post',
+				'type'        => 'textarea',
+				'name'        => 'map_styles',
+				'label'       => 'Create your style with https://snazzymaps.com/, then copy the entire "JavaScript style array" output into this box',
+				'placeholder' => '',
+			),
+		), 'map_styles');
 	}
 
 	public function maybe_add_pois() {

@@ -37,6 +37,7 @@ class Torque_Map_Controller {
         return Torque_API_Responses::Success_Response( array(
           'api_key'          => $this->get_api_key(),
           'map_details'	     => $this->get_map_shaped( $map ),
+					'map_styles'			 => $this->get_map_styles( $map->ID ),
           'pois'	           => $pois['pois'] ?? [],
 					'pois_title'			 => $pois['title'] ?? '',
           'pois_location'    => $this->pois_location(),
@@ -83,6 +84,15 @@ class Torque_Map_Controller {
 		 */
 		$location = apply_filters( self::$POIS_LOCATION, 'top' );
 		return $location;
+	}
+
+	private function get_map_styles( $id ) {
+		$context = array( 'context' => 'post', 'id' => $id );
+		$map_styles = premise_get_value( 'map_styles', $context );
+
+		if ( $map_styles ) {
+			return preg_replace( "/\r|\n/", "", strip_tags($map_styles) );
+		}
 	}
 
 	private function get_map_shaped( $map ) {
