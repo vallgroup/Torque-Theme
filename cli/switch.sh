@@ -35,8 +35,9 @@ fi
 
 # make the switch
 
-# stop containers from previous environment
-docker-compose stop
+# stop anything currently running
+chmod +x ./cli/stop.sh
+./cli/stop.sh
 
 # remove uploads from gitignore wp-content directory
 ./cli/uploads.sh remove
