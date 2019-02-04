@@ -88,8 +88,10 @@ class App extends Component {
         }
       );
 
-      this.setState({ posts: response.data });
-      this.addPostsToCache(response.data);
+      const postsSorted = this.sortPosts(response.data);
+
+      this.setState({ posts: postsSorted });
+      this.addPostsToCache(postsSorted);
     } catch (e) {
       console.warn(e);
     }
@@ -130,7 +132,7 @@ class App extends Component {
       {},
       {
         _embed: true,
-        posts_per_page: 100
+        per_page: 100
       },
       params
     );
@@ -149,6 +151,27 @@ class App extends Component {
     }
 
     return parentId;
+  }
+
+  sortPosts(posts) {
+    const { firstTerm } = this.props;
+
+    if (!firstTerm) {
+      return posts;
+    }
+
+    const firstPosts = [];
+    const otherPosts = [];
+
+    posts.forEach(post => {
+      if (post.categories.includes(parseInt(firstTerm))) {
+        firstPosts.push(post);
+      } else {
+        otherPosts.push(post);
+      }
+    });
+
+    return [...firstPosts, ...otherPosts];
   }
 
   /**
@@ -180,6 +203,7 @@ App.propTypes = {
   site: PropTypes.string.isRequired,
   tax: PropTypes.string.isRequired,
   parent: PropTypes.string,
+  first_term: PropTypes.string,
   loopTemplate: PropTypes.string
 };
 
