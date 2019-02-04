@@ -1,6 +1,6 @@
 # Torque Map
 
-Allows users to create their own custom maps, complete with custom pointers and points of interest filters (POIs), and include them in their wordpress site with a shortcode.
+Allows users to create their own custom maps, complete with styling, custom pointers and points of interest filters (POIs), and include them in their wordpress site with a shortcode.
 
 ## Filters
 
@@ -19,6 +19,12 @@ Filters available for the theme to control some of the map's layout and function
 <!-- prettier-ignore-end -->
 
 # Changelog
+
+## [1.1.0]
+
+### Added
+
+- Ability to add custom styling to maps with snazzymaps output
 
 ## [1.0.2] 9/12/2018
 
