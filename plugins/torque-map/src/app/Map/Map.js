@@ -28,7 +28,6 @@ export class TorqueMap extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(this.props, this.state);
     // check if we have a new search term
     if (this.props.searchNearby !== prevProps.searchNearby) {
       // make sure we have the map and term before running the search
@@ -88,7 +87,6 @@ export class TorqueMap extends React.Component {
 
   renderMarkers() {
     return this.state.markers.map((marker, index) => {
-      console.log(marker);
       return (
         <Marker
           key={index}
