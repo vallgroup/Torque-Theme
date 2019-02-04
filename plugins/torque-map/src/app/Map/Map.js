@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createRef } from "react";
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 import style from "./Map.scss";
 import MapShape from "./Shape";
@@ -19,7 +19,7 @@ export class TorqueMap extends React.Component {
       markerIcon: props.selectedPOIIcon
     };
 
-    this.map = null;
+    this.map = createRef();
     this.placesServices = null;
   }
 
@@ -28,7 +28,6 @@ export class TorqueMap extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(this.props, this.state);
     // check if we have a new search term
     if (this.props.searchNearby !== prevProps.searchNearby) {
       // make sure we have the map and term before running the search
@@ -88,7 +87,6 @@ export class TorqueMap extends React.Component {
 
   renderMarkers() {
     return this.state.markers.map((marker, index) => {
-      console.log(marker);
       return (
         <Marker
           key={index}
@@ -117,7 +115,8 @@ export class TorqueMap extends React.Component {
           google={this.props.google}
           zoom={+this.props.zoom || 12}
           center={this.state.mapCenter}
-          ref={mapObject => (this.map = mapObject && mapObject.map)}
+          ref={this.map}
+          styles={this.props.styles}
         >
           {this.props.center &&
             this.props.centerMarker &&
