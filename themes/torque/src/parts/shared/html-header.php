@@ -12,6 +12,6 @@
 		<link rel="shortcut icon" href="<?php echo get_stylesheet_directory_uri(); ?>/statics/images/favicon/favicon.ico"/>
 		<?php wp_head(); ?>
   </head>
-<body <?php body_class(); ?>>
+<body <?php body_class(); ?> ontouchstart>
 
 <?php do_action('tq_body'); ?>
