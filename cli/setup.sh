@@ -24,11 +24,12 @@ yarn config set workspaces-experimental true
 # install dependencies
 yarn
 
-# stop any previously running docker containers
-docker-compose stop
+# stop anything currently running
+chmod +x ./cli/stop.sh
+./cli/stop.sh
 
-# download and build docker images
-docker-compose up -d
+# make sure we have latest image
+docker pull wordpress:latest
 
 # build workspaces into wp-content
 for workspace in "${workspaces[@]}"

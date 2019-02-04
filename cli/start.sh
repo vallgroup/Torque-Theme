@@ -5,8 +5,9 @@
 source ./cli/lib/colors.sh
 source ./cli/lib/workspaces.sh
 
-# checks the docker containers are running,
-# otherwise starts them up
+# checks the docker containers are up to date and running,
+# otherwise updates and starts them up
+docker pull wordpress:latest
 docker-compose up -d
 
 # runs 'start' script for workspace <workspace-nanme>

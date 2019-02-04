@@ -7,6 +7,7 @@
   "scripts": {
     "setup": "bash cli/setup.sh",
     "start": "bash cli/start.sh",
+    "stop": "bash cli/stop.sh",
     "rebuild": "bash cli/rebuild.sh",
     "switch": "bash cli/switch.sh",
     "uploads": "bash cli/uploads.sh",
