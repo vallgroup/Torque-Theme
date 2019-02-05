@@ -44,10 +44,10 @@ services:
       - ./php.ini:/var/www/html/php.ini
     restart: always
     environment:
-      WORDPRESS_301nc-db_HOST: 301nc-db:3306
-      WORDPRESS_301nc-db_NAME: torque-wp
-      WORDPRESS_301nc-db_USER_FILE: /run/secrets/torque_wp_mysql_user
-      WORDPRESS_301nc-db_PASSWORD_FILE: /run/secrets/torque_wp_mysql_pass
+      WORDPRESS_DB_HOST: 301nc-db:3306
+      WORDPRESS_DB_NAME: torque-wp
+      WORDPRESS_DB_USER_FILE: /run/secrets/torque_wp_mysql_user
+      WORDPRESS_DB_PASSWORD_FILE: /run/secrets/torque_wp_mysql_pass
       WORDPRESS_DEBUG: 1
     networks:
       - 301nc-back
