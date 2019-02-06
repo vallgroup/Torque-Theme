@@ -109,7 +109,7 @@ class App extends Component {
       const url =
         this.props.site + `/wp-json/torque-map/v1/map/${this.props.mapID}`;
       const mapPost = await axios.get(url);
-      console.log(mapPost.data);
+
       if (mapPost.data.success) {
         this.setState({
           apiKey: mapPost.data.api_key,

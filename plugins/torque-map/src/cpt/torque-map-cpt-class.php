@@ -2,7 +2,7 @@
 /**
  * Register the torque map cpt and it's meta boxes
  */
-class Toruqe_Map_CPT {
+class Torque_Map_CPT {
 
 	/**
 	 * Filters the number of pois allowed for the map

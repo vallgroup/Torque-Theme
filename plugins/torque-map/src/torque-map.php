@@ -55,7 +55,7 @@ class Torque_Map {
 		Torque_Map_Autoloader::autoload( array(
 			'Torque_Map_REST_Controller',
 			'Torque_Map_Shortcode',
-			'Toruqe_Map_CPT',
+			'Torque_Map_CPT',
 		) );
 
 		// enqueue plugin scripts
