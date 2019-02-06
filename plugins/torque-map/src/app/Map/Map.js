@@ -31,7 +31,7 @@ export class TorqueMap extends React.Component {
     // check if we have a new search term
     if (this.props.searchNearby !== prevProps.searchNearby) {
       // make sure we have the map and term before running the search
-      if (this.map && this.props.searchNearby) {
+      if (this.map.current && this.props.searchNearby) {
         this.nearbySearch();
       }
     }
@@ -158,12 +158,17 @@ export class TorqueMap extends React.Component {
   }
 
   async nearbySearch() {
-    const searchClient = new NearbySearch(this.map);
+    if (!(this.map.current && this.map.current.map)) {
+      return;
+    }
+
+    const searchClient = new NearbySearch(this.map.current.map);
     const results = await searchClient.search({
       keyword: this.props.searchNearby,
       location: this.state.mapCenter,
       radius: 1000
     });
+
     // add markers and call our callback
     this.setState({ markers: results, markerIcon: this.props.selectedPOIIcon });
     if (

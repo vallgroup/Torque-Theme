@@ -121,7 +121,7 @@ class Torque_Map_Controller {
 
 	private function get_pois_shaped( $map ) {
 		$context = array( 'context' => 'post', 'id' => $map->ID );
-		$number_of_pois = apply_filters( Toruqe_Map_CPT::$POIS_ALLOWED_FILTER, 0 );
+		$number_of_pois = apply_filters( Torque_Map_CPT::$POIS_ALLOWED_FILTER, 0 );
 
 		$return = array();
 
