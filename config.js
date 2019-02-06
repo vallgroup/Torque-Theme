@@ -1,87 +1,88 @@
-const path = require('path')
+const path = require("path");
 
-const root = __dirname
+const root = __dirname;
 
 const webpackDefaults = {
   js: {
     test: /\.js$/,
     loaders: {
-      loader: 'babel-loader',
+      loader: "babel-loader",
       options: {
-        babelrc: path.join(root, './.babelrc'),
-      },
-    },
+        babelrc: path.join(root, "./.babelrc")
+      }
+    }
   },
   css: {
     test: /\.css$/,
     loaders: [
       {
-        loader: 'css-loader',
+        loader: "css-loader?-autoprefixer"
       },
       {
-        loader: 'postcss-loader',
+        loader: "postcss-loader",
         options: {
           config: {
-            path: path.join(root, './postcss.config.js'),
-          },
-        },
-      },
-    ],
+            path: root
+          }
+        }
+      }
+    ]
   },
   scss: {
     test: /\.scss$/,
     loaders: [
       {
-        loader: 'css-loader',
+        loader: "css-loader?-autoprefixer"
       },
       {
-        loader: 'sass-loader?sourceMap',
-      },
-      {
-        loader: 'postcss-loader',
+        loader: "postcss-loader",
         options: {
           config: {
-            path: path.join(root, './postcss.config.js'),
-          },
-        },
+            path: root
+          }
+        }
       },
-    ],
+      {
+        loader: "sass-loader?sourceMap"
+      }
+    ]
   },
   scssModules: {
     test: /\.scss$/,
     loaders: [
       {
-        loader: 'css-loader?modules&importLoaders=1&localIdentName="[local]__[hash:base64:5]"',
+        loader:
+          'css-loader?-autoprefixer&modules&importLoaders=1&localIdentName="[local]__[hash:base64:5]"'
       },
       {
-        loader: 'sass-loader?sourceMap',
-      },
-      {
-        loader: 'postcss-loader',
+        loader: "postcss-loader",
         options: {
           config: {
-            path: path.join(root, './postcss.config.js'),
-          },
-        },
+            path: root
+          }
+        }
       },
-    ],
+      {
+        loader: "sass-loader?sourceMap"
+      }
+    ]
   },
   images: {
     test: /\.(png|jpg|gif|svg)$/,
     loaders: {
-      loader: 'url-loader',
+      loader: "url-loader",
       options: {
-        limit: 8192,
-      },
-    },
+        limit: 8192
+      }
+    }
   },
   fonts: {
     test: /\.(woff|woff2|eot|ttf|otf)$/,
-    loaders: 'file-loader',
-  },
-}
+    loaders: "file-loader"
+  }
+};
 
 module.exports = {
   root,
-  webpackDefaults,
-}
+  webpackDefaults
+};
