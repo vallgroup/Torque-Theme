@@ -2,6 +2,7 @@
 
 require_once( get_stylesheet_directory() . '/includes/<torque_child_theme_slug>-nav-menus-class.php');
 require_once( get_stylesheet_directory() . '/includes/widgets/<torque_child_theme_slug>-widgets-class.php');
+require_once( get_stylesheet_directory() . '/includes/customizer/<torque_child_theme_slug>-customizer-class.php');
 require_once( get_stylesheet_directory() . '/includes/acf/<torque_child_theme_slug>-acf-class.php');
 
 /**
@@ -18,6 +19,14 @@ require_once( get_stylesheet_directory() . '/includes/acf/<torque_child_theme_sl
 
 if ( class_exists( '<torque_child_theme_class_prefix>_Widgets' ) ) {
   new <torque_child_theme_class_prefix>_Widgets();
+}
+
+/**
+ * Child Theme Customizer
+ */
+
+if ( class_exists( '<torque_child_theme_class_prefix>_Customizer' ) ) {
+  new <torque_child_theme_class_prefix>_Customizer();
 }
 
 /**
