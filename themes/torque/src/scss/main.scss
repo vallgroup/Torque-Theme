@@ -26,3 +26,8 @@ button {
   outline: none;
   user-select: none;
 }
+
+img {
+  // remove image borders on IE10
+  border: 0;
+}
