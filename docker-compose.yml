@@ -1,5 +1,7 @@
 version: "3.3"
 
+# Note: names are 301 instead of 318 because of an error when setting up the environment.
+
 services:
   301nc-db:
     image: mysql:5.7
