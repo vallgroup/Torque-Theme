@@ -54,9 +54,12 @@ class Torque_Slideshow_CPT {
 	 * @return string the shortcode string
 	 */
 	public function output_sc_string() {
+		require_once( Torque_Slideshow_PATH . 'shortcode/torque-slideshow-shortcode-class.php' );
+
 		global $post;
+
 		?>
-		<p>To use this slideshow anywhere on your site, copy and paste this shortcode: <code>[torque_shortcode id="<?php echo $post->ID; ?>"]</code></p>
+		<p>To use this slideshow anywhere on your site, copy and paste this shortcode: <code>[<?php echo Torque_Slideshow_Shortcode::$SHORTCODE_SLUG; ?> id="<?php echo $post->ID; ?>"]</code></p>
 		<?php
 	}
 
