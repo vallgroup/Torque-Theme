@@ -1,0 +1,23 @@
+.root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+
+  .tracker_icon {
+    margin: 5px;
+    border: 2px solid white;
+    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+    box-sizing: border-box;
+
+    background-color: transparent;
+    cursor: pointer;
+
+    &.active {
+      background-color: white;
+    }
+  }
+}
