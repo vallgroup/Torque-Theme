@@ -1,5 +1,5 @@
 {
-  "name": "<torque_plugin_slug>",
+  "name": "torque-slideshow",
   "version": "1.0.0",
   "author": "Torque",
   "license": "ISC",
