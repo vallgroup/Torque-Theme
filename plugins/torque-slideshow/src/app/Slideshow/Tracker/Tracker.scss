@@ -1,10 +1,12 @@
 .root {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
 
   .tracker_icon {
-    margin: 0 5px;
+    margin: 5px;
     border: 2px solid white;
     border-radius: 50%;
     width: 14px;
