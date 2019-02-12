@@ -19,7 +19,7 @@
 
 4.  Rename all files in this directory: {torque-plugin}-etc-class.php => {<torque_plugin_slug>}-etc-class.php
 
-5.  Add '<torque_plugin_name>' to cli/lib/workspaces.sh
+5.  Add '<torque_plugin_slug>' to cli/lib/workspaces.sh
 
 6.  Open new terminal, and in **project** root, run:
 
