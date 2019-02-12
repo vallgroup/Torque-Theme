@@ -2,6 +2,7 @@ import styles from "./Slideshow.scss";
 import React, { memo, useState, useEffect } from "react";
 import classnames from "classnames";
 import PropTypes from "prop-types";
+import Swipe from "react-easy-swipe";
 import Tracker from "./Tracker";
 import arrow from "../images/arrow.svg";
 
@@ -28,10 +29,12 @@ const Slideshow = ({ images }) => {
 
   return (
     <div className={classnames(styles.root, "tq-slideshow")}>
-      <div
-        className={classnames(styles.slide, "tq-slide")}
-        style={{ backgroundImage: `url('${images[slide]}')` }}
-      />
+      <Swipe onSwipeLeft={incrementSlide} onSwipeRight={decrementSlide}>
+        <div
+          className={classnames(styles.slide, "tq-slide")}
+          style={{ backgroundImage: `url('${images[slide]}')` }}
+        />
+      </Swipe>
 
       <div
         className={classnames(
