@@ -25,7 +25,7 @@ class Torque_Slideshow_Controller {
 			$slideshow = get_post( $this->request['id'] );
 
 			if ($slideshow) {
-				$meta = get_post_meta( $this->request['id'], 'torque_slideshow' );
+				$meta = get_post_meta( $this->request['id'], 'torque_slideshow', true );
 
         return Torque_API_Responses::Success_Response( array(
           'slideshow'	=> array(
