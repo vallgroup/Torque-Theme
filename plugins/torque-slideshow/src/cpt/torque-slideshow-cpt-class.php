@@ -75,7 +75,7 @@ class Torque_Slideshow_CPT {
 			array(
 				'context'     => 'post',
 				'type'        => 'wp_media',
-				'name'        => 'images',
+				'name'        => '[images]',
 				'label'       => 'Images',
 				'placeholder' => 'Select slideshow images',
 				'multiple'			=> true
