@@ -53,3 +53,7 @@ remove wp-content/themes/twentysixteen
 remove wp-content/themes/twentyseventeen
 remove wp-content/plugins/akismet
 remove wp-content/plugins/hello.php
+
+# start torque theme
+chmod +x ./cli/start.sh
+./cli/start.sh torque-theme
