@@ -1,26 +1,26 @@
-const projectConfig = require('../../config')
-const path = require('path')
-const webpack = require('webpack')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
+const projectConfig = require("../../config");
+const path = require("path");
+const webpack = require("webpack");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
-const srcDir = path.join(__dirname, 'src')
+const srcDir = path.join(__dirname, "src");
 const buildDir = path.join(
   projectConfig.root,
-  'wp-content/plugins/<torque_plugin_slug>'
-)
+  "wp-content/plugins/<torque_plugin_slug>"
+);
 
 const config = {
   context: srcDir,
 
   entry: {
-    main: ['./index.js'],
+    main: ["@babel/polyfill", "./index.js"]
   },
 
   output: {
-    path: path.join(buildDir, './bundles'),
-    publicPath: '/',
-    filename: 'bundle.js',
+    path: path.join(buildDir, "./bundles"),
+    publicPath: "/",
+    filename: "bundle.js"
   },
 
   module: {
@@ -29,54 +29,54 @@ const config = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
-        },
+          loader: "babel-loader"
+        }
       },
       {
         test: projectConfig.webpackDefaults.css.test,
         exclude: /node_modules/,
         use: ExtractTextPlugin.extract({
-          fallback: 'style-loader?sourceMap',
-          use: projectConfig.webpackDefaults.css.loaders,
-        }),
+          fallback: "style-loader?sourceMap",
+          use: projectConfig.webpackDefaults.css.loaders
+        })
       },
       {
         test: projectConfig.webpackDefaults.scssModules.test,
         exclude: /node_modules/,
         use: ExtractTextPlugin.extract({
-          fallback: 'style-loader?sourceMap',
+          fallback: "style-loader?sourceMap",
           // resolve-url-loader may be chained before sass-loader if necessary
-          use: projectConfig.webpackDefaults.scssModules.loaders,
-        }),
+          use: projectConfig.webpackDefaults.scssModules.loaders
+        })
       },
       {
         test: projectConfig.webpackDefaults.images.test,
         exclude: /node_modules/,
-        use: projectConfig.webpackDefaults.images.loaders,
+        use: projectConfig.webpackDefaults.images.loaders
       },
       {
         test: projectConfig.webpackDefaults.fonts.test,
         exclude: /node_modules/,
-        use: projectConfig.webpackDefaults.fonts.loaders,
-      },
-    ],
+        use: projectConfig.webpackDefaults.fonts.loaders
+      }
+    ]
   },
 
   plugins: [
     new ExtractTextPlugin({
-      filename: 'main.css',
-      publicPath: '/',
+      filename: "main.css",
+      publicPath: "/",
       allChunks: true,
-      ignoreOrder: true,
+      ignoreOrder: true
     }),
     new CopyWebpackPlugin([
-      { from: path.join(srcDir, 'shortcode/*.js'), to: buildDir },
-      { from: path.join(srcDir, 'shortcode/*.html'), to: buildDir },
-      { from: path.join(srcDir, '**/*.php'), to: buildDir },
-    ]),
+      { from: path.join(srcDir, "shortcode/*.js"), to: buildDir },
+      { from: path.join(srcDir, "shortcode/*.html"), to: buildDir },
+      { from: path.join(srcDir, "**/*.php"), to: buildDir }
+    ])
   ],
 
-  devtool: 'source-map',
-}
+  devtool: "source-map"
+};
 
-module.exports = config
+module.exports = config;
