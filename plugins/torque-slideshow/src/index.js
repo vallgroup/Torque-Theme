@@ -5,10 +5,6 @@ import ReactDOM from "react-dom";
 import App from "./app/App";
 import "./app/scss/main.scss";
 
-if (!global._babelPolyfill) {
-  require("@babel/polyfill");
-}
-
 const entry = document.querySelectorAll(".torque-slideshow-react-entry");
 
 entry.forEach(entry => {

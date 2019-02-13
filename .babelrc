@@ -1,9 +1,16 @@
+// Newer themes and plugins using babel 7 have their own config files packaged with them.
+// This file serves as the backup for older themes and plugins still on babel 6.
+//
+// Once all themes and plugins have been moved to babel 7, we can replace this with a repo-wide babel 7 default config
 {
   "presets": [
-    ["env", {
-      "targets": {
-        "browsers": ["last 2 versions"]
+    [
+      "env",
+      {
+        "targets": {
+          "browsers": ["last 2 versions"]
+        }
       }
-    }]
+    ]
   ]
 }
