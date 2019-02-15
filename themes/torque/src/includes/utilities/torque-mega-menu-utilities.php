@@ -12,10 +12,12 @@
       ob_start();
 
       foreach ($parent_items_array as $key => $item) {
+
+        $has_children = $item->children && sizeof($item->children) > 0;
       ?>
 
         <div
-          class="torque-mega-menu-item torque-mega-menu-parent-item"
+          class="torque-mega-menu-item torque-mega-menu-parent-item <?php echo $has_children ? 'has-children' : ''; ?>"
           data-id="<?php echo $item->ID; ?>"
         >
 
@@ -24,12 +26,12 @@
           ?>
 
           <a href="<?php echo $item->url; ?>">
-            <div class="torque-mega-menu-item-title">
+            <div class="torque-mega-menu-item-title torque-mega-menu-item-title-parent">
               <?php echo $item->title; ?>
             </div>
           </a>
 
-          <?php if ( $item->children && sizeof($item->children) > 0 ) { ?>
+          <?php if ( $has_children ) { ?>
             <div class="torque-mega-menu-item-has-children-marker" >
             </div>
           <?php }
@@ -64,7 +66,7 @@
            ?>
 
            <a href="<?php echo $item->url; ?>">
-             <div class="torque-mega-menu-item-title">
+             <div class="torque-mega-menu-item-title torque-mega-menu-item-title-child">
                <?php echo $item->title; ?>
              </div>
            </a>
