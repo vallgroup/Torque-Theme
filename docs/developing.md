@@ -58,6 +58,25 @@ Alternatively, since we won't want to do a full merge from a client branch to ma
 
 4.  Then repeat steps 9, 10 and 11 from [setup](./setup.md) to get your new wordpress installation up and running.
 
+## Working with the Uploads Directory
+
+If you upload anything to your site locally remember to run `yarn uploads`. That will make sure the uploads get added to the repo.
+
+## Cherry Picking
+
+When working on a client branch, you should NEVER merge/pull your changes into master. A client branch must always be ahead of master once the project has started. If you want to make changes to the main code, you must switch to the msater branch, make those changes, then switch back to the client branch to pull those changes and continue working.
+
+If you want to avoid doing all that run around and you want to commit changes directly into master from a client branch, then follow these steps:  
+* From the client branch, use `git log` to see all commits and select the commit hash that you want to merge into the master branch.  
+* Use `yarn switch master` to switch to the master branch.  
+* Then use `git cherry-pick $commit_hash` replacing `$commit_hash` with the hash for the commit that you want to merge.
+
+Learn more about it [here](https://git-scm.com/docs/git-cherry-pick).
+
+## yarn switch
+
+Always use `yarn switch` instead of `git checkout`
+
 ## Further Dev Info
 
 ### Why Yarn Workspaces and Webpack?
