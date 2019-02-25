@@ -19,12 +19,14 @@ if ( ! isset($parent) ) {
 if ($parent) {
 
   $args = array(
-  	'post_parent' => $parent,
-  	'post_type'   => $post_type,
-  	'numberposts' => $numberposts,
-  	'post_status' => $post_status
+    'parent' => $parent,
+    'post_type'   => $post_type,
+    'numberposts' => $numberposts,
+    'post_status' => $post_status,
+    'sort_column' => 'menu_order',
+    'sort_order' => 'ASC'
   );
-  $children = get_children( $args );
+  $children = get_pages( $args );//get_children( $args );
 
   foreach ($children as $child_id => $child) {
 
