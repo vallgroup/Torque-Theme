@@ -29,12 +29,11 @@ if ($parent) {
   $children = get_pages( $args );//get_children( $args );
 
   foreach ($children as $child_id => $child) {
-
     ?>
 
 
     <div class="torque-child-link-wrapper">
-      <a href="<?php echo get_the_permalink( $child_id ); ?>" >
+      <a href="<?php echo get_the_permalink( $child->ID ); ?>" >
         <?php echo $child->post_title; ?>
       </a>
     </div>
