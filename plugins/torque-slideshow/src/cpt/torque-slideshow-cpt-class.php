@@ -78,7 +78,8 @@ class Torque_Slideshow_CPT {
 				'name'        => '[images]',
 				'label'       => 'Images',
 				'placeholder' => 'Select slideshow images',
-				'multiple'			=> true
+				'multiple'	  => true,
+				'preview'     => true,
 			),
 		), 'torque_slideshow');
 	}
