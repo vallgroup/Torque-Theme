@@ -1,7 +1,5 @@
 <?php
 
-require_once( Torque_Floor_Plans_API_ROOT . 'controllers/torque-floor-plan-controller-class.php');
-
 require_once( get_template_directory() . '/api/responses/torque-api-responses-class.php');
 require_once( get_template_directory() . '/includes/validation/torque-validation-class.php');
 
