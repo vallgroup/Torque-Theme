@@ -13,10 +13,7 @@ class Torque_Floor_Plans_Data_Source {
 
 		return self::$instance;
 	}
-
-	/**
-	 * left empty on purpose
-	 */
+	
 	public function __construct() {}
 
 

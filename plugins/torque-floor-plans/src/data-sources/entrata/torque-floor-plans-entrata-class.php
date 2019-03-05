@@ -9,10 +9,7 @@ class Torque_Floor_Plans_Entrata {
 
 		return self::$instance;
 	}
-
-  /**
-	 * left empty on purpose
-	 */
+  
 	public function __construct() {}
 
 

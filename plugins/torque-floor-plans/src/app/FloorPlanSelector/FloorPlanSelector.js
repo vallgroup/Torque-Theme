@@ -1,60 +1,44 @@
-import React, { PureComponent } from 'react'
-import { getFloorWithAffix } from '../App'
-import style from './FloorPlanSelector.scss'
+import React, { memo } from "react";
+import { getFloorWithAffix } from "../App";
+import style from "./FloorPlanSelector.scss";
 
-class FloorPlanSelector extends PureComponent {
-  renderFloor(floorPlan) {
-    return (
-      <div className={`${style.optionBlock} ${style.floor}`}>
-        {getFloorWithAffix(floorPlan)}
-      </div>
-    )
-  }
-
-  renderTitle(floorPlan) {
-    return <div className={`${style.optionBlock}`}>{floorPlan.post_title}</div>
-  }
-
-  renderRSF(floorPlan) {
-    const formatted = floorPlan.rsf.replace(/\d(?=(\d{3})$)/g, '$&,')
-    return (
-      <div className={`${style.optionBlock}`}>
-        {`${formatted} RSF`}
-      </div>
-    )
-  }
-
-  render() {
-    if (!this.props.floorPlans) {
-      return null
-    }
-
-    return (
+const FloorPlanSelector = ({ floorPlans, updateSelected }) => {
+  return (
+    floorPlans && (
       <React.Fragment>
         <h4 className={style.title}>
-          {'CLICK TO PREVIEW FLOOR PLAN ON THE RIGHT'}
+          {"CLICK TO PREVIEW FLOOR PLAN ON THE RIGHT"}
         </h4>
-        {this.props.floorPlans
+        {floorPlans
           .sort((a, b) => {
-            return a.floor_number > b.floor_number
+            return a.floor_number > b.floor_number;
           })
           .map((floorPlan, index) => {
+            const rsf = floorPlan.rsf.replace(/\d(?=(\d{3})$)/g, "$&,");
+
             return (
               <div
                 key={index}
                 className={style.option}
                 onClick={() => {
-                  this.props.updateSelected(index)
-                }}>
-                {this.renderFloor(floorPlan)}
-                {this.renderTitle(floorPlan)}
-                {this.renderRSF(floorPlan)}
+                  updateSelected(index);
+                }}
+              >
+                <div className={`${style.optionBlock} ${style.floor}`}>
+                  {getFloorWithAffix(floorPlan)}
+                </div>
+
+                <div className={`${style.optionBlock}`}>
+                  {floorPlan.post_title}
+                </div>
+
+                <div className={`${style.optionBlock}`}>{`${rsf} RSF`}</div>
               </div>
-            )
+            );
           })}
       </React.Fragment>
     )
-  }
-}
+  );
+};
 
-export default FloorPlanSelector
+export default FloorPlanSelector;

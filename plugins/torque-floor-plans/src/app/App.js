@@ -1,102 +1,88 @@
-import React, { Component } from 'react'
-import axios from 'axios'
-import FloorPlanSelector from './FloorPlanSelector/FloorPlanSelector'
-import Header from './Header/Header'
-import Thumbnail from './Thumbnail/Thumbnail'
-import style from './App.scss'
+import style from "./App.scss";
+import React, { memo, useState, useEffect } from "react";
+import axios from "axios";
+import FloorPlanSelector from "./FloorPlanSelector/FloorPlanSelector";
+import Header from "./Header/Header";
+import Thumbnail from "./Thumbnail/Thumbnail";
 
 // props
 //
 // site: string
 
-class App extends Component {
-  constructor(props) {
-    super(props)
+const App = ({ site }) => {
+  const [floorPlans, setFloorPlans] = useState([]);
+  const [selected, setSelected] = useState(0);
 
-    this.state = {
-      floorPlans: [],
-      selected: 0,
-    }
-  }
-
-  componentDidMount() {
-    this.getFloorPlans()
-  }
-
-  updateSelected(newIndex) {
-    this.setState({ selected: newIndex })
-  }
-
-  getSelectedFloorPlan() {
-    return this.state.floorPlans[this.state.selected]
-  }
-
-  render() {
-    if (!this.state.floorPlans || !this.state.floorPlans.length) {
-      return null
-    }
-
-    return (
-      <div className={`torque-floor-plans ${style.floorPlans}`}>
-        <div className={`torque-floor-plans-header-wrapper ${style.header}`}>
-          <Header floorPlan={this.getSelectedFloorPlan()} />
-        </div>
-        <div className={`torque-floor-plans-selector ${style.selector}`}>
-          <div className={`torque-floor-plans-list ${style.list}`}>
-            <FloorPlanSelector
-              floorPlans={this.state.floorPlans}
-              updateSelected={this.updateSelected.bind(this)}
-            />
-          </div>
-          <div className={`torque-floor-plans-thumbnail ${style.thumbnail}`}>
-            <Thumbnail floorPlan={this.getSelectedFloorPlan()} />
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  async getFloorPlans() {
+  const getFloorPlans = async () => {
     try {
-      const floorPlansUrl = `${
-        this.props.site
-      }/wp-json/floor-plans/v1/floor-plans/`
+      const url = `${site}/wp-json/floor-plans/v1/floor-plans/`;
+      const {
+        data: { floor_plans, success }
+      } = await axios.get(url);
 
-      const { data } = await axios.get(floorPlansUrl)
-
-      if (data.success) {
-        this.setState({ floorPlans: data.floor_plans, selected: 0 })
+      if (success) {
+        setFloorPlans(floor_plans);
+        setSelected(0);
       } else {
-        throw 'Failed getting floor plans'
+        throw "Failed getting floor plans";
       }
     } catch (e) {
-      console.log(e)
-      this.setState({ floorPlans: [], selected: 0 })
+      console.log(e);
+      setFloorPlans([]);
+      setSelected(0);
     }
-  }
-}
+  };
+
+  useEffect(
+    () => {
+      getFloorPlans();
+    },
+    [site]
+  );
+
+  const selectedFloorPlan = floorPlans[selected];
+
+  return floorPlans?.length ? (
+    <div className={`torque-floor-plans ${style.floorPlans}`}>
+      <div className={`torque-floor-plans-header-wrapper ${style.header}`}>
+        <Header floorPlan={selectedFloorPlan} />
+      </div>
+      <div className={`torque-floor-plans-selector ${style.selector}`}>
+        <div className={`torque-floor-plans-list ${style.list}`}>
+          <FloorPlanSelector
+            floorPlans={floorPlans}
+            updateSelected={setSelected}
+          />
+        </div>
+        <div className={`torque-floor-plans-thumbnail ${style.thumbnail}`}>
+          <Thumbnail floorPlan={selectedFloorPlan} />
+        </div>
+      </div>
+    </div>
+  ) : null;
+};
 
 export function getFloorWithAffix(floorPlan) {
-  let affix = 'th'
+  let affix = "th";
 
-  switch (parseInt(floorPlan.floor_number)) {
-    case 1 || -1:
-      affix = 'st'
-      break
+  switch (Math.abs(parseInt(floorPlan.floor_number))) {
+    case 1:
+      affix = "st";
+      break;
 
-    case 2 || -2:
-      affix = 'nd'
-      break
+    case 2:
+      affix = "nd";
+      break;
 
-    case 3 || -3:
-      affix = 'rd'
-      break
+    case 3:
+      affix = "rd";
+      break;
 
     default:
-      affix = 'th'
+      affix = "th";
   }
 
-  return `${floorPlan.floor_number}${affix} floor`
+  return `${floorPlan.floor_number}${affix} floor`;
 }
 
-export default App
+export default memo(App);

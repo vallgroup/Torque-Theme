@@ -1,22 +1,16 @@
-import React, { PureComponent } from 'react'
+import React, { memo } from "react";
 
-class Thumbnail extends PureComponent {
-  render() {
-    if (!this.props.floorPlan || !this.props.floorPlan.thumbnail) {
-      return null
-    }
+const Thumbnail = ({ floorPlan }) => {
+  return floorPlan?.thumbnail ? (
+    <img
+      style={{
+        width: "100%",
+        height: "100%",
+        objectFit: "contain"
+      }}
+      src={floorPlan.thumbnail}
+    />
+  ) : null;
+};
 
-    return (
-      <img
-        style={{
-          width: '100%',
-          height: '100%',
-          objectFit: 'contain',
-        }}
-        src={this.props.floorPlan.thumbnail}
-      />
-    )
-  }
-}
-
-export default Thumbnail
+export default memo(Thumbnail);
