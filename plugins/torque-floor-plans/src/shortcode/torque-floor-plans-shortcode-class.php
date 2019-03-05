@@ -51,6 +51,8 @@ class Torque_Floor_Plans_Shortcode {
    * @return string
    */
   private function get_markup() {
+    echo Torque_Floor_Plans_Entrata::get_inst()->PROPERTY_ID;
+
     return '<div
       class="torque-floor-plans-react-entry"
       data-site="'.get_site_url().'"

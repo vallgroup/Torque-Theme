@@ -10,6 +10,7 @@ A Floor Plans React app can then be included via a shortcode in the Wordpress si
 *Filter* | *Function* | *Value Type*
 --- | --- | ---
 `torque_floor_plans_data_source` | Change the floor plans data source | 'entrata' or false (default - uses WP CPT)
+`torque_floor_plans_entrata_property_id` | (Entrata Specific) set the entrata property id | int
 
 <!-- prettier-ignore-end -->
 

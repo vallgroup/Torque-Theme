@@ -1,5 +1,9 @@
 <?php
 
+require( plugin_dir_path(__FILE__) . 'entrata/torque-floor-plans-entrata-class.php' );
+require( Torque_Floor_Plans_PATH . '/custom-post-types/torque-floor-plan-cpt-class.php' );
+require( Torque_Floor_Plans_PATH . '/api/torque-floor-plans-rest-controller-class.php' );
+
 class Torque_Floor_Plans_Data_Source {
 
 	public static $instance = NULL;
@@ -17,7 +21,7 @@ class Torque_Floor_Plans_Data_Source {
 
 
 
-	public static $DATA_SOURCE_FILTER_SLUG = 'torque-floor-plans-data-source';
+	public static $DATA_SOURCE_FILTER_SLUG = 'torque_floor_plans_data_source';
 
 	public static $SUPPORTED_DATA_SOURCES = [ false, 'entrata' ];
 
@@ -25,27 +29,17 @@ class Torque_Floor_Plans_Data_Source {
 	public $DATA_SOURCE = false;
 
 
-	/**
-   * This should be a function which registers all the plugin's required hooks.
-   */
 	public function init() {
 		$this->set_data_source();
 
 		switch ( $this->DATA_SOURCE ) {
 
 			case 'entrata':
-				require( plugin_dir_path(__FILE__) . 'entrata/torque-floor-plans-entrata-class.php' );
-				new Torque_Floor_Plans_Entrata();
+				Torque_Floor_Plans_Entrata::get_inst()->init();
 				break;
 
 			default:
-				require( Torque_Floor_Plans_PATH . '/custom-post-types/torque-floor-plan-cpt-class.php' );
-				require( Torque_Floor_Plans_PATH . '/api/torque-floor-plans-rest-controller-class.php' );
-
-				// register plugin specific CPTs
 				new Torque_Floor_Plan_CPT();
-
-				// init the REST Controller
 				new Torque_Floor_Plans_REST_Controller();
 		}
 	}
