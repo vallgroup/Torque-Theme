@@ -26,7 +26,7 @@ class Torque_Floor_Plans_Entrata {
   }
 
   public function get_unit_types() {
-    $unit_types = $this->create_GET_request('propertyunits', '
+    $response = $this->create_GET_request('propertyunits', '
 		{
 			"name": "getUnitTypes",
 			"params": {
@@ -35,12 +35,29 @@ class Torque_Floor_Plans_Entrata {
 		}
 		');
 
-		if (! $unit_types->unitTypes->unitType) {
+		if (! $response->unitTypes->unitType) {
 			throw new Exception('Error getting unit types');
 			return [];
 		}
 
-		return $unit_types->unitTypes->unitType;
+		$unit_types = $response->unitTypes->unitType;
+
+		$cleaned_unit_types = array();
+		foreach ($unit_types as $unit_type) {
+			// group unit types by name
+			$name = $unit_type->name;
+			$id = $unit_type->identificationType->idValue;
+
+			if ( ! array_key_exists($name, $cleaned_unit_types) ) {
+				$cleaned_unit_types[$name] = [$id];
+			} else {
+				$cleaned_unit_types[$name][] = $id;
+			}
+		}
+
+		return $cleaned_unit_types;
+  }
+
   private function create_GET_request($endpoint, $method) {
     $resCurl = curl_init();
 
