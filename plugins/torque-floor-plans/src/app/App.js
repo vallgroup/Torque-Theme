@@ -28,7 +28,7 @@ const App = ({ site, dataSource, dataSourceProps }) => {
     () => {
       getFloorPlans();
     },
-    [site]
+    [site, dataSource]
   );
 
   const selectedFloorPlan = floorPlans[selected];
