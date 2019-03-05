@@ -22,7 +22,7 @@ class Torque_Floor_Plans_Entrata {
 	}
 
   public function get_shortcode_markup() {
-    return 'data-entrata-property-id="'.$this->PROPERTY_ID.'"';
+    return '';
   }
 
   public function get_unit_types() {

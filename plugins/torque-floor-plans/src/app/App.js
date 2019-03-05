@@ -6,13 +6,13 @@ import FloorPlanSelector from "./FloorPlanSelector";
 import Header from "./Header";
 import Thumbnail from "./Thumbnail";
 
-const App = ({ site, dataSource, dataSourceProps }) => {
+const App = ({ site, dataSource }) => {
   const [floorPlans, setFloorPlans] = useState([]);
   const [selected, setSelected] = useState(0);
 
   const getFloorPlans = async () => {
     try {
-      const source = new DataSource({ site, dataSource, dataSourceProps });
+      const source = new DataSource({ site, dataSource });
       const floorPlans = await source.getFloorPlans();
 
       setFloorPlans(floorPlans);
@@ -55,8 +55,7 @@ const App = ({ site, dataSource, dataSourceProps }) => {
 
 App.propTypes = {
   site: PropTypes.string.isRequired,
-  dataSource: PropTypes.string,
-  dataSourceProps: PropTypes.object
+  dataSource: PropTypes.string
 };
 
 export function getFloorWithAffix(floorPlan) {

@@ -12,11 +12,6 @@ entry.forEach(entry => {
       <App
         site={entry.getAttribute("data-site")}
         dataSource={entry.getAttribute("data-source")}
-        dataSourceProps={{
-          entrata: {
-            propertyID: entry.getAttribute("data-entrata-property-id")
-          }
-        }}
       />,
       entry
     );

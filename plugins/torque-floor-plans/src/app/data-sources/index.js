@@ -5,21 +5,15 @@ import Entrata from "./entrata";
 let entrata = null;
 
 export default class DataSource {
-  constructor({ site, dataSource, dataSourceProps }) {
+  constructor({ site, dataSource }) {
     this.site = site;
     this.dataSource = dataSource;
-    this.dataSourceProps = dataSourceProps;
   }
 
   getFloorPlans = async () => {
     switch (this.dataSource) {
       case "entrata": {
-        entrata =
-          entrata ||
-          new Entrata({
-            site,
-            propertyID: this.dataSourceProps?.entrata?.propertyID
-          });
+        entrata = entrata || new Entrata({ site: this.site });
         await entrata.init();
         return await entrata.getFloorPlans();
       }
