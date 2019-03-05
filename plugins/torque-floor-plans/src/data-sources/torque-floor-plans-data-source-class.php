@@ -44,6 +44,19 @@ class Torque_Floor_Plans_Data_Source {
 		}
 	}
 
+	public function get_shortcode_markup() {
+		$extra_markup = 'data-source="'.$this->DATA_SOURCE.'"';
+
+		switch ( $this->DATA_SOURCE ) {
+
+			case 'entrata':
+				$extra_markup .= Torque_Floor_Plans_Entrata::get_inst()->get_shortcode_markup();
+				break;
+		}
+
+		return $extra_markup;
+	}
+
 	private function set_data_source() {
 		$new_source = apply_filters(self::$DATA_SOURCE_FILTER_SLUG, $this->DATA_SOURCE);
 

@@ -23,6 +23,10 @@ class Torque_Floor_Plans_Entrata {
   public function init() {
     $this->PROPERTY_ID = apply_filters(self::$PROPERTY_ID_FILTER_SLUG, $this->PROPERTY_ID);
 	}
+
+  public function get_shortcode_markup() {
+    return 'data-entrata-property-id="'.$this->PROPERTY_ID.'"';
+  }
 }
 
 ?>

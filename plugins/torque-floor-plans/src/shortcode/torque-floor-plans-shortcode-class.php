@@ -36,10 +36,7 @@ class Torque_Floor_Plans_Shortcode {
    * @return array       Attributes combined with our defaults
    */
   private function setup_atts($atts) {
-    return shortcode_atts(array(
-      'example' => true,
-      'another'           => '',
-    ), $atts);
+    return shortcode_atts(array(), $atts);
   }
 
   /**
@@ -51,13 +48,12 @@ class Torque_Floor_Plans_Shortcode {
    * @return string
    */
   private function get_markup() {
-    echo Torque_Floor_Plans_Entrata::get_inst()->PROPERTY_ID;
 
     return '<div
       class="torque-floor-plans-react-entry"
       data-site="'.get_site_url().'"
-      data-1="'.$this->atts['example'].'"
-      data-2="'.$this->atts['another'].'" >
+      '.Torque_Floor_Plans_Data_Source::get_inst()->get_shortcode_markup().'
+      >
       </div>';
   }
 
