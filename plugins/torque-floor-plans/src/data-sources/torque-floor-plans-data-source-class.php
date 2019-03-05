@@ -52,6 +52,8 @@ class Torque_Floor_Plans_Data_Source {
 			case 'entrata':
 				$extra_markup .= Torque_Floor_Plans_Entrata::get_inst()->get_shortcode_markup();
 				break;
+
+			// default has no extra props
 		}
 
 		return $extra_markup;

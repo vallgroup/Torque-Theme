@@ -16,7 +16,7 @@ A Floor Plans React app can then be included via a shortcode in the Wordpress si
 
 # Changelog
 
-## [1.1.0]
+## [2.0.0]
 
 ### Added
 
