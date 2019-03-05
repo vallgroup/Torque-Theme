@@ -8,6 +8,17 @@ const entry = document.querySelectorAll(".torque-floor-plans-react-entry");
 
 entry.forEach(entry => {
   if (entry) {
-    ReactDOM.render(<App site={entry.getAttribute("data-site")} />, entry);
+    ReactDOM.render(
+      <App
+        site={entry.getAttribute("data-site")}
+        dataSource={entry.getAttribute("data-source")}
+        dataSourceProps={{
+          entrata: {
+            propertyID: entry.getAttribute("data-entrata-property-id")
+          }
+        }}
+      />,
+      entry
+    );
   }
 });

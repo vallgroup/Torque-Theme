@@ -1,31 +1,22 @@
 import style from "./App.scss";
 import React, { memo, useState, useEffect } from "react";
-import axios from "axios";
-import FloorPlanSelector from "./FloorPlanSelector/FloorPlanSelector";
-import Header from "./Header/Header";
-import Thumbnail from "./Thumbnail/Thumbnail";
+import PropTypes from "prop-types";
+import DataSource from "./data-sources";
+import FloorPlanSelector from "./FloorPlanSelector";
+import Header from "./Header";
+import Thumbnail from "./Thumbnail";
 
-// props
-//
-// site: string
-
-const App = ({ site }) => {
+const App = ({ site, dataSource, dataSourceProps }) => {
   const [floorPlans, setFloorPlans] = useState([]);
   const [selected, setSelected] = useState(0);
 
   const getFloorPlans = async () => {
     try {
-      const url = `${site}/wp-json/floor-plans/v1/floor-plans/`;
-      const {
-        data: { floor_plans, success }
-      } = await axios.get(url);
+      const source = new DataSource({ site, dataSource, dataSourceProps });
+      const floorPlans = await source.getFloorPlans();
 
-      if (success) {
-        setFloorPlans(floor_plans);
-        setSelected(0);
-      } else {
-        throw "Failed getting floor plans";
-      }
+      setFloorPlans(floorPlans);
+      setSelected(0);
     } catch (e) {
       console.log(e);
       setFloorPlans([]);
@@ -60,6 +51,12 @@ const App = ({ site }) => {
       </div>
     </div>
   ) : null;
+};
+
+App.propTypes = {
+  site: PropTypes.string.isRequired,
+  dataSource: PropTypes.string,
+  dataSourceProps: PropTypes.object
 };
 
 export function getFloorWithAffix(floorPlan) {
