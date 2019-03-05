@@ -13,7 +13,7 @@ class Torque_Floor_Plans_Data_Source {
 
 		return self::$instance;
 	}
-	
+
 	public function __construct() {}
 
 
@@ -37,8 +37,10 @@ class Torque_Floor_Plans_Data_Source {
 
 			default:
 				new Torque_Floor_Plan_CPT();
-				new Torque_Floor_Plans_REST_Controller();
 		}
+
+		// set up REST endpoints
+		new Torque_Floor_Plans_REST_Controller();
 	}
 
 	public function get_shortcode_markup() {

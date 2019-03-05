@@ -15,7 +15,11 @@ export default class DataSource {
     switch (this.dataSource) {
       case "entrata": {
         entrata =
-          entrata || new Entrata(this.dataSourceProps?.entrata?.propertyID);
+          entrata ||
+          new Entrata({
+            site,
+            propertyID: this.dataSourceProps?.entrata?.propertyID
+          });
         await entrata.init();
         return await entrata.getFloorPlans();
       }
