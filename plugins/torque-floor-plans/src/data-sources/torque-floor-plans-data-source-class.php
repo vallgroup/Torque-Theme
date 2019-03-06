@@ -1,8 +1,8 @@
 <?php
 
-require( plugin_dir_path(__FILE__) . 'entrata/torque-floor-plans-entrata-class.php' );
-require( Torque_Floor_Plans_PATH . '/custom-post-types/torque-floor-plan-cpt-class.php' );
-require( Torque_Floor_Plans_PATH . '/api/torque-floor-plans-rest-controller-class.php' );
+require_once( plugin_dir_path(__FILE__) . 'entrata/torque-floor-plans-entrata-class.php' );
+require_once( Torque_Floor_Plans_PATH . '/custom-post-types/torque-floor-plan-cpt-class.php' );
+require_once( Torque_Floor_Plans_PATH . '/api/torque-floor-plans-rest-controller-class.php' );
 
 class Torque_Floor_Plans_Data_Source {
 

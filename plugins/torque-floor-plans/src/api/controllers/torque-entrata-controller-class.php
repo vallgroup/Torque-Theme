@@ -29,7 +29,7 @@ class Torque_Entrata_Controller {
 
 	public function get_unit_types() {
 		try {
-      $result = Torque_Floor_Plans_Entrata::get_inst()->get_unit_types();
+      $result = Entrata_API::get_inst()->get_unit_types();
 
       return Torque_API_Responses::Success_Response( array(
         'unit_types'	=> $result
@@ -41,7 +41,7 @@ class Torque_Entrata_Controller {
 
 	public function get_floor_plans() {
 		try {
-      $result = Torque_Floor_Plans_Entrata::get_inst()->get_floor_plans(
+      $result = Entrata_API::get_inst()->get_floor_plans(
 				explode(',', $this->request['unit_type_ids']),
 				$this->request['start_date']
 			);
