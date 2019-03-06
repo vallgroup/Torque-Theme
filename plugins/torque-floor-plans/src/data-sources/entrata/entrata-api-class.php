@@ -83,7 +83,8 @@ class Entrata_API {
 			}
 
 			$units = $response->ILS_Units->Unit;
-			$start_date_date = date_create( str_replace( '/' , '-' , $start_date ) );
+			$start_date_date = date_create_from_format("d/m/Y",$start_date);
+
 
 			if (!$units) {
 				continue;
@@ -92,7 +93,7 @@ class Entrata_API {
 			foreach ($units as $unit) {
 				try {
 					// filter by date
-					$compare_date = date_create( str_replace( '/' , '-' , $unit->{'@attributes'}->AvailableOn ) );
+					$compare_date = date_create_from_format("d/m/Y",$unit->{'@attributes'}->AvailableOn);
 					$diff = date_diff($compare_date, $start_date_date);
 					$is_available = ($diff->invert === 0 || $diff->days === 0) && $unit->{'@attributes'}->Availability === 'Available';
 
