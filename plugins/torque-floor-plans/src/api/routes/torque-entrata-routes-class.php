@@ -21,6 +21,14 @@ class Torque_Entrata_Routes {
 	  		'args'                => Torque_Entrata_Controller::get_unit_types_args(),
 	  	),
 	  ) );
+
+    register_rest_route( $this->namespace, self::$resource.'floor-plans' , array(
+	  	array(
+	  		'methods'             => 'GET',
+	  		'callback'            => array( $this, 'get_floor_plans' ),
+	  		'args'                => Torque_Entrata_Controller::get_floor_plans_args(),
+	  	),
+	  ) );
   }
 
   public function get_unit_types( $request ) {
@@ -28,9 +36,9 @@ class Torque_Entrata_Routes {
     return $controller->get_unit_types();
   }
 
-  public function get_available_units( $request ) {
+  public function get_floor_plans( $request ) {
     $controller = new Torque_Entrata_Controller( $request );
-    return $controller->get_available_units();
+    return $controller->get_floor_plans();
   }
 }
 

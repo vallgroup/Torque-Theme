@@ -58,6 +58,66 @@ class Torque_Floor_Plans_Entrata {
 		return $cleaned_unit_types;
   }
 
+	public function get_floor_plans($unit_type_ids, $start_date) {
+
+		$floor_plan_ids = [];
+
+		foreach ($unit_type_ids as $unit_type_id) {
+			$response = $this->create_GET_request('propertyunits', '
+			{
+				"name": "getUnitsAvailabilityAndPricing",
+				"version": "r1",
+				"params": {
+					"propertyId": "'.$this->PROPERTY_ID.'",
+					"unitTypeId": "'.$unit_type_id.'",
+					"availableUnitsOnly": "1",
+					"skipPricing": "1",
+	        "showChildProperties": "0",
+	        "includeDisabledFloorplans": "0",
+	        "includeDisabledUnits": "0",
+	        "showUnitSpaces": "0",
+	        "useSpaceConfiguration": "0"
+				}
+			}
+			');
+
+			// "moveInStartDate": "'.$start_date.'"
+
+			$units = $response->ILS_Units->Unit;
+			$start_date_date = date_create( str_replace( '/' , '-' , $start_date ) );
+
+			foreach ($units as $unit) {
+				try {
+					// filter by date
+					$compare_date = date_create( str_replace( '/' , '-' , $unit->{'@attributes'}->AvailableOn ) );
+					$diff = date_diff($compare_date, $start_date_date);
+					$is_available = ($diff->invert === 0 || $diff->days === 0) && $unit->{'@attributes'}->Availability === 'Available';
+
+					if ($is_available) {
+						// seems like their server checks duplicates for us, so lets let them do it
+						$floor_plan_ids[] = $unit->{'@attributes'}->FloorplanId;
+					}
+				} catch (Exception $e) {
+					// do nothing
+				}
+			}
+		}
+
+		$floor_plans = [];
+
+		$response = $this->create_GET_request('properties', '
+		{
+        "name": "getFloorPlans",
+        "params": {
+            "propertyId": "673841",
+						"propertyFloorPlanIds": "'.implode(',', $floor_plan_ids).'"
+				}
+    }
+		');
+
+		return $response->FloorPlans->FloorPlan;
+	}
+
   private function create_GET_request($endpoint, $method) {
     $resCurl = curl_init();
 

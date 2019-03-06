@@ -9,6 +9,17 @@ class Torque_Entrata_Controller {
 		return array();
 	}
 
+	public static function get_floor_plans_args() {
+		return array(
+			'unit_type_ids'				=> array(
+        'validate_callback' => array( 'Torque_Validation', 'string' ),
+      ),
+			'start_date'						=> array(
+        'validate_callback' => array( 'Torque_Validation', 'string' ),
+      ),
+		);
+	}
+
 	protected $request = null;
 
 	function __construct( $request ) {
@@ -22,6 +33,21 @@ class Torque_Entrata_Controller {
 
       return Torque_API_Responses::Success_Response( array(
         'unit_types'	=> $result
+      ) );
+		} catch (Exception $e) {
+			return Torque_API_Responses::Error_Response( $e );
+		}
+	}
+
+	public function get_floor_plans() {
+		try {
+      $result = Torque_Floor_Plans_Entrata::get_inst()->get_floor_plans(
+				explode(',', $this->request['unit_type_ids']),
+				$this->request['start_date']
+			);
+
+      return Torque_API_Responses::Success_Response( array(
+        'floor_plans'	=> $result
       ) );
 		} catch (Exception $e) {
 			return Torque_API_Responses::Error_Response( $e );
