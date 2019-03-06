@@ -1,9 +1,6 @@
 import axios from "axios";
 import Entrata from "./entrata";
 
-// we only want to initialise this once
-let entrata = null;
-
 export default class DataSource {
   constructor({ site, dataSource }) {
     this.site = site;
@@ -12,14 +9,13 @@ export default class DataSource {
 
   getFloorPlans = async () => {
     switch (this.dataSource) {
-      case "entrata": {
-        entrata = entrata || new Entrata({ site: this.site });
-        await entrata.init();
-        return await entrata.getFloorPlans();
-      }
+      case "entrata":
+        return [];
 
-      default:
-        return await this.getDefaultFloorPlans();
+      default: {
+        const floorPlans = await this.getDefaultFloorPlans();
+        return floorPlans;
+      }
     }
   };
 

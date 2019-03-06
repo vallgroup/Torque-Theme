@@ -5,6 +5,7 @@ import DataSource from "./data-sources";
 import FloorPlanSelector from "./FloorPlanSelector";
 import Header from "./Header";
 import Thumbnail from "./Thumbnail";
+import SearchBar from "./data-sources/entrata/SearchBar";
 
 const App = ({ site, dataSource }) => {
   const [floorPlans, setFloorPlans] = useState([]);
@@ -33,10 +34,14 @@ const App = ({ site, dataSource }) => {
 
   const selectedFloorPlan = floorPlans[selected];
 
-  return floorPlans?.length ? (
+  return floorPlans?.length || dataSource === "entrata" ? (
     <div className={`torque-floor-plans ${style.floorPlans}`}>
       <div className={`torque-floor-plans-header-wrapper ${style.header}`}>
-        <Header floorPlan={selectedFloorPlan} />
+        {dataSource === "entrata" ? (
+          <SearchBar getFloorPlans={getFloorPlans} site={site} />
+        ) : (
+          <Header floorPlan={selectedFloorPlan} />
+        )}
       </div>
       <div className={`torque-floor-plans-selector ${style.selector}`}>
         <div className={`torque-floor-plans-list ${style.list}`}>

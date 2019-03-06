@@ -4,15 +4,9 @@ export default class Entrata {
   constructor({ site }) {
     this.requestUrl = endpoint =>
       `${site}/wp-json/floor-plans/v1/entrata/${endpoint}`;
-
-    this.unitTypes = [];
-    this.availableUnits = [];
-    this.floorPlans = [];
   }
 
-  init = async () => !this.property && (await this.updateUnitTypes());
-
-  updateUnitTypes = async () => {
+  getUnitTypes = async () => {
     try {
       const response = await axios.get(this.requestUrl("unit-types"));
 
@@ -20,15 +14,32 @@ export default class Entrata {
         throw "Error getting unit types";
       }
 
-      this.unitTypes = response?.data?.unit_types;
-      console.log(this.unitTypes);
+      return response?.data?.unit_types;
     } catch (err) {
       console.log(err);
-      this.unitTypes = [];
+      return [];
     }
   };
 
-  getFloorPlans = () => {
-    return [];
+  getFloorPlans = async ({ unitTypeIds = [], startDate = false }) => {
+    if (!(unitTypeIds || startDate)) {
+      return [];
+    }
+
+    try {
+      const params = { unit_type_ids: unitTypeIds, start_date: startDate };
+      const response = await axios.get(this.requestUrl("floor-plans"), {
+        params
+      });
+
+      if (!response?.data?.success) {
+        throw "Error getting floor plans";
+      }
+
+      return response?.data?.floor_plans;
+    } catch (err) {
+      console.log(err);
+      return [];
+    }
   };
 }

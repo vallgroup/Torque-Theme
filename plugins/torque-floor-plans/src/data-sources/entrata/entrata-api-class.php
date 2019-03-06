@@ -57,6 +57,7 @@ class Entrata_API {
 
 		$requests = [];
 
+		// send parralel requests, one per unit type id
 		foreach ($unit_type_ids as $unit_type_id) {
 			$requests[] = $this->create_GET_request(
 				'propertyunits',
@@ -80,18 +81,17 @@ class Entrata_API {
 				true
 			);
 		}
-
 		$responses = $this->parralel_curl($requests);
 
+		// extract the floor plan ids from each response
 		$floor_plan_ids = [];
-
 		foreach ($responses as $response) {
 			if (!is_object($response) || !$response->ILS_Units || !$response->ILS_Units->Unit) {
 				continue;
 			}
 
 			$units = $response->ILS_Units->Unit;
-			$start_date_date = date_create_from_format("d/m/Y",$start_date);
+			$start_date_date = date_create_from_format("d/m/Y", $start_date);
 
 
 			if (!$units) {
@@ -101,11 +101,16 @@ class Entrata_API {
 			foreach ($units as $unit) {
 				try {
 					// filter by date
-					$compare_date = date_create_from_format("d/m/Y",$unit->{'@attributes'}->AvailableOn);
-					$diff = date_diff($compare_date, $start_date_date);
-					$is_available = ($diff->invert === 0 || $diff->days === 0) && $unit->{'@attributes'}->Availability === 'Available';
+					if ($start_date_date) {
+						$compare_date = date_create_from_format("d/m/Y",$unit->{'@attributes'}->AvailableOn);
+						$diff = date_diff($compare_date, $start_date_date);
+						$is_available_by_date = ($diff->invert === 0 || $diff->days === 0);
+					} else {
+						$is_available_by_date = true;
+					}
 
-					if ($is_available) {
+
+					if ($is_available_by_date && $unit->{'@attributes'}->Availability === 'Available') {
 						// seems like their server checks duplicates for us, so lets let them do it
 						$floor_plan_ids[] = $unit->{'@attributes'}->FloorplanId;
 					}
@@ -115,6 +120,7 @@ class Entrata_API {
 			}
 		}
 
+		// get floor plan objects from ids from last request
 		if (sizeOf($floor_plan_ids) > 0) {
 			$floor_plans = [];
 
