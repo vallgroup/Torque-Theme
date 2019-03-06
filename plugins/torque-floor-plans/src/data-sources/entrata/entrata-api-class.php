@@ -55,29 +55,37 @@ class Entrata_API {
 
 	public function get_floor_plans($unit_type_ids, $start_date) {
 
-		$floor_plan_ids = [];
+		$requests = [];
 
 		foreach ($unit_type_ids as $unit_type_id) {
-			$response = $this->create_GET_request('propertyunits', '
-			{
-				"name": "getUnitsAvailabilityAndPricing",
-				"version": "r1",
-				"params": {
-					"propertyId": "'.$this->PROPERTY_ID.'",
-					"unitTypeId": "'.$unit_type_id.'",
-					"availableUnitsOnly": "1",
-					"skipPricing": "1",
-	        "showChildProperties": "0",
-	        "includeDisabledFloorplans": "0",
-	        "includeDisabledUnits": "0",
-	        "showUnitSpaces": "0",
-	        "useSpaceConfiguration": "0"
+			$requests[] = $this->create_GET_request(
+				'propertyunits',
+				'
+				{
+					"name": "getUnitsAvailabilityAndPricing",
+					"version": "r1",
+					"params": {
+						"propertyId": "'.$this->PROPERTY_ID.'",
+						"unitTypeId": "'.$unit_type_id.'",
+						"availableUnitsOnly": "1",
+						"skipPricing": "1",
+		        "showChildProperties": "0",
+		        "includeDisabledFloorplans": "0",
+		        "includeDisabledUnits": "0",
+		        "showUnitSpaces": "0",
+		        "useSpaceConfiguration": "0"
+					}
 				}
-			}
-			');
+				',
+				true
+			);
+		}
 
-			// "moveInStartDate": "'.$start_date.'"
+		$responses = $this->parralel_curl($requests);
 
+		$floor_plan_ids = [];
+
+		foreach ($responses as $response) {
 			if (!is_object($response) || !$response->ILS_Units || !$response->ILS_Units->Unit) {
 				continue;
 			}
@@ -126,7 +134,7 @@ class Entrata_API {
 		}
 	}
 
-  private function create_GET_request($endpoint, $method) {
+  private function create_GET_request($endpoint, $method, $prevent_exec = false) {
     $resCurl = curl_init();
 
     $jsonRequest = '{
@@ -145,19 +153,63 @@ class Entrata_API {
     curl_setopt( $resCurl, CURLOPT_URL, 'https://lincolnapts.entrata.com/api/v1/'.$endpoint );
     curl_setopt( $resCurl, CURLOPT_RETURNTRANSFER, 1);
 
+		if ($prevent_exec) {
+			// return un-executed curl object so we can execute it elsewhere
+			return $resCurl;
+		} else {
+			$response = curl_exec( $resCurl );
+	    curl_close( $resCurl );
 
-    $response = curl_exec( $resCurl );
-    curl_close( $resCurl );
+	    $data = json_decode($response);
 
-    $data = json_decode($response);
+			if (!($data->response->code === 200 && $data->response->result)) {
+				throw new Exception('Error fetching data from entrata API');
+				return [];
+			}
 
-		if (!($data->response->code === 200 && $data->response->result)) {
-			throw new Exception('Error fetching data from entrata API');
-			return [];
+			return $data->response->result;
+		}
+  }
+
+	private function parralel_curl($curl_requests) {
+		// array of curl handles
+		$multiCurl = array();
+		// data to be returned
+		$results = array();
+		// multi handle
+		$mh = curl_multi_init();
+
+		foreach ($curl_requests as $i => $curl_request) {
+		  $multiCurl[$i] = $curl_request;
+		  curl_multi_add_handle($mh, $multiCurl[$i]);
 		}
 
-		return $data->response->result;
-  }
+		$index=null;
+		do {
+		  curl_multi_exec($mh,$index);
+		} while($index > 0);
+		// get content and remove handles
+		foreach($multiCurl as $k => $ch) {
+		  $results[$k] = curl_multi_getcontent($ch);
+		  curl_multi_remove_handle($mh, $ch);
+		}
+		// close
+		curl_multi_close($mh);
+
+		$cleaned_results = [];
+
+		foreach ($results as $i => $result) {
+			$data = json_decode($result);
+
+			if (!($data->response->code === 200 && $data->response->result)) {
+				throw new Exception('Error fetching data from entrata API');
+			}
+
+			$cleaned_results[] = $data->response->result;
+		}
+
+		return $cleaned_results;
+	}
 }
 
 ?>
