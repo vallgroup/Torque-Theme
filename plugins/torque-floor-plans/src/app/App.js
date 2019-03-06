@@ -38,7 +38,7 @@ const App = ({ site, dataSource }) => {
     <div className={`torque-floor-plans ${style.floorPlans}`}>
       <div className={`torque-floor-plans-header-wrapper ${style.header}`}>
         {dataSource === "entrata" ? (
-          <SearchBar getFloorPlans={getFloorPlans} site={site} />
+          <SearchBar setFloorPlans={setFloorPlans} site={site} />
         ) : (
           <Header floorPlan={selectedFloorPlan} />
         )}

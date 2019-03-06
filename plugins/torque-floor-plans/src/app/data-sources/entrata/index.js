@@ -22,10 +22,6 @@ export default class Entrata {
   };
 
   getFloorPlans = async ({ unitTypeIds = [], startDate = false }) => {
-    if (!(unitTypeIds || startDate)) {
-      return [];
-    }
-
     try {
       const params = { unit_type_ids: unitTypeIds, start_date: startDate };
       const response = await axios.get(this.requestUrl("floor-plans"), {

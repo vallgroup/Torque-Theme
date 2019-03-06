@@ -2,7 +2,7 @@ import React, { memo, useState, useEffect } from "react";
 import Entrata from "..";
 import style from "./SearchBar.scss";
 
-const SearchBar = ({ getFloorPlans, site }) => {
+const SearchBar = ({ setFloorPlans, site }) => {
   const [unitTypes, setUnitTypes] = useState([]);
   const [selectedUnitTypes, setSelectedUnitTypes] = useState([]);
   const [startDate, setStartDate] = useState("");
@@ -39,9 +39,17 @@ const SearchBar = ({ getFloorPlans, site }) => {
       .join(",");
 
     const entrata = new Entrata({ site });
-    const floorPlans = await entrata.getFloorPlans({ unitTypeIds });
+    const floorPlansResults = await entrata.getFloorPlans({ unitTypeIds });
 
-    console.log(floorPlans);
+    const floorPlans = floorPlansResults.map(floorPlan => ({
+      downloads: { pdf: "" },
+      floor_number: 0,
+      post_title: floorPlan?.UnitTypes?.UnitType[0]["@value"],
+      rsf: floorPlan?.SquareFeet["@attributes"]?.Max.toString(),
+      thumbnail: floorPlan?.File[0]?.Src
+    }));
+
+    setFloorPlans(floorPlans);
   };
 
   return (

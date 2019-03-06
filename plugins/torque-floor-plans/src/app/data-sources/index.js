@@ -10,6 +10,7 @@ export default class DataSource {
   getFloorPlans = async () => {
     switch (this.dataSource) {
       case "entrata":
+        // without any search params set, we return an empty array. Search with params is handled in SearchBar
         return [];
 
       default: {

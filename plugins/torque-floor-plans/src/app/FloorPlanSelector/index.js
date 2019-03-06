@@ -2,6 +2,20 @@ import React, { memo } from "react";
 import { getFloorWithAffix } from "../App";
 import style from "./FloorPlanSelector.scss";
 
+/*
+
+  Floor plan shape
+
+  {
+    downloads: {pdf: ""}
+    floor_number: ""
+    post_title: "Floor Plan 2"
+    rsf: ""
+    thumbnail: "http://localhost:8000/wp-content/uploads/2019/03/Screen-Shot-2019-02-18-at-19.41.26.png"
+  }
+
+ */
+
 const FloorPlanSelector = ({ floorPlans, updateSelected }) => {
   return (
     floorPlans && (
