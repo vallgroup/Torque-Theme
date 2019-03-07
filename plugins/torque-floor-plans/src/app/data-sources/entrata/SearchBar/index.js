@@ -1,4 +1,5 @@
 import React, { memo, useState, useEffect } from "react";
+import classnames from "classnames";
 import Entrata from "..";
 import DatePicker from "react-datepicker";
 import style from "./SearchBar.scss";
@@ -6,7 +7,7 @@ import style from "./SearchBar.scss";
 const SearchBar = ({ setFloorPlans, site }) => {
   const [unitTypes, setUnitTypes] = useState([]);
   const [selectedUnitTypes, setSelectedUnitTypes] = useState([]);
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState();
 
   const getUnitTypes = async () => {
     const entrata = new Entrata({ site });
@@ -42,7 +43,14 @@ const SearchBar = ({ setFloorPlans, site }) => {
       .filter(Boolean)
       .join(",");
 
-    const formattedStartDate = startDate.toLocaleDateString("en-US", {
+    let finalStartDate = startDate;
+    if (!startDate) {
+      // default start date to today if they dont select one
+      finalStartDate = new Date();
+      setStartDate(finalStartDate);
+    }
+
+    const formattedStartDate = finalStartDate.toLocaleDateString("en-US", {
       month: "2-digit",
       day: "2-digit",
       year: "numeric"
@@ -66,17 +74,37 @@ const SearchBar = ({ setFloorPlans, site }) => {
   };
 
   return (
-    <div className={style.root}>
-      <div>{"Select apartment type and move-in date"}</div>
-      <div className={style.search_wrapper}>
+    <div className={classnames("search-bar", style.root)}>
+      <div className={classnames("search-bar-title", style.title)}>
+        {"Select apartment type and move-in date"}
+      </div>
+
+      <div className={classnames("unit-types", style.unit_types)}>
         {Object.keys(unitTypes).map(unitType => (
-          <div key={unitType} onClick={handleUnitTypeClick(unitType)}>
+          <div
+            key={unitType}
+            className={classnames("unit-type", {
+              ["selected"]: selectedUnitTypes.includes(unitType)
+            })}
+            onClick={handleUnitTypeClick(unitType)}
+          >
             {unitType}
           </div>
         ))}
       </div>
-      <DatePicker selected={startDate} onChange={handleDateChange} />
-      <button onClick={handleSubmit}>{"Search"}</button>
+
+      <div className="date-picker-wrapper">
+        <DatePicker
+          selected={startDate}
+          onChange={handleDateChange}
+          className="date-picker"
+          placeholderText="Move-in date"
+        />
+      </div>
+
+      <button onClick={handleSubmit} className="search-button">
+        {"Search"}
+      </button>
     </div>
   );
 };

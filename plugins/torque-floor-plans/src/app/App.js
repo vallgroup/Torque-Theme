@@ -43,17 +43,19 @@ const App = ({ site, dataSource }) => {
           <Header floorPlan={selectedFloorPlan} />
         )}
       </div>
-      <div className={`torque-floor-plans-selector ${style.selector}`}>
-        <div className={`torque-floor-plans-list ${style.list}`}>
-          <FloorPlanSelector
-            floorPlans={floorPlans}
-            updateSelected={setSelected}
-          />
+      {floorPlans?.length ? (
+        <div className={`torque-floor-plans-selector ${style.selector}`}>
+          <div className={`torque-floor-plans-list ${style.list}`}>
+            <FloorPlanSelector
+              floorPlans={floorPlans}
+              updateSelected={setSelected}
+            />
+          </div>
+          <div className={`torque-floor-plans-thumbnail ${style.thumbnail}`}>
+            <Thumbnail floorPlan={selectedFloorPlan} dataSource={dataSource} />
+          </div>
         </div>
-        <div className={`torque-floor-plans-thumbnail ${style.thumbnail}`}>
-          <Thumbnail floorPlan={selectedFloorPlan} />
-        </div>
-      </div>
+      ) : null}
     </div>
   ) : null;
 };

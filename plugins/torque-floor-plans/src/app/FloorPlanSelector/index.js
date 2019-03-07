@@ -1,4 +1,5 @@
 import React, { memo } from "react";
+import classnames from "classnames";
 import { getFloorWithAffix } from "../App";
 import style from "./FloorPlanSelector.scss";
 
@@ -33,20 +34,28 @@ const FloorPlanSelector = ({ floorPlans, updateSelected }) => {
             return (
               <div
                 key={index}
-                className={style.option}
+                className={classnames(style.option, "option")}
                 onClick={() => {
                   updateSelected(index);
                 }}
               >
-                <div className={`${style.optionBlock} ${style.floor}`}>
+                <div
+                  className={classnames(
+                    style.optionBlock,
+                    style.floor,
+                    "floor"
+                  )}
+                >
                   {getFloorWithAffix(floorPlan)}
                 </div>
 
-                <div className={`${style.optionBlock}`}>
+                <div className={classnames(style.optionBlock, "title")}>
                   {floorPlan.post_title}
                 </div>
 
-                <div className={`${style.optionBlock}`}>{`${rsf} RSF`}</div>
+                <div
+                  className={classnames(style.optionBlock, "rsf")}
+                >{`${rsf} RSF`}</div>
               </div>
             );
           })}
