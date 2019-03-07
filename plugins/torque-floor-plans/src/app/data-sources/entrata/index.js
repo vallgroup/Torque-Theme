@@ -28,6 +28,8 @@ export default class Entrata {
         params
       });
 
+      console.log(response);
+
       if (!response?.data?.success) {
         throw "Error getting floor plans";
       }

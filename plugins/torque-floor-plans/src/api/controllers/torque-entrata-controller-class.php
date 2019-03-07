@@ -42,7 +42,7 @@ class Torque_Entrata_Controller {
 	public function get_floor_plans() {
 		try {
       $result = Entrata_API::get_inst()->get_floor_plans(
-				explode(',', $this->request['unit_type_ids']),
+				$this->request['unit_type_ids'] ? explode(',', $this->request['unit_type_ids']) : [],
 				$this->request['start_date']
 			);
 

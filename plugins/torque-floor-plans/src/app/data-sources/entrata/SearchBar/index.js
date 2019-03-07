@@ -1,11 +1,12 @@
 import React, { memo, useState, useEffect } from "react";
 import Entrata from "..";
+import DatePicker from "react-datepicker";
 import style from "./SearchBar.scss";
 
 const SearchBar = ({ setFloorPlans, site }) => {
   const [unitTypes, setUnitTypes] = useState([]);
   const [selectedUnitTypes, setSelectedUnitTypes] = useState([]);
-  const [startDate, setStartDate] = useState("");
+  const [startDate, setStartDate] = useState(new Date());
 
   const getUnitTypes = async () => {
     const entrata = new Entrata({ site });
@@ -33,13 +34,25 @@ const SearchBar = ({ setFloorPlans, site }) => {
     setSelectedUnitTypes(newSelectedUnitTypes);
   };
 
+  const handleDateChange = date => setStartDate(new Date(date));
+
   const handleSubmit = async () => {
     const unitTypeIds = selectedUnitTypes
       .reduce((acc, unitType) => [...acc, ...unitTypes[unitType]], [])
+      .filter(Boolean)
       .join(",");
 
+    const formattedStartDate = startDate.toLocaleDateString("en-US", {
+      month: "2-digit",
+      day: "2-digit",
+      year: "numeric"
+    });
+
     const entrata = new Entrata({ site });
-    const floorPlansResults = await entrata.getFloorPlans({ unitTypeIds });
+    const floorPlansResults = await entrata.getFloorPlans({
+      unitTypeIds: unitTypeIds.length ? unitTypeIds : undefined,
+      startDate: formattedStartDate
+    });
 
     const floorPlans = floorPlansResults.map(floorPlan => ({
       downloads: { pdf: "" },
@@ -62,6 +75,7 @@ const SearchBar = ({ setFloorPlans, site }) => {
           </div>
         ))}
       </div>
+      <DatePicker selected={startDate} onChange={handleDateChange} />
       <button onClick={handleSubmit}>{"Search"}</button>
     </div>
   );

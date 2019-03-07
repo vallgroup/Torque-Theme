@@ -93,7 +93,6 @@ class Entrata_API {
 			$units = $response->ILS_Units->Unit;
 			$start_date_date = date_create_from_format("d/m/Y", $start_date);
 
-
 			if (!$units) {
 				continue;
 			}
