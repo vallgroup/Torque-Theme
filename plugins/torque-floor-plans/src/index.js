@@ -1,17 +1,19 @@
 // entry point for React side of plugin
-import React from 'react'
-import ReactDOM from 'react-dom'
-import App from './app/App'
-import './app/scss/main.scss'
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./app/App";
+import "./app/scss/main.scss";
 
-if (!global._babelPolyfill) {
-	require('babel-polyfill');
-}
-
-const entry = document.querySelectorAll('.torque-floor-plans-react-entry')
+const entry = document.querySelectorAll(".torque-floor-plans-react-entry");
 
 entry.forEach(entry => {
   if (entry) {
-    ReactDOM.render(<App site={entry.getAttribute('data-site')} />, entry)
+    ReactDOM.render(
+      <App
+        site={entry.getAttribute("data-site")}
+        dataSource={entry.getAttribute("data-source")}
+      />,
+      entry
+    );
   }
-})
+});
