@@ -4,7 +4,7 @@
  /**
   * Plugin Name: Torque Floor Plans
   * Description:
-  * Version:     1.0.0
+  * Version:     2.0.0
   * Author:      Torque
   * Author URI:  https://torque.digital
   * License:     GPL
@@ -17,38 +17,51 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-require( plugin_dir_path(__FILE__) . '/custom-post-types/torque-floor-plan-cpt-class.php' );
-require( plugin_dir_path(__FILE__) . '/api/torque-floor-plans-rest-controller-class.php' );
-require( plugin_dir_path(__FILE__) . '/shortcode/torque-floor-plans-shortcode-class.php' );
-
 /**
  * Define constants for plugin's url and path
  */
 define( 'Torque_Floor_Plans_PATH', plugin_dir_path(__FILE__) );
 define( 'Torque_Floor_Plans_URL', plugin_dir_url(__FILE__) );
 
+/**
+ * Register plugin
+ */
+add_action( 'plugins_loaded', array( Torque_Floor_Plans::get_inst(), 'init' ) );
+
 class Torque_Floor_Plans {
+
+	public static $instance = NULL;
+
+	public static function get_inst() {
+		!self::$instance AND self::$instance = new self;
+
+		return self::$instance;
+	}
+
+	/**
+	 * left empty on purpose
+	 */
+	public function __construct() {}
+
+
 
 	public static $PLUGIN_NAME = 'Torque Floor Plans';
 
 	public static $PLUGIN_SLUG = 'torque-floor-plans';
 
-	public function __construct() {
-		add_action( 'plugins_loaded', array( $this, 'init' ) );
-	}
 
 	/**
    * This should be a function which registers all the plugin's required hooks.
    */
 	public function init() {
-		// register plugin specific CPTs
-		new Torque_Floor_Plan_CPT();
-
-		// init the REST Controller
-		new Torque_Floor_Plans_REST_Controller();
 
 		// register plugin shortcode
+		require_once( plugin_dir_path(__FILE__) . '/shortcode/torque-floor-plans-shortcode-class.php' );
 		new Torque_Floor_Plans_Shortcode();
+
+		//Register data source after the theme, since the theme determines which source to use
+		require_once( plugin_dir_path(__FILE__) . '/data-sources/torque-floor-plans-data-source-class.php' );
+		add_action( 'after_setup_theme', array( Torque_Floor_Plans_Data_Source::get_inst(), 'init' ) );
 
 		// enqueue plugin scripts
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_plugin_scripts' ) );
@@ -60,8 +73,5 @@ class Torque_Floor_Plans {
 		wp_enqueue_style( 'torque-floor-plans-styles', Torque_Floor_Plans_URL . 'bundles/main.css' );
 	}
 }
-
-// instantiate the plugin class to run the contructor and register all the hooks.
-new Torque_Floor_Plans();
 
 ?>
