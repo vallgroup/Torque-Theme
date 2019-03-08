@@ -20,7 +20,7 @@ A Floor Plans React app can then be included via a shortcode in the Wordpress si
 
 ### Added
 
-- Ability to use Entrata API as data source
+- Entrata API as data source
 
 ## [1.0.0]
 
