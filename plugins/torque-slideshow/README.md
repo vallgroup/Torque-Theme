@@ -11,11 +11,12 @@
 
 # Changelog
 
-## [1.1.0] 02/12/19
+## [1.1.0] 03/09/19
 
 ### Added
 
 - Slideshow timer
+- Ability to cycle infinitely
 
 ## [1.0.0] 02/12/19
 
