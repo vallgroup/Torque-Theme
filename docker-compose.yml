@@ -1,10 +1,10 @@
 version: '3.3'
 
 services:
-   db:
+   ust-db:
      image: mysql:5.7
      volumes:
-       - db_data:/var/lib/mysql
+       - ust-db_data:/var/lib/mysql
      restart: always
      environment:
        MYSQL_DATABASE: torque-wp
@@ -12,30 +12,30 @@ services:
        MYSQL_USER_FILE: /run/secrets/torque_wp_mysql_user
        MYSQL_PASSWORD_FILE: /run/secrets/torque_wp_mysql_pass
      networks:
-       - back
+       - ust-back
      secrets:
        - torque_wp_mysql_root
        - torque_wp_mysql_user
        - torque_wp_mysql_pass
 
-   phpmyadmin:
+   ust-phpmyadmin:
     depends_on:
-      - db
+      - ust-db
     image: phpmyadmin/phpmyadmin
     restart: always
     ports:
       - 8080:80
     environment:
-      PMA_HOST: db
+      PMA_HOST: ust-db
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/torque_wp_mysql_root
     networks:
-      - back
+      - ust-back
     secrets:
       - torque_wp_mysql_root
 
-   wordpress:
+   ust-wordpress:
      depends_on:
-       - db
+       - ust-db
      image: wordpress:latest
      ports:
        - "8000:80"
@@ -44,22 +44,22 @@ services:
        - ./php.ini:/var/www/html/php.ini
      restart: always
      environment:
-       WORDPRESS_DB_HOST: db:3306
+       WORDPRESS_DB_HOST: ust-db:3306
        WORDPRESS_DB_NAME: torque-wp
        WORDPRESS_DB_USER_FILE: /run/secrets/torque_wp_mysql_user
        WORDPRESS_DB_PASSWORD_FILE: /run/secrets/torque_wp_mysql_pass
        WORDPRESS_DEBUG: 1
      networks:
-       - back
+       - ust-back
      secrets:
        - torque_wp_mysql_user
        - torque_wp_mysql_pass
 
 networks:
-  back:
+  ust-back:
 
 volumes:
-  db_data:
+  ust-db_data:
     driver: local
 
 secrets:
