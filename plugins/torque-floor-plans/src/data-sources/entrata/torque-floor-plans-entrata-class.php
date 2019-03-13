@@ -39,27 +39,34 @@ class Torque_Floor_Plans_Entrata {
 				unset($metaboxes['floor_number']);
 
 				$metaboxes['entrata_name'] = array(
-					array(
-						'title'   => 'Entrata',
-						'priority' => 'high',
-					),
-					array( Torque_Floor_Plan_CPT::$floor_plan_labels['post_type_name'] ),
+					'Entrata',
+					Torque_Floor_Plan_CPT::$floor_plan_labels['post_type_name'],
 					array(
 						array(
 							'type'    => 'text',
 							'context' => 'post',
 							'name'    => 'entrata_name',
 							'label'   => 'Name in Entrata',
-							'placeholder'	=> 'OB'
-						),
-						array(
-							'context'     => 'post',
-							'type'        => 'wp_media',
-							'name'        => '[key_plan][url]',
-							'label'       => 'Key Plan Image',
+							'placeholder'	=> 'eg OB'
 						),
 					),
 					'entrata_name'
+				);
+
+				$metaboxes['entrata_key_plan'] = array(
+					'Additional Images',
+					Torque_Floor_Plan_CPT::$floor_plan_labels['post_type_name'],
+					array(
+						'name_prefix' => 'entrata_additional_images',
+						array(
+							'context'     => 'post',
+							'type'        => 'wp_media',
+							'name'        => '[key_plan]',
+							'label'       => 'Key Plan Image',
+							'preview'			=> true,
+						),
+					),
+					'entrata_additional_images'
 				);
 
 				return $metaboxes;
