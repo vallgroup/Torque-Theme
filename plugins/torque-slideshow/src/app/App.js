@@ -27,8 +27,9 @@ const App = ({ site, id }) => {
   );
 
   const images = slideshow?.meta?.images[0]?.split(",") || [];
+  const interval = slideshow?.meta?.interval;
 
-  return <Slideshow images={images} />;
+  return <Slideshow images={images} interval={interval} />;
 };
 
 App.propTypes = {

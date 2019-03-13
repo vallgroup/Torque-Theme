@@ -5,10 +5,6 @@ import ReactDOM from "react-dom";
 import App from "./app/App";
 import "./app/scss/main.scss";
 
-if (!global._babelPolyfill) {
-  require("babel-polyfill");
-}
-
 const entry = document.querySelectorAll(".torque-filtered-loop-react-entry");
 
 entry.forEach(entry => {
@@ -17,6 +13,7 @@ entry.forEach(entry => {
     ReactDOM.render(
       <App
         site={entry.getAttribute("data-site")}
+        postType={entry.getAttribute("data-post_type")}
         tax={entry.getAttribute("data-tax")}
         parent={entry.getAttribute("data-parent")}
         firstTerm={entry.getAttribute("data-first_term")}

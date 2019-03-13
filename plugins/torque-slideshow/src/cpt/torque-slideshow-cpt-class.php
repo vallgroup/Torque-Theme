@@ -74,6 +74,13 @@ class Torque_Slideshow_CPT {
 			'name_prefix' => 'torque_slideshow',
 			array(
 				'context'     => 'post',
+				'type'        => 'number',
+				'name'        => '[interval]',
+				'label'       => 'Time Interval (s) - 0 for no auto-slide',
+				'placeholder' => '3',
+			),
+			array(
+				'context'     => 'post',
 				'type'        => 'wp_media',
 				'name'        => '[images]',
 				'label'       => 'Images',
