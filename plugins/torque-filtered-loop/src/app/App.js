@@ -82,7 +82,7 @@ class App extends Component {
       }
 
       const response = await axios.get(
-        `${this.props.site}/wp-json/wp/v2/posts`,
+        `${this.props.site}/wp-json/wp/v2/${this.props.postType}`,
         {
           params: this.getRequestParams()
         }

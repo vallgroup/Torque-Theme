@@ -13,6 +13,7 @@ entry.forEach(entry => {
     ReactDOM.render(
       <App
         site={entry.getAttribute("data-site")}
+        postType={entry.getAttribute("data-post_type")}
         tax={entry.getAttribute("data-tax")}
         parent={entry.getAttribute("data-parent")}
         firstTerm={entry.getAttribute("data-first_term")}
