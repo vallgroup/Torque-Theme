@@ -2,6 +2,8 @@
 
 class Entrata_API {
 
+	public static $UNIT_TYPE_NAME_FILTER_HANDLE = 'floor_plans_entrata_unit_type_name';
+
 	public static $instance = NULL;
 
 	public static function get_inst() {
@@ -40,7 +42,7 @@ class Entrata_API {
 		$cleaned_unit_types = array();
 		foreach ($unit_types as $unit_type) {
 			// group unit types by name
-			$name = $unit_type->name;
+			$name = apply_filters(self::$UNIT_TYPE_NAME_FILTER_HANDLE, $unit_type->name);
 			$id = $unit_type->identificationType->idValue;
 
 			if ( ! array_key_exists($name, $cleaned_unit_types) ) {
@@ -158,8 +160,8 @@ class Entrata_API {
 			$rsf = get_post_meta($floor_plan_wp->ID, 'floor_plan_rsf', true);
 
 			$floor_plans[] = array(
-				'post_title'							=> $floor_plan_wp->post_title,
-				'thumbnail' 		=> get_the_post_thumbnail_url($floor_plan_wp->ID, 'large') ?? '',
+				'post_title'				=> $floor_plan_wp->post_title,
+				'thumbnail' 				=> get_the_post_thumbnail_url($floor_plan_wp->ID, 'large') ?? '',
 				'key_plan_src'			=> $images['key_plan'] ?? '',
 				'rsf'								=> $rsf
 			);

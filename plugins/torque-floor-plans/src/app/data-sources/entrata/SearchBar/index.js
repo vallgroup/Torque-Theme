@@ -83,7 +83,7 @@ const SearchBar = ({ setFloorPlans, site }) => {
             })}
             onClick={handleUnitTypeClick(unitType)}
           >
-            {unitType}
+            {unitType.toUpperCase()}
           </div>
         ))}
       </div>
