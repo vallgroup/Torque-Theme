@@ -17,6 +17,16 @@ Currently, the user is able to set a taxonomy, a parent term to limit filter opt
 
 # Changelog
 
+## [1.1.0]
+
+### Added
+
+- Support for custom post types
+
+### Changed
+
+- Babel to v7
+
 ## [1.0.1]
 
 ### Changed

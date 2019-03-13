@@ -3,14 +3,15 @@ import React, { memo, useState, useEffect } from "react";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 import Swipe from "react-easy-swipe";
+import useInterval from "../hooks/useInterval";
 import Tracker from "./Tracker";
 import arrow from "../images/arrow.svg";
 
-const Slideshow = ({ images }) => {
+const Slideshow = ({ images, interval }) => {
   const [slide, setSlide] = useState(0);
 
-  const incrementSlide = () => slide < images.length - 1 && setSlide(slide + 1);
-  const decrementSlide = () => slide > 0 && setSlide(slide - 1);
+  const incrementSlide = () => setSlide((slide + 1) % images.length);
+  const decrementSlide = () => setSlide((slide - 1) % images.length);
   const createSetSlide = index => () => setSlide(index);
 
   const preloadImages = () => {
@@ -26,6 +27,11 @@ const Slideshow = ({ images }) => {
     },
     [images]
   );
+
+  const intervalInt = parseInt(interval);
+  useInterval(() => {
+    incrementSlide(slide + 1);
+  }, intervalInt);
 
   return (
     <div className={classnames(styles.root, "tq-slideshow")}>
