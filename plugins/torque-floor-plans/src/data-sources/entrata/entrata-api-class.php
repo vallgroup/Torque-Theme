@@ -158,9 +158,8 @@ class Entrata_API {
 			$rsf = get_post_meta($floor_plan_wp->ID, 'floor_plan_rsf', true);
 
 			$floor_plans[] = array(
-				'title'							=> $floor_plan_wp->post_title,
-				'name'							=> $name,
-				'floor_plan_src' 		=> get_the_post_thumbnail_url($floor_plan_wp->ID, 'large') ?? '',
+				'post_title'							=> $floor_plan_wp->post_title,
+				'thumbnail' 		=> get_the_post_thumbnail_url($floor_plan_wp->ID, 'large') ?? '',
 				'key_plan_src'			=> $images['key_plan'] ?? '',
 				'rsf'								=> $rsf
 			);
