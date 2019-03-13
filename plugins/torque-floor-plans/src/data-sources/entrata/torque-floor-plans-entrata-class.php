@@ -22,7 +22,50 @@ class Torque_Floor_Plans_Entrata {
   public function init() {
     $this->PROPERTY_ID = apply_filters(self::$PROPERTY_ID_FILTER_SLUG, $this->PROPERTY_ID);
 
+		$this->configure_cpt();
+
 		Entrata_API::get_inst()->init($this->PROPERTY_ID);
+	}
+
+	public function configure_cpt() {
+		if ( class_exists( 'Torque_Floor_Plan_CPT' ) ) {
+
+			add_action('do_meta_boxes', function() {
+				remove_meta_box('postexcerpt', Torque_Floor_Plan_CPT::$floor_plan_labels['post_type_name'], 'normal');
+			});
+
+			add_filter( Torque_Floor_Plan_CPT::$METABOXES_FILTER_HOOK, function($metaboxes) {
+				unset($metaboxes['downloads']);
+				unset($metaboxes['floor_number']);
+
+				$metaboxes['entrata_name'] = array(
+					array(
+						'title'   => 'Entrata',
+						'priority' => 'high',
+					),
+					array( Torque_Floor_Plan_CPT::$floor_plan_labels['post_type_name'] ),
+					array(
+						array(
+							'type'    => 'text',
+							'context' => 'post',
+							'name'    => 'entrata_name',
+							'label'   => 'Name in Entrata',
+							'placeholder'	=> 'OB'
+						),
+						array(
+							'context'     => 'post',
+							'type'        => 'wp_media',
+							'name'        => '[key_plan][url]',
+							'label'       => 'Key Plan Image',
+						),
+					),
+					'entrata_name'
+				);
+
+				return $metaboxes;
+			});
+
+		}
 	}
 
   public function get_shortcode_markup() {
