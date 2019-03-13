@@ -21,6 +21,7 @@ class Torque_Filtered_Loop_Shortcode {
     // use this array to attributes and display them in the front end
     // for private attributes go to setup_atts()
     $this->expected_args = array(
+      'post_type'     => 'posts',
       'tax'           => '',
       'parent'        => '',
       'first_term'    => '',

@@ -20,6 +20,12 @@ Filters available for the theme to control some of the map's layout and function
 
 # Changelog
 
+## [1.2.0]
+
+### Added
+
+- Upgrade babel and react
+
 ## [1.1.0]
 
 ### Added
