@@ -12,19 +12,15 @@ class Template_1 extends React.PureComponent {
 
     return (
       <div className={"loop-post template-1"}>
-        {backgroundImage && (
-          <div className={"featured-image-wrapper"}>
-            <div
-              className={"featured-image"}
-              style={{ backgroundImage: `url(${backgroundImage})` }}
-            />
-          </div>
-        )}
+        <div className={"featured-image-wrapper"}>
+          <div
+            className={"featured-image"}
+            style={{ backgroundImage: `url(${backgroundImage})` }}
+          />
+        </div>
 
         <div className={"content-wrapper"}>
-          <a href={post.link}>
-            <h4 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
-          </a>
+          <h4 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
 
           <div
             className="content"
