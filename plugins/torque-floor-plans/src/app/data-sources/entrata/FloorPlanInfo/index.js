@@ -4,9 +4,10 @@ import classnames from "classnames";
 import printer from "./icons/eleven33-printer.png";
 import search from "./icons/eleven33-search.png";
 import share from "./icons/eleven33-share.png";
-import keyplan from "./icons/Eleven33-Keyplans.png";
 
-const FloorPlanInfo = ({ floorPlan: { post_title, rsf, thumbnail } }) => {
+const FloorPlanInfo = ({
+  floorPlan: { post_title, rsf, thumbnail, key_plan_src: keyPlanSrc }
+}) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const toggleModalOpen = () => setModalOpen(!isModalOpen);
 
@@ -69,7 +70,7 @@ const FloorPlanInfo = ({ floorPlan: { post_title, rsf, thumbnail } }) => {
       </div>
 
       <div className="floor-plan-info-block floor-plan-key">
-        <img src={keyplan} />
+        <img src={keyPlanSrc} />
       </div>
 
       {isModalOpen && (

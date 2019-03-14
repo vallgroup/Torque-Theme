@@ -4,7 +4,7 @@
  /**
   * Plugin Name: Torque Floor Plans
   * Description:
-  * Version:     2.0.0
+  * Version:     2.1.0
   * Author:      Torque
   * Author URI:  https://torque.digital
   * License:     GPL
