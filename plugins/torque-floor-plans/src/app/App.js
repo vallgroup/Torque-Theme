@@ -1,5 +1,5 @@
 import style from "./App.scss";
-import React, { memo, useState, useEffect } from "react";
+import React, { memo, useState, useEffect, useCallback } from "react";
 import PropTypes from "prop-types";
 import DataSource from "./data-sources";
 import FloorPlanSelector from "./FloorPlanSelector";
@@ -11,25 +11,28 @@ const App = ({ site, dataSource }) => {
   const [floorPlans, setFloorPlans] = useState([]);
   const [selected, setSelected] = useState(0);
 
-  const getFloorPlans = async () => {
-    try {
-      const source = new DataSource({ site, dataSource });
-      const floorPlans = await source.getFloorPlans();
+  const getFloorPlans = useCallback(
+    async () => {
+      try {
+        const source = new DataSource({ site, dataSource });
+        const floorPlans = await source.getFloorPlans();
 
-      setFloorPlans(floorPlans);
-      setSelected(0);
-    } catch (e) {
-      console.log(e);
-      setFloorPlans([]);
-      setSelected(0);
-    }
-  };
+        setFloorPlans(floorPlans);
+        setSelected(0);
+      } catch (e) {
+        console.log(e);
+        setFloorPlans([]);
+        setSelected(0);
+      }
+    },
+    [site, dataSource]
+  );
 
   useEffect(
     () => {
       getFloorPlans();
     },
-    [site, dataSource]
+    [getFloorPlans]
   );
 
   const selectedFloorPlan = floorPlans[selected];

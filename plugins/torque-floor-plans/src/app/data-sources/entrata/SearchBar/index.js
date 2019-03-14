@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect } from "react";
+import React, { memo, useState, useEffect, useCallback } from "react";
 import classnames from "classnames";
 import Entrata from "..";
 import DatePicker from "react-datepicker";
@@ -9,19 +9,22 @@ const SearchBar = ({ setFloorPlans, site }) => {
   const [selectedUnitTypes, setSelectedUnitTypes] = useState([]);
   const [startDate, setStartDate] = useState();
 
-  const getUnitTypes = async () => {
-    const entrata = new Entrata({ site });
-    const unitTypes = await entrata.getUnitTypes();
+  const getUnitTypes = useCallback(
+    async () => {
+      const entrata = new Entrata({ site });
+      const unitTypes = await entrata.getUnitTypes();
 
-    setUnitTypes(unitTypes);
-    setSelectedUnitTypes([]);
-  };
+      setUnitTypes(unitTypes);
+      setSelectedUnitTypes([]);
+    },
+    [site]
+  );
 
   useEffect(
     () => {
       getUnitTypes();
     },
-    [site]
+    [getUnitTypes]
   );
 
   const handleUnitTypeClick = name => () => {
@@ -57,18 +60,10 @@ const SearchBar = ({ setFloorPlans, site }) => {
     });
 
     const entrata = new Entrata({ site });
-    const floorPlansResults = await entrata.getFloorPlans({
+    const floorPlans = await entrata.getFloorPlans({
       unitTypeIds: unitTypeIds.length ? unitTypeIds : undefined,
       startDate: formattedStartDate
     });
-
-    const floorPlans = floorPlansResults.map(floorPlan => ({
-      downloads: { pdf: "" },
-      floor_number: 0,
-      post_title: floorPlan?.UnitTypes?.UnitType[0]["@value"],
-      rsf: floorPlan?.SquareFeet["@attributes"]?.Max.toString(),
-      thumbnail: floorPlan?.File[0]?.Src
-    }));
 
     setFloorPlans(floorPlans);
   };
@@ -88,7 +83,7 @@ const SearchBar = ({ setFloorPlans, site }) => {
             })}
             onClick={handleUnitTypeClick(unitType)}
           >
-            {unitType}
+            {unitType.toUpperCase()}
           </div>
         ))}
       </div>

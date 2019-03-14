@@ -36,8 +36,11 @@ class Torque_Floor_Plans_Data_Source {
 				break;
 
 			default:
-				new Torque_Floor_Plan_CPT();
+
 		}
+
+		// set up CPT
+		new Torque_Floor_Plan_CPT();
 
 		// set up REST endpoints
 		new Torque_Floor_Plans_REST_Controller();

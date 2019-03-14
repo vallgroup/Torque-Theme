@@ -2,6 +2,8 @@
 
 class Entrata_API {
 
+	public static $UNIT_TYPE_NAME_FILTER_HANDLE = 'floor_plans_entrata_unit_type_name';
+
 	public static $instance = NULL;
 
 	public static function get_inst() {
@@ -40,7 +42,7 @@ class Entrata_API {
 		$cleaned_unit_types = array();
 		foreach ($unit_types as $unit_type) {
 			// group unit types by name
-			$name = $unit_type->name;
+			$name = apply_filters(self::$UNIT_TYPE_NAME_FILTER_HANDLE, $unit_type->name);
 			$id = $unit_type->identificationType->idValue;
 
 			if ( ! array_key_exists($name, $cleaned_unit_types) ) {
@@ -133,10 +135,39 @@ class Entrata_API {
 	    }
 			');
 
-			return $response->FloorPlans->FloorPlan;
+			return $this->combine_floorplans($response->FloorPlans->FloorPlan);
 		} else {
 			return [];
 		}
+	}
+
+	private function combine_floorplans($floor_plans_from_entrata) {
+		$floor_plans = [];
+
+		foreach ($floor_plans_from_entrata as $floor_plan_entrata) {
+			$name = $floor_plan_entrata->Name;
+			if (!$name) { continue; }
+
+			$floor_plans_query = new WP_Query( array(
+				'post_type' 				=> Torque_Floor_Plan_CPT::$floor_plan_labels['post_type_name'],
+				'meta_key'					=> 'entrata_name',
+				'meta_value'				=> $name
+			) );
+			if ($floor_plans_query->found_posts === 0) { continue; }
+
+			$floor_plan_wp = $floor_plans_query->post;
+			$images = get_post_meta($floor_plan_wp->ID, 'entrata_additional_images', true);
+			$rsf = get_post_meta($floor_plan_wp->ID, 'floor_plan_rsf', true);
+
+			$floor_plans[] = array(
+				'post_title'				=> $floor_plan_wp->post_title,
+				'thumbnail' 				=> get_the_post_thumbnail_url($floor_plan_wp->ID, 'large') ?? '',
+				'key_plan_src'			=> $images['key_plan'] ?? '',
+				'rsf'								=> $rsf
+			);
+		}
+
+		return $floor_plans;
 	}
 
   private function create_GET_request($endpoint, $method, $prevent_exec = false) {
