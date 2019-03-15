@@ -2,6 +2,8 @@
 
 class Torque_Floor_Plan_CPT {
 
+	public static $METABOXES_FILTER_HOOK = 'torque_floor_plans_cpt_metaboxes';
+
 	/**
 	 * Holds the floor plan cpt object
 	 *
@@ -29,7 +31,6 @@ class Torque_Floor_Plan_CPT {
 	protected $floor_plan_options = array(
 		'supports' => array(
 			'title',
-			'editor',
       'excerpt',
 			'thumbnail',
 		),
@@ -42,53 +43,65 @@ class Torque_Floor_Plan_CPT {
 	function __construct() {
 		$this->floor_plan = new PremiseCPT( self::$floor_plan_labels, $this->floor_plan_options );
 
-		pwp_add_metabox(
-			array(
-				'title'   => 'Floor Number',
-				'context' => 'side',
-				'priority' => 'high',
-			),
-			array( self::$floor_plan_labels['post_type_name'] ),
-			array(
+		add_action('init', array($this, 'add_metaboxes'));
+	}
+
+	public function add_metaboxes() {
+		$maybe_metaboxes = array(
+			'floor_number' => array(
 				array(
-					'type'    => 'number',
-					'step'		=> 1,
-					'context' => 'post',
-					'name'    => 'floor_plan_floor_number',
-					'label'   => 'Floor Number',
+					'title'   => 'Floor Number',
+					'context' => 'side',
+					'priority' => 'high',
 				),
+				array( self::$floor_plan_labels['post_type_name'] ),
+				array(
+					array(
+						'type'    => 'number',
+						'step'		=> 1,
+						'context' => 'post',
+						'name'    => 'floor_plan_floor_number',
+						'label'   => 'Floor Number',
+					),
+				),
+				'floor_plan_floor_number'
 			),
-			'floor_plan_floor_number'
+
+			'rsf' => array(
+				'RSF',
+				self::$floor_plan_labels['post_type_name'],
+				array(
+					array(
+						'type'    => 'number',
+						'step'		=> 1,
+						'context' => 'post',
+						'name'    => 'floor_plan_rsf',
+						'label'   => 'Floor Plan RSF',
+					),
+				),
+				'floor_plan_rsf'
+			),
+
+			'downloads' => array (
+				'Floor Plan Downloads',
+				array( self::$floor_plan_labels['post_type_name'] ),
+				array(
+					'name_prefix' => 'floor_plan_downloads',
+					array(
+						'type'     => 'wp_media',
+						'context'  => 'post',
+						'name'     => '[pdf]',
+						'label'    => 'PDF',
+					),
+				),
+				'floor_plan_downloads'
+			),
 		);
 
-		pwp_add_metabox(
-			'RSF',
-			self::$floor_plan_labels['post_type_name'],
-			array(
-				array(
-					'type'    => 'number',
-					'step'		=> 1,
-					'context' => 'post',
-					'name'    => 'floor_plan_rsf',
-					'label'   => 'Floor Plan RSF',
-				),
-			),
-			'floor_plan_rsf'
-		);
+		$metaboxes = apply_filters( self::$METABOXES_FILTER_HOOK, $maybe_metaboxes );
 
-		pwp_add_metabox(
-			'Floor Plan Downloads',
-			array( self::$floor_plan_labels['post_type_name'] ),
-			array(
-				'name_prefix' => 'floor_plan_downloads',
-				array(
-					'type'     => 'wp_media',
-					'context'  => 'post',
-					'name'     => '[pdf]',
-					'label'    => 'PDF',
-				),
-			),
-			'floor_plan_downloads'
-		);
+		foreach ($metaboxes as $key => $value) {
+			pwp_add_metabox(...$value);
+		}
 	}
 }
