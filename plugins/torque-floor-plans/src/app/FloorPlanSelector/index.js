@@ -17,48 +17,44 @@ import style from "./FloorPlanSelector.scss";
 
  */
 
-const FloorPlanSelector = ({ floorPlans, updateSelected }) => {
+const FloorPlanSelector = ({ floorPlans, selected, updateSelected }) => {
   return (
     floorPlans && (
       <React.Fragment>
         <h4 className={style.title}>
           {"CLICK TO PREVIEW FLOOR PLAN ON THE RIGHT"}
         </h4>
-        {floorPlans
-          .sort((a, b) => {
-            return a.floor_number > b.floor_number;
-          })
-          .map((floorPlan, index) => {
-            const rsf = floorPlan.rsf.replace(/\d(?=(\d{3})$)/g, "$&,");
+        {floorPlans.map((floorPlan, index) => {
+          const rsf = floorPlan.rsf.replace(/\d(?=(\d{3})$)/g, "$&,");
 
-            return (
+          console.log(selected, index, index === selected);
+
+          return (
+            <div
+              key={index}
+              className={classnames(style.option, "option", {
+                active: index === selected
+              })}
+              onClick={() => {
+                updateSelected(index);
+              }}
+            >
               <div
-                key={index}
-                className={classnames(style.option, "option")}
-                onClick={() => {
-                  updateSelected(index);
-                }}
+                className={classnames(style.optionBlock, style.floor, "floor")}
               >
-                <div
-                  className={classnames(
-                    style.optionBlock,
-                    style.floor,
-                    "floor"
-                  )}
-                >
-                  {getFloorWithAffix(floorPlan)}
-                </div>
-
-                <div className={classnames(style.optionBlock, "title")}>
-                  {floorPlan.post_title}
-                </div>
-
-                <div
-                  className={classnames(style.optionBlock, "rsf")}
-                >{`${rsf} RSF`}</div>
+                {getFloorWithAffix(floorPlan)}
               </div>
-            );
-          })}
+
+              <div className={classnames(style.optionBlock, "title")}>
+                {floorPlan.post_title}
+              </div>
+
+              <div
+                className={classnames(style.optionBlock, "rsf")}
+              >{`${rsf} RSF`}</div>
+            </div>
+          );
+        })}
       </React.Fragment>
     )
   );
