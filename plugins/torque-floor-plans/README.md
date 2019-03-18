@@ -18,6 +18,12 @@ A Floor Plans React app can then be included via a shortcode in the Wordpress si
 
 # Changelog
 
+## [2.1.2]
+
+### Changed
+
+- Entrata - all floor plans are fetched on initial load
+
 ## [2.1.1]
 
 ### Added
