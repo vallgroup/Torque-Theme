@@ -27,8 +27,6 @@ const FloorPlanSelector = ({ floorPlans, selected, updateSelected }) => {
         {floorPlans.map((floorPlan, index) => {
           const rsf = floorPlan.rsf.replace(/\d(?=(\d{3})$)/g, "$&,");
 
-          console.log(selected, index, index === selected);
-
           return (
             <div
               key={index}
