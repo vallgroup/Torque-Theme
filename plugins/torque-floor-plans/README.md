@@ -18,6 +18,16 @@ A Floor Plans React app can then be included via a shortcode in the Wordpress si
 
 # Changelog
 
+## [2.1.1]
+
+### Added
+
+- Selected floor plan has active state
+
+### Changed
+
+- Sorting by floor number happens higher up in app state
+
 ## [2.1.0]
 
 ### Added
