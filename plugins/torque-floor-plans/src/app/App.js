@@ -1,5 +1,5 @@
 import style from "./App.scss";
-import React, { memo, useState, useEffect, useCallback } from "react";
+import React, { memo, useState, useEffect, useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
 import DataSource from "./data-sources";
 import FloorPlanSelector from "./FloorPlanSelector";
@@ -35,9 +35,16 @@ const App = ({ site, dataSource }) => {
     [getFloorPlans]
   );
 
-  const selectedFloorPlan = floorPlans[selected];
+  const sortedFloorPlans = useMemo(
+    () =>
+      floorPlans.sort((a, b) => {
+        return a.floor_number > b.floor_number;
+      }),
+    [floorPlans]
+  );
+  const selectedFloorPlan = sortedFloorPlans[selected];
 
-  return floorPlans?.length || dataSource === "entrata" ? (
+  return sortedFloorPlans?.length || dataSource === "entrata" ? (
     <div className={`torque-floor-plans ${style.floorPlans}`}>
       <div className={`torque-floor-plans-header-wrapper ${style.header}`}>
         {dataSource === "entrata" ? (
@@ -46,12 +53,13 @@ const App = ({ site, dataSource }) => {
           <Header floorPlan={selectedFloorPlan} />
         )}
       </div>
-      {floorPlans?.length ? (
+      {sortedFloorPlans?.length ? (
         <div className={`torque-floor-plans-selector ${style.selector}`}>
           <div className={`torque-floor-plans-list ${style.list}`}>
             <FloorPlanSelector
-              floorPlans={floorPlans}
+              floorPlans={sortedFloorPlans}
               updateSelected={setSelected}
+              selected={selected}
             />
           </div>
           <div className={`torque-floor-plans-thumbnail ${style.thumbnail}`}>
