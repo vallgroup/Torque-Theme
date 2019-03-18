@@ -4,6 +4,8 @@
  */
 class Torque_Staff_CPT {
 
+	public static $STAFF_METABOXES_FILTER_HOOK = 'torque_staff_exclude_metaboxes';
+
 	/**
 	 * Holds the staff cpt object
 	 *
@@ -51,7 +53,7 @@ class Torque_Staff_CPT {
 
 	public function register_metaboxes() {
 		// can hide metaboxes by passing an array of strings.
-		$exclude_metaboxes = apply_filters( 'torque_staff_exclude_metaboxes', array() );
+		$exclude_metaboxes = apply_filters( self::$STAFF_METABOXES_FILTER_HOOK, array() );
 
 		// potential metaboxes
 		$maybe_metaboxes = array(

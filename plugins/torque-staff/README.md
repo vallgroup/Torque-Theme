@@ -14,6 +14,12 @@ Registers a 'Staff' CPT, allowing the theme to include loops of staff members.
 
 # Changelog
 
+## [1.1.1] 3/14/2019
+
+### Changed
+
+- Made metaboxes filter hook a static property
+
 ## [1.1.0] 9/13/2018
 
 ### Added
