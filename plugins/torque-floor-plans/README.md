@@ -18,7 +18,11 @@ A Floor Plans React app can then be included via a shortcode in the Wordpress si
 
 # Changelog
 
-## [2.1.2]
+## [2.2.0]
+
+### Added
+
+- Add dropdown for floor plans list
 
 ### Changed
 
