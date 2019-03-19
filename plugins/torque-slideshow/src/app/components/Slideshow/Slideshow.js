@@ -1,45 +1,26 @@
 import styles from "./Slideshow.scss";
-import React, { memo, useState, useEffect } from "react";
+import React, { memo } from "react";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 import Swipe from "react-easy-swipe";
-import useInterval from "../hooks/useInterval";
-import Tracker from "./Tracker";
-import arrow from "../images/arrow.svg";
+import useSlide from "../../hooks/useSlide";
+import Tracker from "../Tracker";
+import arrow from "../../images/arrow.svg";
 
-const Slideshow = ({ images, interval }) => {
-  const [slide, setSlide] = useState(0);
-
-  const incrementSlide = () => setSlide((slide + 1) % images.length);
-  const decrementSlide = () => setSlide((slide - 1) % images.length);
-  const createSetSlide = index => () => setSlide(index);
-
-  const preloadImages = () => {
-    images.forEach(image => {
-      const img = new Image();
-      img.src = image;
-    });
-  };
-
-  useEffect(
-    () => {
-      preloadImages();
-    },
-    [images]
+const Slideshow = ({ length, interval = 0, slideTemplate }) => {
+  const [slide, createSetSlide, incrementSlide, decrementSlide] = useSlide(
+    length,
+    interval
   );
 
-  const intervalInt = parseInt(interval);
-  useInterval(() => {
-    incrementSlide(slide + 1);
-  }, intervalInt);
+  console.log(slide);
 
   return (
     <div className={classnames(styles.root, "tq-slideshow")}>
       <Swipe onSwipeLeft={incrementSlide} onSwipeRight={decrementSlide}>
-        <div
-          className={classnames(styles.slide, "tq-slide")}
-          style={{ backgroundImage: `url('${images[slide]}')` }}
-        />
+        <div className={classnames(styles.slide, "tq-slide")}>
+          {slideTemplate(slide)}
+        </div>
       </Swipe>
 
       <div
@@ -83,18 +64,16 @@ const Slideshow = ({ images, interval }) => {
       </div>
 
       <div className={classnames(styles.tracker, "tq-tracker-wrapper")}>
-        <Tracker images={images} current={slide} onClick={createSetSlide} />
+        <Tracker length={length} current={slide} onClick={createSetSlide} />
       </div>
     </div>
   );
 };
 
 Slideshow.propTypes = {
-  images: PropTypes.array
-};
-
-Slideshow.defaultProps = {
-  images: []
+  length: PropTypes.number.isRequired,
+  interval: PropTypes.number,
+  slideTemplate: PropTypes.func.isRequired
 };
 
 export default memo(Slideshow);
