@@ -1,16 +1,16 @@
 import { useEffect } from "react";
 import axios from "axios";
 
-export default (site, id, params, onSuccess) => {
+export default (site, endpoint, params, onSuccess) => {
   useEffect(
     () => {
       const getData = async () => {
         try {
-          const url = `${site}/wp-json/slideshow/v1/slideshows/${id}`;
+          const url = `${site}/wp-json/slideshow/v1/slideshows/${endpoint}`;
           const response = await axios.get(url, { params });
 
           if (response?.data?.success) {
-            onSuccess(response.data.slideshow);
+            onSuccess(response.data.data);
           }
         } catch (err) {
           console.log(err);
@@ -19,6 +19,6 @@ export default (site, id, params, onSuccess) => {
 
       getData();
     },
-    [site, id, onSuccess]
+    [site, endpoint, params, onSuccess]
   );
 };

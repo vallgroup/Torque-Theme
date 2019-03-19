@@ -13,8 +13,6 @@ const Slideshow = ({ length, interval = 0, slideTemplate }) => {
     interval
   );
 
-  console.log(slide);
-
   return (
     <div className={classnames(styles.root, "tq-slideshow")}>
       <Swipe onSwipeLeft={incrementSlide} onSwipeRight={decrementSlide}>
