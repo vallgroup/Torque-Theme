@@ -62,6 +62,7 @@ class Torque_Slideshow {
 			'Torque_Slideshow_REST_Controller',
 			'Torque_Slideshow_Shortcode',
 			'Torque_Slideshow_CPT',
+			'Torque_Post_Slideshow_CPT',
 		) );
 
 		// enqueue plugin scripts
