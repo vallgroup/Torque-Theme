@@ -60,6 +60,7 @@ const App = ({ site, dataSource }) => {
               floorPlans={sortedFloorPlans}
               updateSelected={setSelected}
               selected={selected}
+              withDropdown={dataSource === "entrata"}
             />
           </div>
           <div className={`torque-floor-plans-thumbnail ${style.thumbnail}`}>
