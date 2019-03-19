@@ -35,7 +35,7 @@ class Torque_Slideshow_Controller {
 				}
 
         return Torque_API_Responses::Success_Response( array(
-          'slideshow'	=> array(
+          'data'	=> array(
 						'post' => $slideshow,
 						'meta' => $meta
 					)
@@ -43,7 +43,7 @@ class Torque_Slideshow_Controller {
 			}
 
 			return Torque_API_Responses::Failure_Response( array(
-				'slideshow'	=> []
+				'data'	=> []
 			));
 
 		} catch (Exception $e) {
