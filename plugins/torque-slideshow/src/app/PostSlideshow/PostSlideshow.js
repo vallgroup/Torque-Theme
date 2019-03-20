@@ -14,11 +14,10 @@ const PostSlideshow = ({ site, postIds, interval }) => {
   return (
     posts.length > 0 && (
       <Slideshow
-        length={posts.length}
+        items={posts}
         interval={interval}
-        slideTemplate={slide => {
-          const post = posts[slide];
-
+        withItemList
+        slideTemplate={post => {
           return (
             <div className={classnames(styles.post_slide, "post-slide")}>
               {post.thumbnail && <img src={post.thumbnail} />}

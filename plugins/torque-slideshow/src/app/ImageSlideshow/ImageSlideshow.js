@@ -21,12 +21,12 @@ const ImageSlideshow = ({ images, interval }) => {
 
   return (
     <Slideshow
-      length={images.length}
+      items={images}
       interval={interval}
-      slideTemplate={slide => (
+      slideTemplate={image => (
         <div
           className={classnames(styles.image_slide, "image-slide")}
-          style={{ backgroundImage: `url('${images[slide]}')` }}
+          style={{ backgroundImage: `url('${image}')` }}
         />
       )}
     />
