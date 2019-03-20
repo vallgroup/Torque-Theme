@@ -16,3 +16,25 @@
     }
   }
 }
+
+.dropdown_wrapper {
+  .dropdown_title {
+    user-select: none;
+  }
+
+  .dropdown_items {
+    width: 100%;
+
+    overflow: hidden;
+    height: auto;
+    max-height: 0;
+
+    transition: all 0.5s ease;
+  }
+
+  &.open {
+    .dropdown_items {
+      max-height: 4000px;
+    }
+  }
+}

@@ -18,6 +18,26 @@ A Floor Plans React app can then be included via a shortcode in the Wordpress si
 
 # Changelog
 
+## [2.2.0]
+
+### Added
+
+- Add dropdown for floor plans list
+
+### Changed
+
+- Entrata - all floor plans are fetched on initial load
+
+## [2.1.1]
+
+### Added
+
+- Selected floor plan has active state
+
+### Changed
+
+- Sorting by floor number happens higher up in app state
+
 ## [2.1.0]
 
 ### Added
