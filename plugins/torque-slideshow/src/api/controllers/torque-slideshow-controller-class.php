@@ -25,10 +25,17 @@ class Torque_Slideshow_Controller {
 			$slideshow = get_post( $this->request['id'] );
 
 			if ($slideshow) {
-				$meta = get_post_meta( $this->request['id'], 'torque_slideshow', true );
+				$meta = [];
+
+				if ($slideshow->post_type === Torque_Slideshow_CPT::$slideshow_labels['post_type_name']) {
+					$meta = get_post_meta( $this->request['id'], 'torque_slideshow', true );
+
+				} else if ($slideshow->post_type === Torque_Post_Slideshow_CPT::$post_slideshow_labels['post_type_name']) {
+					$meta = get_fields( $this->request['id'] );
+				}
 
         return Torque_API_Responses::Success_Response( array(
-          'slideshow'	=> array(
+          'data'	=> array(
 						'post' => $slideshow,
 						'meta' => $meta
 					)
@@ -36,7 +43,7 @@ class Torque_Slideshow_Controller {
 			}
 
 			return Torque_API_Responses::Failure_Response( array(
-				'slideshow'	=> []
+				'data'	=> []
 			));
 
 		} catch (Exception $e) {

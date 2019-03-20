@@ -3,15 +3,15 @@ import React, { memo } from "react";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 
-const Tracker = ({ images, current, onClick: handleClick }) => {
+const Tracker = ({ length = 0, current, onClick: handleClick }) => {
   return (
     <div className={classnames(styles.root, "tq-tracker")}>
-      {images.map((image, index) => {
+      {[...Array(length)].map((el, index) => {
         const isCurrent = index === current;
 
         return (
           <div
-            key={`${image}_${index}`}
+            key={index}
             className={classnames(
               styles.tracker_icon,
               { [styles.active]: isCurrent, active: isCurrent },
@@ -26,13 +26,12 @@ const Tracker = ({ images, current, onClick: handleClick }) => {
 };
 
 Tracker.propTypes = {
-  images: PropTypes.array,
+  length: PropTypes.number,
   current: PropTypes.number,
   onClick: PropTypes.func
 };
 
 Tracker.defaultProps = {
-  images: [],
   current: 0
 };
 

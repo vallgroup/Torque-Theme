@@ -3,6 +3,7 @@
 define( 'Torque_Slideshow_API_ROOT', dirname(__FILE__) . '/' );
 
 require_once( Torque_Slideshow_API_ROOT . 'routes/torque-slideshow-routes-class.php');
+require_once( Torque_Slideshow_API_ROOT . 'routes/torque-slideshow-posts-routes-class.php');
 
 /**
 * The plugin API class
@@ -23,6 +24,9 @@ class Torque_Slideshow_REST_Controller {
 
     $slideshow_routes = new Torque_Slideshow_Routes( $this->namespace );
     $slideshow_routes->register_routes();
+
+    $slideshow_posts_routes = new Torque_Slideshow_Posts_Routes( $this->namespace );
+    $slideshow_posts_routes->register_routes();
   }
 }
 
