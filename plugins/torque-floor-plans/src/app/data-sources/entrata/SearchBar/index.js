@@ -14,8 +14,8 @@ const SearchBar = ({ setFloorPlans, site }) => {
       const entrata = new Entrata({ site });
       const unitTypes = await entrata.getUnitTypes();
 
+      setSelectedUnitTypes(Object.keys(unitTypes));
       setUnitTypes(unitTypes);
-      setSelectedUnitTypes([]);
     },
     [site]
   );
@@ -67,6 +67,14 @@ const SearchBar = ({ setFloorPlans, site }) => {
 
     setFloorPlans(floorPlans);
   };
+
+  useEffect(
+    () => {
+      // submit to get all floor posts on initial load
+      if (Object.keys(unitTypes).length) handleSubmit();
+    },
+    [unitTypes]
+  );
 
   return (
     <div className={classnames("search-bar", style.root)}>

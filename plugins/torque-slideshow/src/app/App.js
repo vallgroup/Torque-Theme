@@ -1,40 +1,35 @@
-import React, { memo, useState, useEffect } from "react";
+import React, { memo, useState } from "react";
+import useSlideshowFetch from "./hooks/useSlideshowFetch";
 import PropTypes from "prop-types";
-import axios from "axios";
-import Slideshow from "./Slideshow";
+import ImageSlideshow from "./ImageSlideshow";
+import PostSlideshow from "./PostSlideshow";
 
-const App = ({ site, id }) => {
-  const [slideshow, updateSlideshow] = useState(false);
+const App = ({ site, id, type = "image" }) => {
+  const [data, updateData] = useState(false);
 
-  const getSlideshow = async () => {
-    try {
-      const url = `${site}/wp-json/slideshow/v1/slideshows/${id}`;
-      const response = await axios.get(url);
+  useSlideshowFetch(site, id, null, updateData);
 
-      if (response.data.success) {
-        updateSlideshow(response.data.slideshow);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const images = data?.meta?.images;
+  const imagesArray = (images?.length && images[0].split(",")) || [];
 
-  useEffect(
-    () => {
-      getSlideshow();
-    },
-    [site, id]
-  );
+  const posts = data?.meta?.posts;
 
-  const images = slideshow?.meta?.images[0]?.split(",") || [];
-  const interval = slideshow?.meta?.interval;
+  const interval = parseInt(data?.meta?.interval);
 
-  return <Slideshow images={images} interval={interval} />;
+  if (type === "image" && imagesArray.length) {
+    return <ImageSlideshow images={imagesArray} interval={interval} />;
+  } else if (type === "post" && posts?.length) {
+    return <PostSlideshow site={site} postIds={posts} interval={interval} />;
+  } else {
+    console.warn('Slideshow type should be one of "image" or "post"');
+    return null;
+  }
 };
 
 App.propTypes = {
   site: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired
+  id: PropTypes.string.isRequired,
+  type: PropTypes.string
 };
 
 export default memo(App);

@@ -3,6 +3,7 @@
 require( Torque_Slideshow_PATH . '/api/torque-slideshow-rest-controller-class.php' );
 require( Torque_Slideshow_PATH . '/shortcode/torque-slideshow-shortcode-class.php' );
 require( Torque_Slideshow_PATH . '/cpt/torque-slideshow-cpt-class.php' );
+require( Torque_Slideshow_PATH . '/cpt/torque-post-slideshow-cpt-class.php' );
 
 
 /**
