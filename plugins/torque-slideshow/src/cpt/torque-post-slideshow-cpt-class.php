@@ -4,6 +4,8 @@
  */
 class Torque_Post_Slideshow_CPT {
 
+	public static $RELATIONSHIP_FIELD_FILTER_HOOK = 'torque_post_slideshow_relationship_field';
+
 	/**
 	 * Holds the post_slideshow cpt object
 	 *
@@ -86,34 +88,36 @@ class Torque_Post_Slideshow_CPT {
 				'key' => 'group_5c913f0380267',
 				'title' => 'Post Slideshow Details',
 				'fields' => array(
-					array(
-						'key' => 'field_5c913f0fdb1a1',
-						'label' => 'Posts',
-						'name' => 'posts',
-						'type' => 'relationship',
-						'instructions' => '',
-						'required' => 0,
-						'conditional_logic' => 0,
-						'wrapper' => array(
-							'width' => '',
-							'class' => '',
-							'id' => '',
-						),
-						'post_type' => array(
-						),
-						'taxonomy' => array(
-						),
-						'filters' => array(
-							0 => 'search',
-							1 => 'post_type',
-							2 => 'taxonomy',
-						),
-						'elements' => array(
-							0 => 'featured_image',
-						),
-						'min' => '',
-						'max' => '',
-						'return_format' => 'id',
+					apply_filters( self::$RELATIONSHIP_FIELD_FILTER_HOOK,
+						array(
+							'key' => 'field_5c913f0fdb1a1',
+							'label' => 'Posts',
+							'name' => 'posts',
+							'type' => 'relationship',
+							'instructions' => '',
+							'required' => 0,
+							'conditional_logic' => 0,
+							'wrapper' => array(
+								'width' => '',
+								'class' => '',
+								'id' => '',
+							),
+							'post_type' => array(
+							),
+							'taxonomy' => array(
+							),
+							'filters' => array(
+								0 => 'search',
+								1 => 'post_type',
+								2 => 'taxonomy',
+							),
+							'elements' => array(
+								0 => 'featured_image',
+							),
+							'min' => '',
+							'max' => '',
+							'return_format' => 'id',
+						)
 					),
 				),
 				'location' => array(

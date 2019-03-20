@@ -19,7 +19,13 @@ const PostSlideshow = ({ site, postIds, interval }) => {
         withItemList
         slideTemplate={post => {
           return (
-            <div className={classnames(styles.post_slide, "post-slide")}>
+            <div
+              className={classnames(
+                styles.post_slide,
+                "post-slide",
+                `post-type-${post.post_type_label.split(" ").join("-")}`
+              )}
+            >
               <div
                 style={{ backgroundImage: `url(${post.thumbnail})` }}
                 className="post-image"
@@ -74,9 +80,11 @@ const PostSlideshow = ({ site, postIds, interval }) => {
                   }
 
                   return (
-                    <div key={metaKey} className={className}>
-                      {post.meta[metaKey]}
-                    </div>
+                    <div
+                      key={metaKey}
+                      className={className}
+                      dangerouslySetInnerHTML={{ __html: post.meta[metaKey] }}
+                    />
                   );
                 })}
 
