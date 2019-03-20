@@ -4,7 +4,7 @@
  /**
   * Plugin Name: Torque Slideshow
   * Description:
-  * Version:     1.1.0
+  * Version:     2.0.0
   * Author:      Torque
   * Author URI:  https://torque.digital
   * License:     GPL
@@ -31,9 +31,11 @@ require( Torque_Slideshow_PATH . '/autoload.php' );
 /**
  * Register plugin
  */
-add_action( 'plugins_loaded', array( Torque_Slideshow::get_inst(), 'init' ) );
+add_action( 'after_setup_theme', array( Torque_Slideshow::get_inst(), 'init' ) );
 
 class Torque_Slideshow {
+
+	public static $USE_POST_SLIDESHOW_FILTER_HOOK = 'torque_slideshow_allow_post_slideshow';
 
 	public static $instance = NULL;
 
@@ -56,14 +58,19 @@ class Torque_Slideshow {
    * This should be a function which registers all the plugin's required hooks.
    */
 	public function init() {
-
-		// comment out class names to exclude
-		Torque_Slideshow_Autoloader::autoload( array(
+		$to_load = array(
 			'Torque_Slideshow_REST_Controller',
 			'Torque_Slideshow_Shortcode',
 			'Torque_Slideshow_CPT',
-			'Torque_Post_Slideshow_CPT',
-		) );
+		);
+
+		$should_use_post_slideshow = apply_filters( self::$USE_POST_SLIDESHOW_FILTER_HOOK, false );
+		if ($should_use_post_slideshow) {
+			$to_load[] = 'Torque_Post_Slideshow_CPT';
+		}
+
+		// comment out class names to exclude
+		Torque_Slideshow_Autoloader::autoload( $to_load );
 
 		// enqueue plugin scripts
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_plugin_scripts' ) );

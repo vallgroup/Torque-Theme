@@ -84,6 +84,7 @@ const PostSlideshow = ({ site, postIds, interval }) => {
                   href={post.permalink}
                   target="_blank"
                   referrer="noreferrer noopener"
+                  className="slideshow-link-to-post"
                 >
                   <button>{`Visit ${post.post_type_label}`}</button>
                 </a>
