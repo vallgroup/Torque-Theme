@@ -37,14 +37,44 @@ const PostSlideshow = ({ site, postIds, interval }) => {
 
                   if (typeof meta !== "string") return null;
 
+                  const className = classnames(
+                    "slideshow-post-field",
+                    `slideshow-${metaKey}`
+                  );
+
+                  // we use a different element depending on the meta name,
+                  // since the meta could be absolutley anything,
+                  // its the best way i can think of doing this now
+                  // without heavy involvement from the child theme
+
+                  if (metaKey.includes("image")) {
+                    return (
+                      <img
+                        key={metaKey}
+                        className={className}
+                        src={post.meta[metaKey]}
+                      />
+                    );
+                  }
+
+                  if (metaKey.includes("download") || metaKey.includes("pdf")) {
+                    return (
+                      <a
+                        key={metaKey}
+                        href={post.meta[metaKey]}
+                        className={className}
+                        target="_blank"
+                        referrer="noopener noreferrer"
+                      >
+                        <button>
+                          <span>Download</span>
+                        </button>
+                      </a>
+                    );
+                  }
+
                   return (
-                    <div
-                      key={metaKey}
-                      className={classnames(
-                        "slideshow-post-field",
-                        `slideshow-${metaKey}`
-                      )}
-                    >
+                    <div key={metaKey} className={className}>
                       {post.meta[metaKey]}
                     </div>
                   );
