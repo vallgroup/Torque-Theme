@@ -94,7 +94,7 @@ class Torque_Post_Slideshow_CPT {
 							'label' => 'Posts',
 							'name' => 'posts',
 							'type' => 'relationship',
-							'instructions' => '',
+							'instructions' => 'Make sure to keep all posts of the same post type',
 							'required' => 0,
 							'conditional_logic' => 0,
 							'wrapper' => array(

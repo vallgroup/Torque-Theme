@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import ImageSlideshow from "./ImageSlideshow";
 import PostSlideshow from "./PostSlideshow";
 
-const App = ({ site, id, type = "image" }) => {
+const App = ({ site, id, type = "image", template }) => {
   const [data, updateData] = useState(false);
 
   useSlideshowFetch(site, id, null, updateData);
@@ -19,7 +19,14 @@ const App = ({ site, id, type = "image" }) => {
   if (type === "image" && imagesArray.length) {
     return <ImageSlideshow images={imagesArray} interval={interval} />;
   } else if (type === "post" && posts?.length) {
-    return <PostSlideshow site={site} postIds={posts} interval={interval} />;
+    return (
+      <PostSlideshow
+        site={site}
+        postIds={posts}
+        interval={interval}
+        template={template}
+      />
+    );
   } else {
     console.warn('Slideshow type should be one of "image" or "post"');
     return null;
@@ -29,7 +36,8 @@ const App = ({ site, id, type = "image" }) => {
 App.propTypes = {
   site: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  type: PropTypes.string
+  type: PropTypes.string,
+  template: PropTypes.string
 };
 
 export default memo(App);
