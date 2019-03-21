@@ -147,6 +147,14 @@ class Entrata_API {
 	private function clean_unit(&$unit) {
 		unset($unit->Rent->TermRent);
 		unset($unit->Deposit);
+
+		$unit->pretty_price = $unit->Rent->{"@attributes"}->MinRent &&
+	    $unit->Rent->{"@attributes"}->MaxRent
+	    ? $unit->Rent->{"@attributes"}->MinRent ===
+	      $unit->Rent->{"@attributes"}->MaxRent
+	      ? '$'.$unit->Rent->{"@attributes"}->MaxRent
+	      : '$'.$unit->Rent->{"@attributes"}->MinRent.' - $'.$unit->Rent->{"@attributes"}->MaxRent
+	    : "N/A";
 	}
 
 	private function group_units_by_floorplan($units) {
@@ -163,6 +171,16 @@ class Entrata_API {
 			unset($unit->floorplan);
 
 			$grouped_units[$name]['units'][] = $unit;
+
+			$min_price = $unit->Rent->{"@attributes"}->MinRent = intval(str_replace(',', '', $unit->Rent->{"@attributes"}->MinRent));
+			$max_price = $unit->Rent->{"@attributes"}->MaxRent = intval(str_replace(',', '', $unit->Rent->{"@attributes"}->MaxRent));
+
+			if ($min_price && ($min_price < $grouped_units[$name]['min_price'] || !$grouped_units[$name]['min_price'])) {
+				$grouped_units[$name]['min_price'] = $min_price;
+			}
+			if ($max_price && ($max_price > $grouped_units[$name]['max_price'] || !$grouped_units[$name]['max_price'])) {
+				$grouped_units[$name]['max_price'] = $max_price;
+			}
 		}
 
 		return $grouped_units;
