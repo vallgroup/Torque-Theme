@@ -56,10 +56,36 @@ class Entrata_API {
   }
 
 	public function get_floor_plans($unit_type_ids, $start_date) {
+		$responses = $this->get_units($unit_type_ids);
 
+		$units_arr = [];
+		foreach ($responses as $response) {
+			if (!is_object($response) || !$response->ILS_Units || !$response->ILS_Units->Unit) {
+				continue;
+			}
+
+			$units = $response->ILS_Units->Unit;
+
+			foreach ($units as &$unit) {
+				$this->attach_floorplan_info($unit);
+				$this->clean_unit($unit);
+				$units_arr[] = $unit;
+			}
+		}
+
+		$units_by_floorplan = $this->group_units_by_floorplan($units_arr);
+
+		foreach ($units_by_floorplan as $floor_plan_key => &$values) {
+			$values['units'] = $this->filter_units_by_availability($values['units'], $start_date);
+		}
+
+		return $units_by_floorplan;
+	}
+
+	private function get_units($unit_type_ids) {
 		$requests = [];
 
-		// send parralel requests, one per unit type id
+		// send parallel requests, one per unit type id
 		foreach ($unit_type_ids as $unit_type_id) {
 			$requests[] = $this->create_GET_request(
 				'propertyunits',
@@ -70,8 +96,8 @@ class Entrata_API {
 					"params": {
 						"propertyId": "'.$this->PROPERTY_ID.'",
 						"unitTypeId": "'.$unit_type_id.'",
-						"availableUnitsOnly": "1",
-						"skipPricing": "1",
+						"availableUnitsOnly": "0",
+						"skipPricing": "0",
 		        "showChildProperties": "0",
 		        "includeDisabledFloorplans": "0",
 		        "includeDisabledUnits": "0",
@@ -83,91 +109,100 @@ class Entrata_API {
 				true
 			);
 		}
-		$responses = $this->parralel_curl($requests);
-
-		// extract the floor plan ids from each response
-		$floor_plan_ids = [];
-		foreach ($responses as $response) {
-			if (!is_object($response) || !$response->ILS_Units || !$response->ILS_Units->Unit) {
-				continue;
-			}
-
-			$units = $response->ILS_Units->Unit;
-			$start_date_date = date_create_from_format("d/m/Y", $start_date);
-
-			if (!$units) {
-				continue;
-			}
-
-			foreach ($units as $unit) {
-				try {
-					// filter by date
-					if ($start_date_date) {
-						$compare_date = date_create_from_format("d/m/Y",$unit->{'@attributes'}->AvailableOn);
-						$diff = date_diff($compare_date, $start_date_date);
-						$is_available_by_date = ($diff->invert === 0 || $diff->days === 0);
-					} else {
-						$is_available_by_date = true;
-					}
-
-
-					if ($is_available_by_date && $unit->{'@attributes'}->Availability === 'Available') {
-						// seems like their server checks duplicates for us, so lets let them do it
-						$floor_plan_ids[] = $unit->{'@attributes'}->FloorplanId;
-					}
-				} catch (Exception $e) {
-					// do nothing
-				}
-			}
-		}
-
-		// get floor plan objects from ids from last request
-		if (sizeOf($floor_plan_ids) > 0) {
-			$floor_plans = [];
-
-			$response = $this->create_GET_request('properties', '
-			{
-	        "name": "getFloorPlans",
-	        "params": {
-	            "propertyId": "673841",
-							"propertyFloorPlanIds": "'.implode(',', $floor_plan_ids).'"
-					}
-	    }
-			');
-
-			return $this->combine_floorplans($response->FloorPlans->FloorPlan);
-		} else {
-			return [];
-		}
+		return $this->parallel_curl($requests);
 	}
 
-	private function combine_floorplans($floor_plans_from_entrata) {
-		$floor_plans = [];
+	private $floor_plan_cache; // set up a cache so we dont have to hit the db too mnay times for the same thing
+	private function attach_floorplan_info(&$unit) {
+		$name = $unit->{"@attributes"}->FloorPlanName;
+		if (!$name) { return; }
 
-		foreach ($floor_plans_from_entrata as $floor_plan_entrata) {
-			$name = $floor_plan_entrata->Name;
-			if (!$name) { continue; }
-
-			$floor_plans_query = new WP_Query( array(
-				'post_type' 				=> Torque_Floor_Plan_CPT::$floor_plan_labels['post_type_name'],
-				'meta_key'					=> 'entrata_name',
-				'meta_value'				=> $name
-			) );
-			if ($floor_plans_query->found_posts === 0) { continue; }
-
-			$floor_plan_wp = $floor_plans_query->post;
-			$images = get_post_meta($floor_plan_wp->ID, 'entrata_additional_images', true);
-			$rsf = get_post_meta($floor_plan_wp->ID, 'floor_plan_rsf', true);
-
-			$floor_plans[] = array(
-				'post_title'				=> $floor_plan_wp->post_title,
-				'thumbnail' 				=> get_the_post_thumbnail_url($floor_plan_wp->ID, 'large') ?? '',
-				'key_plan_src'			=> $images['key_plan'] ?? '',
-				'rsf'								=> $rsf
-			);
+		if (isset($this->floor_plan_cache[$name])) {
+			$unit->floorplan = $this->floor_plan_cache[$name];
+			return;
 		}
 
-		return $floor_plans;
+		$floor_plans_query = new WP_Query( array(
+			'post_type' 				=> Torque_Floor_Plan_CPT::$floor_plan_labels['post_type_name'],
+			'meta_key'					=> 'entrata_name',
+			'meta_value'				=> $name
+		) );
+		if ($floor_plans_query->found_posts === 0) { return; }
+
+		$floor_plan_wp = $floor_plans_query->post;
+		$images = get_post_meta($floor_plan_wp->ID, 'entrata_additional_images', true);
+		$rsf = get_post_meta($floor_plan_wp->ID, 'floor_plan_rsf', true);
+
+		$floor_plan = array(
+			'post_title'				=> $floor_plan_wp->post_title,
+			'thumbnail' 				=> get_the_post_thumbnail_url($floor_plan_wp->ID, 'large') ?? '',
+			'key_plan_src'			=> $images['key_plan'] ?? '',
+			'rsf'								=> $rsf
+		);
+
+		$this->floor_plan_cache[$name] = $floor_plan;
+		$unit->floorplan = $floor_plan;
+	}
+
+	private function clean_unit(&$unit) {
+		unset($unit->Rent->TermRent);
+		unset($unit->Deposit);
+	}
+
+	private function group_units_by_floorplan($units) {
+		$grouped_units = [];
+
+		foreach ($units as &$unit) {
+			if (!isset($unit->floorplan)) { continue; }
+
+			$name = $unit->{"@attributes"}->FloorPlanName;
+
+			if (!isset($grouped_units[$name])) {
+				$grouped_units[$name] = $unit->floorplan;
+			}
+			unset($unit->floorplan);
+
+			$grouped_units[$name]['units'][] = $unit;
+		}
+
+		return $grouped_units;
+	}
+
+	private function filter_units_by_availability($units, $start_date) {
+		$result = array(
+			'available' => [],
+			'unavailable'	=> []
+		);
+		$start_date_date = date_create_from_format("d/m/Y", $start_date);
+
+		if (!$units) {
+			return $result;
+		}
+
+		foreach ($units as $unit) {
+			try {
+				// filter by date
+				if ($start_date_date) {
+					$compare_date = date_create_from_format("d/m/Y",$unit->{'@attributes'}->AvailableOn);
+					$diff = date_diff($compare_date, $start_date_date);
+					$is_available_by_date = ($diff->invert === 0 || $diff->days === 0);
+				} else {
+					$is_available_by_date = true;
+				}
+
+				$is_available = $is_available_by_date && $unit->{'@attributes'}->Availability === 'Available';
+
+				if ($is_available) {
+					$result['available'][] = $unit;
+				} else {
+					$result['unavailable'][] = $unit;
+				}
+			} catch (Exception $e) {
+				// do nothing
+			}
+		}
+
+		return $result;
 	}
 
   private function create_GET_request($endpoint, $method, $prevent_exec = false) {
@@ -207,7 +242,7 @@ class Entrata_API {
 		}
   }
 
-	private function parralel_curl($curl_requests) {
+	private function parallel_curl($curl_requests) {
 		// array of curl handles
 		$multiCurl = array();
 		// data to be returned
@@ -241,7 +276,7 @@ class Entrata_API {
 				throw new Exception('Error fetching data from entrata API');
 			}
 
-			$cleaned_results[] = $data->response->result;
+			$cleaned_results[$i] = $data->response->result;
 		}
 
 		return $cleaned_results;
