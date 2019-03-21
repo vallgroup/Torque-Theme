@@ -6,10 +6,19 @@
 
 *Filter* | *Function* | *Value Type*
 --- | --- | ---
+`torque_slideshow_allow_post_slideshow` | Allow post slideshow | bool
+`torque_post_slideshow_relationship_field` | Filter ACF relatioship field settings (only for post slideshow) | assoc arr
 
 <!-- prettier-ignore-end -->
 
 # Changelog
+
+## [2.0.0] 03/20/19
+
+### Added
+
+- Post Slideshow functionality + hook to turn it on
+- Add choice of templates to post slideshow
 
 ## [1.1.0] 03/09/19
 

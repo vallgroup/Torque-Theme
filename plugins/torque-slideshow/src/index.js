@@ -14,6 +14,8 @@ entry.forEach(entry => {
       <App
         site={entry.getAttribute("data-site")}
         id={entry.getAttribute("data-id")}
+        type={entry.getAttribute("data-type")}
+        template={entry.getAttribute("data-template")}
       />,
       entry
     );

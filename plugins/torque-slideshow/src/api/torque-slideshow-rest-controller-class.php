@@ -23,6 +23,13 @@ class Torque_Slideshow_REST_Controller {
 
     $slideshow_routes = new Torque_Slideshow_Routes( $this->namespace );
     $slideshow_routes->register_routes();
+
+    if (class_exists('Torque_Post_Slideshow_CPT')) {
+      require_once( Torque_Slideshow_API_ROOT . 'routes/torque-slideshow-posts-routes-class.php');
+
+      $slideshow_posts_routes = new Torque_Slideshow_Posts_Routes( $this->namespace );
+      $slideshow_posts_routes->register_routes();
+    }
   }
 }
 
