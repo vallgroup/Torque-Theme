@@ -26,7 +26,9 @@ const Template = ({ post }) => {
           <img src={floorPlan} />
           {download && (
             <a href={download} target="_blank" referrer="noopener noreferrer">
-              <button className={"slideshow-download-pdf"}>{download}</button>
+              <button className={"slideshow-download-pdf"}>
+                <span>{"FLOORPLAN"}</span>
+              </button>
             </a>
           )}
         </div>

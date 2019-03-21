@@ -6,6 +6,8 @@ import PropTypes from "prop-types";
 // renders all possible meta and fields
 
 const Template = ({ post }) => {
+  const content = post?.meta?.content;
+
   return (
     <div
       className={classnames(
@@ -22,9 +24,12 @@ const Template = ({ post }) => {
       <div className="post-details">
         <h3>{post.post_title}</h3>
 
-        <div className="slideshow-post-excerpt slideshow-post-field">
-          {post.post_excerpt || post.post_content}
-        </div>
+        {content && (
+          <div
+            className="slideshow-post-cotent slideshow-post-field"
+            dangerouslySetInnerHTML={{ __html: content }}
+          />
+        )}
       </div>
     </div>
   );
