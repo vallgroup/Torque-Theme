@@ -1,12 +1,20 @@
 import style from "./FloorPlanInfo.scss";
-import React, { memo, useState } from "react";
+import React, { memo, useState, useMemo } from "react";
 import classnames from "classnames";
 import printer from "./icons/eleven33-printer.png";
 import search from "./icons/eleven33-search.png";
 import share from "./icons/eleven33-share.png";
 
 const FloorPlanInfo = ({
-  floorPlan: { post_title, rsf, thumbnail, key_plan_src: keyPlanSrc }
+  floorPlan: {
+    post_title,
+    rsf,
+    thumbnail,
+    key_plan_src: keyPlanSrc,
+    units,
+    min_price,
+    max_price
+  }
 }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const toggleModalOpen = () => setModalOpen(!isModalOpen);
@@ -25,12 +33,28 @@ const FloorPlanInfo = ({
     "envelope-o": `mailto:?subject=${post_title}&body=${href}`
   };
 
+  const hasAvailability = Boolean(units?.available?.length);
+
+  const sortedAvailableUnits = useMemo(
+    () =>
+      units.available.sort((a, b) => {
+        return (
+          b?.Rent?.["@attributes"]?.MinRent - a?.Rent?.["@attributes"]?.MinRent
+        );
+      }),
+    [units.available]
+  );
+
   return (
     <div className={classnames("floor-plan-info", style.root)}>
       <div className="floor-plan-info-block floor-plan-name">
         <div className="title">{post_title}</div>
         <div className="rsf">{`${rsf} RSF`}</div>
-        <div className="call">Call for availability</div>
+        <div className="call">
+          {hasAvailability
+            ? `$${min_price} - $${max_price}`
+            : "Call for availability"}
+        </div>
       </div>
 
       <div className="floor-plan-info-block floor-plan-share">
@@ -72,6 +96,34 @@ const FloorPlanInfo = ({
       <div className="floor-plan-info-block floor-plan-key">
         <img src={keyPlanSrc} />
       </div>
+
+      {hasAvailability && (
+        <div className="floor-plan-info-block floor-plan-units">
+          <div className="floor-plan-availability-title">Availability</div>
+          {sortedAvailableUnits.map(unit => (
+            <div
+              key={unit["@attributes"].UnitNumber}
+              className="floor-plan-unit"
+            >
+              <div className="foor-plan-unit-floor-plan-name">
+                {unit?.["@attributes"]?.FloorPlanName || "N/A"}
+              </div>
+              <div className="foor-plan-unit-floor-plan-price">
+                {unit.pretty_price}
+              </div>
+              <div className="foor-plan-unit-apply-online">
+                <a
+                  href="https://www.eleven33apartments.com/Apartments/module/application_authentication/property%5Bid%5D/673841/show_in_popup/false/kill_session/1/?_ga=2.209833173.170999534.1552933147-703022457.1552424636"
+                  target="_blank"
+                  referrer="noopener noreferrer"
+                >
+                  Apply Online
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
 
       {isModalOpen && (
         <div className={style.modal_wrapper} onClick={toggleModalOpen}>
