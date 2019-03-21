@@ -39,7 +39,7 @@ const FloorPlanInfo = ({
     () =>
       units.available.sort((a, b) => {
         return (
-          b?.Rent?.["@attributes"]?.MinRent - a?.Rent?.["@attributes"]?.MinRent
+          a?.Rent?.["@attributes"]?.MinRent - b?.Rent?.["@attributes"]?.MinRent
         );
       }),
     [units.available]
@@ -52,7 +52,9 @@ const FloorPlanInfo = ({
         <div className="rsf">{`${rsf} RSF`}</div>
         <div className="call">
           {hasAvailability
-            ? `$${min_price} - $${max_price}`
+            ? min_price === max_price
+              ? `$${min_price}`
+              : `$${min_price} - $${max_price}`
             : "Call for availability"}
         </div>
       </div>
@@ -106,14 +108,22 @@ const FloorPlanInfo = ({
               className="floor-plan-unit"
             >
               <div className="foor-plan-unit-floor-plan-name">
-                {unit?.["@attributes"]?.FloorPlanName || "N/A"}
+                {unit?.["@attributes"]?.UnitNumber || "N/A"}
               </div>
               <div className="foor-plan-unit-floor-plan-price">
                 {unit.pretty_price}
               </div>
               <div className="foor-plan-unit-apply-online">
                 <a
-                  href="https://www.eleven33apartments.com/Apartments/module/application_authentication/property%5Bid%5D/673841/show_in_popup/false/kill_session/1/?_ga=2.209833173.170999534.1552933147-703022457.1552424636"
+                  href={`https://www.eleven33apartments.com/Apartments/module/application_authentication/http_referer/www.eleven33apartments.com/popup/false/kill_session/1/property[id]/${
+                    unit["@attributes"].PropertyId
+                  }/property_floorplan[id]/${
+                    unit["@attributes"].FloorplanId
+                  }/unit_space[id]/${
+                    unit["@attributes"].PropertyUnitId
+                  }/show_in_popup/false/from_check_availability/1/term_month/13/?lease_start_date=${
+                    window.torqueStartDate
+                  }`}
                   target="_blank"
                   referrer="noopener noreferrer"
                 >

@@ -37,6 +37,15 @@ const SearchBar = ({ setFloorPlans, site, setIsFetching }) => {
   };
 
   const handleDateChange = date => setStartDate(new Date(date));
+  useEffect(
+    () => {
+      // very hacky way to pass this to another component,
+      // but we dont want to integrate redux
+      // and it really doesnt make sense to move this to the top level App, since it's only relevant to Entrata
+      window.torqueStartDate = formatDate(startDate);
+    },
+    [startDate]
+  );
 
   const handleSubmit = async () => {
     setIsFetching(true);
@@ -55,11 +64,7 @@ const SearchBar = ({ setFloorPlans, site, setIsFetching }) => {
       setStartDate(finalStartDate);
     }
 
-    const formattedStartDate = finalStartDate.toLocaleDateString("en-US", {
-      month: "2-digit",
-      day: "2-digit",
-      year: "numeric"
-    });
+    const formattedStartDate = formatDate(finalStartDate);
 
     const entrata = new Entrata({ site });
     const floorPlans = await entrata.getFloorPlans({
@@ -118,5 +123,15 @@ const SearchBar = ({ setFloorPlans, site, setIsFetching }) => {
     </div>
   );
 };
+
+function formatDate(date) {
+  if (!date) return "";
+
+  return date.toLocaleDateString("en-US", {
+    month: "2-digit",
+    day: "2-digit",
+    year: "numeric"
+  });
+}
 
 export default memo(SearchBar);
