@@ -23,7 +23,7 @@ const ItemsList = ({ titles, current, onClick: handleClick }) => {
 };
 
 ItemsList.propTypes = {
-  titles: PropTypes.number,
+  titles: PropTypes.array,
   current: PropTypes.number,
   onClick: PropTypes.func
 };

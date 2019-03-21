@@ -51,19 +51,7 @@ class Torque_Slideshow_Posts_Controller {
 	}
 
 	private function setup_post_shape( $post ) {
-		$post->meta =
-		array_filter(
-			array_merge(
-				// get all meta from both WP and ACF
-				get_post_meta($post->ID),
-				get_fields($post->ID)
-			),
-			function($meta_key) {
-				// hide private meta
-				return $meta_key[0] !== '_';
-			},
-			ARRAY_FILTER_USE_KEY
-		);
+		$post->meta = $this->prepare_meta( $post->ID );
 
 		$post->thumbnail = get_the_post_thumbnail_url($post->ID, 'large');
 
@@ -75,6 +63,35 @@ class Torque_Slideshow_Posts_Controller {
 		$post->terms = array_map(function($term) { return $term->name; }, $terms);
 
 		return $post;
+	}
+
+	private function prepare_meta( $post_id ) {
+		$wp_keys = array_filter(
+			get_post_custom_keys($post_id),
+			function($meta_key) {
+				// hide private meta
+				return $meta_key[0] !== '_';
+			}
+		);
+
+		$wp_meta = [];
+		foreach ($wp_keys as $key) {
+			$meta = get_post_meta($post_id, $key, true);
+
+			if (is_array($meta)) {
+				foreach ($meta as $arr_key => $value) {
+					$meta_key = $key.'_'.$arr_key;
+					$wp_meta[$meta_key] = $value;
+				}
+			} else {
+				$wp_meta[$key] = $meta;
+			}
+		}
+
+		$acf_meta = get_fields($post_id);
+		$acf_meta = $acf_meta ? $acf_meta : array();
+
+		return $wp_meta + $acf_meta;
 	}
 
 	private function get_post_type_label( $post_type ) {

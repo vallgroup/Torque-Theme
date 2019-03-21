@@ -4,8 +4,14 @@ import classnames from "classnames";
 import PropTypes from "prop-types";
 import useSlideshowFetch from "../hooks/useSlideshowFetch";
 import Slideshow from "../components/Slideshow";
+import {
+  Template_0,
+  Template_Interra,
+  Template_UST_Floorplans,
+  Template_UST_Locations
+} from "./templates";
 
-const PostSlideshow = ({ site, postIds, interval }) => {
+const PostSlideshow = ({ site, postIds, interval, template }) => {
   const [posts, setPosts] = useState([]);
 
   const params = useMemo(() => ({ ids: postIds }), [postIds]);
@@ -14,60 +20,25 @@ const PostSlideshow = ({ site, postIds, interval }) => {
   return (
     posts.length > 0 && (
       <Slideshow
+        className={`template_${template}`}
         items={posts}
         interval={interval}
         withItemList
         slideTemplate={post => {
-          return (
-            <div className={classnames(styles.post_slide, "post-slide")}>
-              <div
-                style={{ backgroundImage: `url(${post.thumbnail})` }}
-                className="post-image"
-              />
+          switch (template) {
+            case "ust_floorplans":
+              return <Template_UST_Floorplans post={post} />;
 
-              <div className="post-details">
-                <h3>{post.post_title}</h3>
+            case "ust_locations":
+              return <Template_UST_Locations post={post} />;
 
-                <div className="slideshow-post-excerpt slideshow-post-field">
-                  {post.post_excerpt || post.post_content}
-                </div>
+            case "interra":
+              return <Template_Interra post={post} />;
 
-                {Object.keys(post.meta).map(metaKey => {
-                  const meta = post.meta[metaKey];
-
-                  if (typeof meta !== "string") return null;
-
-                  return (
-                    <div
-                      key={metaKey}
-                      className={classnames(
-                        "slideshow-post-field",
-                        `slideshow-${metaKey}`
-                      )}
-                    >
-                      {post.meta[metaKey]}
-                    </div>
-                  );
-                })}
-
-                <a
-                  href={post.permalink}
-                  target="_blank"
-                  referrer="noreferrer noopener"
-                >
-                  <button>{`Visit ${post.post_type_label}`}</button>
-                </a>
-
-                <div className="slideshow-post-terms">
-                  {post.terms.map(term => (
-                    <div key={term} className="post-term">
-                      {term}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          );
+            case "0":
+            default:
+              return <Template_0 post={post} />;
+          }
         }}
       />
     )
