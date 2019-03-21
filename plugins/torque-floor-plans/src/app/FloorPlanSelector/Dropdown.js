@@ -5,10 +5,17 @@ import style from "./FloorPlanSelector.scss";
 const Dropdown = ({ children }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const toggleDropdownOpen = () => setDropdownOpen(!isDropdownOpen);
+  const dropdownRef = useRef(null);
 
   const [canScrollToTop, setCanScrollToTop] = useState(false);
-  const activateScrollToTop = () => setCanScrollToTop(true);
-  const dropdownRef = useRef(null);
+  const windowWidth = useWindowWidth();
+  useEffect(
+    () => {
+      if (windowWidth > 1024) setCanScrollToTop(false);
+      else setCanScrollToTop(false);
+    },
+    [windowWidth]
+  );
 
   useEffect(
     () => {
@@ -17,10 +24,15 @@ const Dropdown = ({ children }) => {
       const { top } = dropdownRef.current.getBoundingClientRect();
 
       if (!isDropdownOpen && top)
-        window.scrollTo(0, top + window.scrollY - 100);
+        window.scrollTo(0, top + window.scrollY - 120);
     },
     [isDropdownOpen, canScrollToTop, dropdownRef]
   );
+
+  const handleDropdownTitleClick = () => {
+    toggleDropdownOpen();
+    setCanScrollToTop(true);
+  };
 
   return (
     <div
@@ -29,11 +41,10 @@ const Dropdown = ({ children }) => {
         [style.open]: isDropdownOpen,
         open: isDropdownOpen
       })}
-      onClick={activateScrollToTop}
     >
       <div
         className={classnames(style.dropdown_title, "dropdown-title")}
-        onClick={toggleDropdownOpen}
+        onClick={handleDropdownTitleClick}
       >
         SELECT A PLAN
       </div>
@@ -46,5 +57,19 @@ const Dropdown = ({ children }) => {
     </div>
   );
 };
+
+function useWindowWidth() {
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  });
+
+  return width;
+}
 
 export default memo(Dropdown);
