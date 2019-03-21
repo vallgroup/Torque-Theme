@@ -8,7 +8,13 @@ import Tracker from "../Tracker";
 import ItemsList from "../ItemsList";
 import arrow from "../../images/arrow.svg";
 
-const Slideshow = ({ items, interval = 0, slideTemplate, withItemList }) => {
+const Slideshow = ({
+  items,
+  interval = 0,
+  slideTemplate,
+  withItemList,
+  className
+}) => {
   const length = items.length;
 
   const [slide, createSetSlide, incrementSlide, decrementSlide] = useSlide(
@@ -26,7 +32,7 @@ const Slideshow = ({ items, interval = 0, slideTemplate, withItemList }) => {
         />
       )}
 
-      <div className={classnames(styles.root, "tq-slideshow")}>
+      <div className={classnames(styles.root, "tq-slideshow", className)}>
         <Swipe onSwipeLeft={incrementSlide} onSwipeRight={decrementSlide}>
           <div className={classnames(styles.slide, "tq-slide")}>
             {slideTemplate(items[slide])}
