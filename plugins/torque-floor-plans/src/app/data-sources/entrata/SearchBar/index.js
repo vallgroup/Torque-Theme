@@ -1,10 +1,11 @@
 import React, { memo, useState, useEffect, useCallback } from "react";
 import classnames from "classnames";
 import Entrata from "..";
+import Loading from "../../../Loading";
 import DatePicker from "react-datepicker";
 import style from "./SearchBar.scss";
 
-const SearchBar = ({ setFloorPlans, site }) => {
+const SearchBar = ({ setFloorPlans, site, setIsFetching }) => {
   const [unitTypes, setUnitTypes] = useState([]);
   const [selectedUnitTypes, setSelectedUnitTypes] = useState([]);
   const [startDate, setStartDate] = useState();
@@ -38,6 +39,7 @@ const SearchBar = ({ setFloorPlans, site }) => {
   const handleDateChange = date => setStartDate(new Date(date));
 
   const handleSubmit = async () => {
+    setIsFetching(true);
     const finalUnitTypes = selectedUnitTypes.length
       ? selectedUnitTypes
       : Object.keys(unitTypes); //  if no unit types are selecting then use them all
@@ -65,6 +67,7 @@ const SearchBar = ({ setFloorPlans, site }) => {
       startDate: formattedStartDate
     });
 
+    setIsFetching(false);
     setFloorPlans(floorPlans);
   };
 
@@ -83,17 +86,21 @@ const SearchBar = ({ setFloorPlans, site }) => {
       </div>
 
       <div className={classnames("unit-types", style.unit_types)}>
-        {Object.keys(unitTypes).map(unitType => (
-          <div
-            key={unitType}
-            className={classnames("unit-type", {
-              ["selected"]: selectedUnitTypes.includes(unitType)
-            })}
-            onClick={handleUnitTypeClick(unitType)}
-          >
-            {unitType.toUpperCase()}
-          </div>
-        ))}
+        {Object.keys(unitTypes).length ? (
+          Object.keys(unitTypes).map(unitType => (
+            <div
+              key={unitType}
+              className={classnames("unit-type", {
+                ["selected"]: selectedUnitTypes.includes(unitType)
+              })}
+              onClick={handleUnitTypeClick(unitType)}
+            >
+              {unitType.toUpperCase()}
+            </div>
+          ))
+        ) : (
+          <Loading />
+        )}
       </div>
 
       <div className="date-picker-wrapper">
