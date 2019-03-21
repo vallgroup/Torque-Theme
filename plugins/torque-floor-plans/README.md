@@ -18,6 +18,12 @@ A Floor Plans React app can then be included via a shortcode in the Wordpress si
 
 # Changelog
 
+## [2.2.1]
+
+### Added
+
+- Add availability table, back end and front, for entrata units
+
 ## [2.2.0]
 
 ### Added

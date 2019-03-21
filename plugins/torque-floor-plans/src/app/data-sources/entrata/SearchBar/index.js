@@ -1,30 +1,28 @@
 import React, { memo, useState, useEffect, useCallback } from "react";
 import classnames from "classnames";
 import Entrata from "..";
+import Loading from "../../../Loading";
 import DatePicker from "react-datepicker";
 import style from "./SearchBar.scss";
 
-const SearchBar = ({ setFloorPlans, site }) => {
+const SearchBar = ({ setFloorPlans, site, setIsFetching }) => {
   const [unitTypes, setUnitTypes] = useState([]);
   const [selectedUnitTypes, setSelectedUnitTypes] = useState([]);
   const [startDate, setStartDate] = useState();
 
-  const getUnitTypes = useCallback(
-    async () => {
-      const entrata = new Entrata({ site });
-      const unitTypes = await entrata.getUnitTypes();
-
-      setSelectedUnitTypes(Object.keys(unitTypes));
-      setUnitTypes(unitTypes);
-    },
-    [site]
-  );
-
   useEffect(
     () => {
+      const getUnitTypes = async () => {
+        const entrata = new Entrata({ site });
+        const unitTypes = await entrata.getUnitTypes();
+
+        setSelectedUnitTypes([]);
+        setUnitTypes(unitTypes);
+      };
+
       getUnitTypes();
     },
-    [getUnitTypes]
+    [site]
   );
 
   const handleUnitTypeClick = name => () => {
@@ -39,9 +37,22 @@ const SearchBar = ({ setFloorPlans, site }) => {
   };
 
   const handleDateChange = date => setStartDate(new Date(date));
+  useEffect(
+    () => {
+      // very hacky way to pass this to another component,
+      // but we dont want to integrate redux
+      // and it really doesnt make sense to move this to the top level App, since it's only relevant to Entrata
+      window.torqueStartDate = formatDate(startDate);
+    },
+    [startDate]
+  );
 
   const handleSubmit = async () => {
-    const unitTypeIds = selectedUnitTypes
+    setIsFetching(true);
+    const finalUnitTypes = selectedUnitTypes.length
+      ? selectedUnitTypes
+      : Object.keys(unitTypes); //  if no unit types are selecting then use them all
+    const unitTypeIds = finalUnitTypes
       .reduce((acc, unitType) => [...acc, ...unitTypes[unitType]], [])
       .filter(Boolean)
       .join(",");
@@ -53,18 +64,15 @@ const SearchBar = ({ setFloorPlans, site }) => {
       setStartDate(finalStartDate);
     }
 
-    const formattedStartDate = finalStartDate.toLocaleDateString("en-US", {
-      month: "2-digit",
-      day: "2-digit",
-      year: "numeric"
-    });
+    const formattedStartDate = formatDate(finalStartDate);
 
     const entrata = new Entrata({ site });
     const floorPlans = await entrata.getFloorPlans({
-      unitTypeIds: unitTypeIds.length ? unitTypeIds : undefined,
+      unitTypeIds: unitTypeIds,
       startDate: formattedStartDate
     });
 
+    setIsFetching(false);
     setFloorPlans(floorPlans);
   };
 
@@ -83,17 +91,21 @@ const SearchBar = ({ setFloorPlans, site }) => {
       </div>
 
       <div className={classnames("unit-types", style.unit_types)}>
-        {Object.keys(unitTypes).map(unitType => (
-          <div
-            key={unitType}
-            className={classnames("unit-type", {
-              ["selected"]: selectedUnitTypes.includes(unitType)
-            })}
-            onClick={handleUnitTypeClick(unitType)}
-          >
-            {unitType.toUpperCase()}
-          </div>
-        ))}
+        {Object.keys(unitTypes).length ? (
+          Object.keys(unitTypes).map(unitType => (
+            <div
+              key={unitType}
+              className={classnames("unit-type", {
+                ["selected"]: selectedUnitTypes.includes(unitType)
+              })}
+              onClick={handleUnitTypeClick(unitType)}
+            >
+              {unitType.toUpperCase()}
+            </div>
+          ))
+        ) : (
+          <Loading />
+        )}
       </div>
 
       <div className="date-picker-wrapper">
@@ -111,5 +123,15 @@ const SearchBar = ({ setFloorPlans, site }) => {
     </div>
   );
 };
+
+function formatDate(date) {
+  if (!date) return "";
+
+  return date.toLocaleDateString("en-US", {
+    month: "2-digit",
+    day: "2-digit",
+    year: "numeric"
+  });
+}
 
 export default memo(SearchBar);
