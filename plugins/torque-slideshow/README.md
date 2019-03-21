@@ -18,6 +18,7 @@
 ### Added
 
 - Post Slideshow functionality + hook to turn it on
+- Add choice of templates to post slideshow
 
 ## [1.1.0] 03/09/19
 
