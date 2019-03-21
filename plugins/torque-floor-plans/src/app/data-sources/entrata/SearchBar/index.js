@@ -9,22 +9,19 @@ const SearchBar = ({ setFloorPlans, site }) => {
   const [selectedUnitTypes, setSelectedUnitTypes] = useState([]);
   const [startDate, setStartDate] = useState();
 
-  const getUnitTypes = useCallback(
-    async () => {
-      const entrata = new Entrata({ site });
-      const unitTypes = await entrata.getUnitTypes();
-
-      setSelectedUnitTypes(Object.keys(unitTypes));
-      setUnitTypes(unitTypes);
-    },
-    [site]
-  );
-
   useEffect(
     () => {
+      const getUnitTypes = async () => {
+        const entrata = new Entrata({ site });
+        const unitTypes = await entrata.getUnitTypes();
+
+        setSelectedUnitTypes([]);
+        setUnitTypes(unitTypes);
+      };
+
       getUnitTypes();
     },
-    [getUnitTypes]
+    [site]
   );
 
   const handleUnitTypeClick = name => () => {
@@ -41,7 +38,10 @@ const SearchBar = ({ setFloorPlans, site }) => {
   const handleDateChange = date => setStartDate(new Date(date));
 
   const handleSubmit = async () => {
-    const unitTypeIds = selectedUnitTypes
+    const finalUnitTypes = selectedUnitTypes.length
+      ? selectedUnitTypes
+      : Object.keys(unitTypes); //  if no unit types are selecting then use them all
+    const unitTypeIds = finalUnitTypes
       .reduce((acc, unitType) => [...acc, ...unitTypes[unitType]], [])
       .filter(Boolean)
       .join(",");
@@ -61,7 +61,7 @@ const SearchBar = ({ setFloorPlans, site }) => {
 
     const entrata = new Entrata({ site });
     const floorPlans = await entrata.getFloorPlans({
-      unitTypeIds: unitTypeIds.length ? unitTypeIds : undefined,
+      unitTypeIds: unitTypeIds,
       startDate: formattedStartDate
     });
 
