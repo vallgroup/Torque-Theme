@@ -13,6 +13,13 @@
 
 # Changelog
 
+## [2.0.1] 03/22/19
+
+### Changed
+
+- Interra template
+- Post slides sorted by draggable order
+
 ## [2.0.0] 03/20/19
 
 ### Added
