@@ -32,7 +32,7 @@ export default class Entrata {
         throw "Error getting floor plans";
       }
 
-      return response?.data?.floor_plans;
+      return Object.values(response?.data?.floor_plans || {});
     } catch (err) {
       console.log(err);
       return [];

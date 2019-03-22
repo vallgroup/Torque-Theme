@@ -20,7 +20,8 @@ class Torque_Slideshow_Shortcode {
     // for private attributes go to setup_atts()
     $this->expected_args = array(
       'id'    => '',
-      'type'  => 'image'
+      'type'  => 'image',
+      'template'  => '0'
     );
 
 		add_shortcode( self::$SHORTCODE_SLUG , array( $this, 'shortcode_handler') );
