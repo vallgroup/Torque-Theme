@@ -3,9 +3,8 @@ import React, { memo } from "react";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 
-// renders all possible meta and fields
-
 const Template = ({ post }) => {
+  console.log(post);
   return (
     <div
       className={classnames(
@@ -22,28 +21,16 @@ const Template = ({ post }) => {
       <div className="post-details">
         <h3>{post.post_title}</h3>
 
-        <div className="slideshow-post-excerpt slideshow-post-field">
-          {post.post_excerpt || post.post_content}
-        </div>
-
-        {Object.keys(post.meta).map(metaKey => {
-          const meta = post.meta[metaKey];
-
-          if (typeof meta !== "string") return null;
-
-          const className = classnames(
-            "slideshow-post-field",
-            `slideshow-${metaKey}`
-          );
-
-          return (
-            <div
-              key={metaKey}
-              className={className}
-              dangerouslySetInnerHTML={{ __html: post.meta[metaKey] }}
-            />
-          );
-        })}
+        {post.meta["listing_city"] && (
+          <div
+            className={classnames(
+              "slideshow-post-field",
+              `slideshow-listing_city`
+            )}
+          >
+            {post.meta["listing_city"]}
+          </div>
+        )}
 
         <a
           href={post.permalink}
