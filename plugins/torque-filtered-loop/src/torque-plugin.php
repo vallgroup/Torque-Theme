@@ -60,6 +60,7 @@ class Torque_Filtered_Loop {
 		// comment out class names to exclude
 		Torque_Filtered_Loop_Autoloader::autoload( array(
 			'Torque_Filtered_Loop_Shortcode',
+			'Torque_Filtered_Loop_REST_Controller'
 		) );
 
 		// enqueue plugin scripts
