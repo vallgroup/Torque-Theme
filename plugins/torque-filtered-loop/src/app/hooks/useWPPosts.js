@@ -26,6 +26,7 @@ export default (site, activeTerm, firstTerm, postType, params) => {
           setPosts(postsSorted);
         } catch (e) {
           console.warn(e);
+          setPosts([]);
         }
       };
 

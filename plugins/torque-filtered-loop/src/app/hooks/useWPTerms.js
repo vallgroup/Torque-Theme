@@ -17,7 +17,7 @@ export default (site, taxSlug) => {
           setTerms(terms);
         } catch (e) {
           console.warn(e);
-          this.setState({ terms: [] });
+          setTerms([]);
         }
       };
 

@@ -1,9 +1,16 @@
 import React, { memo, useMemo } from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
-import { filterTermsByParent } from "./helpers";
+import { filterTermsByParent } from "../helpers";
 
-const Filters = ({ terms, activeTerm, updateActiveTerm, parentId }) => {
+const Filters = ({
+  className,
+  terms,
+  activeTerm,
+  updateActiveTerm,
+  parentId,
+  hideAllOption
+}) => {
   const filteredTerms = filterTermsByParent(terms, parentId);
 
   const allTerm = {
@@ -12,14 +19,17 @@ const Filters = ({ terms, activeTerm, updateActiveTerm, parentId }) => {
   };
 
   return (
-    <div className={"torque-filtered-loop-filters"}>
-      <button
-        className={classnames("torque-filtered-loop-filter-button", {
-          active: allTerm.id === activeTerm
-        })}
-        onClick={updateActiveTerm(allTerm.id)}
-        dangerouslySetInnerHTML={{ __html: allTerm.name }}
-      />
+    <div className={classnames("torque-filtered-loop-filters", className)}>
+      {!hideAllOption && (
+        <button
+          className={classnames("torque-filtered-loop-filter-button", {
+            active: allTerm.id === activeTerm
+          })}
+          onClick={updateActiveTerm(allTerm.id)}
+          dangerouslySetInnerHTML={{ __html: allTerm.name }}
+        />
+      )}
+
       {filteredTerms.map(term => (
         <button
           key={term.id}
@@ -35,10 +45,12 @@ const Filters = ({ terms, activeTerm, updateActiveTerm, parentId }) => {
 };
 
 Filters.propTypes = {
+  className: PropTypes.string,
   terms: PropTypes.array.isRequired,
   activeTerm: PropTypes.number.isRequired,
   updateActiveTerm: PropTypes.func.isRequired,
-  parentId: PropTypes.number
+  parentId: PropTypes.number,
+  hideAllOption: PropTypes.bool
 };
 
 export default memo(Filters);

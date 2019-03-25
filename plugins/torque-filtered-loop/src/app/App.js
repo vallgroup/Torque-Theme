@@ -1,20 +1,11 @@
 import React, { memo, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import Filters from "./Filters";
-import Posts from "./Posts/Posts";
+import Posts from "./Posts";
 import { useWPTerms, useWPPosts, useParentId } from "./hooks";
 import { createRequestParams } from "./helpers";
 
-const App = ({
-  site,
-  postType,
-  tax,
-  parent,
-  firstTerm,
-  filtersTypes,
-  filtersArgs,
-  loopTemplate
-}) => {
+const App = ({ site, postType, tax, parent, firstTerm, loopTemplate }) => {
   const [activeTerm, setActiveTerm] = useState(0);
   const updateActiveTerm = useMemo(
     () => termId => () => setActiveTerm(termId),

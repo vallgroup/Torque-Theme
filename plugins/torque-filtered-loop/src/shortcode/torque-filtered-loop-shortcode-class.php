@@ -20,11 +20,34 @@ class Torque_Filtered_Loop_Shortcode {
   public function __construct() {
     // use this array to attributes and display them in the front end
     // for private attributes go to setup_atts()
+    //
+    // 2 ways to build filters:
+    //
+    // 1. use a combination of 'tax', 'parent', and 'first_term' to build simple tax filters
+    //
+    // 'tax' - a wordpress tanonomy slug
+    // 'parent' - show child terms of a parent term (pass slug)
+    // 'first_term' - show a certain term first (pass ID)
+    //
+    // 2. more complex filters of different types
+    //
+    // 'filters_types' - comma separated array of filter types which will have an AND relationship
+    // options:
+    //   tabs_acf - creates tab filters for a given acf select field (pass the acf field id)
+    //   dropdown_tax - creates dropdown filter for a given wp tax (pass the tax slug)
+    //   dropdown_date - creates dropdown filter for filtering by month (no args)
+    //
+    // 'filters_args' - comma separated array of filter arguments for the types
+    //
     $this->expected_args = array(
-      'post_type'     => 'posts',
+      'post_type'     => 'posts', // always required
+
       'tax'           => '',
       'parent'        => '',
       'first_term'    => '',
+
+      'filters_types' => '',
+      'filters_args'  => ''
     );
 
 		add_shortcode( self::$SHORTCODE_SLUG , array( $this, 'shortcode_handler') );
