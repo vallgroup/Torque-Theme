@@ -1,70 +1,38 @@
-import React from "react";
+import React, { memo, useMemo } from "react";
 import PropTypes from "prop-types";
+import classnames from "classnames";
+import { filterTermsByParent } from "./helpers";
 
-class Filters extends React.Component {
-  constructor(props) {
-    super(props);
+const Filters = ({ terms, activeTerm, updateActiveTerm, parentId }) => {
+  const filteredTerms = filterTermsByParent(terms, parentId);
 
-    this.state = {
-      terms: this.filterTermsByParent()
-    };
+  const allTerm = {
+    id: 0,
+    name: "All"
+  };
 
-    this.allTerm = {
-      id: 0,
-      name: "All"
-    };
-
-    this.renderFilterButton = this.renderFilterButton.bind(this);
-  }
-
-  // If the terms change, we filter the terms by any parent Id that we might get.
-  //
-  // Doing it only when terms change and saving it on the state
-  // just saves us from running the filter unecessarily
-  componentDidUpdate(prevProps) {
-    if (prevProps.terms !== this.props.terms) {
-      this.setState({ terms: this.filterTermsByParent() });
-    }
-  }
-
-  render() {
-    const { terms } = this.state;
-
-    return (
-      <div className={"torque-filtered-loop-filters"}>
-        {this.renderFilterButton(this.allTerm, -1)}
-        {terms.map(this.renderFilterButton)}
-      </div>
-    );
-  }
-
-  renderFilterButton(term, index) {
-    const isActive = term.id === this.props.activeTerm;
-
-    return (
+  return (
+    <div className={"torque-filtered-loop-filters"}>
       <button
-        key={index}
-        className={`torque-filtered-loop-filter-button ${
-          isActive ? "active" : ""
-        }`}
-        onClick={() => this.props.updateActiveTerm(term.id)}
-        dangerouslySetInnerHTML={{ __html: term.name }}
+        className={classnames("torque-filtered-loop-filter-button", {
+          active: allTerm.id === activeTerm
+        })}
+        onClick={updateActiveTerm(allTerm.id)}
+        dangerouslySetInnerHTML={{ __html: allTerm.name }}
       />
-    );
-  }
-
-  filterTermsByParent() {
-    const { terms, parentId } = this.props;
-
-    if (!parentId) {
-      return terms;
-    }
-
-    return terms.filter(term => {
-      return term.parent === parentId;
-    });
-  }
-}
+      {filteredTerms.map(term => (
+        <button
+          key={term.id}
+          className={classnames("torque-filtered-loop-filter-button", {
+            active: term.id === activeTerm
+          })}
+          onClick={updateActiveTerm(term.id)}
+          dangerouslySetInnerHTML={{ __html: term.name }}
+        />
+      ))}
+    </div>
+  );
+};
 
 Filters.propTypes = {
   terms: PropTypes.array.isRequired,
@@ -73,4 +41,4 @@ Filters.propTypes = {
   parentId: PropTypes.number
 };
 
-export default Filters;
+export default memo(Filters);
