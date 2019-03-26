@@ -2,8 +2,8 @@ import React, { memo, useMemo, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Posts from "./Posts";
 import { DropdownDate, DropdownTax, TabsACF } from "./Filters/CustomFilters";
-import { useCustomFilterSettings } from "./hooks";
-import { createRequestParams } from "./helpers";
+import { useCustomFilterSettings, useWPPosts } from "./hooks";
+import { createRequestParams, combineCustomFilters } from "./helpers";
 
 const App = ({ site, postType, filtersTypes, filtersArgs, loopTemplate }) => {
   const [filters, setFilters] = useState({});
@@ -23,6 +23,13 @@ const App = ({ site, postType, filtersTypes, filtersArgs, loopTemplate }) => {
     },
     [filterSettings]
   );
+
+  const { taxParams, metaParams } = combineCustomFilters(
+    filters,
+    filterSettings
+  );
+  const params = createRequestParams({ postType, taxParams, metaParams });
+  const posts = useWPPosts(site, null, params);
 
   return filterSettings?.length ? (
     <div className={"torque-filtered-loop custom-filters"}>
@@ -51,7 +58,7 @@ const App = ({ site, postType, filtersTypes, filtersArgs, loopTemplate }) => {
         }
       })}
 
-      <Posts posts={[]} loopTemplate={loopTemplate} />
+      <Posts posts={posts} loopTemplate={loopTemplate} />
     </div>
   ) : null;
 };

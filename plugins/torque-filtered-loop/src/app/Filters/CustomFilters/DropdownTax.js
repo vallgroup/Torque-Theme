@@ -3,7 +3,6 @@ import { useWPTerms } from "../../hooks";
 
 const DropdownTax = ({ site, value, onChange, args }) => {
   const terms = useWPTerms(site, args);
-  console.log(terms);
 
   return null;
 };

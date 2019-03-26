@@ -47,11 +47,13 @@ export default (site, activeTerm, params) => {
 let postsCache = {};
 
 function getPostsFromCache(activeTerm) {
+  if (!activeTerm) return [];
+
   return postsCache?.[activeTerm] || [];
 }
 
 function addPostsToCache(activeTerm, posts) {
-  if (!posts?.length || activeTerm === 0) return;
+  if (!posts?.length || !activeTerm) return;
 
   postsCache = {
     ...postsCache,

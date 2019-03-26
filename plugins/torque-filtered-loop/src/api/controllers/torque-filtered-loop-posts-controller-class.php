@@ -54,6 +54,12 @@ class Torque_Filtered_Loop_Posts_Controller {
 			if (substr($key, 0 ,5) === 'meta_') {
 				$meta_key = substr($key, 5);
 
+				if (substr($meta_key, 0, 6) === 'field_') {
+					// is acf key, need to get the field name
+					$field = get_field_object( $meta_key );
+					$meta_key = $field['name'];
+				}
+
 				$query['meta_query'][] = array(
 					'key'	  => $meta_key,
 					'value'	=> $value

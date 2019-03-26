@@ -17,12 +17,7 @@ export default (site, fieldId) => {
           if (response.data.success && response.data.choices) {
             const { choices } = response.data;
 
-            return setChoices(
-              Object.keys(choices).map(choiceKey => ({
-                id: choiceKey,
-                name: choices[choiceKey]
-              }))
-            );
+            return setChoices(choices);
           }
 
           return setChoices([]);
