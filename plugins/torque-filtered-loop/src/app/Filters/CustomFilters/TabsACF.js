@@ -21,7 +21,7 @@ const TabsACF = ({ site, value, onChange, args }) => {
     <Filters
       className="torque-acf-tabs-filters"
       terms={filterOptions}
-      activeTerm={0}
+      activeTerm={value}
       updateActiveTerm={onChange}
       hideAllOption
     />
