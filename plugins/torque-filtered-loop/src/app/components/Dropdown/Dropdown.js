@@ -1,10 +1,30 @@
 import styles from "./Dropdown.scss";
-import React, { memo, useState, useMemo } from "react";
+import React, { memo, useState, useMemo, useEffect } from "react";
 import classnames from "classnames";
 
 const Dropdown = ({ title, options, value, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const toggleOpen = () => setIsOpen(!isOpen);
+  const handleDropdownClick = useMemo(
+    () => e => {
+      e.stopPropagation();
+      setIsOpen(isOpen => !isOpen);
+    },
+    []
+  );
+  useEffect(
+    () => {
+      // close dropdown when clicking outside
+      function handleBodyClick() {
+        setIsOpen(false);
+      }
+
+      if (isOpen) {
+        document.addEventListener("click", handleBodyClick);
+        return () => document.removeEventListener("click", handleBodyClick);
+      }
+    },
+    [isOpen]
+  );
 
   const optionsWithAll = options.slice(0);
   optionsWithAll.unshift({
@@ -21,7 +41,7 @@ const Dropdown = ({ title, options, value, onChange }) => {
     <div className={classnames(styles.root, "torque-custom-filter-dropdown")}>
       <div
         className={classnames(styles.title_wrapper, "dropdown-title-wrapper")}
-        onClick={toggleOpen}
+        onClick={handleDropdownClick}
       >
         <span className="dropdown-title">{title}</span>
         {selectedOption && (
