@@ -20,6 +20,15 @@ export default (filterVals, customFiltersSettings) =>
             metaParams[metaKey] = metaVal;
             break;
           }
+
+          case "dropdown_tax": {
+            const taxName = filterType.args;
+            const termId = filterVals[filterId];
+            if (termId === 0) break;
+
+            taxParams[taxName] = termId;
+            break;
+          }
         }
       });
 
