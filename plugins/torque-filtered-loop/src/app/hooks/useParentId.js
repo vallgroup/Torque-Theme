@@ -13,12 +13,12 @@ export default (terms, parent) => {
           const term = terms[i];
 
           if (term.slug === parent) {
-            parentId = term.id;
+            parentId = term.term_id;
             break;
           }
         }
 
-        return setParentId(parentId);
+        setParentId(parentId);
       };
 
       getParentId();

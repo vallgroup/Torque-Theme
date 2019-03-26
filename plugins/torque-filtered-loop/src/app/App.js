@@ -2,8 +2,8 @@ import React, { memo, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import Filters from "./Filters";
 import Posts from "./Posts";
-import { useWPTerms, useWPPosts, useParentId } from "./hooks";
-import { createRequestParams } from "./helpers";
+import { useWPTerms, useWPPosts, useParentId, useSortPosts } from "./hooks";
+import { createTaxParams, createRequestParams } from "./helpers";
 
 const App = ({ site, postType, tax, parent, firstTerm, loopTemplate }) => {
   const [activeTerm, setActiveTerm] = useState(0);
@@ -15,8 +15,10 @@ const App = ({ site, postType, tax, parent, firstTerm, loopTemplate }) => {
   const terms = useWPTerms(site, tax);
   const parentId = useParentId(terms, parent);
 
-  const params = createRequestParams(tax, parentId, activeTerm);
-  const posts = useWPPosts(site, activeTerm, firstTerm, postType, params);
+  const taxParams = createTaxParams(tax, parentId, activeTerm);
+  const params = createRequestParams({ postType, taxParams });
+  const posts = useWPPosts(site, activeTerm, params);
+  const sortedPosts = useSortPosts(firstTerm, posts);
 
   return terms?.length ? (
     <div className={"torque-filtered-loop"}>
@@ -26,7 +28,11 @@ const App = ({ site, postType, tax, parent, firstTerm, loopTemplate }) => {
         updateActiveTerm={updateActiveTerm}
         parentId={parentId}
       />
-      <Posts posts={posts} loopTemplate={loopTemplate} parentId={parentId} />
+      <Posts
+        posts={sortedPosts}
+        loopTemplate={loopTemplate}
+        parentId={parentId}
+      />
     </div>
   ) : null;
 };

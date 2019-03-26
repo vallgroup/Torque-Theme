@@ -14,7 +14,7 @@ const Filters = ({
   const filteredTerms = filterTermsByParent(terms, parentId);
 
   const allTerm = {
-    id: 0,
+    term_id: 0,
     name: "All"
   };
 
@@ -23,20 +23,20 @@ const Filters = ({
       {!hideAllOption && (
         <button
           className={classnames("torque-filtered-loop-filter-button", {
-            active: allTerm.id === activeTerm
+            active: allTerm.term_id === activeTerm
           })}
-          onClick={updateActiveTerm(allTerm.id)}
+          onClick={updateActiveTerm(allTerm.term_id)}
           dangerouslySetInnerHTML={{ __html: allTerm.name }}
         />
       )}
 
       {filteredTerms.map(term => (
         <button
-          key={term.id}
+          key={term.term_id}
           className={classnames("torque-filtered-loop-filter-button", {
-            active: term.id === activeTerm
+            active: term.term_id === activeTerm
           })}
-          onClick={updateActiveTerm(term.id)}
+          onClick={updateActiveTerm(term.term_id)}
           dangerouslySetInnerHTML={{ __html: term.name }}
         />
       ))}

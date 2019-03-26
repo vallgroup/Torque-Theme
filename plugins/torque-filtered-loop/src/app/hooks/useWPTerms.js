@@ -1,20 +1,24 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export default (site, taxSlug) => {
+export default (site, tax) => {
   const [terms, setTerms] = useState([]);
 
   useEffect(
     () => {
-      if (!taxSlug) return;
+      if (!tax) return;
 
       const getTerms = async () => {
         try {
-          const url = `${site}/wp-json/wp/v2/${taxSlug}`;
-          const response = await axios.get(url);
-          const terms = response.data;
+          const url = `${site}/wp-json/filtered-loop/v1/terms`;
+          const params = { tax };
+          const response = await axios.get(url, { params });
 
-          setTerms(terms);
+          if (response.data.success && response.data.terms) {
+            return setTerms(response.data.terms);
+          }
+
+          return setTerms([]);
         } catch (e) {
           console.warn(e);
           setTerms([]);
@@ -23,7 +27,7 @@ export default (site, taxSlug) => {
 
       getTerms();
     },
-    [site, taxSlug]
+    [site, tax]
   );
 
   return terms;

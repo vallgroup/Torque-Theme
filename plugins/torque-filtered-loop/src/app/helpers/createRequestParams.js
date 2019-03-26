@@ -1,43 +1,25 @@
 import { useMemo } from "react";
 
-export default (tax, parentId, activeTerm) =>
+export default ({ postType, taxParams, metaParams }) =>
   useMemo(
     () => {
-      let params = {};
+      const params = {
+        post_type: postType
+      };
 
-      if (parentId) {
-        //
-        // if we have a parent Id,
-        // then if we have an active term we want to filter with that,
-        // otherwise we want to filter on the parent term and get all posts
-        //
-        params = activeTerm
-          ? {
-              [tax]: activeTerm
-            }
-          : {
-              [tax]: parentId
-            };
-      } else {
-        //
-        // if theres no parent term
-        // then if we have an active term we filter on that
-        // otherwise we get all posts
-        params = activeTerm
-          ? {
-              [tax]: activeTerm
-            }
-          : {};
+      if (taxParams) {
+        Object.keys(taxParams).forEach(taxSlug => {
+          params[`tax_${taxSlug}`] = taxParams[taxSlug];
+        });
       }
 
-      return Object.assign(
-        {},
-        {
-          _embed: true,
-          per_page: 100
-        },
-        params
-      );
+      if (metaParams) {
+        Object.keys(metaParams).forEach(metaKey => {
+          params[`meta_${metaKey}`] = metaParams[metaKey];
+        });
+      }
+
+      return params;
     },
-    [tax, parentId, activeTerm]
+    [postType, taxParams, metaParams]
   );

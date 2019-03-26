@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export default (site, activeTerm, firstTerm, postType, params) => {
+export default (site, activeTerm, params) => {
   const [posts, setPosts] = useState([]);
 
   useEffect(
@@ -14,16 +14,18 @@ export default (site, activeTerm, firstTerm, postType, params) => {
           }
 
           const response = await axios.get(
-            `${site}/wp-json/wp/v2/${postType}`,
+            `${site}/wp-json/filtered-loop/v1/posts`,
             {
               params
             }
           );
 
-          const postsSorted = sortPosts(firstTerm, response.data);
+          if (response?.data?.success && response?.data?.posts) {
+            addPostsToCache(activeTerm, response.data.posts);
+            return setPosts(response.data.posts);
+          }
 
-          addPostsToCache(activeTerm, postsSorted);
-          setPosts(postsSorted);
+          setPosts([]);
         } catch (e) {
           console.warn(e);
           setPosts([]);
@@ -32,30 +34,11 @@ export default (site, activeTerm, firstTerm, postType, params) => {
 
       getPosts();
     },
-    [site, postType, params, activeTerm]
+    [site, params, activeTerm]
   );
 
   return posts;
 };
-
-function sortPosts(firstTerm, posts) {
-  if (!firstTerm) {
-    return posts;
-  }
-
-  const firstPosts = [];
-  const otherPosts = [];
-
-  posts.forEach(post => {
-    if (post.categories.includes(parseInt(firstTerm))) {
-      firstPosts.push(post);
-    } else {
-      otherPosts.push(post);
-    }
-  });
-
-  return [...firstPosts, ...otherPosts];
-}
 
 /**
  * Cacheing functions
