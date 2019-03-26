@@ -23,11 +23,25 @@ class Torque_Filtered_Loop_Filters_Routes {
 	  		//'permission_callback' => array('Torque_API_Permissions', 'user_can_read'),
 	  	),
 	  ) );
+
+    register_rest_route( $this->namespace, self::$resource.'dropdown-date' , array(
+	  	array(
+	  		'methods'             => 'GET',
+	  		'callback'            => array( $this, 'get_filter_dropdown_date' ),
+	  		'args'                => Torque_Filtered_Loop_Filters_Controller::get_filter_dropdown_date_args(),
+	  		//'permission_callback' => array('Torque_API_Permissions', 'user_can_read'),
+	  	),
+	  ) );
   }
 
   public function get_filter_acf_select( $request ) {
     $controller = new Torque_Filtered_Loop_Filters_Controller( $request );
     return $controller->get_filter_acf_select();
+  }
+
+  public function get_filter_dropdown_date( $request ) {
+    $controller = new Torque_Filtered_Loop_Filters_Controller( $request );
+    return $controller->get_filter_dropdown_date();
   }
 }
 

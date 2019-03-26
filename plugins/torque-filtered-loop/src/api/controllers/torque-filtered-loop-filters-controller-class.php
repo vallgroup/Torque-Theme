@@ -8,7 +8,15 @@ class Torque_Filtered_Loop_Filters_Controller {
 	public static function get_filter_acf_select_args() {
 		return array(
       'field_id' => array(
-        'validate_callback' => array( 'Torque_Validation', 'str' ),
+        'validate_callback' => array( 'Torque_Validation', 'string' ),
+      ),
+    );
+	}
+
+	public static function get_filter_dropdown_date_args() {
+		return array(
+      'post_type' => array(
+        'validate_callback' => array( 'Torque_Validation', 'string' ),
       ),
     );
 	}
@@ -33,6 +41,39 @@ class Torque_Filtered_Loop_Filters_Controller {
 
 			return Torque_API_Responses::Failure_Response( array(
 				'choices'	=> []
+			));
+
+		} catch (Exception $e) {
+			return Torque_API_Responses::Error_Response( $e );
+		}
+	}
+
+	public function get_filter_dropdown_date() {
+		try {
+			$post_type = $this->request['post_type'];
+			$query = new WP_Query( array(
+				'post_type'	=> $post_type,
+				'posts_per_page' => -1,
+				'orderby'	=> 'date'
+			));
+
+			if ($query->have_posts()) {
+				$dates_arr = [];
+
+				foreach ($query->posts as $post) {
+					$dates = date("M Y", strtotime($post->post_date));
+					if (!in_array($dates, $dates_arr)) {
+						$dates_arr[] = $dates;
+					}
+				}
+
+        return Torque_API_Responses::Success_Response( array(
+          'dates'	=> $dates_arr
+        ) );
+			}
+
+			return Torque_API_Responses::Failure_Response( array(
+				'dates'	=> []
 			));
 
 		} catch (Exception $e) {
