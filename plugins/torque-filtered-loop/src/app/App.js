@@ -12,7 +12,7 @@ const App = ({ site, postType, tax, parent, firstTerm, loopTemplate }) => {
     []
   );
 
-  const terms = useWPTerms(site, tax);
+  const [terms] = useWPTerms(site, tax);
   const parentId = useParentId(terms, parent);
 
   const taxParams = createTaxParams(tax, parentId, activeTerm);

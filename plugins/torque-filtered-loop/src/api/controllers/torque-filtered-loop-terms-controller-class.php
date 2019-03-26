@@ -22,15 +22,19 @@ class Torque_Filtered_Loop_Terms_Controller {
 	public function get_terms() {
 		try {
 			$terms = get_terms( $this->request['tax'] );
+			$tax = get_taxonomy( $this->request['tax'] );
+			$tax_name = $tax->singular_label ?? $tax->label;
 
-			if ($terms) {
+			if ($terms && $tax_name) {
 				return Torque_API_Responses::Success_Response( array(
-          'terms'	=> $terms
+          'terms'	=> $terms,
+					'tax_name' => $tax_name
         ) );
 			}
 
 			return Torque_API_Responses::Failure_Response( array(
-				'terms'	=> []
+				'terms'	=> [],
+				'tax_name' => ''
 			));
 
 		} catch (Exception $e) {

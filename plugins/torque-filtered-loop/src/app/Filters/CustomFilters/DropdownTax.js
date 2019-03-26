@@ -8,7 +8,7 @@ const DropdownTax = ({ site, value, onChange, args }) => {
     return null;
   }
 
-  const terms = useWPTerms(site, args);
+  const [terms, taxName] = useWPTerms(site, args);
   const dropdownOptions = useMemo(
     () =>
       terms.map(term => ({
@@ -20,7 +20,7 @@ const DropdownTax = ({ site, value, onChange, args }) => {
 
   return terms?.length ? (
     <Dropdown
-      title={"Dropdown"}
+      title={`Filter by ${taxName}`}
       options={dropdownOptions}
       value={value}
       onChange={onChange}
