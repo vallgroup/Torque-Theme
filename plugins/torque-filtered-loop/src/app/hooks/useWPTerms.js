@@ -15,8 +15,6 @@ export default (site, tax) => {
           const params = { tax };
           const response = await axios.get(url, { params });
 
-          console.log(response);
-
           if (response.data.success && response.data.terms) {
             setTerms(response.data.terms);
             setTaxName(response.data.tax_name);

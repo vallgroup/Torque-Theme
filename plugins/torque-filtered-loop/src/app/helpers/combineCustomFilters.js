@@ -5,6 +5,7 @@ export default (filterVals, customFiltersSettings) =>
     () => {
       const taxParams = {};
       const metaParams = {};
+      const dateParams = [];
 
       Object.keys(filterVals).forEach(filterId => {
         const filterType = customFiltersSettings.find(
@@ -29,10 +30,15 @@ export default (filterVals, customFiltersSettings) =>
             taxParams[taxName] = termId;
             break;
           }
+
+          case "dropdown_date": {
+            dateParams.push(filterVals[filterId]);
+            break;
+          }
         }
       });
 
-      return { taxParams, metaParams };
+      return { taxParams, metaParams, dateParams };
     },
     [filterVals, customFiltersSettings]
   );

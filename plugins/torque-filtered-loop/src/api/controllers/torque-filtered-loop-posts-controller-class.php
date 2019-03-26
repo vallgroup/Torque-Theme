@@ -9,7 +9,13 @@ class Torque_Filtered_Loop_Posts_Controller {
 		return array(
       'post_type' => array(
         'validate_callback' => array( 'Torque_Validation', 'string' ),
-      )
+      ),
+			'year'	=> array(
+        'validate_callback' => array( 'Torque_Validation', 'int' ),
+      ),
+			'monthnum'	=> array(
+        'validate_callback' => array( 'Torque_Validation', 'int' ),
+      ),
     );
 	}
 

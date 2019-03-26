@@ -24,11 +24,16 @@ const App = ({ site, postType, filtersTypes, filtersArgs, loopTemplate }) => {
     [filterSettings]
   );
 
-  const { taxParams, metaParams } = combineCustomFilters(
+  const { taxParams, metaParams, dateParams } = combineCustomFilters(
     filters,
     filterSettings
   );
-  const params = createRequestParams({ postType, taxParams, metaParams });
+  const params = createRequestParams({
+    postType,
+    taxParams,
+    metaParams,
+    dateParams
+  });
   const posts = useWPPosts(site, null, params);
 
   return filterSettings?.length ? (
@@ -50,7 +55,7 @@ const App = ({ site, postType, filtersTypes, filtersArgs, loopTemplate }) => {
             return <DropdownTax {...customFilterProps} />;
 
           case "dropdown_date":
-            return <DropdownDate {...customFilterProps} />;
+            return <DropdownDate {...customFilterProps} postType={postType} />;
 
           default:
             console.warn(`Filter type ${filter.type} not found`);
