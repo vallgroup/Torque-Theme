@@ -1,65 +1,65 @@
-version: '3.3'
+version: "3.3"
 
 services:
-   db:
-     image: mysql:5.7
-     volumes:
-       - db_data:/var/lib/mysql
-     restart: always
-     environment:
-       MYSQL_DATABASE: torque-wp
-       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/torque_wp_mysql_root
-       MYSQL_USER_FILE: /run/secrets/torque_wp_mysql_user
-       MYSQL_PASSWORD_FILE: /run/secrets/torque_wp_mysql_pass
-     networks:
-       - back
-     secrets:
-       - torque_wp_mysql_root
-       - torque_wp_mysql_user
-       - torque_wp_mysql_pass
+  eleven33-db:
+    image: mysql:5.7
+    volumes:
+      - eleven33-db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: torque-wp
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/torque_wp_mysql_root
+      MYSQL_USER_FILE: /run/secrets/torque_wp_mysql_user
+      MYSQL_PASSWORD_FILE: /run/secrets/torque_wp_mysql_pass
+    networks:
+      - eleven33-back
+    secrets:
+      - torque_wp_mysql_root
+      - torque_wp_mysql_user
+      - torque_wp_mysql_pass
 
-   phpmyadmin:
+  eleven33-phpmyadmin:
     depends_on:
-      - db
+      - eleven33-db
     image: phpmyadmin/phpmyadmin
     restart: always
     ports:
       - 8080:80
     environment:
-      PMA_HOST: db
+      PMA_HOST: eleven33-db
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/torque_wp_mysql_root
     networks:
-      - back
+      - eleven33-back
     secrets:
       - torque_wp_mysql_root
 
-   wordpress:
-     depends_on:
-       - db
-     image: wordpress:latest
-     ports:
-       - "8000:80"
-     volumes:
-       - ./wp-content:/var/www/html/wp-content
-       - ./php.ini:/var/www/html/php.ini
-     restart: always
-     environment:
-       WORDPRESS_DB_HOST: db:3306
-       WORDPRESS_DB_NAME: torque-wp
-       WORDPRESS_DB_USER_FILE: /run/secrets/torque_wp_mysql_user
-       WORDPRESS_DB_PASSWORD_FILE: /run/secrets/torque_wp_mysql_pass
-       WORDPRESS_DEBUG: 1
-     networks:
-       - back
-     secrets:
-       - torque_wp_mysql_user
-       - torque_wp_mysql_pass
+  eleven33-wordpress:
+    depends_on:
+      - eleven33-db
+    image: wordpress:latest
+    ports:
+      - "8000:80"
+    volumes:
+      - ./wp-content:/var/www/html/wp-content
+      - ./php.ini:/var/www/html/php.ini
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: eleven33-db:3306
+      WORDPRESS_DB_NAME: torque-wp
+      WORDPRESS_DB_USER_FILE: /run/secrets/torque_wp_mysql_user
+      WORDPRESS_DB_PASSWORD_FILE: /run/secrets/torque_wp_mysql_pass
+      WORDPRESS_DEBUG: 1
+    networks:
+      - eleven33-back
+    secrets:
+      - torque_wp_mysql_user
+      - torque_wp_mysql_pass
 
 networks:
-  back:
+  eleven33-back:
 
 volumes:
-  db_data:
+  eleven33-db_data:
     driver: local
 
 secrets:
