@@ -35,7 +35,7 @@ const FloorPlansList = ({
 
         <div
           className={classnames(style.optionBlock, "rsf")}
-        >{`${rsf} RSF`}</div>
+        >{`${rsf} SF`}</div>
       </div>
     );
   });
