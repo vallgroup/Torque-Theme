@@ -1,30 +1,21 @@
-import { useState, useEffect } from "react";
+import { useMemo } from "react";
 
-export default (terms, parent) => {
-  const [parentId, setParentId] = useState(0);
-
-  useEffect(
+export default (terms, parent) =>
+  useMemo(
     () => {
-      const getParentId = () => {
-        if (!terms?.length) return setParentId(0);
+      if (!terms?.length) return 0;
 
-        let parentId = 0;
-        for (let i = 0; i < terms.length; i++) {
-          const term = terms[i];
+      let parentId = 0;
+      for (let i = 0; i < terms.length; i++) {
+        const term = terms[i];
 
-          if (term.slug === parent) {
-            parentId = term.term_id;
-            break;
-          }
+        if (term.slug === parent) {
+          parentId = term.term_id;
+          break;
         }
+      }
 
-        setParentId(parentId);
-      };
-
-      getParentId();
+      return parentId;
     },
     [terms, parent]
   );
-
-  return parentId;
-};

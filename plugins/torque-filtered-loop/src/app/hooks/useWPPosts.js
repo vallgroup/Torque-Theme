@@ -3,7 +3,7 @@ import axios from "axios";
 import usePagination from "./usePagination";
 
 export default (site, activeTerm, params, postsPerPage) => {
-  const [page, getNextPage, setHasNextPage] = usePagination(params);
+  const [page, getNextPage, setHasNextPage] = usePagination([params]);
 
   // request
   const [posts, setPosts] = useState([]);

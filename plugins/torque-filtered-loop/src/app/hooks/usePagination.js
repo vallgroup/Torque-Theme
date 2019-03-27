@@ -1,16 +1,13 @@
 import { useState, useMemo, useEffect } from "react";
 
-export default requestParams => {
+export default deps => {
   const [page, setPage] = useState(1);
   const [hasNextPage, setHasNextPage] = useState(false);
 
-  useEffect(
-    () => {
-      setPage(1); // reset page if params change
-      setHasNextPage(false);
-    },
-    [requestParams]
-  );
+  useEffect(() => {
+    setPage(1); // reset page if deps change
+    setHasNextPage(false);
+  }, deps);
 
   const getNextPage = useMemo(
     () => {
