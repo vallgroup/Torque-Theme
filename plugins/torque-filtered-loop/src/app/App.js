@@ -5,7 +5,15 @@ import Posts from "./Posts";
 import { useWPTerms, useWPPosts, useParentId, useSortPosts } from "./hooks";
 import { createTaxParams, createRequestParams } from "./helpers";
 
-const App = ({ site, postType, tax, parent, firstTerm, loopTemplate }) => {
+const App = ({
+  site,
+  postType,
+  postsPerPage,
+  tax,
+  parent,
+  firstTerm,
+  loopTemplate
+}) => {
   const [activeTerm, setActiveTerm] = useState(0);
   const updateActiveTerm = useMemo(
     () => termId => () => setActiveTerm(termId),
@@ -17,7 +25,12 @@ const App = ({ site, postType, tax, parent, firstTerm, loopTemplate }) => {
 
   const taxParams = createTaxParams(tax, parentId, activeTerm);
   const params = createRequestParams({ postType, taxParams });
-  const posts = useWPPosts(site, activeTerm, params);
+  const { posts, getNextPage } = useWPPosts(
+    site,
+    activeTerm,
+    params,
+    postsPerPage
+  );
   const sortedPosts = useSortPosts(firstTerm, posts);
 
   return terms?.length ? (
@@ -33,6 +46,15 @@ const App = ({ site, postType, tax, parent, firstTerm, loopTemplate }) => {
         loopTemplate={loopTemplate}
         parentId={parentId}
       />
+
+      {getNextPage && (
+        <button
+          className="torque-filtered-loop-load-more"
+          onClick={getNextPage}
+        >
+          Load More
+        </button>
+      )}
     </div>
   ) : null;
 };

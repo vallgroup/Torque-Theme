@@ -32,20 +32,23 @@ class Torque_Filtered_Loop_Shortcode {
     // 2. more complex filters of different types
     //
     // 'filters_types' - comma separated array of filter types which will have an AND relationship
-    // options:
-    //   tabs_acf - creates tab filters for a given acf select field (pass the acf field id)
-    //   dropdown_tax - creates dropdown filter for a given wp tax (pass the tax slug)
-    //   dropdown_date - creates dropdown filter for filtering by month (no args)
+    //   supported options:
+    //     tabs_acf - creates tab filters for a given acf select field (pass the acf field id)
+    //     dropdown_tax - creates dropdown filter for a given wp tax (pass the tax slug)
+    //     dropdown_date - creates dropdown filter for filtering by month (no args)
     //
     // 'filters_args' - comma separated array of filter arguments for the types
     //
     $this->expected_args = array(
-      'post_type'     => 'posts', // always required
+      'post_type'      => 'posts', // always required
+      'posts_per_page' => '-1', // optional
 
+      // args for first method
       'tax'           => '',
       'parent'        => '',
       'first_term'    => '',
 
+      // args for second method
       'filters_types' => '',
       'filters_args'  => ''
     );

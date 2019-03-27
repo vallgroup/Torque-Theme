@@ -5,8 +5,20 @@ import { DropdownDate, DropdownTax, TabsACF } from "./Filters/CustomFilters";
 import { useCustomFilterSettings, useWPPosts } from "./hooks";
 import { createRequestParams, combineCustomFilters } from "./helpers";
 
-const App = ({ site, postType, filtersTypes, filtersArgs, loopTemplate }) => {
+const App = ({
+  site,
+  postType,
+  postsPerPage,
+  filtersTypes,
+  filtersArgs,
+  loopTemplate
+}) => {
   const [filters, setFilters] = useState({});
+  //
+  // Use to create an update function specific to each filter.
+  //
+  // createUpdateFilter('some_filter_id') becomes a function you can pass to that filter's onChange handler
+  //
   const createUpdateFilter = useMemo(
     () => filterId => value => () =>
       setFilters(filters => ({
@@ -17,9 +29,10 @@ const App = ({ site, postType, filtersTypes, filtersArgs, loopTemplate }) => {
   );
 
   const filterSettings = useCustomFilterSettings(filtersTypes, filtersArgs);
+  // reset filters if filter settings change
   useEffect(
     () => {
-      setFilters({}); // reset filters if filter settings change
+      setFilters({});
     },
     [filterSettings]
   );
@@ -34,7 +47,7 @@ const App = ({ site, postType, filtersTypes, filtersArgs, loopTemplate }) => {
     metaParams,
     dateParams
   });
-  const posts = useWPPosts(site, null, params);
+  const { posts, getNextPage } = useWPPosts(site, null, params, postsPerPage);
 
   return filterSettings?.length ? (
     <div className={"torque-filtered-loop custom-filters"}>
@@ -64,6 +77,15 @@ const App = ({ site, postType, filtersTypes, filtersArgs, loopTemplate }) => {
       })}
 
       <Posts posts={posts} loopTemplate={loopTemplate} />
+
+      {getNextPage && (
+        <button
+          className="torque-filtered-loop-load-more"
+          onClick={getNextPage}
+        >
+          Load More
+        </button>
+      )}
     </div>
   ) : null;
 };

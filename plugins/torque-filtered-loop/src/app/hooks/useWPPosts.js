@@ -1,17 +1,18 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import usePagination from "./usePagination";
 
-export default (site, activeTerm, params) => {
+export default (site, activeTerm, params, postsPerPage) => {
+  const [page, getNextPage, setHasNextPage] = usePagination(params);
+
+  // request
   const [posts, setPosts] = useState([]);
-
   useEffect(
     () => {
       const getPosts = async () => {
         try {
-          const cachedPosts = getPostsFromCache(activeTerm);
-          if (cachedPosts?.length) {
-            return setPosts(cachedPosts);
-          }
+          params["posts_per_page"] = postsPerPage;
+          params["paged"] = page;
 
           const response = await axios.get(
             `${site}/wp-json/filtered-loop/v1/posts`,
@@ -20,12 +21,12 @@ export default (site, activeTerm, params) => {
             }
           );
 
-          if (response?.data?.success && response?.data?.posts) {
-            addPostsToCache(activeTerm, response.data.posts);
-            return setPosts(response.data.posts);
-          }
+          setHasNextPage(response?.data?.has_next_page);
 
-          setPosts([]);
+          const newPosts = response?.data?.posts || [];
+          return page > 1
+            ? setPosts(posts => [...posts, ...newPosts])
+            : setPosts(newPosts);
         } catch (e) {
           console.warn(e);
           setPosts([]);
@@ -34,29 +35,8 @@ export default (site, activeTerm, params) => {
 
       getPosts();
     },
-    [site, params, activeTerm]
+    [site, params, activeTerm, page]
   );
 
-  return posts;
+  return { posts, getNextPage };
 };
-
-/**
- * Cacheing functions
- */
-
-let postsCache = {};
-
-function getPostsFromCache(activeTerm) {
-  if (!activeTerm) return [];
-
-  return postsCache?.[activeTerm] || [];
-}
-
-function addPostsToCache(activeTerm, posts) {
-  if (!posts?.length || !activeTerm) return;
-
-  postsCache = {
-    ...postsCache,
-    [activeTerm]: posts
-  };
-}

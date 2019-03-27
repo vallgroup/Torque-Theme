@@ -33,18 +33,22 @@ class Torque_Filtered_Loop_Posts_Controller {
 
 			$query = new WP_Query( $query_args );
 
+			$has_next_page = $this->has_next_page( $query_args );
+
 			if ($query->have_posts()) {
 				foreach ($query->posts as &$post) {
 					$this->setup_post_shape($post);
 				}
 
         return Torque_API_Responses::Success_Response( array(
-          'posts'	=> $query->posts
+          'posts'	=> $query->posts,
+					'has_next_page' => $has_next_page
         ) );
 			}
 
 			return Torque_API_Responses::Failure_Response( array(
-				'posts'	=> []
+				'posts'	=> [],
+				'has_next_page' => false
 			));
 
 		} catch (Exception $e) {
@@ -128,5 +132,17 @@ class Torque_Filtered_Loop_Posts_Controller {
 		$acf_meta = $acf_meta ? $acf_meta : array();
 
 		return $wp_meta + $acf_meta;
+	}
+
+	private function has_next_page( $query_args ) {
+		if ( !$query_args['posts_per_page'] || $query_args['posts_per_page'] == -1 ) {
+			return false;
+		}
+
+		$next_page = intval($query_args['paged']) + 1;
+		$query_args['paged'] = $next_page;
+
+		$query = new WP_Query( $query_args );
+		return $query->have_posts();
 	}
 }
