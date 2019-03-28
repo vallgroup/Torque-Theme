@@ -49,7 +49,7 @@ const FloorPlanInfo = ({
     <div className={classnames("floor-plan-info", style.root)}>
       <div className="floor-plan-info-block floor-plan-name">
         <div className="title">{post_title}</div>
-        <div className="rsf">{`${rsf} RSF`}</div>
+        <div className="rsf">{`${rsf} SF`}</div>
         <div className="call">
           {hasAvailability
             ? min_price === max_price
