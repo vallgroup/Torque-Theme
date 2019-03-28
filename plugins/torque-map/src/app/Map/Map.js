@@ -25,6 +25,8 @@ export class TorqueMap extends React.Component {
 
   componentWillMount() {
     this.setMapCenterFromProps();
+    '' !== this.props.searchNearby
+      && this.nearbySearch();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -64,6 +66,7 @@ export class TorqueMap extends React.Component {
   renderCenterMarker() {
     return (
       <Marker
+        isCenter={true}
         onClick={this.onMarkerClick.bind(this)}
         name={this.props.centerMarker.name}
         position={this.state.mapCenter}
@@ -86,86 +89,71 @@ export class TorqueMap extends React.Component {
   }
 
   renderMarkers() {
-
     return this.state.markers.map((marker, index) => {
       return (
         <Marker
           key={index}
-          onClick={this.onMarkerClick.bind(this)}
           name={marker.name}
+          marker={marker}
+          onClick={this.onMarkerClick.bind(this)}
           position={marker.geometry.location}
           icon={{
-            url: this.props.markersIcon
+            url: this.props.markersIcon && this.props.markersIcon.url
               ? this.props.markersIcon.url
               : marker.icon,
             anchor: new this.props.google.maps.Point(39 / 2, 54),
             size: new google.maps.Size(39, 54),
             scaledSize: new google.maps.Size(39, 54)
           }}
-          infowindow={this.getInfoWindowForMarker(marker)}
         />
       );
     });
   }
 
-  getInfoWindowForMarker(marker) {
-    const {
-      name,
-      distance,
-      place_id,
-      opening_hours,
-      price_level,
-      rating,
-      user_ratings_total,
-      vicinity,
-      photos
-    } = marker;
-
-    const info = {
-      name: name,
-      distance: distance,
-      placeID: place_id,
-      openingHours: opening_hours,
-      dollarSigns: price_level,
-      rating: rating,
-      reviews: user_ratings_total,
-      vicinity: vicinity,
-      photos: photos,
-    }
-
-    return info;
-  }
-
   renderDynamicInfowindow() {
-
+    // if a mareker is clicked on and it is the center marker
     if (this.state.selectedPlace
-      && this.state.selectedPlace.infowindow) {
-      const infowindow = this.state.selectedPlace.infowindow
-
-      return (<div className={`torque-map-infowindow`}>
-        <div>
-          <h3>{infowindow.name}</h3>
-          <p>{infowindow.vicinity}</p>
-            {infowindow.openingHours
+      && this.state.selectedPlace.isCenter) {
+      // check if we have a dynamic infowindow set
+      // from the backend
+      if (this.props.centerMarker && this.props.centerMarker.icon
+        && "" !== this.props.centerMarker.icon.infowindow) {
+        // we have an infowindow from the backend!
+        return (<div
+          className={`torque-map-dynamic-infowindow`}
+          dangerouslySetInnerHTML={{
+            __html: this.props.centerMarker.icon.infowindow
+          }}
+        />)
+      } else {
+        // we do NOT have an infowindow from the backend
+        return (<div
+          className={`torque-map-infowindow`}
+        >
+          <h3>{this.selectedPlace.name}</h3>
+        </div>)
+      }
+    } else {
+      if (this.state.activeMarker
+        && this.state.activeMarker.marker) {
+        // display a marker
+        const infowindow = this.state.activeMarker.marker
+        return (<div className={`torque-map-infowindow`}>
+          <div>
+            <h3>{infowindow.name}</h3>
+            <p>{infowindow.vicinity}</p>
+            {infowindow.opening_hours
               && <p>
-                {infowindow.openingHours.open_now
+                {infowindow.opening_hours.open_now
                   ? <b>Open</b>
                   : <b>closed</b>}
               </p>}
-
-        </div>
-      </div>)
+          </div>
+        </div>)
+      }
     }
-
-    if (this.props.centerMarker
-      && this.props.centerMarker.icon
-      && "" !== this.props.centerMarker.icon.infowindow) {
-      return (<div
-        className={`torque-map-dynamic-infowindow`}
-        dangerouslySetInnerHTML={{
-          __html: this.props.centerMarker.icon.infowindow
-        }} />)
-    }
+    // return an empty div
+    return (<div></div>);
   }
 
   render() {
@@ -189,13 +177,12 @@ export class TorqueMap extends React.Component {
             0 < this.state.markers.length &&
             this.renderMarkers()}
 
+
           <InfoWindow
             marker={this.state.activeMarker}
             visible={this.state.showingInfoWindow}
           >
-            <div>
-              <h3>{this.state.selectedPlace.name}</h3>
-            </div>
+            {this.renderDynamicInfowindow()}
           </InfoWindow>
         </Map>
       </div>
@@ -235,7 +222,6 @@ export class TorqueMap extends React.Component {
       markers: [],
       markerIcon: null,
     });
-
     const keywords = this.props.searchNearby.split(',')
     if (!this.searchClient) this.searchClient = new NearbySearch(this.map.current.map);
 

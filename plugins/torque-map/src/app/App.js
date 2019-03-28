@@ -31,6 +31,27 @@ class App extends Component {
     this.getTheMapDetails();
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    // check if the POIS change
+    if (this.state.pois !== prevState.pois) {
+      // if they do, iterate through them
+      // to find if any id supposed to be
+      // preloaded. If so, preload it but
+      // wait a second until the map has
+      // finished loading. This avoids errors.
+      setTimeout(() => {
+        this.state.pois.forEach(poi => {
+          // if preload param exists and it is true
+          poi && poi.preload && this.updatePOIS(poi)
+        })
+        // TODO: we must refactor this and find a better
+        // way of checking for the map to preload.
+        // Right now I do not have a lot of hours for
+        // this and have to move one to other tasks. MV
+      }, 1000)
+    }
+  }
+
   render() {
     return (
       <div className={`torque-map`}>
