@@ -88,6 +88,13 @@ class Torque_Map_CPT {
 				'label'       => 'Center Marker Size',
 				'placeholder' => '20,32',
 			),
+			array(
+				'context'     => 'post',
+				'type'        => 'textarea',
+				'name'        => '[center_marker][infowindow]',
+				'label'       => 'Center Marker Info Window',
+				'placeholder' => '<h3>My Fancy Title</h3>',
+			),
 		), 'torque_map');
 
 		$this->maybe_add_pois();
