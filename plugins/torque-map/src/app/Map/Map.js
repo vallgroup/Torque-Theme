@@ -105,6 +105,23 @@ export class TorqueMap extends React.Component {
     });
   }
 
+  renderDynamicInfowindow() {
+    if (this.props.centerMarker
+      && this.props.centerMarker.icon
+      && "" !== this.props.centerMarker.icon.infowindow) {
+      return (<div
+        className={`torque-map-dynamic-infowindow`}
+        dangerouslySetInnerHTML={{
+          __html: this.props.centerMarker.icon.infowindow
+        }} />)
+    }
+
+    return (<div
+        className={`torque-map-infowindow`}>
+        <h3>{this.state.selectedPlace.name}</h3>
+      </div>)
+  }
+
   render() {
     return (
       <div
@@ -130,9 +147,7 @@ export class TorqueMap extends React.Component {
             marker={this.state.activeMarker}
             visible={this.state.showingInfoWindow}
           >
-            <div>
-              <h3>{this.state.selectedPlace.name}</h3>
-            </div>
+            {this.renderDynamicInfowindow()}
           </InfoWindow>
         </Map>
       </div>
