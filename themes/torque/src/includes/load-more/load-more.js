@@ -55,8 +55,12 @@
 
         // the newNodes includes a new 'load more' button if another page exists
         loopWrapper.append(newNodes);
-        // so remove the current button
-        $(e.target).remove();
+
+        // so remove the current button (by removing the parent)
+        $(e.target)
+          .parent()
+          .remove();
+
         // and rebind this function to the next button
         bindClick();
       }
