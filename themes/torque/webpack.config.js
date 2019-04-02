@@ -11,13 +11,17 @@ const config = {
   context: srcDir,
 
   entry: {
-    main: ["@babel/polyfill/noConflict", "./js/index.js"]
+    main: ["@babel/polyfill/noConflict", "./js/index.js"],
+    loadMore: [
+      "@babel/polyfill/noConflict",
+      "./includes/load-more/load-more.js"
+    ]
   },
 
   output: {
     path: path.join(buildDir, "./bundles"),
     publicPath: "/",
-    filename: "bundle.js"
+    filename: "[name].bundle.js"
   },
 
   module: {
