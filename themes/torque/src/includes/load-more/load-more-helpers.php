@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * These are functions that need to be shared between both the Load_More_Loop class and the Load_More API controller.
+ */
 class Torque_Load_More_Helpers {
 
   public static function render_page( $id, $page_number, $query_args, $template ) {
