@@ -24,7 +24,6 @@
 
 ($ => {
   $(document).ready(function($) {
-    console.log(loadMoreData);
     for (let loadMoreId in loadMoreData) {
       bindClick();
 
