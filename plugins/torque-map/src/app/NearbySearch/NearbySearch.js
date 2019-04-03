@@ -25,11 +25,14 @@ export default class NearbySearch {
     this.placesServices.nearbySearch(
       this.params,
       (results, status, pagination) => {
+        // if 0 results
+        if ("ZERO_RESULTS" === status) {
+          resolve(results);
+        }
         // if succesful resolve promise
         if ("OK" === status && 0 < results.length) {
           resolve(results);
         }
-        reject(null);
         // else, reject it
         reject(null);
       }
