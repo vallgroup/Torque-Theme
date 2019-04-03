@@ -86,10 +86,12 @@ export class TorqueMap extends React.Component {
   }
 
   renderMarkers() {
+
     return this.state.markers.map((marker, index) => {
       return (
         <Marker
           key={index}
+          onClick={this.onMarkerClick.bind(this)}
           name={marker.name}
           position={marker.geometry.location}
           icon={{
@@ -100,9 +102,70 @@ export class TorqueMap extends React.Component {
             size: new google.maps.Size(39, 54),
             scaledSize: new google.maps.Size(39, 54)
           }}
+          infowindow={this.getInfoWindowForMarker(marker)}
         />
       );
     });
+  }
+
+  getInfoWindowForMarker(marker) {
+    const {
+      name,
+      distance,
+      place_id,
+      opening_hours,
+      price_level,
+      rating,
+      user_ratings_total,
+      vicinity,
+      photos
+    } = marker;
+
+    const info = {
+      name: name,
+      distance: distance,
+      placeID: place_id,
+      openingHours: opening_hours,
+      dollarSigns: price_level,
+      rating: rating,
+      reviews: user_ratings_total,
+      vicinity: vicinity,
+      photos: photos,
+    }
+
+    return info;
+  }
+
+  renderDynamicInfowindow() {
+
+    if (this.state.selectedPlace
+      && this.state.selectedPlace.infowindow) {
+      const infowindow = this.state.selectedPlace.infowindow
+
+      return (<div className={`torque-map-infowindow`}>
+        <div>
+          <h3>{infowindow.name}</h3>
+          <p>{infowindow.vicinity}</p>
+            {infowindow.openingHours
+              && <p>
+                {infowindow.openingHours.open_now
+                  ? <b>Open</b>
+                  : <b>closed</b>}
+              </p>}
+
+        </div>
+      </div>)
+    }
+
+    if (this.props.centerMarker
+      && this.props.centerMarker.icon
+      && "" !== this.props.centerMarker.icon.infowindow) {
+      return (<div
+        className={`torque-map-dynamic-infowindow`}
+        dangerouslySetInnerHTML={{
+          __html: this.props.centerMarker.icon.infowindow
+        }} />)
+    }
   }
 
   render() {
@@ -158,6 +221,7 @@ export class TorqueMap extends React.Component {
   }
 
   async nearbySearch() {
+
     if (!(this.map.current && this.map.current.map)) {
       return;
     }
