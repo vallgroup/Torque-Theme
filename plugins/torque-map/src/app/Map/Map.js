@@ -230,14 +230,22 @@ export class TorqueMap extends React.Component {
       location: this.state.mapCenter,
       radius: 1000
     });
+    if (results) {
+      if (0 === results.length) {
+        alert('no results found')
+      }
+      // add markers and call our callback
+      this.setState({
+        markers: results,
+        markerIcon: this.props.selectedPOIIcon
+      });
 
-    // add markers and call our callback
-    this.setState({ markers: results, markerIcon: this.props.selectedPOIIcon });
-    if (
-      this.props.onNearbySearch &&
-      "function" === typeof this.props.onNearbySearch
-    ) {
-      this.props.onNearbySearch(results, this.state.mapCenter);
+      if (this.props.onNearbySearch
+        && "function" === typeof this.props.onNearbySearch) {
+        this.props.onNearbySearch(results, this.state.mapCenter);
+      }
+    } else {
+      this.props.onNearbySearch([], this.state.mapCenter);
     }
   }
 }
