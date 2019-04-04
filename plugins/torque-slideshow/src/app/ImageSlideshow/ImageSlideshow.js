@@ -18,17 +18,25 @@ const ImageSlideshow = ({ images, interval }) => {
     },
     [images]
   );
-
   return (
     <Slideshow
       items={images}
       interval={interval}
-      slideTemplate={image => (
-        <div
-          className={classnames(styles.image_slide, "image-slide")}
-          style={{ backgroundImage: `url('${image}')` }}
-        />
-      )}
+      slideTemplate={image => {
+
+        const _slides = images.map((_img, idx) => {
+          const activeClass = null !== _img.match(image)
+            ? classnames(styles.active_slide, "active-slide")
+            : ''
+          return <div
+            key={idx}
+            className={`${activeClass} ${classnames(styles.image_slide, "image-slide")}`}
+            style={{ backgroundImage: `url('${_img}')` }}
+          />
+        })
+
+        return (_slides)
+      }}
     />
   );
 };
