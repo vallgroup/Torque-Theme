@@ -4,7 +4,6 @@ import classnames from "classnames";
 import PropTypes from "prop-types";
 
 const Template = ({ post }) => {
-  console.log(post);
   return (
     <div
       className={classnames(
@@ -38,13 +37,15 @@ const Template = ({ post }) => {
           referrer="noreferrer noopener"
           className="slideshow-link-to-post"
         >
-          <button>{`Visit ${post.post_type_label}`}</button>
+          <button>{`View ${post.post_type_label}`}</button>
         </a>
 
         <div className="slideshow-post-terms">
-          {post.terms.map(term => (
-            <div key={term} className="post-term">
-              {term}
+          {post.term_objects.map(term => (
+            <div key={term.term_id} className="post-term">
+              <a href={`/listings?${term.taxonomy}=${term.term_id}`}>
+                {term.name}
+              </a>
             </div>
           ))}
         </div>

@@ -1,12 +1,24 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+/**
+ * Used for Interra specifically
+ */
 class Template_2 extends React.PureComponent {
   render() {
     const { post } = this.props;
 
+    console.log(post);
+
     const backgroundImage = post?.thumbnail;
     const excerpt = post?.post_excerpt;
+
+    const buttonText =
+      post.post_type === "torque_listing"
+        ? "View Listing"
+        : post.post_type === "post"
+        ? "Read More"
+        : "View";
 
     return (
       <div className={"loop-post template-1"}>
@@ -30,7 +42,7 @@ class Template_2 extends React.PureComponent {
           />
 
           <a href={post.permalink}>
-            <button>View</button>
+            <button>{buttonText}</button>
           </a>
 
           <div className={"post-terms-wrapper"}>{this.renderTerms()}</div>
@@ -47,11 +59,11 @@ class Template_2 extends React.PureComponent {
       terms &&
       terms.map((term, index) => {
         return (
-          <div
-            key={index}
-            className={"term"}
-            dangerouslySetInnerHTML={{ __html: term.name }}
-          />
+          <div key={index} className={"term"}>
+            <a href={`/listings?${term.taxonomy}=${term.term_id}`}>
+              {term.name}
+            </a>
+          </div>
         );
       })
     );

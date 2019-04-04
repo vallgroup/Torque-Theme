@@ -29,7 +29,7 @@ class Torque_Slideshow_Posts_Controller {
 			$query = new WP_Query( array (
 				'post_type'			=> 'any',
 				'post__in'			=> $this->request['ids'],
-				'orderby' 			=> 'post__in' 
+				'orderby' 			=> 'post__in'
 			) );
 
 			if ($query->have_posts()) {
@@ -62,6 +62,7 @@ class Torque_Slideshow_Posts_Controller {
 
 		$terms = wp_get_post_terms($post->ID, array_keys($this->taxonomies));
 		$post->terms = array_map(function($term) { return $term->name; }, $terms);
+		$post->term_objects = $terms;
 
 		return $post;
 	}
