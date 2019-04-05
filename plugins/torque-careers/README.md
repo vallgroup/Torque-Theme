@@ -11,10 +11,17 @@ Registers two CPTs:
 
 *Filter* | *Function* | *Value Type*
 --- | --- | ---
+`torque_careers_job_application_public` | Make job application CPT public | bool (false)
 
 <!-- prettier-ignore-end -->
 
 # Changelog
+
+## [1.1.0] 04/03/2019
+
+### Added
+
+- Filter for making Job Applications CPT public
 
 ## [1.0.0]
 

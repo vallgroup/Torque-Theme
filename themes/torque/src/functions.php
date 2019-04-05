@@ -9,6 +9,7 @@ require_once( 'includes/customizer/torque-customizer-class.php' );
 require_once( 'includes/widgets/torque-widgets-class.php' );
 require_once( 'includes/torque-nav-menus-class.php' );
 require_once( 'includes/torque-theme-support-class.php' );
+require_once( 'includes/load-more/load-more.php' );
 
 /**
  * Set permalink structure
@@ -71,7 +72,7 @@ add_action( 'wp_enqueue_scripts', 'torque_custom_script_init' );
 function torque_custom_script_init(){
 
 	wp_enqueue_script( 'torque-theme-scripts',
-		get_template_directory_uri().'/bundles/bundle.js',
+		get_template_directory_uri().'/bundles/main.bundle.js',
 		array( 'jquery' ),
 		wp_get_theme()->get('Version'),
 		true

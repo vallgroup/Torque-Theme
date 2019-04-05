@@ -34,6 +34,7 @@ class Torque_Careers_CPT {
 			'editor',
 		),
 		'menu_icon'           => 'dashicons-welcome-learn-more',
+		'menu_position'				=> 20
 	);
 
 	/**
