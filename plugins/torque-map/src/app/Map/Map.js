@@ -240,11 +240,6 @@ export class TorqueMap extends React.Component {
     keywords.forEach((kWord, idx) => {
       this.doSearch(kWord)
     })
-
-    if (this.props.onNearbySearch
-      && "function" === typeof this.props.onNearbySearch) {
-      this.props.onNearbySearch(this.state.markers, this.state.mapCenter);
-    }
   }
 
   async doSearch(keyword) {
@@ -268,8 +263,11 @@ export class TorqueMap extends React.Component {
         markerIcon: this.props.selectedPOIIcon
       });
 
-    } else {
-      this.props.onNearbySearch([], this.state.mapCenter);
+      if (this.props.onNearbySearch
+        && "function" === typeof this.props.onNearbySearch) {
+        this.props.onNearbySearch(this.state.markers, this.state.mapCenter);
+      }
+
     }
   }
 }

@@ -25,7 +25,9 @@ export default class ListPOIS extends React.Component {
       <div className={`torque-map-pois-list`}>
         {this.state.list &&
           0 < this.state.list.length &&
-          this.state.list.map((poi, index) => {
+          this.state.list
+          .sort(this.sortByDistance.bind(this))
+          .map((poi, index) => {
             return (
               <div key={index} className={`torque-map-pois-list-item`}>
                 <div className={`torque-map-pois-list-item-name`}>
@@ -44,6 +46,24 @@ export default class ListPOIS extends React.Component {
           })}
       </div>
     );
+  }
+
+  sortByDistance(a, b) {
+
+    if (!a.distance || !b.distance) {
+      return 0;
+    }
+
+    const distanceA = parseFloat(a.distance.replace(/[^0-9\.]/g, ''))
+    const distanceB = parseFloat(b.distance.replace(/[^0-9\.]/g, ''))
+
+    if (distanceA < distanceB) {
+      return -1
+    }
+    if (distanceA > distanceB) {
+      return 1
+    }
+    return 0
   }
 
   initListState() {
@@ -78,7 +98,9 @@ export default class ListPOIS extends React.Component {
         // avoidTolls: Boolean,
       },
       resp => {
-        if (resp.rows && 0 < resp.rows.length) {
+        if (resp
+          && resp.rows
+          && 0 < resp.rows.length) {
           let destinations = this.state.list;
           for (var i = 0; i < resp.rows[0].elements.length; i++) {
             destinations[i].distance = resp.rows[0].elements[i].distance.text;
