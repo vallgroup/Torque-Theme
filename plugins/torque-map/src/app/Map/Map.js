@@ -20,7 +20,7 @@ export class TorqueMap extends React.Component {
     };
 
     this.map = createRef();
-    this.placesServices = null;
+    this.searchClient = null;
   }
 
   componentWillMount() {
@@ -218,32 +218,56 @@ export class TorqueMap extends React.Component {
     this.updateMapCenter(coordinates);
   }
 
-  async nearbySearch() {
+  nearbySearch() {
 
     if (!(this.map.current && this.map.current.map)) {
       return;
     }
 
-    const searchClient = new NearbySearch(this.map.current.map);
-    const results = await searchClient.search({
-      keyword: this.props.searchNearby,
+    if (!this.props.searchNearby
+      || 0 === this.props.searchNearby.length) {
+      return;
+    }
+
+    this.setState({
+      markers: [],
+      markerIcon: null,
+    });
+
+    const keywords = this.props.searchNearby.split(',')
+    if (!this.searchClient) this.searchClient = new NearbySearch(this.map.current.map);
+
+    keywords.forEach((kWord, idx) => {
+      this.doSearch(kWord)
+    })
+
+    if (this.props.onNearbySearch
+      && "function" === typeof this.props.onNearbySearch) {
+      this.props.onNearbySearch(this.state.markers, this.state.mapCenter);
+    }
+  }
+
+  async doSearch(keyword) {
+    const results = await this.searchClient.search({
+      keyword: keyword,
       location: this.state.mapCenter,
       radius: 1000
     });
+
     if (results) {
       if (0 === results.length) {
-        alert('no results found')
+        console.warn(`${keyword} did not return any results.`)
+        return
       }
+
+      let markers = [...this.state.markers, ...results]
+
       // add markers and call our callback
       this.setState({
-        markers: results,
+        markers: markers,
         markerIcon: this.props.selectedPOIIcon
       });
 
-      if (this.props.onNearbySearch
-        && "function" === typeof this.props.onNearbySearch) {
-        this.props.onNearbySearch(results, this.state.mapCenter);
-      }
     } else {
       this.props.onNearbySearch([], this.state.mapCenter);
     }
