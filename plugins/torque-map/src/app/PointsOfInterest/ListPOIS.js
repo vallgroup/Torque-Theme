@@ -28,6 +28,9 @@ export default class ListPOIS extends React.Component {
           this.state.list
           .sort(this.sortByDistance.bind(this))
           .map((poi, index) => {
+            if (!poi.distance) {
+              return null;
+            }
             return (
               <div key={index} className={`torque-map-pois-list-item`}>
                 <div className={`torque-map-pois-list-item-name`}>
@@ -53,9 +56,15 @@ export default class ListPOIS extends React.Component {
     if (!a.distance || !b.distance) {
       return 0;
     }
+    const _a = ( null !== a.distance.match(/(ft)$/i) )
+      ? (+a.distance.replace(/[^0-9\.]/g, '') / 5280)
+      : a.distance.replace(/[^0-9\.]/g, '')
+    const _b = ( null !== b.distance.match(/(ft)$/i) )
+      ? (+b.distance.replace(/[^0-9\.]/g, '') / 5280)
+      : b.distance.replace(/[^0-9\.]/g, '')
 
-    const distanceA = parseFloat(a.distance.replace(/[^0-9\.]/g, ''))
-    const distanceB = parseFloat(b.distance.replace(/[^0-9\.]/g, ''))
+    const distanceA = Math.abs(_a).toFixed(2)
+    const distanceB = Math.abs(_b).toFixed(2)
 
     if (distanceA < distanceB) {
       return -1
@@ -105,9 +114,9 @@ export default class ListPOIS extends React.Component {
         // avoidTolls: Boolean,
       },
       (resp, status) => {
-        console.log(resp, status)
+        // console.log(resp, status)
         if ("OK" !== status) {
-          console.log(destinations)
+          // console.log(destinations)
           return;
         }
         if ("OK" === status
