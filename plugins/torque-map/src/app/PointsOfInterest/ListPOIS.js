@@ -74,9 +74,16 @@ export default class ListPOIS extends React.Component {
     const destinations = this.props.list.map(poi => {
       return poi.geometry.location; //new google.maps.LatLng(lat,lng)
     });
+// console.log(destinations)
+
+    let destinationChunks = [];
+    const chunkSize = 20;
+    for (var i=0; i < destinations.length; i += chunkSize) {
+      destinationChunks = [...destinationChunks, destinations.slice(i,i+chunkSize)]
+    }
 
     if (this.props.showDistanceFrom) {
-      this.getDistances(this.props.showDistanceFrom, destinations);
+      destinationChunks.forEach(chunk => this.getDistances(this.props.showDistanceFrom, chunk));
     }
 
     this.setState({
@@ -97,8 +104,14 @@ export default class ListPOIS extends React.Component {
         // avoidHighways: Boolean,
         // avoidTolls: Boolean,
       },
-      resp => {
-        if (resp
+      (resp, status) => {
+        console.log(resp, status)
+        if ("OK" !== status) {
+          console.log(destinations)
+          return;
+        }
+        if ("OK" === status
+          && resp
           && resp.rows
           && 0 < resp.rows.length) {
           let destinations = this.state.list;
