@@ -131,12 +131,33 @@ class Torque_Map_Controller {
 		}
 
 		// get the pois
-		$pois = array();
-		for ($i=0; $i < $number_of_pois; $i++) {
-			$_poi = premise_get_value( 'torque_map_pois_'.$i, $context );
+		$pois = $this->retrieve_shaped_pois( $number_of_pois, $context );
 
-			if ( empty( $_poi['name'] )
-				|| empty( $_poi['keyword'] ) ) {
+		$return['pois'] = $pois;
+
+		return $return;
+	}
+
+	private function retrieve_shaped_pois( $number_of_pois, $context ) {
+
+		$manual_pois = (bool) apply_filters( Torque_Map_CPT::$POIS_MANUAL_FILTER, false );
+		$pois = array();
+
+		for ($i=0; $i < $number_of_pois; $i++) {
+			$_option_name = $manual_pois ? 'torque_map_manual_pois_' : 'torque_map_pois_';
+			$_poi = premise_get_value( $_option_name.$i, $context );
+
+			if ( empty( $_poi['name'] ) ) {
+				continue;
+			}
+
+			if ( ! $manual_pois
+				&& empty( $_poi['keyword'] ) ) {
+				continue;
+			}
+
+			if ( $manual_pois
+				&& empty( $_poi['location'] ) ) {
 				continue;
 			}
 
@@ -153,8 +174,6 @@ class Torque_Map_Controller {
 			}
 		}
 
-		$return['pois'] = $pois;
-
-		return $return;
+		return $pois;
 	}
 }
