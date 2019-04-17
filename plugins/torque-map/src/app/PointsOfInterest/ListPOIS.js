@@ -28,6 +28,9 @@ export default class ListPOIS extends React.Component {
           this.state.list
           .sort(this.sortByDistance.bind(this))
           .map((poi, index) => {
+            if (!poi.distance) {
+              return null;
+            }
             return (
               <div key={index} className={`torque-map-pois-list-item`}>
                 <div className={`torque-map-pois-list-item-name`}>
@@ -53,9 +56,15 @@ export default class ListPOIS extends React.Component {
     if (!a.distance || !b.distance) {
       return 0;
     }
+    const _a = ( null !== a.distance.match(/(ft)$/i) )
+      ? (+a.distance.replace(/[^0-9\.]/g, '') / 5280)
+      : a.distance.replace(/[^0-9\.]/g, '')
+    const _b = ( null !== b.distance.match(/(ft)$/i) )
+      ? (+b.distance.replace(/[^0-9\.]/g, '') / 5280)
+      : b.distance.replace(/[^0-9\.]/g, '')
 
-    const distanceA = parseFloat(a.distance.replace(/[^0-9\.]/g, ''))
-    const distanceB = parseFloat(b.distance.replace(/[^0-9\.]/g, ''))
+    const distanceA = Math.abs(_a).toFixed(2)
+    const distanceB = Math.abs(_b).toFixed(2)
 
     if (distanceA < distanceB) {
       return -1
@@ -74,9 +83,16 @@ export default class ListPOIS extends React.Component {
     const destinations = this.props.list.map(poi => {
       return poi.geometry.location; //new google.maps.LatLng(lat,lng)
     });
+// console.log(destinations)
+
+    let destinationChunks = [];
+    const chunkSize = 20;
+    for (var i=0; i < destinations.length; i += chunkSize) {
+      destinationChunks = [...destinationChunks, destinations.slice(i,i+chunkSize)]
+    }
 
     if (this.props.showDistanceFrom) {
-      this.getDistances(this.props.showDistanceFrom, destinations);
+      destinationChunks.forEach(chunk => this.getDistances(this.props.showDistanceFrom, chunk));
     }
 
     this.setState({
@@ -97,8 +113,14 @@ export default class ListPOIS extends React.Component {
         // avoidHighways: Boolean,
         // avoidTolls: Boolean,
       },
-      resp => {
-        if (resp
+      (resp, status) => {
+        // console.log(resp, status)
+        if ("OK" !== status) {
+          // console.log(destinations)
+          return;
+        }
+        if ("OK" === status
+          && resp
           && resp.rows
           && 0 < resp.rows.length) {
           let destinations = this.state.list;
