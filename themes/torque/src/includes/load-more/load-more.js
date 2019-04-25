@@ -24,6 +24,8 @@
 
 ($ => {
   $(document).ready(function($) {
+    if (typeof loadMoreData === "undefined") return;
+
     for (let loadMoreId in loadMoreData) {
       bindClick();
 
