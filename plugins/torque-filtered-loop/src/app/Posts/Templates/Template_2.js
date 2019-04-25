@@ -8,8 +8,6 @@ class Template_2 extends React.PureComponent {
   render() {
     const { post } = this.props;
 
-    console.log(post);
-
     const backgroundImage = post?.thumbnail;
     const excerpt = post?.post_excerpt;
 

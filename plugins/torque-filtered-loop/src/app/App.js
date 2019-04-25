@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useState } from "react";
+import React, { memo, useMemo, useState, useCallback } from "react";
 import PropTypes from "prop-types";
 import Filters from "./Filters";
 import Posts from "./Posts";
@@ -15,8 +15,8 @@ const App = ({
   loopTemplate
 }) => {
   const [activeTerm, setActiveTerm] = useState(0);
-  const updateActiveTerm = useMemo(
-    () => termId => () => setActiveTerm(termId),
+  const updateActiveTerm = useCallback(
+    termId => () => setActiveTerm(termId),
     []
   );
 

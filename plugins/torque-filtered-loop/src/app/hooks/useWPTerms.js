@@ -15,14 +15,25 @@ export default (site, tax) => {
           const params = { tax };
           const response = await axios.get(url, { params });
 
-          if (response.data.success && response.data.terms) {
-            setTerms(response.data.terms);
-            setTaxName(response.data.tax_name);
+          if (
+            response.data.success &&
+            response.data.terms &&
+            response.data.tax_name
+          ) {
+            const { terms, tax_name: taxName } = response.data;
+
+            const termsArray =
+              typeof terms === "object" ? Object.values(terms) : terms;
+            setTerms(termsArray);
+
+            setTaxName(taxName);
+
             return;
           }
 
           setTaxName("");
-          return setTerms([]);
+          setTerms([]);
+          return;
         } catch (e) {
           console.warn(e);
           setTerms([]);
