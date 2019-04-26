@@ -17,6 +17,19 @@ Currently, the user is able to set a taxonomy, a parent term to limit filter opt
 
 # Changelog
 
+## [2.0.0] 03/26/2019
+
+### Added
+
+- Support for custom filters (acf tabs, dropdown taxonomy, and dropdown date)
+- Support for pagination
+- API endpoints for getting posts, terms, and filter options
+- Template 2
+
+### Changed
+
+- Upgraded plugin to use latest React standards
+
 ## [1.1.0]
 
 ### Added

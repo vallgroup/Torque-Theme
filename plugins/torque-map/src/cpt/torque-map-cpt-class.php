@@ -14,6 +14,14 @@ class Torque_Map_CPT {
 	public static $POIS_ALLOWED_FILTER = 'torque_map_pois_allowed';
 
 	/**
+	 * Filters whether to display the manual POIs or the
+	 * dynamic ones. By default, we display the dynamic.
+	 *
+	 * @var bool
+	 */
+	public static $POIS_MANUAL_FILTER = 'torque_map_manual_pois';
+
+	/**
 	 * register our post type and meta boxes
 	 */
 	function __construct() {
@@ -113,6 +121,7 @@ class Torque_Map_CPT {
 	public function maybe_add_pois() {
 
 		$number_of_pois = apply_filters( self::$POIS_ALLOWED_FILTER, 0 );
+		$manual_pois = (bool) apply_filters( self::$POIS_MANUAL_FILTER, false );
 
 		if ($number_of_pois > 0) {
 			pwp_add_metabox( 'Point of Interest Section Title', array( 'torque_map' ), array(
@@ -127,7 +136,11 @@ class Torque_Map_CPT {
 		}
 
 		for ($i=0; $i < $number_of_pois; $i++) {
-			$this->poi_mb( $i );
+			if ( $manual_pois ) {
+				$this->manual_poi_mb( $i );
+			} else {
+				$this->poi_mb( $i );
+			}
 		}
 	}
 
@@ -151,6 +164,44 @@ class Torque_Map_CPT {
 				'name'        => '[keyword]',
 				'label'       => 'Keyword',
 				'placeholder' => 'hospitals, clinics, urgent care',
+			),
+			array(
+				'context'     => 'post',
+				'type'        => 'wp_media',
+				'name'        => '[marker][url]',
+				'label'       => 'Marker To Use For This POI',
+				'placeholder' => 'Enter icon url or click upload button',
+			),
+			array(
+				'context'     => 'post',
+				'type'        => 'text',
+				'name'        => '[marker][size]',
+				'label'       => 'Marker Size',
+				'placeholder' => '20,32',
+			),
+		), $option_name);
+	}
+
+	public function manual_poi_mb( $n = 0 ) {
+
+		$option_name = 'torque_map_manual_pois_'.$n;
+		$mb_title = 'Point Of Interest '.($n + 1);
+
+		pwp_add_metabox( $mb_title, array( 'torque_map' ), array(
+			'name_prefix' => $option_name,
+			array(
+				'context'     => 'post',
+				'type'        => 'text',
+				'name'        => '[name]',
+				'label'       => 'Name',
+				'placeholder' => 'Hospitals',
+			),
+			array(
+				'context'     => 'post',
+				'type'        => 'text',
+				'name'        => '[location]',
+				'label'       => 'Location',
+				'placeholder' => 'Address or Lat, Long coordinates',
 			),
 			array(
 				'context'     => 'post',

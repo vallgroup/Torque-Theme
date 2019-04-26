@@ -5,10 +5,8 @@ class Template_1 extends React.PureComponent {
   render() {
     const { post } = this.props;
 
-    const backgroundImage =
-      post?._embedded["wp:featuredmedia"] &&
-      post?._embedded["wp:featuredmedia"][0]?.source_url;
-    const content = post?.content?.rendered;
+    const backgroundImage = post?.thumbnail;
+    const content = post?.post_content;
 
     return (
       <div className={"loop-post template-1"}>
@@ -20,7 +18,7 @@ class Template_1 extends React.PureComponent {
         </div>
 
         <div className={"content-wrapper"}>
-          <h4 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
+          <h4 dangerouslySetInnerHTML={{ __html: post.post_title }} />
 
           <div
             className="content"

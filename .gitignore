@@ -9,3 +9,7 @@ yarn-error.log
 themes/*
 !themes/torque
 themes/torque/node_modules/
+
+# mac files
+.DS_Store
+**/*/.DS_Store
