@@ -20,7 +20,7 @@ export class TorqueMap extends React.Component {
     };
 
     this.map = createRef();
-    this.placesServices = null;
+    this.searchClient = null;
   }
 
   componentWillMount() {
@@ -86,10 +86,12 @@ export class TorqueMap extends React.Component {
   }
 
   renderMarkers() {
+
     return this.state.markers.map((marker, index) => {
       return (
         <Marker
           key={index}
+          onClick={this.onMarkerClick.bind(this)}
           name={marker.name}
           position={marker.geometry.location}
           icon={{
@@ -100,9 +102,70 @@ export class TorqueMap extends React.Component {
             size: new google.maps.Size(39, 54),
             scaledSize: new google.maps.Size(39, 54)
           }}
+          infowindow={this.getInfoWindowForMarker(marker)}
         />
       );
     });
+  }
+
+  getInfoWindowForMarker(marker) {
+    const {
+      name,
+      distance,
+      place_id,
+      opening_hours,
+      price_level,
+      rating,
+      user_ratings_total,
+      vicinity,
+      photos
+    } = marker;
+
+    const info = {
+      name: name,
+      distance: distance,
+      placeID: place_id,
+      openingHours: opening_hours,
+      dollarSigns: price_level,
+      rating: rating,
+      reviews: user_ratings_total,
+      vicinity: vicinity,
+      photos: photos,
+    }
+
+    return info;
+  }
+
+  renderDynamicInfowindow() {
+
+    if (this.state.selectedPlace
+      && this.state.selectedPlace.infowindow) {
+      const infowindow = this.state.selectedPlace.infowindow
+
+      return (<div className={`torque-map-infowindow`}>
+        <div>
+          <h3>{infowindow.name}</h3>
+          <p>{infowindow.vicinity}</p>
+            {infowindow.openingHours
+              && <p>
+                {infowindow.openingHours.open_now
+                  ? <b>Open</b>
+                  : <b>closed</b>}
+              </p>}
+
+        </div>
+      </div>)
+    }
+
+    if (this.props.centerMarker
+      && this.props.centerMarker.icon
+      && "" !== this.props.centerMarker.icon.infowindow) {
+      return (<div
+        className={`torque-map-dynamic-infowindow`}
+        dangerouslySetInnerHTML={{
+          __html: this.props.centerMarker.icon.infowindow
+        }} />)
+    }
   }
 
   render() {
@@ -157,25 +220,56 @@ export class TorqueMap extends React.Component {
     this.updateMapCenter(coordinates);
   }
 
-  async nearbySearch() {
+  nearbySearch() {
+
     if (!(this.map.current && this.map.current.map)) {
       return;
     }
 
-    const searchClient = new NearbySearch(this.map.current.map);
-    const results = await searchClient.search({
-      keyword: this.props.searchNearby,
+    if (!this.props.searchNearby
+      || 0 === this.props.searchNearby.length) {
+      return;
+    }
+
+    this.setState({
+      markers: [],
+      markerIcon: null,
+    });
+
+    const keywords = this.props.searchNearby.split(',')
+    if (!this.searchClient) this.searchClient = new NearbySearch(this.map.current.map);
+
+    keywords.forEach((kWord, idx) => {
+      this.doSearch(kWord)
+    })
+  }
+
+  async doSearch(keyword) {
+    const results = await this.searchClient.search({
+      keyword: keyword,
       location: this.state.mapCenter,
       radius: 1000
     });
 
-    // add markers and call our callback
-    this.setState({ markers: results, markerIcon: this.props.selectedPOIIcon });
-    if (
-      this.props.onNearbySearch &&
-      "function" === typeof this.props.onNearbySearch
-    ) {
-      this.props.onNearbySearch(results, this.state.mapCenter);
+    if (results) {
+      if (0 === results.length) {
+        console.warn(`${keyword} did not return any results.`)
+        return
+      }
+
+      let markers = [...this.state.markers, ...results]
+
+      // add markers and call our callback
+      this.setState({
+        markers: markers,
+        markerIcon: this.props.selectedPOIIcon
+      });
+
+      if (this.props.onNearbySearch
+        && "function" === typeof this.props.onNearbySearch) {
+        this.props.onNearbySearch(this.state.markers, this.state.mapCenter);
+      }
+
     }
   }
 }

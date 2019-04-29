@@ -5,10 +5,7 @@ class Template_0 extends React.PureComponent {
   render() {
     const { post } = this.props;
 
-    const backgroundImage =
-      post._embedded["wp:featuredmedia"] &&
-      post._embedded["wp:featuredmedia"][0] &&
-      post._embedded["wp:featuredmedia"][0].source_url;
+    const backgroundImage = post.thumbnail;
 
     return (
       <div className={"loop-post template-0"}>
@@ -22,9 +19,9 @@ class Template_0 extends React.PureComponent {
         <div className={"content-wrapper"}>
           <div className={"post-terms-wrapper"}>{this.renderTerms()}</div>
 
-          <h3 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
+          <h3 dangerouslySetInnerHTML={{ __html: post.post_title }} />
 
-          <a href={post.link}>
+          <a href={post.permalink}>
             <button>View</button>
           </a>
         </div>
@@ -34,16 +31,12 @@ class Template_0 extends React.PureComponent {
 
   renderTerms() {
     const { post, parentId } = this.props;
-    const terms =
-      post._embedded["wp:term"] &&
-      post._embedded["wp:term"][0] &&
-      post._embedded["wp:term"][0].length &&
-      post._embedded["wp:term"][0];
+    const terms = post.terms;
 
     return (
       terms &&
       terms.map((term, index) => {
-        if (term.id === parentId) {
+        if (term.term_id === parentId) {
           return null;
         }
 

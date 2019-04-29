@@ -28,7 +28,8 @@ class Torque_Slideshow_Posts_Controller {
 		try {
 			$query = new WP_Query( array (
 				'post_type'			=> 'any',
-				'post__in'			=> $this->request['ids']
+				'post__in'			=> $this->request['ids'],
+				'orderby' 			=> 'post__in' 
 			) );
 
 			if ($query->have_posts()) {

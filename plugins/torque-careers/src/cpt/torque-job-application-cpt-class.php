@@ -9,6 +9,8 @@ class Torque_Job_Application_CPT {
 
 	public static $save_application_action_handle = 'torque_job_application_save';
 
+	public static $PUBLIC_FILTER_HOOK = 'torque_careers_job_application_public';
+
 	/**
 	 * We should use this static function to add new applications to the db
 	 */
@@ -58,6 +60,8 @@ class Torque_Job_Application_CPT {
 			'title',   // will just hold the applicant name, making it easier to search
 			'editor'  // serialized array of the application data to keep it flexible
 		),
+		'menu_icon'				=> 'dashicons-id',
+		'menu_position'		=> 20
 	);
 
 	/**
@@ -65,7 +69,12 @@ class Torque_Job_Application_CPT {
 	 */
 	function __construct() {
 		if ( class_exists( 'PremiseCPT' ) ) {
-			new PremiseCPT( self::$job_applications_labels, $this->job_applications_options );
+
+			add_action('after_setup_theme', function() {
+				$this->job_applications_options['public'] = apply_filters( self::$PUBLIC_FILTER_HOOK, false );
+
+				new PremiseCPT( self::$job_applications_labels, $this->job_applications_options );
+			});
 		}
 	}
 }

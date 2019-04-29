@@ -1,6 +1,7 @@
 <?php
 
 require( Torque_Filtered_Loop_PATH . '/shortcode/torque-filtered-loop-shortcode-class.php' );
+require( Torque_Filtered_Loop_PATH . '/api/torque-filtered-loop-rest-controller-class.php' );
 
 /**
  * Autoload all other classes

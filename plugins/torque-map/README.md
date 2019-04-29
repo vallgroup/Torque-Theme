@@ -20,6 +20,12 @@ Filters available for the theme to control some of the map's layout and function
 
 # Changelog
 
+## [1.3.0]
+
+### Added
+
+- New filter to determine whether to user manual POIs or dynamic ones.
+
 ## [1.2.0]
 
 ### Added
