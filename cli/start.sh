@@ -8,7 +8,13 @@ source ./cli/lib/workspaces.sh
 # checks the docker containers are up to date and running,
 # otherwise updates and starts them up
 docker pull wordpress:latest
-docker-compose up -d
+
+if [ "$IS_WINDOWS" == true ];
+then
+  docker-compose.exe up -d
+else
+  docker-compose up -d;
+fi
 
 # runs 'start' script for workspace <workspace-nanme>
 # as defined in the package.json for that workspace
