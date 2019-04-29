@@ -12,7 +12,8 @@
     "switch": "bash cli/switch.sh",
     "uploads": "bash cli/uploads.sh",
     "logs:php": "bash cli/logs.sh wordpress",
-    "logs:mysql": "bash cli/logs.sh mysql:5.7"
+    "logs:mysql": "bash cli/logs.sh mysql:5.7",
+    "windows": "cd cli && find . -type f -print0 | xargs -0 dos2unix && cd .. && dos2unix .envrc"
   },
   "workspaces": [
     "themes/*",
