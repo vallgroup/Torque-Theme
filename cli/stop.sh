@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
 
 # stop and remove any previously running docker containers from this branch
-COMPOSE_CONTAINERS="$(docker-compose ps -q)"
-
-[[ ! -z "$COMPOSE_CONTAINERS" ]] && docker-compose rm --stop
-
+if [ -z ${IS_WINDOWS+x} ];
+then
+  COMPOSE_CONTAINERS="$(docker-compose ps -q)"
+  [[ ! -z "$COMPOSE_CONTAINERS" ]] && docker-compose rm --stop
+else
+  COMPOSE_CONTAINERS="$(docker-compose.exe ps -q)"
+  [[ ! -z "$COMPOSE_CONTAINERS" ]] && docker-compose.exe rm --stop
+fi
 
 # stop and remove any previously running torque docker containers to avoid conflicts
 TORQUE_CONTAINERS="$(docker ps -q -a --filter name=torque)"
