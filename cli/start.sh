@@ -9,11 +9,11 @@ source ./cli/lib/workspaces.sh
 # otherwise updates and starts them up
 docker pull wordpress:latest
 
-if [ -z ${IS_WINDOWS+x} ];
+if [ "$IS_WINDOWS" == true ];
 then
-  docker-compose up -d
+  docker-compose.exe up -d
 else
-  docker-compose.exe up -d;
+  docker-compose up -d;
 fi
 
 # runs 'start' script for workspace <workspace-nanme>
