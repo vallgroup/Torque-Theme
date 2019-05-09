@@ -23,7 +23,6 @@ const TabsACF = ({ site, value, onChange, args }) => {
       terms={filterOptions}
       activeTerm={value}
       updateActiveTerm={onChange}
-      hideAllOption
     />
   );
 };

@@ -60,8 +60,12 @@ class Torque_Filtered_Loop_Posts_Controller {
 		$query = array();
 
 		foreach ($params as $key => $value) {
+
 			// meta query params
 			if (substr($key, 0 ,5) === 'meta_') {
+				if ($value === "0") {
+					continue;
+				}
 				$meta_key = substr($key, 5);
 
 				if (substr($meta_key, 0, 6) === 'field_') {
@@ -79,6 +83,9 @@ class Torque_Filtered_Loop_Posts_Controller {
 
 			// tax query params
 			if (substr($key, 0 ,4) === 'tax_') {
+				if ($value === "0") {
+					continue;
+				}
 				$tax_slug = substr($key, 4);
 
 				$query['tax_query'][] = array(
