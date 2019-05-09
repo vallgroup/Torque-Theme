@@ -1,8 +1,12 @@
 version: '3.1'
 
 services:
+
   interra-db:
-    image: mysql:5.7
+    image: mysql:5.7.24
+    command: --max_allowed_packet=132505856
+    ports:
+      - "4306:3306"
     volumes:
       - interra-db_data:/var/lib/mysql
     restart: always
