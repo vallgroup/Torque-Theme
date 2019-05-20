@@ -3,13 +3,17 @@ import React, { memo } from "react";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 
+import LightBox from '../../../components/LightBox'
+
 // renders all possible meta and fields
 
-const Template = ({ post }) => {
+const Template = ({ post, posts }) => {
   const floorPlan = post?.meta?.floor_plan_images_floor_plan;
   const stackingPlan = post?.meta?.floor_plan_images_stacking_plan;
   const view = post?.meta?.floor_plan_images_view;
   const download = post?.meta?.floor_plan_downloads_pdf;
+
+  const _360 = post?.meta?.floor_plan_images_360;
 
   return (
     <div
@@ -45,11 +49,16 @@ const Template = ({ post }) => {
         </div>
       )}
 
-      {stackingPlan && (
-        <div className={classnames("slideshow-post-field", "slideshow-view")}>
-          <img src={view} />
-        </div>
-      )}
+      {_360
+        ? <LightBox
+          view={view}
+          render={_360}
+          currentPost={post}
+          posts={posts}>
+          </LightBox>
+        : <div className={classnames("slideshow-post-field", "slideshow-view")}>
+            <img src={view} />
+          </div>}
     </div>
   );
 };

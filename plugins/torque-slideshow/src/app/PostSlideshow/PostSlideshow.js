@@ -27,7 +27,9 @@ const PostSlideshow = ({ site, postIds, interval, template }) => {
         slideTemplate={post => {
           switch (template) {
             case "ust_floorplans":
-              return <Template_UST_Floorplans post={post} />;
+              return <Template_UST_Floorplans
+                post={post}
+                posts={posts} />;
 
             case "ust_locations":
               return <Template_UST_Locations post={post} />;
