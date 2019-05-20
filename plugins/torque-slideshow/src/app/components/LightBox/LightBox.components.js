@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
+
 export const LightBoxWrapper = styled.div`
   display: inline-block;
 `
@@ -19,6 +20,22 @@ export const LightBoxDialogDiv = styled.div`
 
   transition: all 0.6s ease-in-out;
   background: #000;
+`
+
+export const LightBoxLinkWrapper = styled.div`
+  position: relative;
+
+  .icon-360 {
+    position: absolute;
+    width: 100px !important;
+    height: 100px !important;
+    top: 50%;
+    left: 50%;
+    margin: -50px 0 0 -50px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
 `
 
 export const LightBoxClose = styled.a`
