@@ -53,4 +53,8 @@ Filters.propTypes = {
   hideAllOption: PropTypes.bool
 };
 
+Filters.defaultProps = {
+  activeTerm: 0
+};
+
 export default memo(Filters);
