@@ -55,7 +55,18 @@ class Template_2 extends React.PureComponent {
 
     return (
       terms &&
-      terms.map((term, index) => {
+      terms.sort((a, b) => {
+        if ("interra_listing_property_type" === a.taxonomy
+          && "interra_listing_property_type" === b.taxonomy) {
+          return 0;
+        } else
+        if ("interra_listing_property_type" === a.taxonomy) {
+          return -1;
+        } else
+        if ("interra_listing_property_type" === b.taxonomy) {
+          return 1;
+        }
+      }).map((term, index) => {
         return (
           <div key={index} className={"term"}>
             <a href={`/listings?${term.taxonomy}=${term.term_id}`}>
