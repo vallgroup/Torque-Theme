@@ -3,7 +3,11 @@ import styled from "styled-components";
 
 
 export const LightBoxWrapper = styled.div`
-  display: inline-block;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: block;
+  overflow: hidden;
 `
 
 export const LightBoxDialogDiv = styled.div`
@@ -23,8 +27,6 @@ export const LightBoxDialogDiv = styled.div`
 `
 
 export const LightBoxLinkWrapper = styled.div`
-  position: relative;
-
   .icon-360 {
     position: absolute;
     width: 100px !important;

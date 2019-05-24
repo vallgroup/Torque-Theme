@@ -17,8 +17,7 @@ const LightBoxLink = (props) => {
   return (<LightBoxLinkWrapper>
     <a
       href="#__open_360_lightbox"
-      onClick={handleClick}
-      className={classnames("slideshow-post-field", "slideshow-view")}>
+      onClick={handleClick}>
         <img src={props.view} />
         <img className={classnames("icon-360")} src={svg360} />
     </a>

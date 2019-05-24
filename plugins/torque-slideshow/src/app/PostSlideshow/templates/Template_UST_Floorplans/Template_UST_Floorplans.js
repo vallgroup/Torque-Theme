@@ -7,7 +7,7 @@ import LightBox from '../../../components/LightBox'
 
 // renders all possible meta and fields
 
-const Template = ({ post, posts }) => {
+const Template = ({ post, posts, changeTheme }) => {
   const floorPlan = post?.meta?.floor_plan_images_floor_plan;
   const stackingPlan = post?.meta?.floor_plan_images_stacking_plan;
   const view = post?.meta?.floor_plan_images_view;
@@ -49,16 +49,17 @@ const Template = ({ post, posts }) => {
         </div>
       )}
 
-      {_360
-        ? <LightBox
-          view={view}
-          render={_360}
-          currentPost={post}
-          posts={posts}>
-          </LightBox>
-        : <div className={classnames("slideshow-post-field", "slideshow-view")}>
-            <img src={view} />
-          </div>}
+      <div className={classnames("slideshow-post-field", "slideshow-view")}>
+        {_360
+          ? <LightBox
+            view={view}
+            render={_360}
+            currentPost={post}
+            posts={posts}
+            changeTheme={changeTheme}>
+            </LightBox>
+          : <img src={view} />}
+      </div>
     </div>
   );
 };

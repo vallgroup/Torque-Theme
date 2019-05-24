@@ -15,6 +15,12 @@ const LightBox = (props) => {
 
   const [open, toggleLightBox] = useLightBoxToggle()
 
+  if (open) {
+    props.changeTheme('lightbox-active')
+  } else {
+    props.changeTheme('')
+  }
+
   return (<LightBoxWrapper>
     <LightBoxLink
       view={props.view}

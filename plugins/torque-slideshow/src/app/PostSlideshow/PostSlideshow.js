@@ -13,14 +13,19 @@ import {
 
 const PostSlideshow = ({ site, postIds, interval, template }) => {
   const [posts, setPosts] = useState([]);
+  const [theme, setTheme] = useState('');
 
   const params = useMemo(() => ({ ids: postIds }), [postIds]);
   useSlideshowFetch(site, "posts", params, setPosts);
 
+  const changeTheme = (theme) => {
+    setTheme(theme)
+  }
+
   return (
     posts.length > 0 && (
       <Slideshow
-        className={`template_${template}`}
+        className={`template_${template} ${theme}`}
         items={posts}
         interval={interval}
         withItemList
@@ -29,7 +34,8 @@ const PostSlideshow = ({ site, postIds, interval, template }) => {
             case "ust_floorplans":
               return <Template_UST_Floorplans
                 post={post}
-                posts={posts} />;
+                posts={posts}
+                changeTheme={changeTheme} />;
 
             case "ust_locations":
               return <Template_UST_Locations post={post} />;
