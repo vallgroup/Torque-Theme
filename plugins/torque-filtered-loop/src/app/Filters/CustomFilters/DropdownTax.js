@@ -1,6 +1,7 @@
 import React, { memo, useMemo } from "react";
 import { Dropdown } from "../../components";
 import { useWPTerms } from "../../hooks";
+import { useNeighborhoodOrder } from "../../hooks";
 
 const DropdownTax = ({ site, value, onChange, args }) => {
   if (typeof args !== "string") {
@@ -9,10 +10,11 @@ const DropdownTax = ({ site, value, onChange, args }) => {
   }
 
   const [terms, taxName] = useWPTerms(site, args);
+  const order = useNeighborhoodOrder(site);
+
   const dropdownOptions = useMemo(
     () => {
       if ('Regions' === taxName) {
-console.log(terms, taxName)
         sortByNeighborhood(terms)
       }
       return terms.map(term => ({
@@ -34,25 +36,20 @@ console.log(terms, taxName)
   ) : null;
 
   function sortByNeighborhood(terms) {
-    const neighborhoods = [
-      'Chicago Near West',
-      'Chicago North',
-      'Chicago North and West Suburbs',
-      'Chicago South',
-      'Chicago South Suburbs',
-      'Chicago West',
-    ];
+    if (0 === order.length) {
+      return terms;
+    }
 
     return terms.sort((a, b) => {
 
-      if (-1 !== neighborhoods.indexOf(a.name)
-        && -1 !== neighborhoods.indexOf(b.name)) {
+      if (-1 !== order.indexOf(a.term_id)
+        && -1 !== order.indexOf(b.term_id)) {
         return 0;
       } else
-      if (-1 !== neighborhoods.indexOf(a.name)) {
+      if (-1 !== order.indexOf(a.term_id)) {
         return -1;
       } else
-      if(-1 !== neighborhoods.indexOf(b.name)) {
+      if(-1 !== order.indexOf(b.term_id)) {
         return 1;
       }
     })
