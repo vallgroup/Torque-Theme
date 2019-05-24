@@ -10,13 +10,19 @@ const DropdownTax = ({ site, value, onChange, args }) => {
 
   const [terms, taxName] = useWPTerms(site, args);
   const dropdownOptions = useMemo(
-    () =>
-      terms.map(term => ({
+    () => {
+      if ('Regions' === taxName) {
+console.log(terms, taxName)
+        sortByNeighborhood(terms)
+      }
+      return terms.map(term => ({
         key: term.term_id,
         name: term.name
-      })),
-    [terms]
+      }))
+    },
+    [terms, taxName]
   );
+
 
   return terms?.length ? (
     <Dropdown
@@ -26,6 +32,31 @@ const DropdownTax = ({ site, value, onChange, args }) => {
       onChange={onChange}
     />
   ) : null;
+
+  function sortByNeighborhood(terms) {
+    const neighborhoods = [
+      'Chicago Near West',
+      'Chicago North',
+      'Chicago North and West Suburbs',
+      'Chicago South',
+      'Chicago South Suburbs',
+      'Chicago West',
+    ];
+
+    return terms.sort((a, b) => {
+
+      if (-1 !== neighborhoods.indexOf(a.name)
+        && -1 !== neighborhoods.indexOf(b.name)) {
+        return 0;
+      } else
+      if (-1 !== neighborhoods.indexOf(a.name)) {
+        return -1;
+      } else
+      if(-1 !== neighborhoods.indexOf(b.name)) {
+        return 1;
+      }
+    })
+  }
 };
 
 export default memo(DropdownTax);
