@@ -19,8 +19,8 @@ class Template_2 extends React.PureComponent {
         : "View";
 
     return (
-      <div className={"loop-post template-1"}>
-        <a href={post.permalink}>
+      <div className={"loop-post template-2"}>
+        <a className={"single-listing-link"} href={post.permalink}>
           <div className={"featured-image-wrapper"}>
             <div
               className={"featured-image"}
@@ -30,7 +30,7 @@ class Template_2 extends React.PureComponent {
         </a>
 
         <div className={"content-wrapper"}>
-          <a href={post.permalink}>
+          <a className={"single-listing-link"} href={post.permalink}>
             <h4 dangerouslySetInnerHTML={{ __html: post.post_title }} />
           </a>
 
@@ -39,7 +39,7 @@ class Template_2 extends React.PureComponent {
             dangerouslySetInnerHTML={{ __html: excerpt }}
           />
 
-          <a href={post.permalink}>
+          <a className={"single-listing-link"} href={post.permalink}>
             <button>{buttonText}</button>
           </a>
 

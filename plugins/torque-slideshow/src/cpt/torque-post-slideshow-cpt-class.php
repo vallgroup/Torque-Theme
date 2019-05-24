@@ -84,11 +84,10 @@ class Torque_Post_Slideshow_CPT {
 
 			if( function_exists('acf_add_local_field_group') ):
 
-			acf_add_local_field_group(array(
-				'key' => 'group_5c913f0380267',
-				'title' => 'Post Slideshow Details',
-				'fields' => array(
-					apply_filters( self::$RELATIONSHIP_FIELD_FILTER_HOOK,
+				acf_add_local_field_group(array(
+					'key' => 'group_5c913f0380267',
+					'title' => 'Post Slideshow Details',
+					'fields' => array(
 						array(
 							'key' => 'field_5c913f0fdb1a1',
 							'label' => 'Posts',
@@ -103,13 +102,13 @@ class Torque_Post_Slideshow_CPT {
 								'id' => '',
 							),
 							'post_type' => array(
+								0 => 'torque_listing',
 							),
 							'taxonomy' => array(
 							),
 							'filters' => array(
 								0 => 'search',
 								1 => 'post_type',
-								2 => 'taxonomy',
 							),
 							'elements' => array(
 								0 => 'featured_image',
@@ -117,27 +116,26 @@ class Torque_Post_Slideshow_CPT {
 							'min' => '',
 							'max' => '',
 							'return_format' => 'id',
-						)
-					),
-				),
-				'location' => array(
-					array(
-						array(
-							'param' => 'post_type',
-							'operator' => '==',
-							'value' => self::$post_slideshow_labels['post_type_name'],
 						),
 					),
-				),
-				'menu_order' => 10,
-				'position' => 'normal',
-				'style' => 'default',
-				'label_placement' => 'top',
-				'instruction_placement' => 'label',
-				'hide_on_screen' => '',
-				'active' => 1,
-				'description' => '',
-			));
+					'location' => array(
+						array(
+							array(
+								'param' => 'post_type',
+								'operator' => '==',
+								'value' => 'torque_post_ss',
+							),
+						),
+					),
+					'menu_order' => 10,
+					'position' => 'normal',
+					'style' => 'default',
+					'label_placement' => 'top',
+					'instruction_placement' => 'label',
+					'hide_on_screen' => '',
+					'active' => 1,
+					'description' => '',
+				));
 
 			endif;
 		});
