@@ -41,4 +41,28 @@ class Torque_Filtered_Loop_Terms_Controller {
 			return Torque_API_Responses::Error_Response( $e );
 		}
 	}
+
+
+	public function get_neighborhood_order() {
+		try {
+
+			$order = get_field('order_neighborhoods', 'options');
+			if ($order) {
+				$order_ids = [];
+				foreach ( $order as $_o ) {
+					$order_ids[] = $_o['neighborhood'];
+				}
+				return Torque_API_Responses::Success_Response( array(
+          'order'	=> $order_ids,
+        ) );
+			}
+
+			return Torque_API_Responses::Failure_Response( array(
+				'order'	=> [],
+			));
+
+		} catch (Exception $e) {
+			return Torque_API_Responses::Error_Response( $e );
+		}
+	}
 }

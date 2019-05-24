@@ -23,11 +23,26 @@ class Torque_Filtered_Loop_Terms_Routes {
 	  		//'permission_callback' => array('Torque_API_Permissions', 'user_can_read'),
 	  	),
 	  ) );
+
+
+    register_rest_route( $this->namespace, self::$resource . 'get-neighborhood-order/' , array(
+      array(
+        'methods'             => 'GET',
+        'callback'            => array( $this, 'get_neighborhood_order' ),
+        // 'args'                => array(),
+        //'permission_callback' => array('Torque_API_Permissions', 'user_can_read'),
+      ),
+    ) );
   }
 
   public function get_terms( $request ) {
     $controller = new Torque_Filtered_Loop_Terms_Controller( $request );
     return $controller->get_terms();
+  }
+
+  public function get_neighborhood_order( $request ) {
+    $controller = new Torque_Filtered_Loop_Terms_Controller( $request );
+    return $controller->get_neighborhood_order();
   }
 }
 
