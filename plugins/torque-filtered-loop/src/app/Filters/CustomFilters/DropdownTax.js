@@ -14,15 +14,12 @@ const DropdownTax = ({ site, value, onChange, args }) => {
 
   const dropdownOptions = useMemo(
     () => {
-      if ('Regions' === taxName) {
-        sortByNeighborhood(terms)
-      }
-      return terms.map(term => ({
+      return sortByNeighborhood(terms).map(term => ({
         key: term.term_id,
         name: term.name
       }))
     },
-    [terms, taxName]
+    [terms, taxName, order]
   );
 
 
@@ -36,6 +33,7 @@ const DropdownTax = ({ site, value, onChange, args }) => {
   ) : null;
 
   function sortByNeighborhood(terms) {
+
     if (0 === order.length) {
       return terms;
     }
