@@ -2,8 +2,14 @@ import styles from "./Template_Interra.scss";
 import React, { memo } from "react";
 import classnames from "classnames";
 import PropTypes from "prop-types";
+import SlideShowTitle from "../SlideShowTitle";
 
-const Template = ({ post }) => {
+const Template = ({ post, titleClassName }) => {
+  if ( post.permalink.includes('/listing/') ) {
+      titleClassName = 'has-title';
+  } else {
+      titleClassName = '';
+  }
   return (
     <div
       className={classnames(
@@ -18,7 +24,12 @@ const Template = ({ post }) => {
       />
 
       <div className="post-details">
-        <h3>{post.post_title}</h3>
+        
+        <SlideShowTitle
+          post={post}
+        />
+
+        <h3 className={titleClassName}>{post.post_title}</h3>
 
         {post.meta["listing_city"] && (
           <div
@@ -55,7 +66,8 @@ const Template = ({ post }) => {
 };
 
 Template.propTypes = {
-  post: PropTypes.object
+  post: PropTypes.object,
+  titleClassName: PropTypes.string
 };
 
 export default memo(Template);
