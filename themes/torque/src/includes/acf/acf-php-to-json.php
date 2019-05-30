@@ -1,12 +1,10 @@
-
-
-
 <?php
 /**
  * Plugin Name: Convert ACF PHP to JSON
  * Description: Convert Advanced Custom Fields Pro configuration from PHP to JSON.
  * Credit: https://gist.github.com/ollietreend/df32c5cbe2914f6fc407332bf6cbfca5
  * Author: https://gist.github.com/ollietreend
+ * Usage: Un-comment 'required' statement in acf-init.php
  */
 namespace ConvertAcfPhpToJson;
 /**
