@@ -14,7 +14,7 @@ const Template = ({ post, posts, changeTheme }) => {
   const download = post?.meta?.floor_plan_downloads_pdf;
 
   const _360 = post?.meta?.floor_plan_images_360;
-
+console.log(_360)
   return (
     <div
       className={classnames(
