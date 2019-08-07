@@ -105,7 +105,7 @@ class Torque_Filtered_Loop_Posts_Controller {
 	private function setup_post_shape( &$post ) {
 		$post->meta = $this->prepare_meta( $post->ID );
 
-		$post->thumbnail = get_the_post_thumbnail_url($post->ID, 'large');
+		$post->thumbnail = get_field('thumbnail_image', $post->ID) ? get_field('thumbnail_image', $post->ID) : get_the_post_thumbnail_url($post->ID, 'large');
 
 		$post->permalink = get_post_permalink($post->ID);
 
