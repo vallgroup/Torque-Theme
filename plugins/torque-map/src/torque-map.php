@@ -56,10 +56,16 @@ class Torque_Map {
 			'Torque_Map_REST_Controller',
 			'Torque_Map_Shortcode',
 			'Torque_Map_CPT',
+			'Torque_Map_ACF',
 		) );
 
 		// enqueue plugin scripts
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_plugin_scripts' ) );
+
+		// fetch API key
+		if ( class_exists( 'Torque_Map_Controller' ) ) {
+			add_filter( Torque_Map_Controller::$API_KEY_FILTER , function() { return get_field( 'google_maps', 'option' ); });
+		}
 	}
 
 	/**
