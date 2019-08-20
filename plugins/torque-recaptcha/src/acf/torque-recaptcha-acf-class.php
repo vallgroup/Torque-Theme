@@ -17,7 +17,7 @@ class Torque_Recaptcha_ACF {
       			'key' => 'field_5c1d05d877fb1',
       			'label' => 'API Key',
       			'name' => 'tq_recaptcha_api_key',
-      			'type' => 'password',
+      			'type' => 'text',
       			'instructions' => 'https://www.google.com/recaptcha/admin',
       			'required' => 0,
       			'conditional_logic' => 0,
