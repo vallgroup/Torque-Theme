@@ -9,7 +9,7 @@ yarn-error.log
 themes/*
 !themes/torque
 themes/torque/node_modules/
-plugins/interra-buildout
+plugins/interra-marketing-automation
 
 # mac files
 .DS_Store

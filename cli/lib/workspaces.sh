@@ -21,4 +21,5 @@ declare -a workspaces=(
   "torque-contact-form"
   "torque-recaptcha"
   "torque-slideshow"
+  "interra-marketing-automation"
 )
