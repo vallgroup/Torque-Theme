@@ -9,6 +9,7 @@ yarn-error.log
 themes/*
 !themes/torque
 themes/torque/node_modules/
+plugins/interra-buildout
 
 # mac files
 .DS_Store
