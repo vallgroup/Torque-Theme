@@ -60,9 +60,7 @@ class Interra_Marketing_Automation {
    */
 	public function init() {
 
-		if ( class_exists( 'IMA_ACF' ) ) {
-		 new IMA_ACF();
-		}
+		$this->add_acf_fields();
 
 		// comment out class names to exclude
 		Interra_Marketing_Automation_Autoloader::autoload( array(
@@ -73,6 +71,12 @@ class Interra_Marketing_Automation {
 
 		// enqueue plugin scripts
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_plugin_scripts' ) );
+	}
+
+	public function add_acf_fields() {
+		if ( class_exists( 'IMA_ACF' ) ) {
+		 new IMA_ACF();
+		}
 	}
 
 	public function enqueue_plugin_scripts() {
