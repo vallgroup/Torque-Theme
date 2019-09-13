@@ -3,6 +3,7 @@
 require( Torque_Map_PATH . '/api/torque-map-rest-controller-class.php' );
 require( Torque_Map_PATH . '/shortcode/torque-map-shortcode-class.php' );
 require( Torque_Map_PATH . '/cpt/torque-map-cpt-class.php' );
+require( Torque_Map_PATH . '/acf/torque-map-acf-class.php' );
 
 
 /**
