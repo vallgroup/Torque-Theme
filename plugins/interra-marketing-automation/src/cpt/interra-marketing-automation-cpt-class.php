@@ -38,8 +38,8 @@ class Interra_Marketing_Automation_CPT {
 	);
 
 	public static $disclaimer_labels = array(
-			'singular'       => 'Disclaimer',
-			'plural'         => 'Disclaimers',
+			'singular'       => 'Disclosure',
+			'plural'         => 'Disclosures',
 			'slug'           => 'disclaimer',
 			'post_type_name' => 'interra_disclaimer',
 	);

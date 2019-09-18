@@ -845,11 +845,11 @@ acf_add_local_field_group(array(
 
 acf_add_local_field_group(array(
   'key' => 'group_5d681caa470d6',
-  'title' => 'Disclaimers',
+  'title' => 'Disclosures',
   'fields' => array(
     array(
       'key' => 'field_5d681cb4a2bfa',
-      'label' => 'Disclaimers',
+      'label' => 'Disclosures',
       'name' => 'disclaimers',
       'type' => 'repeater',
       'instructions' => '',
@@ -864,11 +864,11 @@ acf_add_local_field_group(array(
       'min' => 0,
       'max' => 0,
       'layout' => 'row',
-      'button_label' => 'Add Disclaimer',
+      'button_label' => 'Add Disclosure',
       'sub_fields' => array(
         array(
           'key' => 'field_5d681cbea2bfb',
-          'label' => 'Disclaimer',
+          'label' => 'Disclosure',
           'name' => 'disclaimer',
           'type' => 'post_object',
           'instructions' => '',
