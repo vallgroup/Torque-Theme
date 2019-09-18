@@ -11,6 +11,8 @@ class Torque_Map_Controller {
 
 	public static $POIS_LOCATION = 'torque_map_pois_location';
 
+	public static $MAP_DEFAULT_STYLES = 'torque_map_default_styles';
+
 	public static function get_map_args() {
 		return array(
       'id' => array(
@@ -89,6 +91,10 @@ class Torque_Map_Controller {
 	private function get_map_styles( $id ) {
 		$context = array( 'context' => 'post', 'id' => $id );
 		$map_styles = premise_get_value( 'map_styles', $context );
+
+		if (!$map_styles) {
+			$map_styles = apply_filters( self::$MAP_DEFAULT_STYLES, false );
+		}
 
 		if ( $map_styles ) {
 			return preg_replace( "/\r|\n/", "", strip_tags($map_styles) );
