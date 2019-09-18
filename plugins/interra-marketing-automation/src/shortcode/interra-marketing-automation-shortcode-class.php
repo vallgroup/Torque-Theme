@@ -19,7 +19,8 @@ class Interra_Marketing_Automation_Shortcode {
     // use this array to attributes and display them in the front end
     // for private attributes go to setup_atts()
     $this->expected_args = array(
-      'example' => true,
+      'module' => '',
+      'options' => '',
     );
 
 		add_shortcode( self::$SHORTCODE_SLUG , array( $this, 'shortcode_handler') );

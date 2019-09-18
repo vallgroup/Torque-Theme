@@ -60,6 +60,8 @@ class Interra_Marketing_Automation {
    */
 	public function init() {
 
+		// $this->send_file();
+
 		$this->add_acf_fields();
 
 		// comment out class names to exclude
@@ -71,6 +73,41 @@ class Interra_Marketing_Automation {
 
 		// enqueue plugin scripts
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_plugin_scripts' ) );
+
+		add_action('acf/input/admin_enqueue_scripts', array( $this, 'boxapp_ajax_scripts'), 10, 1);
+
+		add_filter( 'template_include', array( $this, 'filter_ima_page_template' ), 99 );
+
+		add_filter( 'torque_map_api_key', array( $this, 'gmap_api_key') );
+
+	}
+
+	public function gmap_api_key() {
+		return 'AIzaSyBbzylAdZ7vqtFdVbfxK2Vkwt5-lCm1F30';
+	}
+
+	public function filter_ima_page_template( $template ) {
+ 		global $post;
+
+		$ima_post_type = Interra_Marketing_Automation_CPT::$marketer_labels['post_type_name'];
+
+ 		if ( $post && $ima_post_type === $post->post_type ) {
+			if ( $overridden_template = locate_template( 'page-property-marketer.php' ) ) {
+				return $overridden_template;
+			} else {
+				return dirname( __FILE__ ) . '/templates/page-property-marketer.php';
+			}
+		}
+
+		if ( $post && 'interra_disclaimer' === $post->post_type ) {
+			if ( $overridden_template = locate_template( 'page-disclaimer.php' ) ) {
+				return $overridden_template;
+			} else {
+				return dirname( __FILE__ ) . '/templates/page-disclaimer.php';
+			}
+		}
+
+		return $template;
 	}
 
 	public function add_acf_fields() {
@@ -89,10 +126,44 @@ class Interra_Marketing_Automation {
 		);
 
 		wp_enqueue_style(
-			'interra-marketing-automation-styles',
+			'interra-marketing-automation-app-styles',
 			Interra_Marketing_Automation_URL . 'bundles/main.css'
 		);
+
+		wp_enqueue_style(
+			'interra-marketing-automation-styles',
+			Interra_Marketing_Automation_URL . 'ima-styles.css'
+		);
 	}
+
+	public function boxapp_ajax_scripts($hook) {
+		global $post;
+
+		if ( $post && 'property_marketer' === $post->post_type ) {
+			wp_enqueue_script(
+				'boxapp-ajax-scripts',
+				Interra_Marketing_Automation_URL . '/js/boxapp-ajax-client.js',
+				array(),
+				'1.0.0',
+				true
+			);
+
+
+			wp_enqueue_script(
+				'ima-mailchimp-tmpl',
+				Interra_Marketing_Automation_URL . '/js/ima-mailchimp-tmpl.js',
+				array(),
+				'1.0.0',
+				true
+			);
+
+			wp_enqueue_style(
+				'interra-marketing-automation-admin-styles',
+				Interra_Marketing_Automation_URL . 'admin/ima-admin-styles.css'
+			);
+		}
+	}
+
 }
 
 ?>

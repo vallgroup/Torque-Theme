@@ -1,13 +1,20 @@
-import React, { Component } from 'react'
+import React from 'react'
+
+import LoanAmortization from './LoanAmortization/LoanAmortization'
 
 // props
 //
-// site: string 
+// site: string
 
-class App extends Component {
-  render() {
-    return <div>'Hello World!'</div>
-  }
+const App = ({module, options}) => {
+
+	if (!module) {
+		return <div>Missing module args.</div>
+	}
+
+	if ('loanAmortization' === module) {
+		return <LoanAmortization docID={options} />
+	}
 }
 
 export default App

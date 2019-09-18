@@ -10,6 +10,13 @@ const entry = document.querySelectorAll(".interra-marketing-automation-react-ent
 entry.forEach(entry => {
   if (entry) {
     // pass through the data-site attr as props so the app knows where to send requests
-    ReactDOM.render(<App site={entry.getAttribute("data-site")} />, entry);
+    ReactDOM.render(
+    	<App
+	    	site={entry.getAttribute("data-site")}
+	    	module={entry.getAttribute("data-module")}
+	    	options={entry.getAttribute("data-options")}
+    	 />,
+    	entry
+    );
   }
 });

@@ -72,7 +72,11 @@ const config = {
     new CopyWebpackPlugin([
       { from: path.join(srcDir, "shortcode/*.js"), to: buildDir },
       { from: path.join(srcDir, "shortcode/*.html"), to: buildDir },
-      { from: path.join(srcDir, "**/*.php"), to: buildDir }
+      { from: path.join(srcDir, "**/*.php"), to: buildDir },
+      { from: path.join(srcDir, "js/*.js"), to: buildDir },
+      { from: path.join(srcDir, "images/*"), to: buildDir },
+      { from: path.join(srcDir, "ima-styles.css"), to: buildDir },
+      { from: path.join(srcDir, "admin/*.css"), to: buildDir }
     ])
   ],
 
