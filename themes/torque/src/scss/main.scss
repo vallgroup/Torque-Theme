@@ -1,0 +1,33 @@
+@import "parts/elements/element-burger-menu";
+@import "parts/elements/element-burger-menu-squeeze";
+
+@import "parts/shared/header-parts/menu-items";
+@import "parts/shared/header-templates/header-style-1";
+
+@import "parts/shared/footer";
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+}
+
+img {
+  // remove image borders on IE10
+  border: 0;
+}

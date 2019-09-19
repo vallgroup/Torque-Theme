@@ -1,0 +1,12 @@
+.torque-menu-items-inline {
+  .torque-menu-item-wrapper {
+    display: inline-block;
+  }
+}
+
+.torque-menu-items-stacked {
+  .torque-menu-item-wrapper {
+    display: block;
+    text-align: center;
+  }
+}

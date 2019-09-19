@@ -4,8 +4,6 @@
 # to get a list of the workspace names so we dont have to define it here
 
 declare -a workspaces=(
-  "torque-theme"
-  "atlantic-residential-child"
   "torque-floor-plans"
   "torque-availability"
   "torque-gallery-layouts"
@@ -21,4 +19,6 @@ declare -a workspaces=(
   "torque-contact-form"
   "torque-recaptcha"
   "torque-slideshow"
+  "torque-theme"
+  "pacific-residential-child"
 )
