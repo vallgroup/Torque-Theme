@@ -5,6 +5,7 @@
 
 declare -a workspaces=(
   "torque-theme"
+  "the-cannery"
   "torque-floor-plans"
   "torque-availability"
   "torque-gallery-layouts"
