@@ -6,7 +6,7 @@
       @content;
     }
   }
-  @elseif $media == desktop {
+  @else if $media == desktop {
     @media only screen and (min-width: $TabletMaxWidth + 1px) {
       @content;
     }
@@ -19,7 +19,7 @@
       @content;
     }
   }
-  @elseif $media == desktop {
+  @else if $media == desktop {
     @media only screen and (max-width: $TabletMaxWidth) {
       @content;
     }
