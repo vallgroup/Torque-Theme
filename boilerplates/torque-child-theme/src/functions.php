@@ -9,32 +9,32 @@ require_once( get_stylesheet_directory() . '/includes/acf/<torque_child_theme_sl
  * Child Theme Nav Menus
  */
 
- if ( class_exists( '<torque_child_theme_class_prefix>_Nav_Menus' ) ) {
-   new <torque_child_theme_class_prefix>_Nav_Menus();
+ if ( class_exists( 'The_Cannery_Nav_Menus' ) ) {
+   new The_Cannery_Nav_Menus();
  }
 
 /**
  * Child Theme Widgets
  */
 
-if ( class_exists( '<torque_child_theme_class_prefix>_Widgets' ) ) {
-  new <torque_child_theme_class_prefix>_Widgets();
+if ( class_exists( 'The_Cannery_Widgets' ) ) {
+  new The_Cannery_Widgets();
 }
 
 /**
  * Child Theme Customizer
  */
 
-if ( class_exists( '<torque_child_theme_class_prefix>_Customizer' ) ) {
-  new <torque_child_theme_class_prefix>_Customizer();
+if ( class_exists( 'The_Cannery_Customizer' ) ) {
+  new The_Cannery_Customizer();
 }
 
 /**
  * Child Theme ACF
  */
 
- if ( class_exists( '<torque_child_theme_class_prefix>_ACF' ) ) {
-   new <torque_child_theme_class_prefix>_ACF();
+ if ( class_exists( 'The_Cannery_ACF' ) ) {
+   new The_Cannery_ACF();
  }
 
 

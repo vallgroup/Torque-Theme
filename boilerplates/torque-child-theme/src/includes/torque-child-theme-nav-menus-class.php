@@ -2,7 +2,7 @@
 
 require_once( get_template_directory() . '/includes/torque-nav-menus-class.php' );
 
-class <torque_child_theme_class_prefix>_Nav_Menus {
+class The_Cannery_Nav_Menus {
 
   public function __construct() {
     add_filter( Torque_Nav_Menus::$nav_menus_filter_handle, array( $this, 'modify_parent_nav_menus' ) );

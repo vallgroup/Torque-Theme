@@ -3,7 +3,7 @@
 require_once( get_template_directory() . '/includes/customizer/torque-customizer-class.php' );
 //require_once( get_stylesheet_directory() . '/includes/customizer/tabs/example-tab-upate-class.php');
 
-class <torque_child_theme_class_prefix>_Customizer {
+class The_Cannery_Customizer {
 
   public function __construct() {
     add_filter( Torque_Customizer::$tabs_filter_handle, array( $this, 'modify_tabs' ) );
