@@ -1,0 +1,18 @@
+#ima-mailchimp-html-preview pre {
+	max-height: 300px;
+	display: block;
+	overflow: auto;
+	background-color: #efefef;
+	padding: 1em;
+}
+
+#mailchimp.postbox #__ima_html_email_container {
+	position: relative;
+	overflow: hidden;
+	height: 0;
+}
+#mailchimp.postbox #__ima_html_email {
+	position: absolute;
+	top: 0;
+	left: -999999px;
+}

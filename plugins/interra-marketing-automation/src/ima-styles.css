@@ -1,0 +1,227 @@
+.ima-full-width {
+	width: 100% !important;
+	box-sizing: border-box;
+}
+
+.ima-link {
+	text-decoration: underline;
+}
+
+.ima-section {
+	overflow: hidden;
+}
+
+.ima-horizontal-scroll {
+	overflow: auto;
+}
+
+.ima-horizontal-scroll::-webkit-scrollbar {
+  width:5px;
+}
+
+.ima-horizontal-scroll::-webkit-scrollbar-track {
+    -webkit-box-shadow: transparent;
+  background: rgba(104,106,108,.25);
+  border-right:0px solid black;
+}
+
+.ima-horizontal-scroll::-webkit-scrollbar-thumb {
+  background-color: #78b855;
+  outline: 2px solid #78b855;
+  border-radius: 0;
+}
+.ima-horizontal-scroll::-webkit-scrollbar-corner {
+  background-color: transparent;
+  border-right: 0px !important;
+}
+
+.ima-horizontal-scroll::-webkit-scrollbar-track:horizontal {
+  background: transparent;
+  border-left: 0px;
+}
+
+.ima-clear-float:after {
+	display: block;
+	content: '';
+	clear: both;
+}
+
+/* TODO: move to theme */
+.torque-listing-content h5 {
+	margin-top: 0;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: -0.3px;
+  color: #888;
+}
+
+/* Tables */
+
+.ima-table {
+	width: 100%;
+	border-spacing: 0;
+	border: 1px solid rgba(104,106,108,.25);
+}
+
+.ima-table-row {
+}
+
+.ima-table-row th {
+	text-align: center;
+	background-color: #f5f5f5;
+	padding: 1em 0.25em;
+	text-transform: uppercase;
+}
+
+.ima-table-row th:last-child {
+	/*border-right: 1px solid #ccc;*/
+}
+
+.ima-table-row td {
+	padding: 0.75em 0.5em;
+	overflow: auto;
+	border-bottom: 1px dotted #ccc;
+}
+
+.ima-table-row td.align-center {
+	text-align: center;
+}
+
+
+/* Gallery */
+
+.ima-gallery {}
+
+.ima-gallery .gallery-col {
+	position: relative;
+	width: 100%;
+	padding-top: 56%;
+	float: left;
+	/* the background styles */
+	background-repeat: no-repeat;
+	background-color: transparent;
+	background-position: center;
+	background-size: cover;
+}
+
+.ima-gallery iframe {
+	position: absolute;
+	top: 0; left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.ima-gallery .gallery-image {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border: 5px solid #fff;
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	box-sizing: border-box;
+}
+
+@media screen and (min-width: 750px) {
+
+	.ima-gallery .gallery-col-4 {
+		padding-top: 25%;
+		width: 25%;
+	}
+
+	.ima-gallery .gallery-col-3 {
+		padding-top: 33.333%;
+		width: 33.333%;
+	}
+
+	.ima-gallery .gallery-col-2 {
+		padding-top: 30%;
+		width: 50%;
+	}
+
+}
+
+.video-wrapper {
+	position: relative;
+	display: inline-block;
+	padding-top: 30%;
+	width: 49%;
+}
+
+
+/* Rent Roll */
+
+.ima-rent-roll {
+	max-width: 100%;
+	box-sizing: border-box;
+	overflow: auto;
+}
+
+.ima-rent-roll .ima-rent-roll-table {
+	min-width: 1000px;
+}
+
+.ima-rent-roll .torque-listing-content .torque-listing-content-details {
+	/*padding: 2em;*/
+}
+
+/* Pictures & Videos */
+
+.ima-property-pictures {
+	margin-bottom: 80px;
+}
+
+.ima-property-videos {
+	margin-bottom: 80px;
+}
+
+.ima-360-photos {
+	/*margin-bottom: 80px;*/
+}
+
+.ima-boxapp-link {
+	display: block;
+	margin-top: 1em;
+	font-size: 14px;
+	margin-bottom: 25px;
+}
+
+
+/* Comps */
+
+.ima-sales-comps-table,
+.ima-rent-comps-table {
+	min-width: 1000px;
+}
+
+.ima-sales-comps-table .ima-col-map,
+.ima-rent-comps-table .ima-col-map {
+	width: 275px;
+}
+
+
+/* lena styles */
+span.interra-marketing-automation-react-entry label {
+  text-transform: uppercase;
+  font-weight: 500;
+  letter-spacing: .1;
+}
+
+.ima-disclaimers .key-detail.with-border {
+	border-bottom: solid 1px #b0b3b5;
+}
+
+.ima-maps h5 {
+	text-transform: uppercase;
+}
+
+.ima-maps .torque-map-container h3 {
+	font-size: 20px;
+  margin-top: 0;
+  font-weight: bold;
+  letter-spacing: -0.3px;
+  color: #78b855;
+  text-transform: uppercase;
+}
