@@ -3,6 +3,9 @@ export {
   default as Template_Interra
 } from "./Template_Interra/Template_Interra";
 export {
+  default as Template_Cannery
+} from "./Template_Cannery/Template_Cannery";
+export {
   default as Template_UST_Locations
 } from "./Template_UST_Locations/Template_UST_Locations";
 export {

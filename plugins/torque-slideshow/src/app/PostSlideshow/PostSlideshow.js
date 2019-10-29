@@ -8,7 +8,8 @@ import {
   Template_0,
   Template_Interra,
   Template_UST_Floorplans,
-  Template_UST_Locations
+  Template_UST_Locations,
+  Template_Cannery
 } from "./templates";
 
 const PostSlideshow = ({ site, postIds, interval, template }) => {
@@ -34,6 +35,9 @@ const PostSlideshow = ({ site, postIds, interval, template }) => {
 
             case "interra":
               return <Template_Interra post={post} />;
+
+            case "cannery_floorplans":
+              return <Template_Cannery post={post} />;
 
             case "0":
             default:
