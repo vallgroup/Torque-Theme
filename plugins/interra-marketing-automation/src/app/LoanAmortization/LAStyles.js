@@ -2,14 +2,14 @@ import styled from 'styled-components'
 
 export const LoanAmoForm = styled.div`
 	display: block;
-	margin: 2em auto;
+	margin: 2em 0;
 	max-width: 600px;
 	box-sizing: border-box;
 `
 
 export const LoanAmoFieldRow = styled.div`
 	display: block;
-	margin: 1em;
+	margin: 1em 1em 1em 0;
 `
 
 export const LoanAmoInputField = styled.input`
