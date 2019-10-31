@@ -10,7 +10,8 @@ import {
 	LoanAmoPrependField,
 	LoanAmoAppendField,
 	LoanAmoFormResults,
-	LoanAmoSchedule
+	LoanAmoSchedule,
+	LoanAmoSelectFieldContainer
 } from './LAStyles'
 
 import {formatMoney} from '../lib/helpers'
@@ -112,14 +113,16 @@ const LAForm = ({loanAmo, updateAmoTable}) => {
 						Term:
 					</div>
 					<LoanAmoFieldWrapper className={"span5"}>
-						<LoanAmoSelectField
-							id={'term'}
-							value={term}
-							onChange={e => setTerm(e.target.value)}
-						>
-							<option value={15}>15 Years</option>
-							<option value={30}>30 Years</option>
-						</LoanAmoSelectField>
+						<LoanAmoSelectFieldContainer>
+							<LoanAmoSelectField
+								id={'term'}
+								value={term}
+								onChange={e => setTerm(e.target.value)}
+							>
+								<option value={15}>15 Years</option>
+								<option value={30}>30 Years</option>
+							</LoanAmoSelectField>
+						</LoanAmoSelectFieldContainer>
 					</LoanAmoFieldWrapper>
 				</div>
 			</label>

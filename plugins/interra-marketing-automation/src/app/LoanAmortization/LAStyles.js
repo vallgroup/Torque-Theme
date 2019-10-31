@@ -44,7 +44,22 @@ export const LoanAmoAppendField = styled.div`
 	padding: 0.5em;
 `
 
+export const LoanAmoSelectFieldContainer = styled.div`
+	position: relative;
+	display: block;
+
+	&:after {
+		content: '\f107';
+		display: block;
+		font-family: 'FontAwesome';
+		position: absolute;
+		top: 0.5em;
+		right: 1em;
+	}
+`
+
 export const LoanAmoSelectField = styled.select`
+	position: relative;
 	padding: 0.5em;
 	border: 1px solid #ccc;
 	border-radius: 0.375em;
@@ -54,6 +69,16 @@ export const LoanAmoSelectField = styled.select`
 	-webki-appearance: none;
 	color: #686a6c;
 	padding: 0.5em 0.5em;
+
+	&:after {
+		content: '\f107';
+		display: block;
+		font-family: 'FontAwesome';
+		position: absolute;
+		top: 0.5em;
+		right: 1em;
+		pointer-events: none;
+	}
 `
 
 export const LoanAmoFieldName = styled.div`
