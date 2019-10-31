@@ -545,7 +545,8 @@ acf_add_local_field_group(array(
       ),
       'choices' => array(
         30 => '30 years',
-        15 => '15 years',
+        25 => '25 years',
+        20 => '20 years',
       ),
       'default_value' => array(
         0 => 30,
@@ -582,7 +583,7 @@ acf_add_local_field_group(array(
       'key' => 'field_5d5d66808de45',
       'label' => 'Property Value',
       'name' => 'property_value',
-      'type' => 'text',
+      'type' => 'number',
       'instructions' => '',
       'required' => 0,
       'conditional_logic' => 0,
@@ -639,6 +640,7 @@ acf_add_local_field_group(array(
   'active' => 1,
   'description' => 'Enter details for loan amortization chart & UI',
 ));
+
 
 acf_add_local_field_group(array(
   'key' => 'group_5d681695f3e6c',

@@ -17,6 +17,7 @@ import {
 import {formatMoney} from '../lib/helpers'
 
 const LAForm = ({loanAmo, updateAmoTable}) => {
+	console.log(loanAmo)
 	//
 	const [loading       , setLoading]       = useState(true)
 	const [term          , setTerm]          = useState(loanAmo.term)
@@ -119,7 +120,8 @@ const LAForm = ({loanAmo, updateAmoTable}) => {
 								value={term}
 								onChange={e => setTerm(e.target.value)}
 							>
-								<option value={15}>15 Years</option>
+								<option value={20}>20 Years</option>
+								<option value={25}>25 Years</option>
 								<option value={30}>30 Years</option>
 							</LoanAmoSelectField>
 						</LoanAmoSelectFieldContainer>
