@@ -21,7 +21,7 @@ function explode_panos( $n ) {
 
 			<div class="ima-property-pictures">
 
-				<h4>Property Pictures</h4>
+				<h4>Gallery</h4>
 
 				<div class="row ima-gallery">
 
