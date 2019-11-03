@@ -203,7 +203,7 @@ const LAForm = ({loanAmo, updateAmoTable}) => {
 						<div className={`span7`}>
 							<h5>Loan Amount:</h5>
 						</div>
-						<div className={`span5 pwp-align-left`} style={{paddingLeft: '36px'}}>
+						<div className={`span5 pwp-align-right`}>
 							<h5>${formatMoney(propertyValue - (propertyValue * (downPayment / 100)))}</h5>
 						</div>
 					</div>
@@ -212,7 +212,7 @@ const LAForm = ({loanAmo, updateAmoTable}) => {
 						<div className={`span7`}>
 							<h5>Monthly Payment:</h5>
 						</div>
-						<div className={`span5 pwp-align-left`} style={{paddingLeft: '36px'}}>
+						<div className={`span5 pwp-align-right`}>
 							<h5>${formatMoney(monthlyPmt.PI)}</h5>
 						</div>
 					</div>

@@ -3,6 +3,8 @@
 require( Interra_Marketing_Automation_PATH . '/api/interra-marketing-automation-rest-controller-class.php' );
 require( Interra_Marketing_Automation_PATH . '/shortcode/interra-marketing-automation-shortcode-class.php' );
 require( Interra_Marketing_Automation_PATH . '/cpt/interra-marketing-automation-cpt-class.php' );
+require( Interra_Marketing_Automation_PATH . '/cpt/interra-marketing-automation-income-expenses-class.php' );
+require( Interra_Marketing_Automation_PATH . '/cpt/interra-marketing-automation-financial-summary-class.php' );
 
 
 /**

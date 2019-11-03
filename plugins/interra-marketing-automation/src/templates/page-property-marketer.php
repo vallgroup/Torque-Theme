@@ -19,6 +19,10 @@
 
 	<?php load_template( $__path . 'templates/content/content-taxes.php' ); ?>
 
+	<?php load_template( $__path . 'templates/content/content-income-expenses.php' ); ?>
+
+	<?php load_template( $__path . 'templates/content/content-financial-summary.php' ); ?>
+
 	<?php load_template( $__path . 'templates/content/content-loan-amortization.php' ); ?>
 
 	<?php load_template( $__path . 'templates/content/content-disclaimers.php' ); ?>

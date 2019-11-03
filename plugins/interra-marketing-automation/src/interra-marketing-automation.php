@@ -329,6 +329,14 @@ class Interra_Marketing_Automation {
 				true
 			);
 
+			// rent roll imports
+			wp_enqueue_script(
+				'ima-rent-roll-import',
+				Interra_Marketing_Automation_URL . '/js/ima-rent-roll-import.js',
+				array(),
+				'1.0.0',
+				true
+			);
 
 			wp_enqueue_script(
 				'ima-mailchimp-tmpl',

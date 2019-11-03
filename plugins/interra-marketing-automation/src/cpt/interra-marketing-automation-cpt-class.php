@@ -47,7 +47,7 @@ class Interra_Marketing_Automation_CPT {
 	protected $disclaimer_options = array(
 		'supports' => array(
 			'title',
-			'editor',
+			// 'editor',
 		),
 		'menu_icon' => 'dashicons-text-page',
 	);
@@ -56,6 +56,9 @@ class Interra_Marketing_Automation_CPT {
 	 * register our post type and meta boxes
 	 */
 	function __construct() {
+
+		add_filter('acf/upload_prefilter/name=units_spreadsheet', array( get_called_class(), 'filter_rent_roll_csv' ), 10, 3);
+
 		if ( class_exists( 'PremiseCPT' ) ) {
 			new PremiseCPT( self::$marketer_labels, $this->marketer_options );
 
@@ -146,6 +149,53 @@ class Interra_Marketing_Automation_CPT {
 			),
 			$option_names = 'boxapp_panos'
 		);
+	}
+
+	public function filter_rent_roll_csv( $errors, $file, $field ) {
+		global $post;
+		$row = 1;
+		$csv_header = array(
+			'address',
+			'type',
+			'total_rooms',
+			'sq',
+			'rent',
+			'lease_expiration',
+			'tenant_notes',
+		);
+
+		$new_rows = [];
+
+		if ( ( $handle = fopen( $file['tmp_name'], "r" ) ) !== FALSE ) {
+
+	    while ( ( $data = fgetcsv( $handle, 1000, "," ) ) !== FALSE ) {
+    		// get number of columns in each row
+        $num = count($data);
+        if ( $num < count( $csv_header ) ) {
+        	$errors[] = "Incomplete number of columns found in row $row";
+        	continue;
+        }
+
+    		if ( 1 < $row ) {
+    	    $new_rows[] = array_combine( $csv_header, $data );
+    		}
+		    $row++;
+	    }
+
+	    preg_match( '/post=([0-9]*)&/', $_SERVER['HTTP_REFERER'], $matches );
+
+	    fclose($handle);
+
+	    if ( ! update_field( 'units', $new_rows, $matches[1] ) ) {
+	    	$errors[] = 'Something went wrong while updating the Rent Roll table. Please try again.';
+	    }
+		}
+		// we had an issue opening the file.
+		else {
+			$errors[] = 'There was an issue reading this file to create a Rent Roll Update.';
+		}
+
+		return $errors;
 	}
 
 }

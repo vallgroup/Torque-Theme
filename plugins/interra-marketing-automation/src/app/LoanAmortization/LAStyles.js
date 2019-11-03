@@ -9,7 +9,7 @@ export const LoanAmoForm = styled.div`
 
 export const LoanAmoFieldRow = styled.div`
 	display: block;
-	margin: 1em 1em 1em 0;
+	margin: 1em 0;
 `
 
 export const LoanAmoInputField = styled.input`
@@ -22,6 +22,7 @@ export const LoanAmoInputField = styled.input`
   border-bottom: 1px solid #ccc;
   border-radius: 0;
   text-indent: 0;
+  text-align: right;
 `
 
 export const LoanAmoPrependField = styled.div`
@@ -94,7 +95,7 @@ export const LoanAmoFieldWrapper = styled.div`
 export const LoanAmoFormResults = styled.div`
 	// text-align: center;
 	margin: 2em 0;
-
+	max-width: 570px;
 	h5 {
 		color: #636363;
 	}

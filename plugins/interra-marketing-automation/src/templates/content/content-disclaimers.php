@@ -1,6 +1,19 @@
 <?php
 
-$disclaimers     = get_field( 'disclaimers' );
+$disclaimers = get_field( 'disclaimers' );
+
+$disclosures = get_posts( [
+	'post_type' => Interra_Marketing_Automation_CPT::$disclaimer_labels['post_type_name'],
+] );
+
+$pdfs = [];
+
+foreach ( $disclosures as $post ) {
+	if ( in_array( trim( strtolower( $post->post_title ) ), $disclaimers ) ) {
+		$file = get_field('pdf', $post->ID );
+		$pdfs[$post->post_title] = $file['url'];
+	}
+}
 
 ?>
 
@@ -14,16 +27,14 @@ $disclaimers     = get_field( 'disclaimers' );
 
 			<div class="key-details-wrapper">
 
-	      <?php foreach ( $disclaimers as $disclaimer  ) {
+	      <?php foreach ( $pdfs as $key => $pdf  ) {  ?>
 
-					$disclaimer_obj = $disclaimer['disclaimer']; ?>
-
-          <div class="key-detail <?php echo (1 < count( $disclaimers ) ) ? '' : 'with-border'; ?>">
+          <div class="key-detail <?php echo (1 < count( $pdfs ) ) ? '' : 'with-border'; ?>">
             <div class="key-detail-name">
-              <?php echo ucwords( esc_html( $disclaimer_obj->post_title ) ); ?>
+              <?php echo ucwords( esc_html( $key ) ); ?>
             </div>
             <div class="key-detail-value">
-							Go to <a class="ima-link" href="<?php the_permalink( $disclaimer_obj ); ?>">diclosure</a>
+							Go to <a class="ima-link" href="<?php echo esc_url( $pdf 	); ?>">diclosure</a>
             </div>
           </div>
 
