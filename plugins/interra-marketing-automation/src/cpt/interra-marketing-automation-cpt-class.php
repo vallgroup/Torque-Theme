@@ -57,7 +57,18 @@ class Interra_Marketing_Automation_CPT {
 	 */
 	function __construct() {
 
-		add_filter('acf/upload_prefilter/name=units_spreadsheet', array( get_called_class(), 'filter_rent_roll_csv' ), 10, 3);
+		add_filter(
+			'acf/upload_prefilter/name=units_spreadsheet',
+			array( get_called_class(), 'filter_rent_roll_csv' ),
+			10,
+			3
+		);
+
+		// add_filter(
+		// 	'acf/load_field/name=units_spreadsheet',
+		// 	array( get_called_class(), 'rent_roll_instructions' ),
+		// 	10
+		// );
 
 		if ( class_exists( 'PremiseCPT' ) ) {
 			new PremiseCPT( self::$marketer_labels, $this->marketer_options );
@@ -196,6 +207,16 @@ class Interra_Marketing_Automation_CPT {
 		}
 
 		return $errors;
+	}
+
+	public static function rent_roll_instructions( $field ) {
+
+	  $field['instructions'] = nl2br(
+	  	$field['instructions']
+	  );
+
+	  return $field;
+
 	}
 
 }
