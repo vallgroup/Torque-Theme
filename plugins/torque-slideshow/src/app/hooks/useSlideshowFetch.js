@@ -7,7 +7,6 @@ export default (site, endpoint, params, onSuccess) => {
       const getData = async () => {
         try {
           const url = `${site}/wp-json/slideshow/v1/slideshows/${endpoint}`;
-          console.log(url)
           const response = await axios.get(url, { params });
 
           if (response?.data?.success) {

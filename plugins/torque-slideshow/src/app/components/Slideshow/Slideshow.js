@@ -8,6 +8,9 @@ import Tracker from "../Tracker";
 import ItemsList from "../ItemsList";
 import arrow from "../../images/arrow.svg";
 
+import arrowLeft from "../../images/the-cannery/arrow-left/arrow-left.png";
+import arrowRight from "../../images/the-cannery/arrow-right/arrow-right.png";
+
 const Slideshow = ({
   items,
   interval = 0,
@@ -55,7 +58,7 @@ const Slideshow = ({
               "tq-slideshow-arrow",
               "tq-slideshow-arrow-right"
             )}
-            src={arrow}
+            src={arrowRight}
           />
         </div>
 
@@ -75,7 +78,7 @@ const Slideshow = ({
               "tq-slideshow-arrow",
               "tq-slideshow-arrow-left"
             )}
-            src={arrow}
+            src={arrowRight}
           />
         </div>
 

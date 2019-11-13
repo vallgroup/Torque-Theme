@@ -2,6 +2,7 @@ import styles from "./Template_Cannery.scss";
 import React, { memo } from "react";
 import classnames from "classnames";
 import PropTypes from "prop-types";
+import './Template_Cannery.scss'
 
 // renders all possible meta and fields
 
