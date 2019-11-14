@@ -6,7 +6,7 @@ import useSlideshowFetch from "../hooks/useSlideshowFetch";
 import Slideshow from "../components/Slideshow";
 import {
   Template_0,
-  Template_Interra,
+  Template_Atlantic,
   Template_UST_Floorplans,
   Template_UST_Locations
 } from "./templates";
@@ -33,7 +33,7 @@ const PostSlideshow = ({ site, postIds, interval, template }) => {
               return <Template_UST_Locations post={post} />;
 
             case "interra":
-              return <Template_Interra post={post} />;
+              return <Template_Atlantic post={post} />;
 
             case "0":
             default:
