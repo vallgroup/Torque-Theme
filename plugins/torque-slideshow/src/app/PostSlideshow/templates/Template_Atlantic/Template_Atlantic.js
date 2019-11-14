@@ -1,4 +1,4 @@
-import styles from "./Template_Interra.scss";
+import styles from "./Template_Atlantic.scss";
 import React, { memo } from "react";
 import classnames from "classnames";
 import PropTypes from "prop-types";
