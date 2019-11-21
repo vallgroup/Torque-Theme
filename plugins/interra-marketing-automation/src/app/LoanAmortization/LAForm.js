@@ -17,7 +17,7 @@ import {
 import {formatMoney} from '../lib/helpers'
 
 const LAForm = ({loanAmo, updateAmoTable}) => {
-	console.log(loanAmo)
+	// console.log(loanAmo)
 	//
 	const [loading       , setLoading]       = useState(true)
 	const [term          , setTerm]          = useState(loanAmo.term)
