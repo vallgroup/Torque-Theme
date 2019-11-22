@@ -7,7 +7,6 @@ import './Template_Cannery.scss'
 // renders all possible meta and fields
 
 const Template = ({ post }) => {
-  console.log(post)
   const title = post?.post_title;
   const floorPlan = post?.thumbnail;
   const rsf = post?.meta?.floor_plan_rsf;
