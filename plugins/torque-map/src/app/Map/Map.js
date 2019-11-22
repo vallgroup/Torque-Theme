@@ -130,7 +130,7 @@ export class TorqueMap extends React.Component {
         return (<div
           className={`torque-map-infowindow`}
         >
-          <h3>{this.selectedPlace.name}</h3>
+          <h3>{this.state.selectedPlace.name}</h3>
         </div>)
       }
     } else {
