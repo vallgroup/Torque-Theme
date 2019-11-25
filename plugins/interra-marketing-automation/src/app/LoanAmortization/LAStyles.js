@@ -111,6 +111,7 @@ export const LoanAmoSchedule = styled.div`
 	max-height: 500px;
 
 ::-webkit-scrollbar {
+  height:5px;
   width:5px;
 }
 
