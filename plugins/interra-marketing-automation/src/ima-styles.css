@@ -88,6 +88,15 @@
 	text-align: center;
 }
 
+.ima-table-row td.align-left {
+	text-align: left;
+}
+
+.ima-table-row td.align-right {
+	text-align: right;
+	padding-right: 1em;
+}
+
 
 /* Gallery */
 
