@@ -226,14 +226,14 @@ class Interra_Marketing_Automation_Income_Expenses {
 					continue;
 				?>
 				<tr class="ima-table-row">
-					<td class="align-center">
+					<td class="align-left">
 						<?php echo strip_tags( $label ); ?>
 					</td>
-					<td class="align-center">
-						<?php $this->output_in_dollars( $value ); ?>
+					<td class="align-right">
+						<?php output_in_dollars( $value ); ?>
 					</td>
-					<td class="align-center">
-						<?php $this->output_in_dollars( $value / $this->units_rented ); ?>
+					<td class="align-right">
+						<?php output_in_dollars( $value / $this->units_rented ); ?>
 					</td>
 				</tr>
 				<?php
@@ -253,19 +253,15 @@ class Interra_Marketing_Automation_Income_Expenses {
 						<?php echo strip_tags( $label ); ?>
 					</th>
 					<th class="align-center">
-						<?php $this->output_in_dollars( $value ); ?>
+						<?php output_in_dollars( $value ); ?>
 					</th>
 					<th class="align-center">
-						<?php $this->output_in_dollars( $value / $this->units_rented ); ?>
+						<?php output_in_dollars( $value / $this->units_rented ); ?>
 					</th>
 				</tr>
 				<?php
 			}
 		?></tfoot><?php
-	}
-
-	public function output_in_dollars( $amount ) {
-		echo '$', (number_format( floatval( $amount ), 2, '.', ',' ));
 	}
 }
 
