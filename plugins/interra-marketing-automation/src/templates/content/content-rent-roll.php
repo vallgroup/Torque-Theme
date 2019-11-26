@@ -16,6 +16,7 @@
  */
 $units = get_field( 'units' );
 
+// Is this necessary? Can be extracted from the $units array key values?
 $col_keys = array(
 	"address",
 	"type",
@@ -56,8 +57,19 @@ $col_keys = array(
 
 							<td class="align-center"><?php echo strip_tags( $key + 1 ); ?></td>
 
-							<?php foreach ( (array) $column as $unit ) { ?>
-								<td class="align-center"><?php echo strip_tags( $unit ); ?></td>
+							<?php foreach ( (array) $column as $key => $unit ) { ?>
+								<td class="align-center"><?php
+									if ( $key === 'rent' ) {
+										// Format for monetary value
+										output_in_dollars( strip_tags( $unit ) );
+									} elseif ( $key === 'sq' ) {
+										// Format for area value
+										output_in_sq_ft( strip_tags( $unit ) );
+									} else {
+										// Simply output unit value
+										echo strip_tags( $unit );
+									}
+									?></td>
 							<?php } ?>
 
 						</tr>
