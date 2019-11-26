@@ -606,8 +606,8 @@ acf_add_local_field_group(array(
         'class' => '',
         'id' => '',
       ),
-      'display_format' => 'd/m/Y',
-      'return_format' => 'd/m/Y',
+      'display_format' => 'm/d/Y',
+      'return_format' => 'm/d/Y',
       'first_day' => 1,
     ),
     array(
@@ -1042,8 +1042,8 @@ IMPORTANT:<br />
             'class' => '',
             'id' => '',
           ),
-          'display_format' => 'd/m/Y',
-          'return_format' => 'd/m/Y',
+          'display_format' => 'm/d/Y',
+          'return_format' => 'm/d/Y',
           'first_day' => 1,
         ),
         array(
