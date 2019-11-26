@@ -27,6 +27,7 @@ define( 'Interra_Marketing_Automation_URL', plugin_dir_url(__FILE__) );
  * Require autoloader for plugin classes
  */
 require( Interra_Marketing_Automation_PATH . '/autoload.php' );
+require( Interra_Marketing_Automation_PATH . '/helpers/formatting-helpers.php' );
 
 require_once( Interra_Marketing_Automation_PATH . '/includes/acf/ima-acf-class.php');
 
