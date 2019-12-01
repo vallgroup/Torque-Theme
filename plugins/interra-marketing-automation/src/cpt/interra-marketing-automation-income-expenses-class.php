@@ -53,6 +53,12 @@ class Interra_Marketing_Automation_Income_Expenses {
 			'Pet Fees'       => $pet_fees,
 		);
 
+		// Add extra income
+		foreach ( (array) get_field( 'extra_income' ) as $income_pair ) {
+			// $income_pair = ['income_name' => 'income_amount']
+			$this->income_table_content[ $income_pair['income_name'] ] = $income_pair['income_amount'];
+		}
+
 		$this->income_total = $this->add_income_total();
 
 		$this->income_table_totals = array(
