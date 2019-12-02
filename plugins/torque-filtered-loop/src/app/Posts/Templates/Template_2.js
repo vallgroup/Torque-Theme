@@ -21,7 +21,7 @@ class Template_2 extends React.PureComponent {
 
         <div className={"content-wrapper"}>
           <a href={post.permalink}>
-            <h4 dangerouslySetInnerHTML={{ __html: post.post_title }} />
+            <h5 dangerouslySetInnerHTML={{ __html: post.post_title }} />
           </a>
 
           <div
@@ -30,7 +30,7 @@ class Template_2 extends React.PureComponent {
           />
 
           <a href={post.permalink}>
-            <button>View</button>
+            <button>Read On</button>
           </a>
 
           <div className={"post-terms-wrapper"}>{this.renderTerms()}</div>
