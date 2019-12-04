@@ -3,29 +3,34 @@
 /**
  * Structure array of arrays:
  * [[
-    "address"          => string
-    "type"             => string
-    "total_rooms"      => string
-    "sq"               => string
-    "rent"             => string
-    "lease_expiration" => string
-    "tenant_notes"     => string
-  ]]
+ *   "address"          => string
+ *   "type"             => string
+ *   "total_rooms"      => string
+ *   "sq"               => string
+ *   "rent"             => string
+ *   "lease_expiration" => string
+ *   "tenant_notes"     => string
+ * ]]
  *
  * @var [array]
  */
 $units = get_field( 'units' );
 
-// Is this necessary? Can be extracted from the $units array key values?
-$col_keys = array(
-	"address",
-	"type",
-	"total_rooms",
-	"sq_ft",
-	"rent",
-	"lease_expiration",
-	"tenant_notes",
-);
+// Holds the col keys for the columns that should be displayed
+$col_keys = [];
+// iterate through all units first, to find empty
+// columns within rows
+foreach ( (array) $units as $key => $column ) {
+	// check within each column for empty values
+	foreach ( (array) $column as $label => $value ) {
+		// add column key if value exists
+		// and key has not already been added
+		if ( ! empty( $value )
+		&& ! in_array( $label, $col_keys ) ) {
+			$col_keys[] = $label;
+		}
+	}
+}
 
 ?>
 
@@ -57,11 +62,22 @@ $col_keys = array(
 
 							<td class="align-center"><?php echo strip_tags( $key + 1 ); ?></td>
 
-							<?php foreach ( (array) $column as $key => $unit ) { ?>
+							<?php foreach ( (array) $column as $key => $unit ) {
+								// bail, if all rows in this column are empty
+								if ( ! in_array( $key, $col_keys ) )
+								 	continue; ?>
 								<td class="align-center"><?php
-									if ( $key === 'rent' ) {
-										// Format for monetary value
-										output_in_dollars( strip_tags( $unit ) );
+									if ( 'rent' === $key
+								 		|| 'market_rent' === $key ) {
+										// Added this additional if stmt for market_rent
+										// If no market rent was present, it would appear
+										// as $0.00 in the FE. That did not make sense. MV
+										if ( '' !== $unit ) {
+											// Format for monetary value
+											output_in_dollars( strip_tags( $unit ) );
+										} else {
+											echo '';
+										}
 									} elseif ( $key === 'sq' ) {
 										// Format for area value
 										output_in_sq_ft( strip_tags( $unit ) );
