@@ -160,7 +160,7 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 		</table><?php
 	}
 
-	public function output_table_rows( $rows = array() ) {
+	public function output_table_rows( $rows = array(), $expenses = false ) {
 
 		?><tbody><?php
 			foreach ( (array) $rows as $label => $value ) {
@@ -175,14 +175,14 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 						<?php if ( in_array( $label, $this->ratio_fields ) ) {
 							output_in_percentage( $value );
 						} else {
-							output_in_dollars( $value ); 
+							output_in_dollars( $value );
 						} ?>
 					</td>
 					<td class="align-right">
 						<?php if ( in_array( $label, $this->ratio_fields ) ) {
 							output_in_percentage( $value );
 						} else {
-							output_in_dollars( $value ); 
+							output_in_dollars( $value );
 						} ?>
 					</td>
 				</tr>

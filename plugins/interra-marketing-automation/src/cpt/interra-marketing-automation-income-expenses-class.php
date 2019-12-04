@@ -211,20 +211,22 @@ class Interra_Marketing_Automation_Income_Expenses {
 
 					<th>Current</th>
 
+					<th>% of Gross Income</th>
+
 					<th>Per Unit</th>
 
 				</tr>
 			</thead>
 
 			<?php
-				$this->output_table_rows( $this->expense_table_content );
-				$this->output_table_footer( $this->expense_table_totals );
+				$this->output_table_rows( $this->expense_table_content, true );
+				$this->output_table_footer( $this->expense_table_totals, true );
 			?>
 
 		</table><?php
 	}
 
-	public function output_table_rows( $rows = array() ) {
+	public function output_table_rows( $rows = array(), $expenses = false ) {
 
 		?><tbody><?php
 			foreach ( (array) $rows as $label => $value ) {
@@ -238,6 +240,13 @@ class Interra_Marketing_Automation_Income_Expenses {
 					<td class="align-right">
 						<?php output_in_dollars( $value ); ?>
 					</td>
+
+					<?php if ( $expenses ) { ?>
+						<td class="align-right">
+							<?php output_in_percentage( $value / $this->income_total ); ?>
+						</td>
+					<?php } ?>
+
 					<td class="align-right">
 						<?php output_in_dollars( $value / $this->units_rented ); ?>
 					</td>
@@ -247,7 +256,7 @@ class Interra_Marketing_Automation_Income_Expenses {
 		?></tbody><?php
 	}
 
-	public function output_table_footer( $rows = array() ) {
+	public function output_table_footer( $rows = array(), $expenses = false ) {
 
 		?><tfoot><?php
 			foreach ( (array) $rows as $label => $value ) {
@@ -261,6 +270,13 @@ class Interra_Marketing_Automation_Income_Expenses {
 					<th class="align-center">
 						<?php output_in_dollars( $value ); ?>
 					</th>
+
+					<?php if ( $expenses ) { ?>
+						<th class="align-center">
+							<?php output_in_percentage( $value / $this->income_total ); ?>
+						</th>
+					<?php } ?>
+
 					<th class="align-center">
 						<?php output_in_dollars( $value / $this->units_rented ); ?>
 					</th>
