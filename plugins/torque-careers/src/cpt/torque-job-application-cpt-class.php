@@ -61,7 +61,9 @@ class Torque_Job_Application_CPT {
 			'editor'  // serialized array of the application data to keep it flexible
 		),
 		'menu_icon'				=> 'dashicons-id',
-		'menu_position'		=> 20
+		'menu_position'		=> 20,
+		// ensure that no application appears on search
+		'exclude_from_search' => true,
 	);
 
 	/**
