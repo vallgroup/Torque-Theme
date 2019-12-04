@@ -91,12 +91,15 @@ class Interra_Marketing_Automation_Income_Expenses {
 			'Water'             => $water,
 			'Trash'             => $trash,
 			'Elevator'          => $elevator,
-			'Extra Expenses'    => $extra_expenses,
 			'Management'        => $management,
 			'Janitorial'        => $janitorial,
 			'Turnover Costs'    => $turnover_costs,
 			'Misc And Reserves' => $misc_and_reserves,
 		);
+
+		foreach ( $extra_expenses as $expense ) {
+			$this->expense_table_content[ $expense['expense_name'] ] = $expense['expense_amount'];
+		}
 
 		$this->expenses_total = $this->add_expenses_total(  );
 
