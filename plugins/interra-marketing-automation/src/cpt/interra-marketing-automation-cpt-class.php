@@ -172,6 +172,7 @@ class Interra_Marketing_Automation_CPT {
 			'sq',
 			'rent',
 			'lease_expiration',
+			'market_rent',
 			'tenant_notes',
 		);
 
