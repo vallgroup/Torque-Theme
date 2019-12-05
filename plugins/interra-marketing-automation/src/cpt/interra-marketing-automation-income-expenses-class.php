@@ -21,7 +21,13 @@ class Interra_Marketing_Automation_Income_Expenses {
 
 	protected $rent_roll_total = 0;
 
+	protected $mkt_rent_roll_total = 0;
+
 	protected $units_rented = 0;
+
+	protected $mkt_expense_table_content = 0;
+	protected $mkt_expenses_total = 0;
+	protected $mkt_expense_table_totals = 0;
 
 	public function __construct() {
 		$this->get_data();
@@ -32,7 +38,10 @@ class Interra_Marketing_Automation_Income_Expenses {
 		$this->get_rent_roll_total();
 		$this->get_number_of_rented_units();
 		$this->get_income_data();
+		$this->get_mkt_income_data();
 		$this->get_expenses_data();
+		$this->get_mkt_expenses_data();
+
 	}
 
 	/*
@@ -63,6 +72,35 @@ class Interra_Marketing_Automation_Income_Expenses {
 
 		$this->income_table_totals = array(
 			'Gross Income' => $this->income_total,
+		);
+	}
+
+	private function get_mkt_income_data() {
+		$mkt_parking_income = get_field('mkt_parking_income');
+		$mkt_vacancy        = get_field('mkt_vacancy');
+		$mkt_laundry        = get_field('mkt_laundry');
+		$mkt_pet_fees       = get_field('mkt_pet_fees');
+		// get from market
+		$rent_total     = $this->get_mkt_rent_roll_total();
+
+		$this->income_mkt_table_content = array(
+			'Rental Income'  => $rent_total,
+			'Vacancy'        => $mkt_vacancy,
+			'Parking Income' => $mkt_parking_income,
+			'Laundry Income' => $mkt_laundry,
+			'Pet Fees'       => $mkt_pet_fees,
+		);
+
+		// Add extra income
+		foreach ( (array) get_field( 'mkt_extra_income' ) as $income_pair ) {
+			// $income_pair = ['income_name' => 'income_amount']
+			$this->income_mkt_table_content[ $income_pair['income_name'] ] = $income_pair['income_amount'];
+		}
+		// get from market
+		$this->income_mkt_total = $this->add_mkt_income_total();
+
+		$this->income_mkt_table_totals = array(
+			'Gross Income' => $this->income_mkt_total,
 		);
 	}
 
@@ -97,7 +135,7 @@ class Interra_Marketing_Automation_Income_Expenses {
 			'Misc And Reserves' => $misc_and_reserves,
 		);
 
-		foreach ( $extra_expenses as $expense ) {
+		foreach ( (array) $extra_expenses as $expense ) {
 			$this->expense_table_content[ $expense['expense_name'] ] = $expense['expense_amount'];
 		}
 
@@ -105,6 +143,45 @@ class Interra_Marketing_Automation_Income_Expenses {
 
 		$this->expense_table_totals = array(
 			'Gross Expenses' => $this->expenses_total,
+		);
+	}
+
+	private function get_mkt_expenses_data() {
+		$mkt_taxes             = get_field('mkt_taxes');
+		$mkt_insurance         = get_field('mkt_insurance');
+		$mkt_gas               = get_field('mkt_gas');
+		$mkt_electric          = get_field('mkt_electric');
+		$mkt_water             = get_field('mkt_water');
+		$mkt_trash             = get_field('mkt_trash');
+		$mkt_elevator          = get_field('mkt_elevator');
+		$mkt_extra_expenses    = get_field('mkt_extra_expenses');
+		$mkt_management        = get_field('mkt_management');
+		$mkt_janitorial        = get_field('mkt_janitorial');
+		$mkt_turnover_costs    = get_field('mkt_turnover_costs');
+		$mkt_misc_and_reserves = get_field('mkt_misc_and_reserves');
+
+		$this->mkt_expense_table_content = array(
+			'Taxes'             => $mkt_taxes,
+			'Insurance'         => $mkt_insurance,
+			'Gas'               => $mkt_gas,
+			'Electric'          => $mkt_electric,
+			'Water'             => $mkt_water,
+			'Trash'             => $mkt_trash,
+			'Elevator'          => $mkt_elevator,
+			'Management'        => $mkt_management,
+			'Janitorial'        => $mkt_janitorial,
+			'Turnover Costs'    => $mkt_turnover_costs,
+			'Misc And Reserves' => $mkt_misc_and_reserves,
+		);
+
+		foreach ( (array) $mkt_extra_expenses as $expense ) {
+			$this->mkt_expense_table_content[ $expense['expense_name'] ] = $expense['expense_amount'];
+		}
+
+		$this->mkt_expenses_total = $this->add_expenses_total(  );
+
+		$this->mkt_expense_table_totals = array(
+			'Gross Expenses' => $this->mkt_expenses_total,
 		);
 	}
 
@@ -132,6 +209,23 @@ class Interra_Marketing_Automation_Income_Expenses {
 		return $this->rent_roll_total;
 	}
 
+	private function get_mkt_rent_roll_total() {
+
+		if ( 0 < $this->mkt_rent_roll_total ) {
+			return $this->mkt_rent_roll_total;
+		}
+
+		foreach ( $this->rent_roll as $unit ) {
+			if ( isset( $unit['market_rent'] )
+				&& ! empty( $unit['market_rent'] ) ) {
+				$rental_amount = floatval( $unit['market_rent'] );
+				$this->mkt_rent_roll_total = $this->mkt_rent_roll_total + $rental_amount;
+			}
+		}
+
+		return $this->mkt_rent_roll_total;
+	}
+
 	private function get_number_of_rented_units() {
 
 		$this->units_rented = 0;
@@ -150,6 +244,16 @@ class Interra_Marketing_Automation_Income_Expenses {
 	protected function add_expenses_total(  ) {
 		$total_expenses = 0;
 		foreach ((array) $this->expense_table_content as $key => $value) {
+			if ( empty( $value ) ) continue;
+
+			$total_expenses = ($total_expenses + floatval( $value ) );
+		}
+		return $total_expenses;
+	}
+
+	protected function add_mkt_expenses_total(  ) {
+		$total_expenses = 0;
+		foreach ((array) $this->mkt_expense_table_content as $key => $value) {
 			if ( empty( $value ) ) continue;
 
 			$total_expenses = ($total_expenses + floatval( $value ) );
@@ -183,6 +287,32 @@ class Interra_Marketing_Automation_Income_Expenses {
 		return $total_income;
 	}
 
+	protected function add_mkt_income_total() {
+		$total_income = 0;
+		$rental_income = 0;
+		$vacancy_percentage = 0;
+		$vacancy_dollars = 0;
+		foreach ( (array) $this->income_mkt_table_content as $key => $value) {
+			if ( empty( $value ) ) continue;
+
+			if ( 'Rental Income' === $key ) {
+				$rental_income = floatval( $value );
+			}
+
+			if ( 'Vacancy' === $key ) {
+				$vacancy_percentage = floatval( ($value / 100) );
+				continue;
+			}
+
+			$total_income = ($total_income + floatval( $value ) );
+		}
+
+		$vacancy_dollars = ($rental_income * $vacancy_percentage);
+		$total_income = ($total_income - $vacancy_dollars);
+
+		return $total_income;
+	}
+
 	public function output_income_table() {
 		?><table class="ima-income-table ima-table">
 			<thead>
@@ -190,7 +320,9 @@ class Interra_Marketing_Automation_Income_Expenses {
 
 					<th>Income Summary</th>
 
-					<th>Current</th>
+					<th><?php echo strip_tags( get_field( 'inc_column_name' ) ) ?></th>
+
+					<th><?php echo strip_tags( get_field( 'mkt_inc_column_name' ) ) ?></th>
 
 					<th>Per Unit</th>
 
@@ -198,7 +330,7 @@ class Interra_Marketing_Automation_Income_Expenses {
 			</thead>
 
 			<?php
-				$this->output_table_rows( $this->income_table_content );
+				$this->output_income_table_rows();
 				$this->output_table_footer( $this->income_table_totals );
 			?>
 
@@ -212,7 +344,9 @@ class Interra_Marketing_Automation_Income_Expenses {
 
 					<th>Expense Summary</th>
 
-					<th>Current</th>
+					<th><?php echo strip_tags( get_field( 'exp_column_name' ) ) ?></th>
+
+					<th><?php echo strip_tags( get_field( 'mkt_exp_column_name' ) ) ?></th>
 
 					<th>% of Gross Income</th>
 
@@ -222,7 +356,7 @@ class Interra_Marketing_Automation_Income_Expenses {
 			</thead>
 
 			<?php
-				$this->output_table_rows( $this->expense_table_content, true );
+				$this->output_expenses_table_rows();
 				$this->output_table_footer( $this->expense_table_totals, true );
 			?>
 
@@ -249,6 +383,73 @@ class Interra_Marketing_Automation_Income_Expenses {
 							<?php output_in_percentage( $value / $this->income_total ); ?>
 						</td>
 					<?php } ?>
+
+					<td class="align-right">
+						<?php output_in_dollars( $value / $this->units_rented ); ?>
+					</td>
+				</tr>
+				<?php
+			}
+		?></tbody><?php
+	}
+
+	public function output_income_table_rows() {
+
+		?><tbody><?php
+			foreach ( (array) $this->income_table_content as $label => $value ) {
+				if ( empty( $value ) )
+					continue;
+				?>
+				<tr class="ima-table-row">
+					<td class="align-left">
+						<?php echo strip_tags( $label ); ?>
+					</td>
+
+					<td class="align-right">
+						<?php output_in_dollars( $value ); ?>
+					</td>
+
+					<td class="align-right">
+						<?php if ( isset( $this->income_mkt_table_content[ $label ] )
+							&& ! empty( $this->income_mkt_table_content[ $label ] ) ) { ?>
+							<?php output_in_dollars( $this->income_mkt_table_content[ $label ] ); ?>
+						<?php } ?>
+					</td>
+
+					<td class="align-right">
+						<?php output_in_dollars( $value / $this->units_rented ); ?>
+					</td>
+				</tr>
+				<?php
+			}
+		?></tbody><?php
+	}
+
+	public function output_expenses_table_rows(  ) {
+
+		?><tbody><?php
+			foreach ( (array) $this->expense_table_content as $label => $value ) {
+				if ( empty( $value ) )
+					continue;
+				?>
+				<tr class="ima-table-row">
+					<td class="align-left">
+						<?php echo strip_tags( $label ); ?>
+					</td>
+					<td class="align-right">
+						<?php output_in_dollars( $value ); ?>
+					</td>
+
+					<td class="align-right">
+						<?php if ( isset( $this->mkt_expense_table_content[ $label ] )
+							&& ! empty( $this->mkt_expense_table_content[ $label ] ) ) { ?>
+							<?php output_in_dollars( $this->mkt_expense_table_content[ $label ] ); ?>
+						<?php } ?>
+					</td>
+
+					<td class="align-right">
+						<?php output_in_percentage( $value / $this->income_total ); ?>
+					</td>
 
 					<td class="align-right">
 						<?php output_in_dollars( $value / $this->units_rented ); ?>
