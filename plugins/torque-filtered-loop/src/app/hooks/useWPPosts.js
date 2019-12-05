@@ -13,9 +13,10 @@ export default (site, activeTerm, params, postsPerPage) => {
         try {
           params["posts_per_page"] = postsPerPage;
           params["paged"] = page;
-
+          const timestamp = `?timestamp=${Date.now()}`
+          const _url = `${site}/wp-json/filtered-loop/v1/posts${timestamp}`
           const response = await axios.get(
-            `${site}/wp-json/filtered-loop/v1/posts`,
+            _url,
             {
               params
             }
