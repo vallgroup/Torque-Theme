@@ -178,7 +178,7 @@ class Interra_Marketing_Automation_Income_Expenses {
 			$this->mkt_expense_table_content[ $expense['expense_name'] ] = $expense['expense_amount'];
 		}
 
-		$this->mkt_expenses_total = $this->add_expenses_total(  );
+		$this->mkt_expenses_total = $this->add_mkt_expenses_total(  );
 
 		$this->mkt_expense_table_totals = array(
 			'Gross Expenses' => $this->mkt_expenses_total,
@@ -331,7 +331,7 @@ class Interra_Marketing_Automation_Income_Expenses {
 
 			<?php
 				$this->output_income_table_rows();
-				$this->output_table_footer( $this->income_table_totals );
+				$this->output_income_table_footer();
 			?>
 
 		</table><?php
@@ -357,7 +357,7 @@ class Interra_Marketing_Automation_Income_Expenses {
 
 			<?php
 				$this->output_expenses_table_rows();
-				$this->output_table_footer( $this->expense_table_totals, true );
+				$this->output_expenses_table_footer();
 			?>
 
 		</table><?php
@@ -406,23 +406,67 @@ class Interra_Marketing_Automation_Income_Expenses {
 					</td>
 
 					<td class="align-right">
-						<?php output_in_dollars( $value ); ?>
+						<?php
+							if ( 'Vacancy' === $label ) {
+								output_in_percentage( ($value / 100) );
+							}else {
+								output_in_dollars( $value );
+							} ?>
 					</td>
 
 					<td class="align-right">
 						<?php if ( isset( $this->income_mkt_table_content[ $label ] )
 							&& ! empty( $this->income_mkt_table_content[ $label ] ) ) { ?>
-							<?php output_in_dollars( $this->income_mkt_table_content[ $label ] ); ?>
+							<?php if ( 'Vacancy' === $label ) {
+									output_in_percentage( ($this->income_mkt_table_content[ $label ] / 100) );
+								} else {
+									output_in_dollars( $this->income_mkt_table_content[ $label ] );
+								} ?>
 						<?php } ?>
 					</td>
 
 					<td class="align-right">
-						<?php output_in_dollars( $value / $this->units_rented ); ?>
+						<?php if ( 'Vacancy' === $label ) {
+								output_in_percentage( (($value / $this->units_rented) / 100) );
+							} else {
+								output_in_dollars( $value / $this->units_rented );
+							} ?>
 					</td>
 				</tr>
 				<?php
 			}
 		?></tbody><?php
+	}
+
+	public function output_income_table_footer() {
+
+		?><tfoot><?php
+			foreach ( (array) $this->income_table_totals as $label => $value ) {
+				if ( empty( $value ) )
+					continue;
+				?>
+				<tr class="ima-table-row">
+					<th class="align-center">
+						<?php echo strip_tags( $label ); ?>
+					</th>
+					<th class="align-center">
+						<?php output_in_dollars( $value ); ?>
+					</th>
+
+					<th class="align-right">
+						<?php if ( isset( $this->income_mkt_table_totals[ $label ] )
+							&& ! empty( $this->income_mkt_table_totals[ $label ] ) ) { ?>
+							<?php output_in_dollars( $this->income_mkt_table_totals[ $label ] ); ?>
+						<?php } ?>
+					</th>
+
+					<th class="align-center">
+						<?php output_in_dollars( $value / $this->units_rented ); ?>
+					</th>
+				</tr>
+				<?php
+			}
+		?></tfoot><?php
 	}
 
 	public function output_expenses_table_rows(  ) {
@@ -458,6 +502,41 @@ class Interra_Marketing_Automation_Income_Expenses {
 				<?php
 			}
 		?></tbody><?php
+	}
+
+	public function output_expenses_table_footer() {
+
+		?><tfoot><?php
+			foreach ( (array) $this->expense_table_totals as $label => $value ) {
+				if ( empty( $value ) )
+					continue;
+				?>
+				<tr class="ima-table-row">
+					<th class="align-center">
+						<?php echo strip_tags( $label ); ?>
+					</th>
+					<th class="align-center">
+						<?php output_in_dollars( $value ); ?>
+					</th>
+
+					<th class="align-right">
+						<?php if ( isset( $this->mkt_expense_table_totals[ $label ] )
+							&& ! empty( $this->mkt_expense_table_totals[ $label ] ) ) { ?>
+							<?php output_in_dollars( $this->mkt_expense_table_totals[ $label ] ); ?>
+						<?php } ?>
+					</th>
+
+					<th class="align-center">
+						<?php output_in_percentage( $value / $this->income_total ); ?>
+					</th>
+
+					<th class="align-center">
+						<?php output_in_dollars( $value / $this->units_rented ); ?>
+					</th>
+				</tr>
+				<?php
+			}
+		?></tfoot><?php
 	}
 
 	public function output_table_footer( $rows = array(), $expenses = false ) {
