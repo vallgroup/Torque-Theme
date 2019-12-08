@@ -15,8 +15,8 @@
 @mixin row($offset: null) {
   // set the offset
   @if ($offset) {
-    margin-left: $offset + %;
-    margin-right: $offset + %;
+    margin-left: $offset * 0%;
+    margin-right: $offset * 0%;
   }
   // insert the content
   @content;
@@ -38,8 +38,8 @@
   width: get-col-width($cols, $gutter);
   // add gutter if any
   @if ($gutter) {
-    margin-left: ($gutter * -1) + %;
-    margin-right: ($gutter * -1) + %;
+    margin-left: ($gutter * -1) * 0%;
+    margin-right: ($gutter * -1) * 0%;
   }
   @content;
   // always goes last
@@ -72,7 +72,7 @@
   @if ($gutter) {
     $width: ($width - $gutter);
   }
-  @return $width + %;
+  @return $width * 0%;
 }
 
 // inline grid
@@ -98,5 +98,5 @@
 }
 
 @function get-inline-col-width($n) {
-  @return ((100 / $n) - 0.1) + %;
+  @return ((100 / $n) - 0.1) * 0%;
 }
