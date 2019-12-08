@@ -28,14 +28,14 @@ const config = {
     rules: [
       {
         test: projectConfig.webpackDefaults.js.test,
-        exclude: ["/node_modules/", "statics"],
+        exclude: ["/node_modules/", "/src/statics"],
         use: {
           loader: "babel-loader"
         }
       },
       {
         test: projectConfig.webpackDefaults.css.test,
-        exclude: ["/node_modules/", "statics"],
+        exclude: ["/node_modules/", "/src/statics"],
         use: ExtractTextPlugin.extract({
           fallback: "style-loader?sourceMap",
           use: projectConfig.webpackDefaults.css.loaders
@@ -43,7 +43,7 @@ const config = {
       },
       {
         test: projectConfig.webpackDefaults.scss.test,
-        exclude: ["/node_modules/", "statics"],
+        exclude: ["/node_modules/", "/src/statics"],
         use: ExtractTextPlugin.extract({
           fallback: "style-loader?sourceMap",
           // resolve-url-loader may be chained before sass-loader if necessary
@@ -52,12 +52,12 @@ const config = {
       },
       {
         test: projectConfig.webpackDefaults.images.test,
-        exclude: ["/node_modules/", "statics"],
+        exclude: ["/node_modules/", "/src/statics"],
         use: projectConfig.webpackDefaults.images.loaders
       },
       {
         test: projectConfig.webpackDefaults.fonts.test,
-        exclude: ["/node_modules/", "statics"],
+        exclude: ["/node_modules/", "/src/statics"],
         use: projectConfig.webpackDefaults.fonts.loaders
       }
     ]
@@ -72,7 +72,7 @@ const config = {
     }),
     new CopyWebpackPlugin([
       {
-        from: path.join(srcDir, "statics/**/*"),
+        from: path.join(srcDir, "/src/statics/**/*"),
         to: buildDir
       },
       { from: path.join(srcDir, "style.css"), to: buildDir },
