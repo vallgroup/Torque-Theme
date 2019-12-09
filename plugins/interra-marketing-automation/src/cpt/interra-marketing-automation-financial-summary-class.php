@@ -3,7 +3,7 @@
 /**
  *
  */
-class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_Automation_Income_Expenses {
+class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_Automation_Expenses {
 
 	protected $investment_table_content = array();
 
@@ -67,21 +67,21 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 		$this->investment_table_content = array(
 			'Price'                      => $this->property_value,
 			'Price Per Unit'             => ( $this->property_value / count( $this->rent_roll ) ), // Price / Num Units
-			'GRM'                        => ( $this->property_value / $this->rent_roll_total ), // Should use a ratio format
+			'GRM'                        => ( $this->property_value / $this->rent_roll_total['current'] ), // Should use a ratio format
 			'CAP Rate'                   => ( $this->noi / $this->property_value ), // NOI / Price
 			'Cash-on-Cash Return (Yr. 1)' => ( $this->operating_table_content['Pre-Tax Cash Flow'] / $this->down_payment ),
-			'Total Return (Yr. 1)'        => ( $this->income_total / $this->financing_table_content['Debt Service'] ),
+			'Total Return (Yr. 1)'        => ( $this->income_total['current'] / $this->financing_table_content['Debt Service'] ),
 			'Debt Coverage Ratio'        => ( $this->noi / ( $this->morgage_payment['principal_interest'] * 12 ) ), // Total NOI / Total Debt Service ??
 		);
 	}
 
 	protected function operating_data() {
 		$this->operating_table_content = array(
-			'Gross Scheduled Income' => $this->rent_roll_total,
-			'Additional Income'      => ( $this->income_total - $this->rent_roll_total ),
-			'Total Scheduled Income' => $this->income_total,
-			'Vacancy Cost (3%)'      => $this->income_table_content['Vacancy'],
-			'Gross Income'           => $this->income_total, // Confirm same as total scheduled income?
+			'Gross Scheduled Income' => $this->rent_roll_total['current'],
+			'Additional Income'      => $this->income_total['current'] - $this->rent_roll_total['current'],
+			'Total Scheduled Income' => $this->income_total['current'],
+			'Vacancy Cost (3%)'      => isset( $this->income_table_content['Vacancy'] ) ? $this->income_table_content['Vacancy'] : 0,
+			'Gross Income'           => $this->income_total['current'], // Confirm same as total scheduled income?
 			'Operating Expenses'     => $this->expenses_total,
 			'Pre-Tax Cash Flow'      => ( $this->noi - ( $this->morgage_payment['principal_interest'] * 12 ) ),
 		);

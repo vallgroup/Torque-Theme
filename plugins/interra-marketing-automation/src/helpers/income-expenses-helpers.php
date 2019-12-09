@@ -145,11 +145,11 @@ function output_expenses_table_rows( $rows, $data ) {
         </td>
 
         <td class="align-right">
-          <?php //output_in_percentage( $row['current'] / $this->income_total ); ?>
+          <?php output_in_percentage( $row['current'] / $data['income_total']['current'] ); ?>
         </td>
 
         <td class="align-right">
-          <?php //output_in_dollars( $row['current'] / $this->units_rented ); ?>
+          <?php output_in_dollars( $row['current'] / $data['units_rented'] ); ?>
         </td>
       </tr>
       <?php
@@ -177,11 +177,11 @@ function output_expenses_table_footer( $footer, $data ) {
         </th>
 
         <th class="align-center">
-          <?php //output_in_percentage( $row['current'] / $this->income_total ); ?>
+          <?php output_in_percentage( $row['current'] / $data['income_total']['current'] ); ?>
         </th>
 
         <th class="align-center">
-          <?php //output_in_dollars( $row['current'] / $this->units_rented ); ?>
+          <?php output_in_dollars( $row['current'] / $data['units_rented'] ); ?>
         </th>
       </tr>
       <?php

@@ -54,9 +54,7 @@ class Interra_Marketing_Automation_Income {
 	}
 
 	private function get_units() {
-		if ( empty( $this->rent_roll ) ) {
-			$this->rent_roll = get_field( 'units' );
-		}
+		$this->rent_roll = get_field( 'units' );
 		return $this->rent_roll;
 	}
 
