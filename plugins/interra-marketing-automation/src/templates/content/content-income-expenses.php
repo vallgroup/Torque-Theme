@@ -1,6 +1,10 @@
 <?php
 
-$income_expenses_class = new Interra_Marketing_Automation_Income_Expenses();
+require_once( Interra_Marketing_Automation_PATH . '/helpers/income-expenses-helpers.php' );
+
+$expenses_class = new Interra_Marketing_Automation_Expenses();
+
+$income_class = new Interra_Marketing_Automation_Income();
 
 ?>
 
@@ -14,7 +18,7 @@ $income_expenses_class = new Interra_Marketing_Automation_Income_Expenses();
 
 			<div class="ima-horizontal-scroll">
 
-				<?php $income_expenses_class->output_income_table(); ?>
+				<?php output_income_table( $income_class->get_table_info() ); ?>
 
 			</div>
 
@@ -22,7 +26,7 @@ $income_expenses_class = new Interra_Marketing_Automation_Income_Expenses();
 
 			<div class="ima-horizontal-scroll">
 
-				<?php $income_expenses_class->output_expenses_table(); ?>
+				<?php output_expenses_table( $expenses_class->get_table_info() ); ?>
 
 			</div>
 
