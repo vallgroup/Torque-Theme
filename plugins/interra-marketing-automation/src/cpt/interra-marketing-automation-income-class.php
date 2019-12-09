@@ -11,6 +11,8 @@ class Interra_Marketing_Automation_Income {
 
 	protected $income_table_totals = array();
 
+	protected $vacancy = array();
+
 	protected $rent_roll = array();
 
 	protected $rent_roll_total = array(
@@ -21,13 +23,15 @@ class Interra_Marketing_Automation_Income {
 	protected $units_rented = 0;
 
 	public function __construct() {
+		$this->vacancy = get_field( 'vacancy' );
+
+		$this->curr_col_name = get_field( 'inc_curr_col_name' );
+		$this->mkt_col_name = get_field( 'inc_mkt_col_name' );
+
 		$this->get_units();
 		$this->get_rent_roll_total();
 		$this->get_number_of_rented_units();
 		$this->get_income_data();
-
-		$this->curr_col_name = get_field( 'inc_curr_col_name' );
-		$this->mkt_col_name = get_field( 'inc_mkt_col_name' );
 	}
 
 	public function get_table_info() {
@@ -98,6 +102,7 @@ class Interra_Marketing_Automation_Income {
  		$income_rows = get_field( 'income' );
 		//
 		$this->income_table_content['Rental Income'] = $this->rent_roll_total;
+		$this->income_table_content['Vacancy'] = $this->vacancy;
  		// format income
  		foreach ( (array) $income_rows as $income ) {
  			$key = strip_tags( $income['income_name'] );
@@ -125,18 +130,18 @@ class Interra_Marketing_Automation_Income {
 			$label_to_compare = strtolower( $key );
 
 			if ( 'rental income' === $label_to_compare ) {
-				$rental_income['current'] = $value['current'];
-				$rental_income['market'] = $value['market'];
+				$rental_income['current'] = (float) $value['current'];
+				$rental_income['market'] = (float) $value['market'];
 			}
 
 			if ( 'vacancy' === $label_to_compare ) {
-				$vacancy_percentage['current'] = ($value['current'] / 100);
-				$vacancy_percentage['market'] = ($value['market'] / 100);
+				$vacancy_percentage['current'] = ((float) $value['current'] / 100);
+				$vacancy_percentage['market'] = ((float) $value['market'] / 100);
 				continue;
 			}
 
-			$total_income['current'] = ($total_income['current'] + $value['current'] );
-			$total_income['market'] = ($total_income['market'] + $value['market'] );
+			$total_income['current'] = ($total_income['current'] + (float) $value['current'] );
+			$total_income['market'] = ($total_income['market'] + (float) $value['market'] );
 		}
 
 		$vacancy_dollars['current'] = ($rental_income['current'] * $vacancy_percentage['current']);
