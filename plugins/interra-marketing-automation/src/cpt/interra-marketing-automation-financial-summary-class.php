@@ -88,6 +88,7 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 	}
 
 	protected function financing_data() {
+
 		$this->financing_table_content = array(
 			'Down Payment'               => $this->down_payment,
 			'Loan Amount'                => $this->property_value - ( $this->property_value * ( $this->down_payment / 100 ) ),
@@ -208,7 +209,8 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 		// build our pament object
 		$principal_interest = round( $payment, 2 );
 		$interest = round( ( $monthly_rate * $principal ), 2 );
-		$principal = (float) number_format( ( $principal_interest - $interest ), 2 );
+		$principal = (float) ( $principal_interest - $interest );
+
 		return [
 			'principal_interest' 	=> $principal_interest,
 			'interest' 						=> $interest,
