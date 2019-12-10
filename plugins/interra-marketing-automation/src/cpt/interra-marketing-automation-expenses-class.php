@@ -5,9 +5,9 @@
  */
 class Interra_Marketing_Automation_Expenses Extends Interra_Marketing_Automation_Income {
 
-	protected $curr_col_name = '';
+	public $curr_col_name = '';
 
-	protected $mkt_col_name = '';
+	public $mkt_col_name = '';
 
 	protected $expense_table_content = array();
 
@@ -26,7 +26,7 @@ class Interra_Marketing_Automation_Expenses Extends Interra_Marketing_Automation
 
 	public function get_table_info() {
 		return array(
-			'columns' => [
+			'header' => [
 				'current' => $this->curr_col_name,
 				'market' => $this->mkt_col_name,
 			],

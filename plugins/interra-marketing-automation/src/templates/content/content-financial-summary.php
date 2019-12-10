@@ -1,5 +1,7 @@
 <?php
 
+require_once( Interra_Marketing_Automation_PATH . '/helpers/income-expenses-helpers.php' );
+
 $financial_summary_class = new Interra_Marketing_Automation_Financial_Summary();
 
 ?>
@@ -14,7 +16,7 @@ $financial_summary_class = new Interra_Marketing_Automation_Financial_Summary();
 
 			<div class="ima-horizontal-scroll">
 
-				<?php $financial_summary_class->output_investment_table(); ?>
+				<?php output_investment_table( $financial_summary_class->investment_table_content ); ?>
 
 			</div>
 
@@ -22,7 +24,7 @@ $financial_summary_class = new Interra_Marketing_Automation_Financial_Summary();
 
 			<div class="ima-horizontal-scroll">
 
-				<?php $financial_summary_class->output_operating_table(); ?>
+				<?php output_operating_table( $financial_summary_class->operating_table_content ); ?>
 
 			</div>
 
@@ -30,7 +32,7 @@ $financial_summary_class = new Interra_Marketing_Automation_Financial_Summary();
 
 			<div class="ima-horizontal-scroll">
 
-				<?php $financial_summary_class->output_financing_table(); ?>
+				<?php output_financing_table( $financial_summary_class->financing_table_content ); ?>
 
 			</div>
 

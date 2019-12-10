@@ -4,15 +4,18 @@
  *
  */
 function output_income_table( $table_data ) {
+
+  output_table( 'Income Summary', $table_data );
+
   ?><table class="ima-income-table ima-table">
     <thead>
       <tr class="ima-table-row">
 
         <th>Income Summary</th>
 
-        <th><?php echo $table_data['columns']['current']; ?></th>
+        <th><?php echo $table_data['header']['current']; ?></th>
 
-        <th><?php echo $table_data['columns']['market']; ?></th>
+        <th><?php echo $table_data['header']['market']; ?></th>
 
         <th>Per Unit</th>
 
@@ -105,9 +108,9 @@ function output_expenses_table( $table_data ) {
 
         <th>Expense Summary</th>
 
-        <th><?php echo $table_data['columns']['current']; ?></th>
+        <th><?php echo $table_data['header']['current']; ?></th>
 
-        <th><?php echo $table_data['columns']['market']; ?></th>
+        <th><?php echo $table_data['header']['market']; ?></th>
 
         <th>% of Gross Income</th>
 
@@ -188,5 +191,124 @@ function output_expenses_table_footer( $footer, $data ) {
     }
   ?></tfoot><?php
 }
+
+
+function output_investment_table( $rows = array() ) {
+  ?><table class="ima-investment-table ima-table">
+    <thead>
+      <tr class="ima-table-row">
+
+        <th>Investment Summary</th>
+
+        <th>Current</th>
+
+        <th>Pro-Forma</th>
+
+      </tr>
+    </thead>
+
+    <?php
+      output_table_rows( $rows );
+    ?>
+
+  </table><?php
+}
+
+function output_operating_table( $rows = array() ) {
+  ?><table class="ima-operating-table ima-table">
+    <thead>
+      <tr class="ima-table-row">
+
+        <th>Operating Summary</th>
+
+        <th>Current</th>
+
+        <th>Pro-Forma</th>
+
+      </tr>
+    </thead>
+
+    <?php
+      output_table_rows( $rows );
+    ?>
+
+  </table><?php
+}
+
+function output_financing_table( $rows = array() ) {
+  ?><table class="ima-financing-table ima-table">
+    <thead>
+      <tr class="ima-table-row">
+
+        <th>Financing Summary</th>
+
+        <th>Current</th>
+
+        <th>Pro-Forma</th>
+
+      </tr>
+    </thead>
+
+    <?php
+      output_table_rows( $rows );
+    ?>
+
+  </table><?php
+}
+
+function output_table( $title = '', $table = array() ) {
+  ?><table class="ima-financing-table ima-table">
+    <thead>
+      <tr class="ima-table-row">
+        <th><?php echo strip_tags( $title ); ?></th>
+
+        <?php foreach( $table['header'] as $column ) : ?>
+            <th><?php echo strip_tags( $column ); ?></th>
+        <?php endforeach; ?>
+      </tr>
+    </thead>
+    <?php
+      output_table_rows( $table['rows'] );
+      output_table_footer( $table['footer'] );
+  ?></table><?php
+}
+
+function output_table_rows( $rows = array() ) {
+  ?><tbody><?php
+    foreach ( (array) $rows as $label => $columns ) {
+      ?><tr class="ima-table-row">
+        <td class="align-left">
+          <?php echo strip_tags( $label ); ?>
+        </td><?php
+        // build the columns
+        foreach ( (array) $columns as $key => $col ) {
+          ?><td class="align-right">
+            <?php echo strip_tags( $col ); ?>
+          </td><?php
+        }
+      ?></tr><?php
+    }
+  ?></tbody><?php
+}
+
+function output_table_footer( $rows = array() ) {
+  ?><tfoot><?php
+    foreach ( (array) $rows as $label => $columns ) {
+      ?><tr class="ima-table-row">
+        <th class="align-left">
+          <?php echo strip_tags( $label ); ?>
+        </th><?php
+        // build the columns
+        foreach ( (array) $columns as $key => $col ) {
+          ?><th class="align-right">
+            <?php echo strip_tags( $col ); ?>
+          </th><?php
+        }
+      ?></tr><?php
+    }
+  ?></tfoot><?php
+}
+
+
 
 ?>
