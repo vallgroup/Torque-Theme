@@ -80,7 +80,7 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 			'Gross Scheduled Income' => $this->rent_roll_total['current'],
 			'Additional Income'      => $this->income_total['current'] - $this->rent_roll_total['current'],
 			'Total Scheduled Income' => $this->income_total['current'],
-			'Vacancy Cost (3%)'      => isset( $this->income_table_content['Vacancy'] ) ? $this->income_table_content['Vacancy'] : 0,
+			'Vacancy Cost ('.$this->vacancy['current'].'%)'      => (-($this->rent_roll_total['current'] * ($this->vacancy['current'] / 100))),
 			'Gross Income'           => $this->income_total['current'], // Confirm same as total scheduled income?
 			'Operating Expenses'     => $this->expenses_total,
 			'Pre-Tax Cash Flow'      => ( $this->noi - ( $this->morgage_payment['principal_interest'] * 12 ) ),
