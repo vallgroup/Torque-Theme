@@ -11,26 +11,18 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 
 	protected $financing_table_content = array();
 
-	protected $property_value = 0;
-
 	protected $noi = 0;
 
-	protected $down_payment = 0;
-
-	protected $interest_rate = 0;
-
-	protected $term = 0;
-
-	protected $morgage_payment = 0;
-
-	protected $ratio_fields = ['CAP Rate', 'Total Return (Yr. 1)', 'Debt Coverage Ratio'];
+	protected $ratio_fields = ['CAP Rate', 'Total Return (Yr. 1)', 'Debt Coverage Ratio', 'Down Payment'];
 
 	public function __construct() {
-		$this->property_value = floatval( get_field( 'property_value' ) );
+		$this->loan_amo->property_value = floatval( get_field( 'property_value' ) );
 		parent::__construct();
 
+		$this->loan_amo = new Interra_Marketing_Automation_Loan_Amo();
+
 		// must run last
-		$this->get_load_amo_data();
+		// $this->get_load_amo_data();
 		$this->operating_data();
 		$this->get_noi();
 		$this->financing_data();
@@ -55,23 +47,15 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 		return $this->noi;
 	}
 
-	private function get_load_amo_data() {
-		$this->down_payment = floatval( get_field( 'down_payment' ) );
-		$this->interest_rate = (float) get_field( 'interest_rate' );
-		$term_array = get_field( 'term' );
-		$this->term = (int) $term_array['value'];
-		$this->morgage_payment = $this->morgage_payment();
-	}
-
 	protected function investment_data() {
 		$this->investment_table_content = array(
-			'Price'                      => $this->property_value,
-			'Price Per Unit'             => ( $this->property_value / count( $this->rent_roll ) ), // Price / Num Units
-			'GRM'                        => ( $this->property_value / $this->rent_roll_total['current'] ), // Should use a ratio format
-			'CAP Rate'                   => ( $this->noi / $this->property_value ), // NOI / Price
+			'Price'                      => $this->loan_amo->property_value,
+			'Price Per Unit'             => ( $this->loan_amo->property_value / count( $this->rent_roll ) ), // Price / Num Units
+			'GRM'                        => ( $this->loan_amo->property_value / $this->rent_roll_total['current'] ), // Should use a ratio format
+			'CAP Rate'                   => ( $this->noi / $this->loan_amo->property_value ), // NOI / Price
 			'Cash-on-Cash Return (Yr. 1)' => ( $this->operating_table_content['Pre-Tax Cash Flow'] / $this->down_payment ),
 			'Total Return (Yr. 1)'        => ( $this->income_total['current'] / $this->financing_table_content['Debt Service'] ),
-			'Debt Coverage Ratio'        => ( $this->noi / ( $this->morgage_payment['principal_interest'] * 12 ) ), // Total NOI / Total Debt Service ??
+			'Debt Coverage Ratio'        => ( $this->noi / ( $this->loan_amo->morgage_payment['principal_interest'] * 12 ) ), // Total NOI / Total Debt Service ??
 		);
 	}
 
@@ -83,18 +67,17 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 			'Vacancy Cost ('.$this->vacancy['current'].'%)'      => (-($this->rent_roll_total['current'] * ($this->vacancy['current'] / 100))),
 			'Gross Income'           => $this->income_total['current'], // Confirm same as total scheduled income?
 			'Operating Expenses'     => $this->expenses_total,
-			'Pre-Tax Cash Flow'      => ( $this->noi - ( $this->morgage_payment['principal_interest'] * 12 ) ),
+			'Pre-Tax Cash Flow'      => ( $this->noi - ( $this->loan_amo->morgage_payment['principal_interest'] * 12 ) ),
 		);
 	}
 
 	protected function financing_data() {
-
 		$this->financing_table_content = array(
-			'Down Payment'               => $this->down_payment,
-			'Loan Amount'                => $this->property_value - ( $this->property_value * ( $this->down_payment / 100 ) ),
-			'Debt Service'              => ( $this->morgage_payment['principal_interest'] * 12 ),
-			'Debt Service Monthly'      => $this->morgage_payment['principal_interest'],
-			'Principal Reduction (Yr. 1)' => ( $this->morgage_payment['principal'] * 12 ),
+			'Down Payment'               => ($this->loan_amo->down_payment / 100),
+			'Loan Amount'                => $this->loan_amo->property_value - ( $this->loan_amo->property_value * ( $this->loan_amo->down_payment / 100 ) ),
+			'Debt Service'              => ( $this->loan_amo->morgage_payment['principal_interest'] * 12 ),
+			'Debt Service Monthly'      => $this->loan_amo->morgage_payment['principal_interest'],
+			'Principal Reduction (Yr. 1)' => ( $this->loan_amo->morgage_payment['principal'] * 12 ),
 		);
 	}
 
@@ -193,7 +176,7 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 	}
 
 	protected function morgage_payment() {
-		$principal = $this->property_value - ( $this->property_value * ( $this->down_payment / 100 ) );
+		$principal = $this->loan_amo->property_value - ( $this->loan_amo->property_value * ( $this->down_payment / 100 ) );
 		$rate        = (float) ($this->interest_rate * 0.01);
 		$monthly_rate = $rate / 12;
 		$periods     = ( $this->term * 12 );

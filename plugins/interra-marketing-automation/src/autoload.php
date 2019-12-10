@@ -7,6 +7,7 @@ require( Interra_Marketing_Automation_PATH . '/cpt/interra-marketing-automation-
 
 require( Interra_Marketing_Automation_PATH . '/cpt/interra-marketing-automation-income-class.php' );
 require( Interra_Marketing_Automation_PATH . '/cpt/interra-marketing-automation-expenses-class.php' );
+require( Interra_Marketing_Automation_PATH . '/cpt/interra-marketing-automation-loan-amo-class.php' );
 require( Interra_Marketing_Automation_PATH . '/cpt/interra-marketing-automation-financial-summary-class.php' );
 
 
