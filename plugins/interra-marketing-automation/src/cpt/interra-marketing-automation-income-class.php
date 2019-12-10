@@ -50,7 +50,7 @@ class Interra_Marketing_Automation_Income {
 				'per_unit' => 'Per Unit',
 			],
 			'rows' => $this->format_columns( $this->income_table_content ),
-			'footer' => $this->income_table_totals,
+			'footer' => $this->format_columns( $this->income_table_totals ),
 			'data' => $this->get_data()
 		);
 	}
@@ -89,7 +89,8 @@ class Interra_Marketing_Automation_Income {
 		foreach ( $rows as $name => $columns ) {
 
 			foreach ( (array) $columns as $key => $col ) {
-				if ( in_array( $name, $this->ratio_fields ) ) {
+				if ( in_array( $name, $this->ratio_fields )
+			 		|| in_array( $key, $this->ratio_fields )) {
 					$rows[ $name ][ $key ] = get_in_percentage( $col / 100 );
 				} else {
 					$rows[ $name ][ $key ] = get_in_dollars( $col );

@@ -13,10 +13,9 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 
 	public $noi = 0;
 
-	protected $ratio_fields = ['CAP Rate', 'Total Return (Yr. 1)', 'Debt Coverage Ratio', 'Down Payment'];
-
 	public function __construct() {
 		parent::__construct();
+		$this->ratio_fields = ['CAP Rate', 'Total Return (Yr. 1)', 'Debt Coverage Ratio', 'Down Payment'];
 		// build loan amo data
 		$this->loan_amo = new Interra_Marketing_Automation_Loan_Amo();
 		//
@@ -29,6 +28,36 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 		$this->financing_data();
 		// 4
 		$this->investment_data();
+	}
+
+	public function get_operating_table_info() {
+		return array(
+			'header' => [
+				'current' => 'Market',
+				'market' => 'Pro-Forma',
+			],
+			'rows' => $this->format_columns( $this->operating_table_content ),
+		);
+	}
+
+	public function get_investment_table_info() {
+		return array(
+			'header' => [
+				'current' => 'Market',
+				'market' => 'Pro-Forma',
+			],
+			'rows' => $this->format_columns( $this->investment_table_content ),
+		);
+	}
+
+	public function get_financing_table_info() {
+		return array(
+			'header' => [
+				'current' => 'Market',
+				'market' => 'Pro-Forma',
+			],
+			'rows' => $this->format_columns( $this->financing_table_content ),
+		);
 	}
 
 	protected function operating_data() {

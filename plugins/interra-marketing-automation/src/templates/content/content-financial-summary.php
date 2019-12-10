@@ -16,7 +16,7 @@ $financial_summary_class = new Interra_Marketing_Automation_Financial_Summary();
 
 			<div class="ima-horizontal-scroll">
 
-				<?php output_investment_table( $financial_summary_class->investment_table_content ); ?>
+				<?php output_investment_table( $financial_summary_class->get_investment_table_info() ); ?>
 
 			</div>
 
@@ -24,7 +24,7 @@ $financial_summary_class = new Interra_Marketing_Automation_Financial_Summary();
 
 			<div class="ima-horizontal-scroll">
 
-				<?php output_operating_table( $financial_summary_class->operating_table_content ); ?>
+				<?php output_operating_table( $financial_summary_class->get_operating_table_info() ); ?>
 
 			</div>
 
@@ -32,7 +32,7 @@ $financial_summary_class = new Interra_Marketing_Automation_Financial_Summary();
 
 			<div class="ima-horizontal-scroll">
 
-				<?php output_financing_table( $financial_summary_class->financing_table_content ); ?>
+				<?php output_financing_table( $financial_summary_class->get_financing_table_info() ); ?>
 
 			</div>
 
