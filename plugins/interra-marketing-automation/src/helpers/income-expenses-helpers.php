@@ -13,15 +13,15 @@ function output_expenses_table( $table_data ) {
 }
 // outputs the investment table
 function output_investment_table( $rows = array() ) {
-  output_table( 'Investment Summary', ['rows' => $rows] );
+  output_table( 'Investment Summary', $rows );
 }
 // outputs the operating table
 function output_operating_table( $rows = array() ) {
-  output_table( 'Operating Summary', ['rows' => $rows] );
+  output_table( 'Operating Summary', $rows );
 }
 // outputs the financing table
 function output_financing_table( $rows = array() ) {
-  output_table( 'Financing Summary', ['rows' => $rows] );
+  output_table( 'Financing Summary', $rows );
 }
 // output a table
 function output_table( $title = '', $table = array() ) {

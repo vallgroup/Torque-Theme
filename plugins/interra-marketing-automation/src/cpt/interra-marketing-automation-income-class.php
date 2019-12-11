@@ -87,7 +87,9 @@ class Interra_Marketing_Automation_Income {
 		if ( empty( $rows ) ) return array();
 
 		foreach ( $rows as $name => $columns ) {
-
+			if ( ! is_array( $columns ) ) {
+				continue;
+			}
 			foreach ( (array) $columns as $key => $col ) {
 				if ( in_array( $name, $this->ratio_fields )
 			 		|| in_array( $key, $this->ratio_fields )) {

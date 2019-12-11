@@ -13,9 +13,20 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 
 	public $noi = 0;
 
+	public $current_column_name = '';
+
+	public $financial_summary_columns = array();
+
+	public $table_columns = array();
+
+	protected $loan_amo = null;
+
 	public function __construct() {
 		parent::__construct();
 		$this->ratio_fields = ['CAP Rate', 'Total Return (Yr. 1)', 'Debt Coverage Ratio', 'Down Payment'];
+		$this->current_column_name = get_field( 'current_column_name' );
+		$this->financial_summary_columns = get_field( 'financial_summary_columns' );
+		$this->table_columns = $this->build_table_header();
 		// build loan amo data
 		$this->loan_amo = new Interra_Marketing_Automation_Loan_Amo();
 		//
@@ -32,43 +43,47 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 
 	public function get_operating_table_info() {
 		return array(
-			'header' => [
-				'current' => 'Market',
-				'market' => 'Pro-Forma',
-			],
+			'header' => $this->table_columns,
 			'rows' => $this->format_columns( $this->operating_table_content ),
 		);
 	}
 
 	public function get_investment_table_info() {
 		return array(
-			'header' => [
-				'current' => 'Market',
-				'market' => 'Pro-Forma',
-			],
+			'header' => $this->table_columns,
 			'rows' => $this->format_columns( $this->investment_table_content ),
 		);
 	}
 
 	public function get_financing_table_info() {
 		return array(
-			'header' => [
-				'current' => 'Market',
-				'market' => 'Pro-Forma',
-			],
+			'header' => $this->table_columns,
 			'rows' => $this->format_columns( $this->financing_table_content ),
 		);
 	}
 
+	protected function build_table_header() {
+		$header = [
+			'current' => $this->current_column_name,
+		];
+		// load more columns, if any
+		if ( $this->financial_summary_columns ) {
+			foreach ( (array) $this->financial_summary_columns as $column ) {
+				$col_name = strip_tags( $column['column_name'] );
+				$header[ $col_name ] = $col_name;
+			}
+		}
+		return $header;
+	}
+
 	protected function operating_data() {
 		$this->operating_table_content = array(
-			'Gross Scheduled Income' => $this->rent_roll_total['current'],
-			'Additional Income'      => $this->income_total['current'] - $this->rent_roll_total['current'],
-			'Total Scheduled Income' => $this->income_total['current'],
-			'Vacancy Cost ('.$this->vacancy['current'].'%)' => (-($this->rent_roll_total['current'] * ($this->vacancy['current'] / 100))),
-			'Gross Income'           => $this->income_total['current'],
-			'Operating Expenses'     => $this->expenses_total['current'],
-			'Pre-Tax Cash Flow'      => ( $this->noi - ( $this->loan_amo->morgage_payment['principal_interest'] * 12 ) ),
+			'Gross Scheduled Income' => $this->get_formula( 'GSI' ),
+			'Additional Income'      => $this->get_formula( 'AI' ),
+			'Total Scheduled Income' => $this->get_formula( 'GSI' ),
+			'Vacancy Cost ('.$this->vacancy['current'].'%)' => $this->get_formula( 'VC' ),
+			'Gross Income'           => $this->get_formula( 'GSI' ),
+			'Operating Expenses'     => $this->get_formula( 'OE' ),
 		);
 	}
 
@@ -84,31 +99,291 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 		}
 
 		$this->noi = $total;
-		$this->operating_table_content['Net Operating Income'] = $this->noi;
+		$this->operating_table_content['Pre-Tax Cash Flow']    = $this->get_formula( 'PTCF' );
+		$this->operating_table_content['Net Operating Income'] = $this->_get_noi();
 
 		return $this->noi;
 	}
 
 	protected function financing_data() {
 		$this->financing_table_content = array(
-			'Down Payment'               => ($this->loan_amo->down_payment / 100),
-			'Loan Amount'                => $this->loan_amo->property_value - ( $this->loan_amo->property_value * ( $this->loan_amo->down_payment / 100 ) ),
-			'Debt Service'              => ( $this->loan_amo->morgage_payment['principal_interest'] * 12 ),
-			'Debt Service Monthly'      => $this->loan_amo->morgage_payment['principal_interest'],
-			'Principal Reduction (Yr. 1)' => ( $this->loan_amo->morgage_payment['principal'] * 12 ),
+			'Down Payment'               => $this->get_formula( 'DP' ),
+			'Loan Amount'                => $this->get_formula( 'LA' ),
+			'Debt Service'              => $this->get_formula( 'DS' ),
+			'Debt Service Monthly'      => $this->get_formula( 'DSM' ),
+			'Principal Reduction (Yr. 1)' => $this->get_formula( 'PR' ),
 		);
 	}
 
 	protected function investment_data() {
 		$this->investment_table_content = array(
-			'Price'                      => $this->loan_amo->property_value,
-			'Price Per Unit'             => ( $this->loan_amo->property_value / count( $this->rent_roll ) ),
-			'GRM'                        => ( $this->loan_amo->property_value / $this->rent_roll_total['current'] ),
-			'CAP Rate'                   => ( $this->noi / $this->loan_amo->property_value ),
-			'Cash-on-Cash Return (Yr. 1)' => ( $this->operating_table_content['Pre-Tax Cash Flow'] / $this->loan_amo->down_payment ),
-			'Total Return (Yr. 1)'        => ( $this->income_total['current'] / $this->financing_table_content['Debt Service'] ),
-			'Debt Coverage Ratio'        => ( $this->noi / ( $this->loan_amo->morgage_payment['principal_interest'] * 12 ) ),
+			'Price'                      => $this->get_formula( 'PV' ),
+			'Price Per Unit'             => $this->get_formula( 'PPU' ),
+			'GRM'                        => $this->get_formula( 'GRM' ),
+			'CAP Rate'                   => $this->get_formula( 'CR' ),
+			'Cash-on-Cash Return (Yr. 1)' => $this->get_formula( 'COCR' ),
+			'Total Return (Yr. 1)'        => $this->get_formula( 'TR' ),
+			'Debt Coverage Ratio'        => $this->get_formula( 'DCR' ),
 		);
+	}
+
+	private function get_formula( $formula_name ) {
+		switch ( $formula_name ) {
+			case 'GSI':
+				return $this->get_gsi();
+			break;
+
+			case 'AI': // Additional Income
+				return $this->get_additional_income();
+			break;
+
+			case 'OE': // Operating Expenses
+				return $this->get_operating_expenses();
+			break;
+
+			case 'VC': // Vacancy Cost
+				return $this->get_vacancy_cost();
+			break;
+
+			case 'DP': // Down Payment
+				return $this->get_down_payment();
+			break;
+
+			case 'PTCF': // Pre-Tax Cash Flow
+				return $this->get_pre_tax_cash_flow();
+			break;
+
+			case 'LA': // Loan Amount
+				return $this->get_loan_amount();
+			break;
+
+			case 'DS': // Debt Service
+				return $this->get_debt_svc();
+			break;
+
+			case 'DSM': // Debt Service Monthly
+				return $this->get_debt_svc_monthly();
+			break;
+
+			case 'PR': // Principal Reduction
+				return $this->get_ppl_reduction();
+			break;
+
+			case 'PV': // Property Value
+				return $this->get_property_value();
+			break;
+
+			case 'PPU': // Price Per Unit
+				return $this->get_price_per_unit();
+			break;
+
+			case 'GRM': // Gross Rent Multiplier
+				return $this->get_gross_rent_mltp();
+			break;
+
+			case 'CR': // CAP Rate
+				return $this->get_cap_rate();
+			break;
+
+			case 'COCR': // Cash on Cash Return
+				return $this->get_cash_on_cash_return();
+			break;
+
+			case 'TR': // Cash on Cash Return
+				return $this->get_total_return();
+			break;
+
+			case 'DCR': // Debt Coverage Ratio
+				return $this->get_debt_cvg_ratio();
+			break;
+
+			default:
+				// code...
+				break;
+		}
+	}
+
+	private function get_gsi() {
+		$gsi = [];
+		foreach ( $this->table_columns as $key => $column ) {
+			$gsi[ $key ] = $this->income_total['current'];
+		}
+
+		return $gsi;
+	}
+
+	private function get_additional_income() {
+		$ai = [];
+		foreach ( $this->table_columns as $key => $column ) {
+			$ai[ $key ] = $this->income_total['current'] - $this->rent_roll_total['current'];
+		}
+
+		return $ai;
+	}
+
+	private function get_operating_expenses() {
+		$oe = [];
+		foreach ( $this->table_columns as $key => $column ) {
+			$oe[ $key ] = $this->expenses_total['current'];
+		}
+
+		return $oe;
+	}
+
+	private function get_vacancy_cost() {
+		$vc = [];
+		foreach ( $this->table_columns as $key => $column ) {
+			$vc[ $key ] = (-($this->rent_roll_total['current'] * ($this->vacancy['current'] / 100)));
+		}
+
+		return $vc;
+	}
+
+	private function get_down_payment() {
+		$dp = [];
+		foreach ( $this->table_columns as $key => $column ) {
+			$dp[ $key ] = ($this->loan_amo->down_payment);
+		}
+
+		return $dp;
+	}
+
+	private function get_pre_tax_cash_flow() {
+		$ptcf = [];
+		foreach ( $this->table_columns as $key => $column ) {
+			$ptcf[ $key ] = ($this->noi - ( $this->loan_amo->morgage_payment['principal_interest'] * 12 ));
+		}
+
+		return $ptcf;
+	}
+
+	private function get_loan_amount() {
+		$la = [];
+		foreach ( $this->table_columns as $key => $column ) {
+			if ( 'current' === $key ) {
+				$la[ $key ] = $this->loan_amo->property_value - ( $this->loan_amo->property_value * ( $this->loan_amo->down_payment / 100 ) );
+			} else {
+				foreach ($this->financial_summary_columns as $key => $value) {
+					$la[ $key ] = (
+						$value['property_value']
+						- ( $value['property_value']
+						* ( $this->loan_amo->down_payment / 100 ) )
+					);
+				}
+			}
+		}
+
+		return $la;
+	}
+
+	private function get_debt_svc_monthly() {
+		$dsm = [];
+		foreach ( $this->table_columns as $key => $column ) {
+			$dsm[ $key ] = $this->loan_amo->morgage_payment['principal_interest'];
+		}
+
+		return $dsm;
+	}
+
+	private function get_debt_svc() {
+		$ds = [];
+		foreach ( $this->table_columns as $key => $column ) {
+			$ds[ $key ] = $this->loan_amo->morgage_payment['principal_interest'] * 12;
+		}
+
+		return $ds;
+	}
+
+	private function get_ppl_reduction() {
+		$pr = [];
+		foreach ( $this->table_columns as $key => $column ) {
+			$pr[ $key ] = ($this->loan_amo->morgage_payment['principal'] * 12);
+		}
+
+		return $pr;
+	}
+
+
+	private function get_property_value() {
+		$pvl = [];
+		foreach ( $this->table_columns as $key => $column ) {
+			if ( 'current' === $key ) {
+				$pvl[ $key ] = $this->loan_amo->property_value;
+			} else {
+				foreach ($this->financial_summary_columns as $key => $value) {
+					$pvl[ $key ] = $value['property_value'];
+				}
+			}
+		}
+		return $pvl;
+	}
+
+	private function get_price_per_unit() {
+		$ppu = [];
+		foreach ( (array) $this->get_property_value() as $key => $column ) {
+			if ( 'current' === $key ) {
+				$ppu[ $key ] = ($this->loan_amo->property_value / count( $this->rent_roll ));
+			} else {
+				foreach ($this->financial_summary_columns as $key => $value) {
+					$ppu[ $key ] = ($value['property_value'] / count( $this->rent_roll ));
+				}
+			}
+		}
+		return $ppu;
+	}
+
+	private function get_gross_rent_mltp() {
+		$grm = [];
+		foreach ( $this->table_columns as $key => $column ) {
+			$grm[ $key ] = ( $this->loan_amo->property_value / $this->rent_roll_total['current'] );
+		}
+		return $grm;
+	}
+
+	private function get_cap_rate() {
+		$ppu = [];
+		foreach ( (array) $this->get_property_value() as $key => $column ) {
+			if ( 'current' === $key ) {
+				$ppu[ $key ] = (($this->loan_amo->property_value / count( $this->rent_roll )) / 100);
+			} else {
+				foreach ($this->financial_summary_columns as $key => $value) {
+					$ppu[ $key ] = (($value['property_value'] / count( $this->rent_roll )) / 100);
+				}
+			}
+		}
+		return $ppu;
+	}
+
+	private function get_cash_on_cash_return() {
+		$cocr = [];
+		foreach ( (array) $this->table_columns as $key => $column ) {
+			$cocr[ $key ] = ((float) $this->income_total['current'] / (float) $this->financing_table_content['Debt Service']);
+		}
+		return $cocr;
+	}
+
+	private function get_total_return() {
+		$cocr = [];
+		foreach ( (array) $this->table_columns as $key => $column ) {
+			$cocr[ $key ] = ((float) $this->income_total['current'] / (float) $this->financing_table_content['Debt Service']);
+		}
+		return $cocr;
+	}
+
+	private function get_debt_cvg_ratio() {
+		$cocr = [];
+		foreach ( (array) $this->table_columns as $key => $column ) {
+			$cocr[ $key ] = ( $this->noi / ( $this->loan_amo->morgage_payment['principal_interest'] * 12 ) );
+		}
+		return $cocr;
+	}
+
+	private function _get_noi() {
+		$grm = [];
+		foreach ( $this->table_columns as $key => $column ) {
+			$grm[ $key ] = $this->noi;
+		}
+		return $grm;
 	}
 }
 
