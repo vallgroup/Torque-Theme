@@ -1,13 +1,19 @@
-import React, { Component } from 'react'
+import React, { memo, useMemo, useState } from 'react'
+import useWPPosts from './hooks/useWPPosts'
+import Grid from './components/Grid/Grid'
+import { TorqueImageGrid } from './styles/styles'
 
-// props
-//
-// site: string 
+const App = ({
+  site,
+  slug
+}) => {
+  const [grid] = useWPPosts(site, slug);
 
-class App extends Component {
-  render() {
-    return <div>'Hello World!'</div>
-  }
-}
+  return 0 < Object.entries(grid).length && grid.constructor === Object
+    ? (<TorqueImageGrid>
+        <Grid grid={grid} />
+      </TorqueImageGrid>)
+    : null;
+};
 
-export default App
+export default memo(App)

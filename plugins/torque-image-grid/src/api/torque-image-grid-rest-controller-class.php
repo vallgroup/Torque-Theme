@@ -21,8 +21,8 @@ class Torque_Image_Grid_REST_Controller {
   // Register our routes.
   public function register_routes() {
 
-    $example_routes = new Torque_Image_Grid_Routes( $this->namespace );
-    $example_routes->register_routes();
+    $grid_routes = new Torque_Image_Grid_Routes( $this->namespace );
+    $grid_routes->register_routes();
   }
 }
 

@@ -7,86 +7,62 @@ class Torque_Image_Grid_Controller {
 
 	public static function get_image_grid_args() {
 		return array(
-      'id' => array(
-        'validate_callback' => array( 'Torque_Validation', 'int' ),
-      ),
-    );
-	}
-
-	public static function update_image_grid_args() {
-		return array(
-			'id' => array(
-        'validate_callback' => array( 'Torque_Validation', 'int' ),
-      ),
-      'name' => array(
+      'slug' => array(
         'validate_callback' => array( 'Torque_Validation', 'string' ),
       ),
     );
 	}
 
-	public static function delete_image_grid_args() {
-		return array(
-			'id' => array(
-        'validate_callback' => array( 'Torque_Validation', 'int' ),
-      ),
-    );
-	}
-
 	protected $request = null;
+	protected $params = array();
 
-	function __construct( $request ) {
-
+	public function __construct( $request ) {
 		$this->request = $request;
+		$this->params = $this->request->get_params();
 	}
 
-	public function get_examples() {
+	public function get_image_grid() {
 		try {
-			$example = get_example( $this->request['id'] );
-
-			if ($example) {
+			$image_grid = $this->get_image_grid_data();
+			if ( $image_grid ) {
         return Torque_API_Responses::Success_Response( array(
-          'example'	=> $example
+					'grid' => $image_grid
         ) );
 			}
-
 			return Torque_API_Responses::Failure_Response( array(
-				'example'	=> []
-			));
-
+				'message' => 'No image grid was found.'
+			) );
 		} catch (Exception $e) {
 			return Torque_API_Responses::Error_Response( $e );
 		}
 	}
 
-	public function update_example() {
-		try {
-      $example_id = update_example( $this->request['id'], $this->request['name'] );
+	private function get_image_grid_data() {
+		$_grids = get_posts( array(
+			'numberposts' => 1,
+			'post_type' => Torque_Image_Grid_CPT::$POST_TYPE,
+			'name' => strip_tags( $this->params['slug'] ),
+		) );
 
-			if ($example_id) {
-				return Torque_API_Responses::Success_Response( array(
-					'id'			=> $example_id
-	    	) );
-			} else {
-				return Torque_API_Responses::Failure_Response( array(
-					'id'			=> 0
-	    	));
-			}
-
-		} catch (Exception $e) {
-			return Torque_API_Responses::Error_Response( $e );
+		if ( $_grids ) {
+			$_grid = $_grids[0];
+		} else {
+			return false;
 		}
-	}
 
-	public function delete_example() {
-		try {
-			if (delete_example( $this->request['id'] )) {
-				return Torque_API_Responses::Success_Response();
-			} else {
-				return Torque_API_Responses::Failure_Response();
-			}
-
-		} catch (Exception $e) {
-			return Torque_API_Responses::Error_Response( $e );
+		// prepare media link for API response
+		$images = get_field( 'images', $_grid->ID );
+		foreach ( $images as $key => $image ) {
+			$media_link = get_field( 'media_link', $image['ID'] );
+			$images[$key]['media_link'] = $media_link ? $media_link : [] ;
 		}
+		
+		return array(
+			'id' => $_grid->ID,
+			'title' => $_grid->post_title,
+			'content' => $_grid->post_content,
+			'images' => $images,
+			'images_per_row' => get_field( 'images_per_row', $_grid->ID ),
+		);
 	}
 }
