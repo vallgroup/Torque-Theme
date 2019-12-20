@@ -9,11 +9,8 @@ import './Template_Cannery.scss'
 const Template = ({ post }) => {
   const title = post?.post_title;
   const floorPlan = post?.thumbnail;
-  const rsf = Number(post?.meta?.floor_plan_rsf).toLocaleString(); // format number with commas
+  const rsf = Number(post?.meta?.floor_plan_rsf).toLocaleString(); // format number (enforced via ACF) with commas
   const download = post?.meta?.floor_plan_downloads_pdf;
-
-  // Format RSF field
-  console.log('rsf (initial)', rsf);
 
   return (
     <div
