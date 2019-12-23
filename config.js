@@ -4,7 +4,7 @@ const root = __dirname;
 
 const webpackDefaults = {
   js: {
-    test: /\.js$/,
+    test: /\.jsx?$/,
     loaders: {
       loader: "babel-loader",
       options: {
