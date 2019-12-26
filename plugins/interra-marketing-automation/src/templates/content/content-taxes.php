@@ -30,10 +30,15 @@ $taxes = [
 					      <?php echo ucwords( str_replace( '_', ' ', esc_attr( $name ) ) ); ?>
 					    </div>
 					    <div class="key-detail-value">
-					    	<?php echo ( 'tax_year' !== $name
-					    		&& 'tax_rate' !== $name )
-					    			? '$'.esc_attr( $value )
-					    			: esc_attr( $value ) ?>
+					    	<?php
+								if ( 'tax_year' === $name ) {
+									echo esc_attr( $value );
+								} else {
+									echo ( 'tax_rate' !== $name )
+					    			? output_in_dollars( esc_attr( $value ) )
+					    			: output_in_percentage( (esc_attr( $value ) / 100) );
+								}
+								?>
 					    </div>
 					  </div>
 

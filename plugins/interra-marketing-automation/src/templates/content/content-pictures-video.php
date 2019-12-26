@@ -27,7 +27,7 @@ function explode_panos( $n ) {
 
 					<?php foreach ($pictures as $picture ) { ?>
 
-						<div class="gallery-col gallery-col-4">
+						<div class="gallery-col gallery-col-3">
 							<div class="gallery-image" style="background-image: url(<?php echo $picture['url']; ?>);"></div>
 						</div>
 
@@ -67,6 +67,7 @@ function explode_panos( $n ) {
 						// $pano is an array. Use index 1 to get the pano id
 						// index 0 gives you the id of the pano image saved in wordpress
 						$pano_id = $pano[1]; ?>
+						<div class="gallery-col gallery-col-2">
 						<div class="gallery-col">
 							<iframe src="<?php echo esc_attr( $vr_url . $pano_id ) ?>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 						</div>
@@ -76,6 +77,7 @@ function explode_panos( $n ) {
 						<div class="ima-boxapp-link">
 							<p>Enjoy this experience in <a class="ima-link" href="<?php echo esc_attr( $vr_url . $pano_id ) ?>" target="_blank" rel="noopener">Full Screen</a></p>
 						</div>
+					</div>
 					<?php } ?>
 
 				</div>

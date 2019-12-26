@@ -13,8 +13,6 @@
 
 	<?php load_template( $__path . 'templates/content/content-maps.php' ); ?>
 
-	<?php load_template( $__path . 'templates/content/content-comps.php' ); ?>
-
 	<?php load_template( $__path . 'templates/content/content-taxes.php' ); ?>
 
 	<?php load_template( $__path . 'templates/content/content-rent-roll.php' ); ?>
@@ -22,6 +20,8 @@
 	<?php load_template( $__path . 'templates/content/content-income-expenses.php' ); ?>
 
 	<?php load_template( $__path . 'templates/content/content-financial-summary.php' ); ?>
+
+	<?php load_template( $__path . 'templates/content/content-comps.php' ); ?>
 
 	<?php load_template( $__path . 'templates/content/content-loan-amortization.php' ); ?>
 

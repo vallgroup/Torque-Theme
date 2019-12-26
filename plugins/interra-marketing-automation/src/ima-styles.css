@@ -11,6 +11,29 @@
 	overflow: hidden;
 }
 
+.ima-columns:after {
+	display: block;
+	content: '';
+	clear: both;
+}
+
+.ima-column {
+	display: block;
+	box-sizing: border-box;
+}
+
+@media screen and (min-width: 1020px) {
+.ima-column-left {
+	float: left;
+	width: 45%;
+}
+
+.ima-column-right {
+	float: right;
+	width: 45%;
+}
+}
+
 .ima-horizontal-scroll {
 	overflow: auto;
 }
@@ -21,7 +44,7 @@
 }
 
 .ima-horizontal-scroll::-webkit-scrollbar-track {
-    -webkit-box-shadow: transparent;
+  -webkit-box-shadow: transparent;
   background: rgba(104,106,108,.25);
   border-right:0px solid black;
 }
@@ -147,8 +170,9 @@
 	}
 
 	.ima-gallery .gallery-col-2 {
-		padding-top: 30%;
-		width: 50%;
+		padding-top: 0;
+		width: 46%;
+		margin: 2%;
 	}
 
 }

@@ -32,77 +32,84 @@ $highlights = get_field( 'listing_highlights' );
   </div>
   <div class="torque-listing-content">
 
-    <div class="torque-listing-content-details" >
-      <?php if ($content) { ?>
-        <h4>Property Overview</h4>
-        <div class="the-content" >
-          <?php echo $content; ?>
-        </div>
-      <?php } ?>
+    <div class="torque-listing-content-details ima-full-width" >
 
-      <?php if ($highlights) { ?>
-        <h4>Highlights</h4>
-        <div class="highlights" >
-          <?php echo $highlights; ?>
-        </div>
-      <?php } ?>
-
-        <h4>Key Details</h4>
-        <div class="key-details-wrapper">
-          <?php foreach ($__key_details as $key => $value) {
-            if ( empty( $value ) ) continue; ?>
-            <div class="key-detail" >
-              <div class="key-detail-name">
-                <?php echo $key; ?>
-              </div>
-              <div class="key-detail-value">
-                <?php echo $value; ?>
-              </div>
+      <div class="ima-columns">
+        <div class="ima-column-left">
+          <?php if ($content) { ?>
+            <h4>Property Overview</h4>
+            <div class="the-content" >
+              <?php echo $content; ?>
             </div>
           <?php } ?>
 
-          <?php if( have_rows('key_details') ): ?>
+          <?php if ($highlights) { ?>
+            <h4>Highlights</h4>
+            <div class="highlights" >
+              <?php echo $highlights; ?>
+            </div>
+          <?php } ?>
+        </div>
 
-            <?php while ( have_rows('key_details') ) : the_row();
-              $sub_field_name = get_sub_field('name');
-              $sub_field_value = get_sub_field('value');
-
-              $geo_search_values = array( "LATITUDE", "LONGITUDE" );
-              $price_search_values = array( "PRICE", "ASKING PRICE" );
-              $size_search_values = array( "LOT SIZE", "BUILDING SIZE" );
-
-              /* Skip over Latitude & Longitude ACF keys, as they are no currently required by the client */
-              if ( in_array(strtoupper($sub_field_name), $geo_search_values) ) {
-                continue;
-              }
-
-              if ( in_array(strtoupper($sub_field_name), $price_search_values) ) {
-                // First, remove any unwanted characters entered by the user
-                $illegal_chars = array( ",", ".", "$", " " );
-                $sub_field_value = str_replace( $illegal_chars, "", $sub_field_value );
-                // Second, format the number as required
-                $sub_field_value = "$" . number_format( trim( $sub_field_value ) );
-              }
-
-              if ( in_array(strtoupper($sub_field_name), $size_search_values) ) {
-                // First, remove any unwanted characters entered by the user
-                $illegal_chars = array( ",", "SF", ".", "SQUARE FEET", " " );
-                $sub_field_value = str_replace( $illegal_chars, "", strtoupper($sub_field_value) );
-                // Second, format the number as required
-                $sub_field_value = number_format( trim( $sub_field_value ) ) . " SF";
-              }?>
+        <div class="ima-column-right">
+          <h4>Key Details</h4>
+          <div class="key-details-wrapper">
+            <?php foreach ($__key_details as $key => $value) {
+              if ( empty( $value ) ) continue; ?>
               <div class="key-detail" >
                 <div class="key-detail-name">
-                  <?php echo $sub_field_name; ?>
+                  <?php echo $key; ?>
                 </div>
                 <div class="key-detail-value">
-                  <?php echo $sub_field_value; ?>
+                  <?php echo $value; ?>
                 </div>
               </div>
-            <?php endwhile ?>
+            <?php } ?>
 
-          <?php endif; ?>
+            <?php if( have_rows('key_details') ): ?>
+
+              <?php while ( have_rows('key_details') ) : the_row();
+                $sub_field_name = get_sub_field('name');
+                $sub_field_value = get_sub_field('value');
+
+                $geo_search_values = array( "LATITUDE", "LONGITUDE" );
+                $price_search_values = array( "PRICE", "ASKING PRICE" );
+                $size_search_values = array( "LOT SIZE", "BUILDING SIZE" );
+
+                /* Skip over Latitude & Longitude ACF keys, as they are no currently required by the client */
+                if ( in_array(strtoupper($sub_field_name), $geo_search_values) ) {
+                  continue;
+                }
+
+                if ( in_array(strtoupper($sub_field_name), $price_search_values) ) {
+                  // First, remove any unwanted characters entered by the user
+                  $illegal_chars = array( ",", ".", "$", " " );
+                  $sub_field_value = str_replace( $illegal_chars, "", $sub_field_value );
+                  // Second, format the number as required
+                  $sub_field_value = "$" . number_format( trim( $sub_field_value ) );
+                }
+
+                if ( in_array(strtoupper($sub_field_name), $size_search_values) ) {
+                  // First, remove any unwanted characters entered by the user
+                  $illegal_chars = array( ",", "SF", ".", "SQUARE FEET", " " );
+                  $sub_field_value = str_replace( $illegal_chars, "", strtoupper($sub_field_value) );
+                  // Second, format the number as required
+                  $sub_field_value = number_format( trim( $sub_field_value ) ) . " SF";
+                }?>
+                <div class="key-detail" >
+                  <div class="key-detail-name">
+                    <?php echo $sub_field_name; ?>
+                  </div>
+                  <div class="key-detail-value">
+                    <?php echo $sub_field_value; ?>
+                  </div>
+                </div>
+              <?php endwhile ?>
+
+            <?php endif; ?>
+          </div>
         </div>
+      </div>
 
     </div>
 
