@@ -5,82 +5,56 @@
  */
 class IMA_Mailchimp_Email_Template {
 
-	function __construct( string $tmpl, string $style, int $postID ) {
-		$this->tmpl = $tmpl;
-		$this->style = $style;
+	protected $doc = null;
+
+	protected $postID = 0;
+
+	protected $templates = array();
+
+	function __construct( int $postID, array $templates ) {
+
+		if ( ! $postID || 0 === $postID ) {
+			return false;
+		}
+
 		$this->postID = $postID;
+		$this->templates = $templates;
+
+		if ( ! isset( $this->templates['header'] ) ) {
+			$this->templates['header'] = 'style-1';
+		}
+
+		if ( ! isset( $this->templates['body'] ) ) {
+			$this->templates['body'] = 'style-1';
+		}
+
+		if ( ! isset( $this->templates['footer'] ) ) {
+			$this->templates['footer'] = 'style-1';
+		}
 
 		$this->load_post();
-
-		global $style;
-		$style = $this->style;
 	}
 
 	public function get_template () {
-		switch( $this->tmpl ) {
-			case 'header':
-				$_tmpl = $this->get_head_tmpl();
-				$_tmpl .= $this->get_header_tmpl();
-			break;
+		global $post_id, $email_templates, $document;
 
-			case 'body':
-				$_tmpl = $this->get_body_tmpl();
-			break;
+		$document = $this->doc;
+		$post_id = $this->postID;
+		$email_templates = $this->templates;
 
-			case 'footer':
-				$_tmpl = $this->get_footer_tmpl();
-			break;
-		}
+		$_tmpl = '';
+		ob_start();
+
+		load_template( Interra_Marketing_Automation_API_ROOT . 'mailchimp/templates/dynamic-email.php' );
+
+		$_tmpl = ob_get_clean();
+
 		return str_replace( ['<','>'], ['&lt;', '&gt;'], $_tmpl );
 	}
 
 	protected function load_post() {
-		global $document;
 		$this->doc = get_post( $this->postID );
-		$document = $this->doc;
 	}
-
-	protected function get_head_tmpl() {
-		$_html = '';
-		ob_start();
-
-		load_template( Interra_Marketing_Automation_API_ROOT . 'mailchimp/templates/head.php' );
-
-		$_html = ob_get_clean();
-		return $_html . PHP_EOL;
-	}
-
-	protected function get_header_tmpl() {
-		$_html = '';
-		ob_start();
-
-		load_template( Interra_Marketing_Automation_API_ROOT . 'mailchimp/templates/header.php' );
-
-		$_html = ob_get_clean();
-		return $_html . PHP_EOL;
-	}
-
-	protected function get_body_tmpl() {
-		$_html = '';
-		ob_start();
-
-		load_template( Interra_Marketing_Automation_API_ROOT . 'mailchimp/templates/body.php' );
-
-		$_html = ob_get_clean();
-		return $_html . PHP_EOL;
-	}
-
-	protected function get_footer_tmpl() {
-		$_html = '';
-		ob_start();
-
-		load_template( Interra_Marketing_Automation_API_ROOT . 'mailchimp/templates/footer.php' );
-
-		$_html = ob_get_clean();
-		return $_html . PHP_EOL;
-	}
-
-
 }
 
 ?>
