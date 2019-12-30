@@ -15,13 +15,18 @@ class Interra_Marketing_Automation_Income {
 
 	public $income_table_totals = array();
 
-	public $vacancy = array();
+	public $vacancy = array(
+		'current' => 0,
+		'market' => 0,
+		'per_unit' => 0
+	);
 
 	public $rent_roll = array();
 
 	public $rent_roll_total = array(
 		'current' => 0,
-		'market' => 0
+		'market' => 0,
+		'per_unit' => 0
 	);
 
 	public $units_rented = 0;
@@ -76,7 +81,10 @@ class Interra_Marketing_Automation_Income {
 
 		if ( 0 < $this->units_rented ) {
 			foreach ( $rows as $name => $columns ) {
-				$rows[ $name ]['per_unit'] = ($columns['current'] / $this->units_rented);
+				if ( isset( $rows[ $name ]['per_unit'] )
+					&& isset( $columns['current'] ) ) {
+						$rows[ $name ]['per_unit'] = ((float) $columns['current'] / $this->units_rented);
+					}
 			}
 		}
 
