@@ -37,21 +37,25 @@ class Interra_Marketing_Automation_Mailchimp_Controller {
 
 			$this->postID = $params['postID'];
 
-			$email_tmpl = '';
+			$email_params = [];
+
 
 			if ( isset( $params['header'] )
 				&& ! empty( $params['header'] ) ) {
-				$email_tmpl .= $this->get_header_tmpl( $params['header'] );
+				$email_params['header'] = $params['header'];
 			}
 			if ( isset( $params['body'] )
 				&& ! empty( $params['body'] ) ) {
-				$email_tmpl .= $this->get_body_tmpl( $params['body'] );
+				$email_params['body'] = $params['body'];
 			}
 			if ( isset( $params['footer'] )
 				&& ! empty( $params['footer'] ) ) {
-				$email_tmpl .= $this->get_footer_tmpl( $params['footer'] );
+				$email_params['footer'] = $params['footer'];
 			}
 
+			$email_class = new IMA_Mailchimp_Email_Template( $this->postID, $email_params );
+
+			$email_tmpl = $email_class->get_template();
       return Torque_API_Responses::Success_Response( array(
         'tmpl'	=> $email_tmpl
       ) );
