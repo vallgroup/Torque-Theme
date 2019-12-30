@@ -27,7 +27,9 @@
 			__params.push(tmpl+'='+style)
 		})
 
-		return fetch( __api + __params.join('&') )
+		var __url = __api + __params.join('&');
+
+		return fetch( __url )
 		.then( r => (r.json().then( j => (j))))
 	}
 
