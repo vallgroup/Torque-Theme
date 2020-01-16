@@ -16,7 +16,7 @@ const App = ({
 }) => {
   const [activeTerm, setActiveTerm] = useState(0);
   const updateActiveTerm = useCallback(
-    termId => () => setActiveTerm(termId),
+    termId => () => setActiveTerm(+termId),
     []
   );
 
@@ -37,7 +37,7 @@ const App = ({
     <div className={"torque-filtered-loop"}>
       <Filters
         terms={terms}
-        activeTerm={activeTerm}
+        activeTerm={+activeTerm}
         updateActiveTerm={updateActiveTerm}
         parentId={parentId}
       />

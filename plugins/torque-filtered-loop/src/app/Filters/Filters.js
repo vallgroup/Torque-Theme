@@ -47,7 +47,10 @@ const Filters = ({
 Filters.propTypes = {
   className: PropTypes.string,
   terms: PropTypes.array.isRequired,
-  activeTerm: PropTypes.number.isRequired,
+  activeTerm: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]).isRequired,
   updateActiveTerm: PropTypes.func.isRequired,
   parentId: PropTypes.number,
   hideAllOption: PropTypes.bool

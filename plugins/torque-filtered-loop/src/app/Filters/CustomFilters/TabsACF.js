@@ -1,4 +1,4 @@
-import React, { memo } from "React";
+import React, { memo } from "react";
 import Filters from "..";
 import { useACFSelectChoices } from "../../hooks";
 
@@ -21,7 +21,7 @@ const TabsACF = ({ site, value, onChange, args }) => {
     <Filters
       className="torque-acf-tabs-filters"
       terms={filterOptions}
-      activeTerm={value}
+      activeTerm={value || 0}
       updateActiveTerm={onChange}
     />
   );
