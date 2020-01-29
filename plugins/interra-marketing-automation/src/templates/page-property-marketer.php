@@ -9,15 +9,15 @@
 
 	<?php load_template( $__path . 'templates/content/content-property-info.php' ); ?>
 
-	<?php load_template( $__path . 'templates/content/content-pictures-video.php' ); ?>
-
 	<?php load_template( $__path . 'templates/content/content-maps.php' ); ?>
 
-	<?php load_template( $__path . 'templates/content/content-taxes.php' ); ?>
+	<?php load_template( $__path . 'templates/content/content-pictures-video.php' ); ?>
 
 	<?php load_template( $__path . 'templates/content/content-rent-roll.php' ); ?>
 
 	<?php load_template( $__path . 'templates/content/content-income-expenses.php' ); ?>
+
+	<?php load_template( $__path . 'templates/content/content-taxes.php' ); ?>
 
 	<?php load_template( $__path . 'templates/content/content-financial-summary.php' ); ?>
 

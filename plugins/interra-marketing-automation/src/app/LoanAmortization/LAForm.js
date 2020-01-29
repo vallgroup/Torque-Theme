@@ -106,7 +106,7 @@ const LAForm = ({loanAmo, updateAmoTable}) => {
 	}
 
 	return (<LoanAmoForm>
-
+		<h4>Loan Amortization Tool</h4>
 		<LoanAmoFieldRow>
 			<label htmlFor={'term'}>
 				<div className={"pwp-inline"}>

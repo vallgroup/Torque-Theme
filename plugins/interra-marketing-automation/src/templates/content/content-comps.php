@@ -3,12 +3,12 @@
 /**
  * Structure array of arrays:
  * [[
-		"address => string
-		"price_sold => string
-		"differences => string
-		"photo => array(WP Attachment Post)
-		"map => object(WP Map Post)
-  ]]
+ *	"address => string
+ *	"price_sold => string
+ *	"differences => string
+ *	"photo => array(WP Attachment Post)
+ *	"map => object(WP Map Post)
+ * ]]
  *
  * @var [array]
  */
@@ -25,12 +25,12 @@ $col_keys = array(
 /**
  * Structure array of arrays:
  * [[
-		"address => string
-		"rent => string
-		"differences => string
-		"photo => array(WP Attachment Post)
-		"map => object(WP Map Post)
-  ]]
+ *	"address => string
+ *	"rent => string
+ *	"differences => string
+ *	"photo => array(WP Attachment Post)
+ *	"map => object(WP Map Post)
+ * ]]
  *
  * @var [array]
  */

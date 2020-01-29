@@ -1,18 +1,31 @@
 import styled from 'styled-components'
 
-export const LoanAmoForm = styled.div`
+export const LoanAmoForm = styled.div.attrs(
+	props => ({
+		className: `LoanAmoForm`,
+	})
+)`
 	display: block;
 	margin: 2em 0;
-	max-width: 600px;
+	float: left;
+	width: 35%;
 	box-sizing: border-box;
 `
 
-export const LoanAmoFieldRow = styled.div`
+export const LoanAmoFieldRow = styled.div.attrs(
+	props => ({
+		className: `LoanAmoFieldRow`,
+	})
+)`
 	display: block;
 	margin: 1em 0;
 `
 
-export const LoanAmoInputField = styled.input`
+export const LoanAmoInputField = styled.input.attrs(
+	props => ({
+		className: `LoanAmoInputField`,
+	})
+)`
 	padding: 0.5em;
 	border: 1px solid #ccc;
 	border-radius: 0.375em;
@@ -25,7 +38,11 @@ export const LoanAmoInputField = styled.input`
   text-align: right;
 `
 
-export const LoanAmoPrependField = styled.div`
+export const LoanAmoPrependField = styled.div.attrs(
+	props => ({
+		className: `LoanAmoPrependField`,
+	})
+)`
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -35,7 +52,11 @@ export const LoanAmoPrependField = styled.div`
 	padding: 0.5em;
 `
 
-export const LoanAmoAppendField = styled.div`
+export const LoanAmoAppendField = styled.div.attrs(
+	props => ({
+		className: `LoanAmoAppendField`,
+	})
+)`
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -45,7 +66,11 @@ export const LoanAmoAppendField = styled.div`
 	padding: 0.5em;
 `
 
-export const LoanAmoSelectFieldContainer = styled.div`
+export const LoanAmoSelectFieldContainer = styled.div.attrs(
+	props => ({
+		className: `LoanAmoSelectFieldContainer`,
+	})
+)`
 	position: relative;
 	display: block;
 
@@ -59,7 +84,11 @@ export const LoanAmoSelectFieldContainer = styled.div`
 	}
 `
 
-export const LoanAmoSelectField = styled.select`
+export const LoanAmoSelectField = styled.select.attrs(
+	props => ({
+		className: `LoanAmoSelectField`,
+	})
+)`
 	position: relative;
 	padding: 0.5em;
 	border: 1px solid #ccc;
@@ -82,17 +111,27 @@ export const LoanAmoSelectField = styled.select`
 	}
 `
 
-export const LoanAmoFieldName = styled.div`
+export const LoanAmoFieldName = styled.div.attrs(
+	props => ({
+		className: `LoanAmoFieldName`,
+	})
+)``
 
-`
-
-export const LoanAmoFieldWrapper = styled.div`
+export const LoanAmoFieldWrapper = styled.div.attrs(
+	props => ({
+		className: `LoanAmoFieldWrapper`,
+	})
+)`
 	position: relative;
 	padding: 0 2em;
 	box-sizing: border-box;
 `
 
-export const LoanAmoFormResults = styled.div`
+export const LoanAmoFormResults = styled.div.attrs(
+	props => ({
+		className: `LoanAmoFormResults`,
+	})
+)`
 	// text-align: center;
 	margin: 2em 0;
 	max-width: 570px;
@@ -101,12 +140,33 @@ export const LoanAmoFormResults = styled.div`
 	}
 `
 
-export const LoanAmoScheduleWrapper = styled.div`
+export const LoanAmoContainer = styled.div.attrs(
+	props => ({
+		className: `LoanAmoContainer`,
+	})
+)`
+	&:after {
+		content: '';
+		display: table;
+		clear: both;
+	}
+`
 
+export const LoanAmoScheduleWrapper = styled.div.attrs(
+	props => ({
+		className: `LoanAmoScheduleWrapper`,
+	})
+)`
+	width: 60%;
+	float: right;
 	margin: 2em 0;
 `
 
-export const LoanAmoSchedule = styled.div`
+export const LoanAmoSchedule = styled.div.attrs(
+	props => ({
+		className: `LoanAmoSchedule`,
+	})
+)`
 	overflow: auto;
 	max-height: 500px;
 

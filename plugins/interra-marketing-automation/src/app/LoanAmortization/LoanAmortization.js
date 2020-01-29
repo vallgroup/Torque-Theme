@@ -4,6 +4,7 @@ import {getLoanAmo} from '../api/loan_amo_client'
 
 import LAForm from './LAForm'
 import LASchedule from './LASchedule'
+import {LoanAmoContainer} from './LAStyles'
 
 const LoanAmortization = ({docID}) => {
 
@@ -35,13 +36,13 @@ const LoanAmortization = ({docID}) => {
 		interest_rate,
 	} = loanAmo
 
-	return (<div>
+	return (<LoanAmoContainer>
 		<LAForm
 			loanAmo={loanAmo}
 			updateAmoTable={schd => setAmoSchedule(schd)}
 		/>
 		<LASchedule amoSchedule={amoSchedule} />
-	</div>)
+	</LoanAmoContainer>)
 }
 
 export default LoanAmortization

@@ -81,8 +81,7 @@ class Interra_Marketing_Automation_Income {
 
 		if ( 0 < $this->units_rented ) {
 			foreach ( $rows as $name => $columns ) {
-				if ( isset( $rows[ $name ]['per_unit'] )
-					&& isset( $columns['current'] ) ) {
+				if ( isset( $columns['current'] ) ) {
 						$rows[ $name ]['per_unit'] = ((float) $columns['current'] / $this->units_rented);
 					}
 			}
@@ -164,6 +163,7 @@ class Interra_Marketing_Automation_Income {
  			$this->income_table_content[ $key ] = array(
  				'current' => floatval( $income['income_amount'] ),
  				'market'  => floatval( $income['income_amount_mkt'] ),
+				// 'per_unit'  => 0.00,
  			);
  		}
 		// add per unti column
@@ -208,6 +208,8 @@ class Interra_Marketing_Automation_Income {
 
 		$total_income['current'] = ($total_income['current'] - $vacancy_dollars['current']);
 		$total_income['market']  = ($total_income['market'] - $vacancy_dollars['market']);
+
+		// $total_income['per_unit'] = ($total_income['current'] / $this->units_rented);
 
 		return $total_income;
 	}

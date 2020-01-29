@@ -34,6 +34,8 @@ $highlights = get_field( 'listing_highlights' );
 
     <div class="torque-listing-content-details ima-full-width" >
 
+      <h2>About The Property</h2>
+
       <div class="ima-columns">
         <div class="ima-column-left">
           <?php if ($content) { ?>

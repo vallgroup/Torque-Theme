@@ -6,35 +6,47 @@ $financial_summary_class = new Interra_Marketing_Automation_Financial_Summary();
 
 ?>
 
-<div class="ima-disclaimers ima-section">
+<div class="ima-financial-summary ima-section">
 
 	<div class="torque-listing-content">
 
-    <div class="torque-listing-content-details">
+    <div class="torque-listing-content-details ima-full-width">
 
-			<h4>Financial Summmary</h4>
+			<div class="ima-columns">
 
-			<div class="ima-horizontal-scroll">
+				<h4>Financial Summmary</h4>
 
-				<?php output_investment_table( $financial_summary_class->get_investment_table_info() ); ?>
+				<div class="ima-column-left-50">
+
+					<div class="ima-horizontal-scroll">
+
+						<?php output_investment_table( $financial_summary_class->get_investment_table_info() ); ?>
+
+					</div>
+
+					<br /><br />
+
+					<div class="ima-horizontal-scroll">
+
+						<?php output_operating_table( $financial_summary_class->get_operating_table_info() ); ?>
+
+					</div>
+				</div>
+
+				<div class="ima-column-right-50">
+					<div class="ima-horizontal-scroll">
+
+						<?php output_financing_table( $financial_summary_class->get_financing_table_info() ); ?>
+
+					</div>
+
+					<!-- <br /><br /> -->
+				</div>
 
 			</div>
 
-			<br /><br />
 
-			<div class="ima-horizontal-scroll">
-
-				<?php output_operating_table( $financial_summary_class->get_operating_table_info() ); ?>
-
-			</div>
-
-			<br /><br />
-
-			<div class="ima-horizontal-scroll">
-
-				<?php output_financing_table( $financial_summary_class->get_financing_table_info() ); ?>
-
-			</div>
+		</div>
 
 	</div>
 

@@ -10,6 +10,7 @@ import {formatMoney} from '../lib/helpers'
 const LASchedule = ({amoSchedule}) => {
 	return (<LoanAmoScheduleWrapper>
 		<h4>Amortization Schedule</h4>
+
 		<LoanAmoSchedule>
 			<table className={"ima-rent-roll-table ima-table"}>
 				<thead>

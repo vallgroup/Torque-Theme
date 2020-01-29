@@ -40,6 +40,8 @@ foreach ( (array) $units as $key => $column ) {
 
     <div class="torque-listing-content-details ima-full-width">
 
+			<h2>Financial Breakdown</h2>
+
 			<h4>Rent Roll</h4>
 
 			<div class="ima-horizontal-scroll">
