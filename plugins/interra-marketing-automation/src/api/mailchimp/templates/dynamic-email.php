@@ -39,11 +39,11 @@ endif;
 require_once( get_template_directory() . '/includes/customizer/customizer-tabs/tabs/torque-customizer-tab-site-identity-class.php' );
 $tab_settings = Torque_Customizer_Tab_Site_Identity::get_settings();
 
-$logo_src_white = null !== get_theme_mod( $tab_settings['logo_white_setting'] )
-  ? '<img src="' . get_theme_mod( $tab_settings['logo_white_setting'] ) . '"/>'
+$header_logo_src_white = null !== get_theme_mod( $tab_settings['logo_white_setting'] )
+  ? '<img src="' . get_theme_mod( $tab_settings['logo_white_setting'] ) . '" height="70px" width="auto" />'
   : null;
-$logo_src_dark = null !== get_theme_mod( $tab_settings['logo_setting'] )
-  ? '<img src="' . get_theme_mod( $tab_settings['logo_setting'] ) . '"/>'
+$header_logo_src_dark = null !== get_theme_mod( $tab_settings['logo_setting'] )
+  ? '<img src="' . get_theme_mod( $tab_settings['logo_setting'] ) . '" height="70px" width="auto" />'
   : null;
 
 
@@ -59,7 +59,7 @@ if ( !empty( $document ) && null !== $post_id ) :
 
   // featured image
   $project_featured_image   = null !== get_the_post_thumbnail_url( $post_id, 'large')
-    ? '<img src="' . get_the_post_thumbnail_url( $post_id, 'large') . '" />'
+    ? '<img src="' . get_the_post_thumbnail_url( $post_id, 'large') . '" style="width: 100%; max-width: 600px;" />'
     : null;
   
   // key details
@@ -112,7 +112,7 @@ if ( !empty( $document ) && null !== $post_id ) :
   setup_postdata( $post );
 
   $featured_image           = null !== get_the_post_thumbnail_url( null, 'large')
-    ? '<img src="' . get_the_post_thumbnail_url( null, 'large') . '" />'
+    ? '<img src="' . get_the_post_thumbnail_url( null, 'large') . '" style="width: 100%; max-width: 600px;" />'
     : null;
   $content                  = get_the_content();
 
@@ -122,13 +122,13 @@ if ( !empty( $document ) && null !== $post_id ) :
     ? substr_count( $highlights, '<li>' )
     : false;  
 
+  // determine the number of highlights per column, for the email templates
   $highlights_count_col1    = ceil( (int) $highlights_count / 2 );
   $highlights_count_col2    = floor( (int) $highlights_count / 2 );
 
+  // split the list of highlights into separate arrays; one array for each column
   $highlights               = str_replace( array( '<ul>', '</ul>', '\r\n' ), '',  $highlights );
-  // $highlights_array         = explode( '\r\n', trim( $highlights ) );
   $highlights_array         = explode( '</li>', trim( $highlights ) );
-  var_dump( $highlights_array );
 
   // highlights col 1 array
   for ( $i=0; $i < $highlights_count_col1; $i++ ) {
@@ -142,8 +142,6 @@ if ( !empty( $document ) && null !== $post_id ) :
       $highlights_array_col2[] = str_replace( '<li>', '', $highlights_array[$i] );
     }
   }
-  var_dump( $highlights_array_col1 );
-  var_dump( $highlights_array_col2 );
 
 endif;
 
@@ -152,7 +150,13 @@ endif;
  * Footer Data
  */
 
-// logo white/dark defined in header data
+// logos
+$footer_logo_src_white = null !== get_theme_mod( $tab_settings['logo_white_setting'] )
+  ? '<img src="' . get_theme_mod( $tab_settings['logo_white_setting'] ) . '" height="85px" width="auto" />'
+  : null;
+$footer_logo_src_dark = null !== get_theme_mod( $tab_settings['logo_setting'] )
+  ? '<img src="' . get_theme_mod( $tab_settings['logo_setting'] ) . '" height="85px" width="auto" />'
+  : null;
 
 $address                    = get_field('address', 'options');
 $phone                      = get_field('phone', 'options');
@@ -194,89 +198,189 @@ endif;
   <head>
     <meta charset="utf-8">
     <title><?php echo esc_html( $document->post_title ); ?></title>
-
-    <style>
-      #main-content-container {
-        width: 600px;
-        max-width: 600px;
-      }
-    </style>
   </head>
   <body>
     <!--*|IF:MC_PREVIEW_TEXT|*-->
     <!--[if !gte mso 9]><!----><span class="mcnPreviewText" style="display:none; font-size:0px; line-height:0px; max-height:0px; max-width:0px; opacity:0; overflow:hidden; visibility:hidden; mso-hide:all;">Interra Realty Offer Memorandum - <?php echo esc_html( $document->post_title ); ?></span><!--<![endif]-->
     <!--*|END:IF|*-->
     <center>
-      <table align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="template-wrapper">
-        <tr>
-          <td align="center" valign="top">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="template-wrapper" style="font-size: 16px; font-family: Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif; color: <?php echo $mediumGray; ?>; background-color: <?php echo $white; ?>;">
+        <tbody>
+          <tr>
+            <td align="center" valign="top">
 
-            <!-- START: MAIN CONTENT TABLE -->
-            <table id="main-content-container" class="<?php echo $tmpl_body; ?>" align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
-              <tr>
-                <td>
+              <!-- START: MAIN CONTENT TABLE -->
+              <table id="main-content-container" style="width: 600px; max-width: 600px; border: <?php echo 'style-2' === $tmpl_body ? '1px solid' . $mediumGreen : '0'; ?>;" align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tbody>
+                  <tr>
+                    <td>
 
-                  <!-- START: HEADER TABLE -->
-                  <table id="header-container" class="<?php echo $tmpl_header; ?>" align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%">
-                    <tr>
-                      <td>
-                        <p>--------- HEADER ---------</p>
-                        <p>logo_src_white: <?php echo $logo_src_white; ?></p>
-                        <p>logo_src_dark: <?php echo $logo_src_dark; ?></p>
-                      </td>
-                    </tr>
-                  </table>
-                  <!-- END: HEADER TABLE -->
-                  
-                  <!-- START: BODY TABLE -->
-                  <table id="body-container" class="<?php echo $tmpl_body; ?>" align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%">
-                    <tr>
-                      <td>
-                        <p>--------- BODY ---------</p>
-                        <p>Project/Post ID: <?php echo $post_id; ?></p>
-                        <p>project_name: <?php echo strip_tags( $project_name ); ?></p>
-                        <p>project_featured_image: <?php echo $project_featured_image; ?></p>
-                        <p>__key_details: <?php var_dump( $__key_details ); ?></p>
-                        <p>pictures: <?php // var_dump( $pictures ); ?></p>
-                        <p>Property/Post ID: <?php echo get_the_ID(); ?></p>
-                        <p>property_location: <?php echo strip_tags( $property_location, '<br><p>' ); ?></p>
-                        <p>content: <?php echo $content; ?></p>
-                        <p>highlights: <?php echo $highlights; ?></p>
-                        <p>highlights_count: <?php echo $highlights_count; ?></p>
-                        <p>highlights_col1: <?php echo $highlights_count_col1; ?></p>
-                        <p>highlights_col2: <?php echo $highlights_count_col2; ?></p>
-                        <p>highlights_array_col1: <?php echo $highlights_array_col1; ?></p>
-                        <p>highlights_array_col2: <?php echo $highlights_array_col2; ?></p>
-                        <p>featured_image: <?php echo $featured_image; ?></p>
-                      </td>
-                    </tr>
-                  </table>
-                  <!-- END: BODY TABLE -->
+                      <!-- START: HEADER TABLE -->
+                      <table id="header-container" class="<?php echo $tmpl_header; ?>" align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%">
+                        <tbody>
+                          <tr>
+                            <td>
+                              <!-- START: HEADER LOGO TABLE -->
+                              <table id="header-logo-container" align="center" border="0" cellpadding="10px" cellspacing="0" height="100%" width="100%">
+                                <tbody>
+                                  <tr>
+                                    <td style="<?php if ( 'style-1' === $tmpl_header ) {
+                                      echo 'height: 70px; padding: 10px; background-color: ' . $mediumGray . '; text-align: center;';
+                                    } elseif ( 'style-2' === $tmpl_header ) {
+                                      echo 'height: 130px; padding: 30px 10px; background-color: ' . $white . '; text-align: center;';
+                                    } else {
+                                      echo '';
+                                    } ?>">
+                                    <?php if ( 'style-1' === $tmpl_header ) {
+                                      echo $header_logo_src_white;
+                                    } else {
+                                      echo $header_logo_src_dark;
+                                    } ?>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                              <!-- END: HEADER LOGO TABLE -->
+                              <?php if ( 'style-1' === $tmpl_header || 'style-2' === $tmpl_header ) { ?>
+                                <!-- START: HEADER TEXT TABLE -->
+                                <table id="header-text-container" align="center" border="0" cellpadding="" cellspacing="0" height="100%" width="100%" style="padding: 9px 18px;">
+                                  <tbody>
+                                    <tr>
+                                      <td style="padding: 18px; background-color: <?php echo $mediumGreen; ?>; text-align: center; text-transform: uppercase; color: <?php echo $white; ?>;">
+                                        <h1 style="font-size: 33px; margin: 0 auto;">
+                                          <span>PRICE REDUCTION</span>
+                                        </h1>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                                <!-- END: HEADER TEXT TABLE -->
+                              <?php } ?>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <!-- END: HEADER TABLE -->
+                      
+                      <!-- START: BODY TABLE -->
+                      <table id="body-container" class="<?php echo $tmpl_body; ?>" align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%">
+                        <tbody>
+                          <tr>
+                            <td style="padding: 0 18px;">
 
-                  <!-- START: FOOTER TABLE -->
-                  <table id="footer-container" class="<?php echo $tmpl_footer; ?>" align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%">
-                    <tr>
-                      <td>
-                        <p>--------- FOOTER ---------</p>
-                        <p>logo_src_white: <?php echo $logo_src_white; ?></p>
-                        <p>logo_src_dark: <?php echo $logo_src_dark; ?></p>
-                        <p>address: <?php echo strip_tags( $address, '<br><p>' ); ?></p>
-                        <p>phone: <?php echo strip_tags( $phone ); ?></p>
-                        <p>email: <?php echo strip_tags( $email ); ?></p>
-                        <p>site_url: <?php echo $site_url; ?></p>
-                        <p>social_channels: <?php var_dump( $social_channels ); ?></p>
-                      </td>
-                    </tr>
-                  </table>
-                  <!-- END: FOOTER TABLE -->
+                              <!-- START: FEATURED IMAGE TABLE -->
+                              <table id="featured-image-container" align="center" border="0" cellpadding="10px" cellspacing="0" height="auto" width="100%">
+                                <tbody>
+                                  <tr>
+                                    <td style="padding: 9px 0; background-color: <?php echo $white; ?>; text-align: center;">
+                                      <?php echo $project_featured_image; ?>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                              <!-- END: FEATURED IMAGE TABLE -->
 
-                </td>
-              </tr>
-            </table>
-            <!-- END: MAIN CONTENT TABLE -->
-            
-          </td>
-        </tr>
+                              <!-- START: HIGHLIGHTS TABLE -->
+                              <table id="highlights-container" align="center" border="0" cellpadding="10px" cellspacing="0" height="auto" width="100%">
+                                <tbody>
+                                  <tr>
+                                    <td style="padding: 9px 0; text-align: left;">
+
+                                      <?php if ( 'style-1' === $tmpl_body || 'style-2' === $tmpl_body ) { ?>
+                                        <h3 style="font-size: 22px; color: <?php echo $mediumGreen; ?>; text-transform: uppercase; margin: 0 auto;">
+                                          Property <span style="color: <?php echo $mediumGray; ?>;">Highlights</span>
+                                        </h3>
+                                      <?php } else { ?>
+                                        <h3 style="font-size: 22px; color: <?php echo $darkGreen; ?>; margin: 0 auto;">
+                                          <span>Property Highlights</span>
+                                        </h3>
+                                      <?php } ?>
+
+                                      <!-- START: HIGHLIGHTS TABLE - COL 1 -->
+                                      <table id="highlights-col1-container" style="width: 100%; max-width: 281px;" align="left" border="0" cellpadding="10px" cellspacing="0" height="auto" width="100%">
+                                        <tbody>
+                                          <tr>
+                                            <td style="padding: 9px 0; text-align: left;">
+                                              <?php if ( !empty( $highlights_array_col1 ) ) {
+                                                echo '<ul>';
+                                                foreach ( $highlights_array_col1 as $highlight ) { 
+                                                  echo '<li style="line-height: 24px;">' . $highlight . '</li>';
+                                                }
+                                                echo '</ul>';
+                                              } ?>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                      <!-- END: HIGHLIGHTS TABLE - COL 1 -->
+
+                                      <!-- START: HIGHLIGHTS TABLE - COL 2 -->
+                                      <table id="highlights-col2-container" style="width: 100%; max-width: 281px;" align="left" border="0" cellpadding="10px" cellspacing="0" height="auto" width="100%">
+                                        <tbody>
+                                          <tr>
+                                            <td style="padding: 9px 0; text-align: left;">
+                                              <?php if ( !empty( $highlights_array_col2 ) ) {
+                                                echo '<ul>';
+                                                foreach ( $highlights_array_col2 as $highlight ) { 
+                                                  echo '<li>' . $highlight . '</li>';
+                                                }
+                                                echo '</ul>';
+                                              } ?>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                      <!-- END: HIGHLIGHTS TABLE - COL 2 -->
+
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                              <!-- END: HIGHLIGHTS TABLE -->
+                              <p>--------- BODY ---------</p>
+                              <p>project_name: <?php echo strip_tags( $project_name ); ?></p>
+                              <p>__key_details: <?php var_dump( $__key_details ); ?></p>
+                              <p>pictures: <?php // var_dump( $pictures ); ?></p>
+                              <p>Property/Post ID: <?php echo get_the_ID(); ?></p>
+                              <p>property_location: <?php echo strip_tags( $property_location, '<br><p>' ); ?></p>
+                              <p>content: <?php echo $content; ?></p>
+                              <p>highlights_array_col1: <?php var_dump( $highlights_array_col1 ); ?></p>
+                              <p>highlights_array_col2: <?php var_dump( $highlights_array_col2 ); ?></p>
+                              <p>featured_image: <?php echo $featured_image; ?></p>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <!-- END: BODY TABLE -->
+
+                      <!-- START: FOOTER TABLE -->
+                      <table id="footer-container" class="<?php echo $tmpl_footer; ?>" align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%">
+                        <tbody>
+                          <tr>
+                            <td>
+                              <p>--------- FOOTER ---------</p>
+                              <p>logo_src_white: <?php echo $logo_src_white; ?></p>
+                              <p>logo_src_dark: <?php echo $logo_src_dark; ?></p>
+                              <p>address: <?php echo strip_tags( $address, '<br><p>' ); ?></p>
+                              <p>phone: <?php echo strip_tags( $phone ); ?></p>
+                              <p>email: <?php echo strip_tags( $email ); ?></p>
+                              <p>site_url: <?php echo $site_url; ?></p>
+                              <p>social_channels: <?php var_dump( $social_channels ); ?></p>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <!-- END: FOOTER TABLE -->
+
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <!-- END: MAIN CONTENT TABLE -->
+              
+            </td>
+          </tr>
+        </tbody>
       </table>
     </center>
   </body>
