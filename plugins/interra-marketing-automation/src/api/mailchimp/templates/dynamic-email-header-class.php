@@ -4,13 +4,10 @@ class Dynamic_Email_Header_Class extends Dynamic_Email_Table_Class {
 
   public static $instance = null;
   private $template;
-  private $header_data = array(
+  private $data = array(
     'logo_url'      => null,
   );
-  private $header_styles = array(
-    'text-align'    => 'center',
-  );
-  private $header_attributes = array(
+  private $shared_attributes = array(
     'id'            => '',
     'align'         => 'center',
     'border'        => '0',
@@ -18,6 +15,9 @@ class Dynamic_Email_Header_Class extends Dynamic_Email_Table_Class {
     'cellspacing'   => '0',
     'height'        => '100%',
     'width'         => "100%",
+  );
+  private $shared_styles = array(
+    'text-align'    => 'center',
   );
 
   public function __construct( $template ) {
@@ -31,7 +31,7 @@ class Dynamic_Email_Header_Class extends Dynamic_Email_Table_Class {
 
   private function get_data() {
 
-    // logo
+    // logo_url
     require_once( get_template_directory() . '/includes/customizer/customizer-tabs/tabs/torque-customizer-tab-site-identity-class.php' );
     $tab_settings = Torque_Customizer_Tab_Site_Identity::get_settings();
 
@@ -41,10 +41,10 @@ class Dynamic_Email_Header_Class extends Dynamic_Email_Table_Class {
         ? get_theme_mod( $tab_settings['logo_white_setting'] )
         : null;
       
-      $td_styles = array(
+      $td_shared_styles = array(
         'height'           => '70px',
         'padding'          => '10px',
-        'background-color' => isset( Dynamic_Email_Table_Class::$colors['medium_gray'] ) ? Dynamic_Email_Table_Class::$colors['medium_gray'] : 'initial',
+        'background-color' => isset( self::$colors['medium_gray'] ) ? self::$colors['medium_gray'] : 'initial',
       );
       
     } else {
@@ -52,15 +52,15 @@ class Dynamic_Email_Header_Class extends Dynamic_Email_Table_Class {
         ? get_theme_mod( $tab_settings['logo_white_setting'] )
         : null;
       
-      $td_styles = array(
+      $td_shared_styles = array(
         'height'           => '130px',
         'padding'          => '30px 10px',
-        'background-color' => isset( Dynamic_Email_Table_Class::$colors['white'] ) ? Dynamic_Email_Table_Class::$colors['white'] : 'initial',
+        'background-color' => isset( self::$colors['white'] ) ? self::$colors['white'] : 'initial',
       );
     }
 
-    $this->header_data['logo_url'] = '<img src="' . $logo_url . '" height="70px" width="auto" />';
-    $this->header_styles = array_merge( $this->header_styles, $td_styles );
+    $this->data['logo_url'] = '<img src="' . $logo_url . '" height="70px" width="auto" />';
+    $this->shared_styles = array_merge( $this->shared_styles, $td_shared_styles );
     
   }
 
@@ -69,21 +69,38 @@ class Dynamic_Email_Header_Class extends Dynamic_Email_Table_Class {
     $this->get_data();
 
     // inner table
-    $this->header_attributes['id'] = 'header-logo-container';
-    $html = Dynamic_Email_Table_Class::build_table_element( 'td', $this->header_data, $this->header_attributes, $this->header_styles );
-    $html = Dynamic_Email_Table_Class::build_table_element( 'tr', array( $html ) );
-    $html = Dynamic_Email_Table_Class::build_table_element( 'tbody', array( $html ) );
-    $html = Dynamic_Email_Table_Class::build_table_element( 'table', array( $html ), $this->header_attributes );
+    $inner_html = self::build_table_element( 'td', $this->data, $this->shared_attributes, $this->shared_styles );
+    $this->shared_attributes['cellpadding'] = '0';
+    $inner_html = self::build_table_element( 'tr', array( $inner_html ) );
+    $inner_html = self::build_table_element( 'tbody', array( $inner_html ) );
+    $this->shared_attributes['id'] = 'header-logo-container';
+    $inner_html = self::build_table_element( 'table', array( $inner_html ), $this->shared_attributes );
 
     // outer table
-    $this->header_attributes['id'] = 'header-container';
-    $this->header_attributes['cellpadding'] = '0';
-    $html = Dynamic_Email_Table_Class::build_table_element( 'td', array( $html ) );
-    $html = Dynamic_Email_Table_Class::build_table_element( 'tr', array( $html ) );
-    $html = Dynamic_Email_Table_Class::build_table_element( 'tbody', array( $html ) );
-    $html = Dynamic_Email_Table_Class::build_table_element( 'table', array( $html ), $this->header_attributes );
+    $outer_html = self::build_table_element( 'td', array( $inner_html ) );
+    $outer_html = self::build_table_element( 'tr', array( $outer_html ) );
+    $outer_html = self::build_table_element( 'tbody', array( $outer_html ) );
+    $this->shared_attributes['id'] = 'header-container';
+    $outer_html = self::build_table_element( 'table', array( $outer_html ), $this->shared_attributes );
 
+    echo $outer_html;
+
+
+    /* // inner table
+    $this->shared_attributes['id'] = 'header-logo-container';
+
+    self::start_table();
+    $inner_html = self::build_table_element( 'td', $this->data, $this->shared_attributes, $this->shared_styles );
+    echo $inner_html;
+
+    // outer table
+    $this->shared_attributes['id'] = 'header-container';
+    $this->shared_attributes['cellpadding'] = '0';
+
+    self::start_table();
+    $html = self::build_table_element( 'td', array( self::end_table( $this->shared_attributes ) ) );
     echo $html;
+    echo self::end_table( $this->shared_attributes ); */
 
   }
 

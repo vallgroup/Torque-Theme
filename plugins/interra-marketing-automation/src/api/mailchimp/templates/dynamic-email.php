@@ -2,6 +2,8 @@
 
 require( Interra_Marketing_Automation_PATH . '/api/mailchimp/templates/dynamic-email-table-class.php' );
 require( Interra_Marketing_Automation_PATH . '/api/mailchimp/templates/dynamic-email-header-class.php' );
+require( Interra_Marketing_Automation_PATH . '/api/mailchimp/templates/dynamic-email-body-class.php' );
+// require( Interra_Marketing_Automation_PATH . '/api/mailchimp/templates/dynamic-email-footer-class.php' );
 
 global $post_id, $email_templates, $document;
 
@@ -24,38 +26,19 @@ if ( !empty( $email_templates ) ) :
     ? $email_templates['footer']
     : null;
 
-  
   $header = Dynamic_Email_Header_Class::get_inst( $tmpl_header );
-  // $header->build_header();
-
-  // colors
-  $white = '#FFF';
-  $black = '#000';
-  $mediumGreen = '#95ca53';
-  $darkGreen = '#64A557';
-  $mediumGray = '#696A6D';
+  $body = Dynamic_Email_Body_Class::get_inst( $tmpl_header, $post_id );
+  // $footer = Dynamic_Email_Footer_Class::get_inst( $tmpl_header );
 
 endif;
 
 
-/**
- * Header Data
- */
-
-
-
-// logos
-require_once( get_template_directory() . '/includes/customizer/customizer-tabs/tabs/torque-customizer-tab-site-identity-class.php' );
-$tab_settings = Torque_Customizer_Tab_Site_Identity::get_settings();
-
-$header_logo_src_white = null !== get_theme_mod( $tab_settings['logo_white_setting'] )
-? '<img src="' . get_theme_mod( $tab_settings['logo_white_setting'] ) . '" height="70px" width="auto" />'
-: null;
-$header_logo_src_dark = null !== get_theme_mod( $tab_settings['logo_setting'] )
-? '<img src="' . get_theme_mod( $tab_settings['logo_setting'] ) . '" height="70px" width="auto" />'
-: null;
-
-
+// colors
+$white = '#FFF';
+$black = '#000';
+$mediumGreen = '#95ca53';
+$darkGreen = '#64A557';
+$mediumGray = '#696A6D';
 
 /**
  * Body Data
@@ -104,6 +87,9 @@ endif;
  */
 
 // logos
+require_once( get_template_directory() . '/includes/customizer/customizer-tabs/tabs/torque-customizer-tab-site-identity-class.php' );
+$tab_settings = Torque_Customizer_Tab_Site_Identity::get_settings();
+
 $footer_logo_src_white = null !== get_theme_mod( $tab_settings['logo_white_setting'] )
   ? '<img src="' . get_theme_mod( $tab_settings['logo_white_setting'] ) . '" height="85px" width="auto" />'
   : null;
@@ -171,7 +157,7 @@ endif;
                       <?php $header->build_header(); ?>
                       
                       <!-- START: BODY TABLE -->
-                      <table id="body-container" class="<?php echo $tmpl_body; ?>" align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%">
+                      <table id="body-container" align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%">
                         <tbody>
                           <tr>
                             <td style="padding: 0 18px;">
@@ -182,7 +168,7 @@ endif;
                                 <tbody>
                                   <tr>
                                     <td style="padding: 9px 18px; background-color: <?php echo $mediumGreen; ?>; text-align: center; text-transform: uppercase; color: <?php echo $white; ?>;">
-                                      <p style="font-size: 18px; margin: 0 auto; font-weight: 600;">
+                                      <p style="font-size: 14px; margin: 0 auto;">
                                         <span><?php echo $property_address; ?></span>
                                       </p>
                                     </td>
