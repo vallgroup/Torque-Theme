@@ -26,7 +26,7 @@ if ( !empty( $email_templates ) ) :
 
   
   $header = Dynamic_Email_Header_Class::get_inst( $tmpl_header );
-  $header->build_header();
+  // $header->build_header();
 
   // colors
   $white = '#FFF';
@@ -168,39 +168,7 @@ endif;
                   <tr>
                     <td>
 
-                      <!-- START: HEADER TABLE -->
-                      <table id="header-container" class="<?php echo $tmpl_header; ?>" align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%">
-                        <tbody>
-                          <tr>
-                            <td>
-
-                              <!-- START: HEADER LOGO TABLE -->
-                              <table id="header-logo-container" align="center" border="0" cellpadding="10px" cellspacing="0" height="100%" width="100%">
-                                <tbody>
-                                  <tr>
-                                    <td style="<?php if ( 'style-1' === $tmpl_header ) {
-                                      echo 'height: 70px; padding: 10px; background-color: ' . $mediumGray . '; text-align: center;';
-                                    } elseif ( 'style-2' === $tmpl_header ) {
-                                      echo 'height: 130px; padding: 30px 10px; background-color: ' . $white . '; text-align: center;';
-                                    } else {
-                                      echo '';
-                                    } ?>">
-                                    <?php if ( 'style-1' === $tmpl_header ) {
-                                      echo $header_logo_src_white;
-                                    } else {
-                                      echo $header_logo_src_dark;
-                                    } ?>
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                              <!-- END: HEADER LOGO TABLE -->
-
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      <!-- END: HEADER TABLE -->
+                      <?php $header->build_header(); ?>
                       
                       <!-- START: BODY TABLE -->
                       <table id="body-container" class="<?php echo $tmpl_body; ?>" align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%">

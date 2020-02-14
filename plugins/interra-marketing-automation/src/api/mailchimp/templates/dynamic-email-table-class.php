@@ -2,7 +2,10 @@
 
 class Dynamic_Email_Table_Class {
 
-
+  /**
+   * Accepted tags that can be dynamically output 
+   * using build_table_element().
+   */
   private static $allowable_tags = array(
     'table',
     'tbody',
@@ -11,6 +14,14 @@ class Dynamic_Email_Table_Class {
     'th',
     'tr',
     'td',
+  );
+
+  public static $colors = array(
+    'white'         => '#FFF',
+    'black'         => '#000',
+    'medium_green'  => '#95CA53',
+    'dark_green'    => '#64A557',
+    'medium_gray'   => '#696A6D',
   );
 
   public function __construct() {}
