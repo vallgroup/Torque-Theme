@@ -39,9 +39,8 @@ class Torque_Map_Controller {
         return Torque_API_Responses::Success_Response( array(
           'api_key'          => $this->get_api_key(),
           'map_details'	     => $this->get_map_shaped( $map ),
-					'map_styles'			 => $this->get_map_styles( $map->ID ),
-          'pois'	           => $pois['pois'] ?? [],
-					'pois_title'			 => $pois['title'] ?? '',
+					'map_styles'			 => get_field( 'map_styles', $map->ID ),
+          'pois'	           => $this->get_pois( $map ),
           'pois_location'    => $this->pois_location(),
           'display_poi_list' => $this->maybe_display_poi_list(),
         ) );
@@ -102,27 +101,20 @@ class Torque_Map_Controller {
 	}
 
 	private function get_map_shaped( $map ) {
-		// get the map meta
-		$context = array( 'context' => 'post', 'id' => $map->ID );
-		$map_dets = premise_get_value( 'torque_map', $context );
-		// if we have a size for our center marker
-		// convert it into separate params: widht and height
-		if ( isset( $map_dets['center_marker'] )
-			&& isset( $map_dets['center_marker']['size'] ) ) {
-			$trimmed_size = str_replace( ' ', '', trim( $map_dets['center_marker']['size'] ) );
-			$width_height = explode( ',', $trimmed_size );
-			if ( isset( $width_height[1] ) ) {
-				$map_dets['center_marker']['width'] = (int) $width_height[0];
-				$map_dets['center_marker']['height'] = (int) $width_height[1];
-			}
-		}
-		// build the map details
-		$map_resp = array_merge( array(
-			'id' => $map->ID,
-			'title' => $map->post_title,
-		), $map_dets );
 
-		return $map_resp;
+		return array(
+			'center' => get_field( 'center', $map->ID ),
+			'zoom' => get_field( 'zoom', $map->ID ),
+			'marker' => get_field( 'marker', $map->ID )
+		);
+	}
+
+	private function get_pois( $map ) {
+
+		return array(
+			'section_title' => get_field( 'section_title', $map->ID ),
+			'pois' => get_field( 'pois', $map->ID ),
+		);
 	}
 
 	private function get_pois_shaped( $map ) {
