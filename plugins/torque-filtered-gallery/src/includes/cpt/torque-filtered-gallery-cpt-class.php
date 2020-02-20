@@ -106,12 +106,12 @@ class Torque_Filtered_Gallery_CPT {
       // Categories, for the attachment page
       acf_add_local_field_group(array(
         'key' => 'group_5e4d68efbd8c4',
-        'title' => 'Filtered Gallery Category',
+        'title' => 'Filtered Gallery Categories',
         'fields' => array(
           array(
             'key' => self::$FILTERED_GALLERY_ACF_KEY,
-            'label' => 'Filtered Gallery Category',
-            'name' => 'filtered_gallery_category',
+            'label' => 'Filtered Gallery Categories',
+            'name' => 'filtered_gallery_categories',
             'type' => 'checkbox',
             'instructions' => '',
             'required' => 0,
@@ -122,10 +122,6 @@ class Torque_Filtered_Gallery_CPT {
               'id' => '',
             ),
             'choices' => array(
-              'interior' => 'Interior',
-              'exterior' => 'Exterior',
-              'amenities' => 'Amenities',
-              'nearby' => 'Nearby',
             ),
             'allow_custom' => 0,
             'default_value' => array(
