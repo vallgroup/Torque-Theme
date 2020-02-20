@@ -1,0 +1,254 @@
+<?php
+/**
+ * Torque filtered gallery CPT
+ */
+class Torque_Filtered_Gallery_CPT {
+
+  public static $FILTERED_GALLERY_ACF_KEY = 'field_5e4d68f62a688';
+  public static $FILTERED_GALLERY_CAT_NAME = 'filtered_gallery_categories';
+  public static $FILTERED_GALLERY_CAT_KEY = 'field_5e4d72664009e';
+  public static $FILTERED_GALLERY_CAT_SUB_FIELD_NAME = 'category';
+
+	/**
+	 * Holds the labels needed to build the careers custom post type.
+	 *
+	 * @var array
+	 */
+	public static $cpt_labels = array(
+    'singular'       => 'Filtered Gallery',
+    'plural'         => 'Filtered Galleries',
+    'slug'           => 'tq-filtered-gallery',
+    'post_type_name' => 'tq_filtered_gallery',
+);
+
+  protected $args = array(
+    'supports' => array( 'title', ),
+    'menu_icon'           => 'dashicons-images-alt',
+    'show_in_rest'        => true,
+    // more args here
+  );
+
+  private $cpt = null;
+
+  function __construct() {
+    if ( class_exists( 'PremiseCPT' ) ) {
+      // register CPT
+      $this->cpt = new PremiseCPT( self::$cpt_labels, $this->args );
+      // add metaboxes needed from ACF
+      // add_action( 'acf/init', array( $this, 'add_acf_metaboxes' ) );
+      
+      add_filter( 'acf/load_field/key=' . self::$FILTERED_GALLERY_ACF_KEY, array( $this, 'acf_load_category_field_choices' ), 10, 3 );
+    }
+  }
+
+  function acf_load_category_field_choices( $field ) {
+
+    // reset choices
+    $field['choices'] = array();
+
+    $filtered_galleries_args = array(
+      'post_type' => self::$cpt_labels['post_type_name'],
+      'nopaging' => true,
+    );
+  
+    $filtered_galleries = get_posts( $filtered_galleries_args );
+  
+    if ( count( $filtered_galleries ) > 0 ) :
+      foreach ( $filtered_galleries as $filtered_gallery ) :
+        // if has rows
+        if ( have_rows( self::$FILTERED_GALLERY_CAT_NAME, $filtered_gallery->ID ) ) :
+          // while has rows
+          while ( have_rows( self::$FILTERED_GALLERY_CAT_NAME, $filtered_gallery->ID ) ) : the_row();
+            
+            // vars
+            $label = get_sub_field( self::$FILTERED_GALLERY_CAT_SUB_FIELD_NAME );
+            $value = $label
+              ? strtolower( str_replace( array( ' ', ',', '.', '_' ), '-', $label ) )
+              : null;
+
+            // append to choices
+            if ( $label ) {
+              $field['choices'][$value] = $label;
+            }
+
+          endwhile;
+        endif;
+      endforeach;
+    endif;
+
+    // return the field
+    return $field;
+  }
+
+	/**
+	 * output the shortcode string
+	 *
+	 * @return string the shortcode string
+	 */
+	public function output_sc_string() {
+    global $post;
+    var_dump( 'testing....' );
+		?>
+		<p>To use this filtered gallery anywhere on your site, copy and paste this shortcode: <code>[torque_filtered_gallery gallery_id="<?php echo $post->ID; ?>"]</code></p>
+		<?php
+  }
+
+  public function add_acf_metaboxes() {
+
+    // add shortcode metabox
+		pwp_add_metabox( array(
+			'title' => 'The Shortcode',
+			'callback' => array( $this, 'output_sc_string' ),
+    ), array( 'torque_filtered_gallery' ), '', '' );
+    
+    if( function_exists('acf_add_local_field_group') ):
+
+      // Categories, for the attachment page
+      acf_add_local_field_group(array(
+        'key' => 'group_5e4d68efbd8c4',
+        'title' => 'Filtered Gallery Category',
+        'fields' => array(
+          array(
+            'key' => self::$FILTERED_GALLERY_ACF_KEY,
+            'label' => 'Filtered Gallery Category',
+            'name' => 'filtered_gallery_category',
+            'type' => 'checkbox',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+              'width' => '',
+              'class' => '',
+              'id' => '',
+            ),
+            'choices' => array(
+              'interior' => 'Interior',
+              'exterior' => 'Exterior',
+              'amenities' => 'Amenities',
+              'nearby' => 'Nearby',
+            ),
+            'allow_custom' => 0,
+            'default_value' => array(
+            ),
+            'layout' => 'vertical',
+            'toggle' => 0,
+            'return_format' => 'value',
+            'save_custom' => 0,
+          ),
+        ),
+        'location' => array(
+          array(
+            array(
+              'param' => 'attachment',
+              'operator' => '==',
+              'value' => 'image',
+            ),
+          ),
+        ),
+        'menu_order' => 0,
+        'position' => 'normal',
+        'style' => 'default',
+        'label_placement' => 'top',
+        'instruction_placement' => 'label',
+        'hide_on_screen' => '',
+        'active' => 1,
+        'description' => '',
+      ));
+      
+      // options, for the Filtered Gallery CPT page
+      acf_add_local_field_group(array(
+        'key' => 'group_5e4d722984191',
+        'title' => 'Filtered Gallery Options',
+        'fields' => array(
+          array(
+            'key' => self::$FILTERED_GALLERY_CAT_KEY,
+            'label' => 'Filtered Gallery Categories',
+            'name' => self::$FILTERED_GALLERY_CAT_NAME,
+            'type' => 'repeater',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+              'width' => '',
+              'class' => '',
+              'id' => '',
+            ),
+            'collapsed' => '',
+            'min' => 0,
+            'max' => 0,
+            'layout' => 'table',
+            'button_label' => '',
+            'sub_fields' => array(
+              array(
+                'key' => 'field_5e4d727c4009f',
+                'label' => 'Category',
+                'name' => self::$FILTERED_GALLERY_CAT_SUB_FIELD_NAME,
+                'type' => 'text',
+                'instructions' => '',
+                'required' => 1,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                  'width' => '',
+                  'class' => '',
+                  'id' => '',
+                ),
+                'default_value' => '',
+                'placeholder' => '',
+                'prepend' => '',
+                'append' => '',
+                'maxlength' => '',
+              ),
+            ),
+          ),
+          array(
+            'key' => 'field_5e4d72343e40c',
+            'label' => 'Filtered Gallery Images',
+            'name' => 'filtered_gallery_images',
+            'type' => 'gallery',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+              'width' => '',
+              'class' => '',
+              'id' => '',
+            ),
+            'min' => '',
+            'max' => '',
+            'insert' => 'append',
+            'library' => 'all',
+            'min_width' => '',
+            'min_height' => '',
+            'min_size' => '',
+            'max_width' => '',
+            'max_height' => '',
+            'max_size' => '',
+            'mime_types' => '',
+          ),
+        ),
+        'location' => array(
+          array(
+            array(
+              'param' => 'post_type',
+              'operator' => '==',
+              'value' => 'tq_filtered_gallery',
+            ),
+          ),
+        ),
+        'menu_order' => 0,
+        'position' => 'normal',
+        'style' => 'default',
+        'label_placement' => 'left',
+        'instruction_placement' => 'label',
+        'hide_on_screen' => '',
+        'active' => 1,
+        'description' => '',
+      ));
+      
+      endif;
+
+  }
+}
+
+
+?>

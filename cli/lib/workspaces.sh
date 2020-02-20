@@ -13,6 +13,7 @@ declare -a workspaces=(
   "torque-staff"
   "torque-button"
   "torque-filtered-loop"
+  "torque-filtered-gallery"
   "torque-careers"
   "torque-us-states"
   "torque-residences"
