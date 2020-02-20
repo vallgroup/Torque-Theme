@@ -17,6 +17,8 @@ class Dynamic_Email_Header_Class extends Dynamic_Email_Table_Class {
     'width'         => "100%",
   );
   private $shared_styles = array(
+    'height'        => '70px',
+    'padding'       => '10px',
     'text-align'    => 'center',
   );
 
@@ -42,19 +44,15 @@ class Dynamic_Email_Header_Class extends Dynamic_Email_Table_Class {
         : null;
       
       $td_shared_styles = array(
-        'height'           => '70px',
-        'padding'          => '10px',
         'background-color' => isset( self::$colors['medium_gray'] ) ? self::$colors['medium_gray'] : 'initial',
       );
       
     } else {
-      $logo_url = get_theme_mod( $tab_settings['logo_white_setting'] )
-        ? get_theme_mod( $tab_settings['logo_white_setting'] )
+      $logo_url = get_theme_mod( $tab_settings['logo_setting'] )
+        ? get_theme_mod( $tab_settings['logo_setting'] )
         : null;
       
       $td_shared_styles = array(
-        'height'           => '130px',
-        'padding'          => '30px 10px',
         'background-color' => isset( self::$colors['white'] ) ? self::$colors['white'] : 'initial',
       );
     }
@@ -74,14 +72,19 @@ class Dynamic_Email_Header_Class extends Dynamic_Email_Table_Class {
     $inner_html = self::build_table_element( 'tr', array( $inner_html ) );
     $inner_html = self::build_table_element( 'tbody', array( $inner_html ) );
     $this->shared_attributes['id'] = 'header-logo-container';
-    $inner_html = self::build_table_element( 'table', array( $inner_html ), $this->shared_attributes );
+    $inner_html = self::build_table_element( 'table', array( $inner_html ), $this->shared_attributes, $this->shared_styles );
+
+    // additional outer table attributes
+    $additional_outer_table_styles = array_merge( $this->shared_styles, array(
+      'margin-bottom' => '9px'
+    ) );
 
     // outer table
     $outer_html = self::build_table_element( 'td', array( $inner_html ) );
     $outer_html = self::build_table_element( 'tr', array( $outer_html ) );
     $outer_html = self::build_table_element( 'tbody', array( $outer_html ) );
     $this->shared_attributes['id'] = 'header-container';
-    $outer_html = self::build_table_element( 'table', array( $outer_html ), $this->shared_attributes );
+    $outer_html = self::build_table_element( 'table', array( $outer_html ), $this->shared_attributes , $additional_outer_table_styles );
 
     echo $outer_html;
 

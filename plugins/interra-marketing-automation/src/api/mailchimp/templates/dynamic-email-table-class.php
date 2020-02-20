@@ -44,24 +44,35 @@ class Dynamic_Email_Table_Class {
       in_array( $tag, self::$allowable_tags )
       && !empty( $data )
     ) {
-      // format tag
+
+      // format tag, removing illegal chars
       $tag = str_replace( array( '<', '>' ), '', $tag );
+      
       // start/open
       $html = '<' . $tag . ' ';
+      
       // attributes
-      foreach ( $attributes as $key => $value ) {
-        $html .= $key . '="' . $value . '" ';
+      if ( $attributes && !empty( $attributes ) ) {
+        foreach ( $attributes as $key => $value ) {
+          $html .= $key . '="' . $value . '" ';
+        }
       }
+        
       // styles
-      $html .= 'style="';
-      foreach ( $styles as $key => $value ) {
-        $html .= $key . ': ' . $value . '; ';
+      if ( $styles && !empty( $styles ) ) {
+        $html .= 'style="';
+        foreach ( $styles as $key => $value ) {
+          $html .= $key . ': ' . $value . '; ';
+        }
+        $html .= '"';
       }
-      $html .= '"';
+      
       // close
       $html .= '>';
+      
       // data
       $html .= implode( ' ', $data );
+      
       // end
       $html .= '</' . $tag . '>';
     } else {
