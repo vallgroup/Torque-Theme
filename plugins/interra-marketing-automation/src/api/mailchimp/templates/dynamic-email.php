@@ -45,7 +45,7 @@ endif;
     <!--[if !gte mso 9]><!----><span class="mcnPreviewText" style="display:none; font-size:0px; line-height:0px; max-height:0px; max-width:0px; opacity:0; overflow:hidden; visibility:hidden; mso-hide:all;">Interra Realty Offer Memorandum - <?php echo esc_html( $document->post_title ); ?></span><!--<![endif]-->
     <!--*|END:IF|*-->
     <center>
-      <table align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="template-wrapper" style="font-size: 16px; font-family: Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif; color: <?php echo $mediumGray; ?>; background-color: <?php echo $white; ?>;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="template-wrapper" style="font-size: 16px; font-family: Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif; color: <?php echo Dynamic_Email_Table_Class::$colors['medium_gray']; ?>; background-color: <?php echo Dynamic_Email_Table_Class::$colors['white']; ?>;">
         <tbody>
           <tr>
             <td align="center" valign="top">
