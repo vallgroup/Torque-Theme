@@ -75,7 +75,7 @@ class Dynamic_Email_Footer_Class extends Dynamic_Email_Table_Class {
     $address                    = get_field('address', 'options');
     $phone                      = get_field('phone', 'options');
     // NB: added email to options page....
-    $email                      = get_field('email', 'options');
+    $site_email                 = get_field('email', 'options');
     $site_url                   = get_site_url();
 
     // social channels
@@ -134,8 +134,8 @@ class Dynamic_Email_Footer_Class extends Dynamic_Email_Table_Class {
       : '';
     
     // email
-    $this->data['email'] = $email
-      ? '<a href="mailto:' . $email . '" target="_blank" style="color: ' . $accent_color . '">' . $email . '</a>'
+    $this->data['email'] = $site_email
+      ? '<a href="mailto:' . $site_email . '" target="_blank" style="color: ' . $accent_color . '">' . $site_email . '</a>'
       : '';
     
     // site url
@@ -167,6 +167,9 @@ class Dynamic_Email_Footer_Class extends Dynamic_Email_Table_Class {
 
   }
 
+  /**
+   * Two-cols, with brokers
+   */
   private function build_footer_style_1() {
 
     // Applicable to both col 1 & col 2
@@ -231,6 +234,9 @@ class Dynamic_Email_Footer_Class extends Dynamic_Email_Table_Class {
     echo $outer_html;
   }
 
+  /**
+   * Single-col, without brokers
+   */
   private function build_footer_style_2() {
 
     // additional outer td attributes
@@ -242,7 +248,7 @@ class Dynamic_Email_Footer_Class extends Dynamic_Email_Table_Class {
     $additional_outer_table_styles = array_merge( $this->shared_styles, array(
       'background-color'  => self::$colors['white'],
       'text-align'        => 'center',
-      'color'             => 'initial',
+      'color'             => 'inherit',
     ) );
 
     // additional outer table attributes
