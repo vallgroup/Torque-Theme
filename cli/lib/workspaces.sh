@@ -21,5 +21,6 @@ declare -a workspaces=(
   "torque-contact-form"
   "torque-recaptcha"
   "torque-slideshow"
+  "torque-rentcafe"
   "the-venn-child"
 )
