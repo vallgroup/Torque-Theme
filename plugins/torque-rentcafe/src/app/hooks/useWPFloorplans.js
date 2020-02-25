@@ -15,10 +15,7 @@ export default (site, params) => {
           );
 
           const newFloorplans = response?.data?.floorplans || [];
-          
-          console.log('newFloorplans', newFloorplans);
-          // console.log('newFloorplans response', response);
-          // console.log('response?.data?.floorplans', response?.data?.floorplans);
+          // console.log('newFloorplans', newFloorplans);
 
           return setFloorplans(newFloorplans);
         } catch (e) {

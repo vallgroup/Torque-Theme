@@ -32,7 +32,7 @@ class Torque_Rentcafe_Floorplans_Controller {
 		// check cache first, else fetch from RentCafe API
 		if ( $cached_floorplans = get_field( 'floorplans_response', 'option' ) ) {
 			return Torque_API_Responses::Success_Response( array(
-				'floorplans'	=> $cached_floorplans
+				'floorplans'	=> json_decode( $cached_floorplans )
 			) );
 		} else {
 			try {

@@ -1,20 +1,18 @@
 import React from "react";
 import { createRequestParams } from "./helpers";
 import { useWPFloorplans } from "./hooks";
-import FloorplansContainer from "./components/FloorplansContainer/FloorplansContainer";
+import Floorplans from "./components/Floorplans/Floorplans";
 
 // props
 //
 // site: string 
 const App = ({ site, requestType, PropertyCode }) => {
   const params = createRequestParams({ requestType, PropertyCode });
-  const floorplans = useWPFloorplans( site, params );
+  const floorplanData = useWPFloorplans( site, params );
 
   return (
-    <FloorplansContainer
-      floorplans={floorplans}
-    />
-  )
+    <Floorplans floorplanData={floorplanData} />
+  );
 }
 
 export default App
