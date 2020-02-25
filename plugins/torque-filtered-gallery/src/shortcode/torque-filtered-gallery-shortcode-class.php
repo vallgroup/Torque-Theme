@@ -19,16 +19,20 @@ class Torque_Filtered_Gallery_Shortcode {
    */
   public function __construct() {
 
+    // 'gallery_id' - required CPT ID of gallery
+    // 'posts_per_page' - max. number of posts to return
+    // 'use_lightbox' - utilise a lightbox feature, to open images in fullscreen when clicked
+    // 'hide_filters' - hide all filters
     // 'filters_types' - comma separated array of filter types which will have an AND relationship
     //   supported options:
     //     tabs_acf - creates tab filters for a given acf select field (pass the acf field id)
-    //     dropdown_tax - creates dropdown filter for a given wp tax (pass the tax slug)
-    //     dropdown_date - creates dropdown filter for filtering by month (no args)
     //
     // 'filters_args' - comma separated array of filter arguments for the types
     $this->expected_args = array(
-      'gallery_id'     => '', // required
-      'posts_per_page' => '-1', // optional
+      'gallery_id'        => '', // required
+      'posts_per_page'    => '-1', // optional
+      'use_lightbox'      => false, // optional
+      'hide_filters'      => false, // optional
 
       // default args for second method
       'filters_types' => 'tabs_acf',

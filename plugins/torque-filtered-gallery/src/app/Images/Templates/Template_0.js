@@ -5,6 +5,8 @@ class Template_0 extends React.PureComponent {
   render() {
     const { image } = this.props;
 
+    const lightboxOptions = {}
+
     const imageUrl = image.url;
 
     return (

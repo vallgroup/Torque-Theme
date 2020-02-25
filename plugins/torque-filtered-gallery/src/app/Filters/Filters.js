@@ -7,7 +7,8 @@ const Filters = ({
   terms,
   activeTerm,
   updateActiveTerm,
-  hideAllOption
+  hideAllOption,
+  hideFilters
 }) => {
   const allTerm = {
     term_id: 0,
@@ -15,28 +16,29 @@ const Filters = ({
   };
 
   return (
-    <div className={classnames("torque-filtered-gallery-filters", className)}>
-      {!hideAllOption && (
-        <button
-          className={classnames("torque-filtered-gallery-filter-button", {
-            active: allTerm.term_id === activeTerm
-          })}
-          onClick={updateActiveTerm(allTerm.term_id)}
-          dangerouslySetInnerHTML={{ __html: allTerm.name }}
-        />
-      )}
+    0 < terms?.length && !hideFilters // if no terms passed in, hide the filters
+      && <div className={classnames("torque-filtered-gallery-filters", className)}>
+        {!hideAllOption && (
+          <button
+            className={classnames("torque-filtered-gallery-filter-button", {
+              active: allTerm.term_id === activeTerm
+            })}
+            onClick={updateActiveTerm(allTerm.term_id)}
+            dangerouslySetInnerHTML={{ __html: allTerm.name }}
+          />
+        )}
 
-      {terms.map(term => (
-        <button
-          key={term.term_id}
-          className={classnames("torque-filtered-gallery-filter-button", {
-            active: term.term_id === activeTerm
-          })}
-          onClick={updateActiveTerm(term.term_id)}
-          dangerouslySetInnerHTML={{ __html: term.name }}
-        />
-      ))}
-    </div>
+        {terms.map(term => (
+          <button
+            key={term.term_id}
+            className={classnames("torque-filtered-gallery-filter-button", {
+              active: term.term_id === activeTerm
+            })}
+            onClick={updateActiveTerm(term.term_id)}
+            dangerouslySetInnerHTML={{ __html: term.name }}
+          />
+        ))}
+      </div>
   );
 };
 

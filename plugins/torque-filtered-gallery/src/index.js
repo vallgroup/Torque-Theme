@@ -13,7 +13,9 @@ entry.forEach(entry => {
       site: entry.getAttribute("data-site"),
       galleryID: entry.getAttribute("data-gallery_id"),
       postsPerPage: entry.getAttribute("data-posts_per_page"),
-      loopTemplate: entry.getAttribute("data-loop-template")
+      loopTemplate: entry.getAttribute("data-loop-template"),
+      hideFilters: entry.getAttribute("data-hide_filters") === '1',
+      useLightbox: entry.getAttribute("data-use_lightbox") === '1',
     };
 
     const filtersTypes = entry.getAttribute("data-filters_types");
