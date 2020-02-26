@@ -34,8 +34,9 @@ class Torque_Filtered_Gallery_CPT {
     if ( class_exists( 'PremiseCPT' ) ) {
       // register CPT
       $this->cpt = new PremiseCPT( self::$cpt_labels, $this->args );
+      
       // add metaboxes needed from ACF
-      // add_action( 'acf/init', array( $this, 'add_acf_metaboxes' ) );
+      add_action( 'acf/init', array( $this, 'add_acf_metaboxes' ) );
       
       add_filter( 'acf/load_field/key=' . self::$FILTERED_GALLERY_ACF_KEY, array( $this, 'acf_load_category_field_choices' ), 10, 3 );
     }
@@ -156,6 +157,44 @@ class Torque_Filtered_Gallery_CPT {
         'key' => 'group_5e4d722984191',
         'title' => 'Filtered Gallery Options',
         'fields' => array(
+          array(
+            'key' => 'field_5e5478ca0b359',
+            'label' => 'Use Lightbox?',
+            'name' => 'filtered_gallery_use_lightbox',
+            'type' => 'true_false',
+            'instructions' => 'Open images in a lightbox, when clicked.',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+              'width' => '',
+              'class' => '',
+              'id' => '',
+            ),
+            'message' => '',
+            'default_value' => 0,
+            'ui' => 1,
+            'ui_on_text' => '',
+            'ui_off_text' => '',
+          ),
+          array(
+            'key' => 'field_5e54792b89ed7',
+            'label' => 'Hide Filters?',
+            'name' => 'filtered_gallery_hide_filters',
+            'type' => 'true_false',
+            'instructions' => 'Hide the filters, even when categories are added to gallery/images.',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+              'width' => '',
+              'class' => '',
+              'id' => '',
+            ),
+            'message' => '',
+            'default_value' => 0,
+            'ui' => 1,
+            'ui_on_text' => '',
+            'ui_off_text' => '',
+          ),
           array(
             'key' => self::$FILTERED_GALLERY_CAT_KEY,
             'label' => 'Filtered Gallery Categories',
