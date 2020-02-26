@@ -7,9 +7,7 @@ const Title = ({ title }) => {
   
   return (
     title 
-      && <TitleContainer
-        className={'TitleContainer'}
-      >
+      && <TitleContainer>
         {'Unit ' + title}
       </TitleContainer>
   )

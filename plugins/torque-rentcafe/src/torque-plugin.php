@@ -61,7 +61,6 @@ class Torque_Rentcafe {
 		Torque_Rentcafe_Autoloader::autoload( array(
 			'Torque_Rentcafe_REST_Controller',
 			'Torque_Rentcafe_Shortcode',
-			// 'Torque_Rentcafe_CPT',
 			'Torque_Rentcafe_ACF_Class',
 		) );
 

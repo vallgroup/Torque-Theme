@@ -3,7 +3,10 @@
 class Torque_Rentcafe_ACF_Class {
 
   public function __construct() {
-    add_action('admin_init', array( $this, 'acf_admin_init'), 99);
+    // run actions on admin init
+    // add_action('admin_init', array( $this, 'acf_admin_init'), 99);
+
+    // load ACF defs
     add_action('acf/init', array( $this, 'acf_init' ) );
 
     // hide acf in admin - client doesnt need to see this
@@ -17,9 +20,73 @@ class Torque_Rentcafe_ACF_Class {
 
   public function acf_init() {
 
-    if ( function_exists('acf_add_local_field_group') ) :
-      // add ACF definitions
-    endif;
+    // add ACF definitions
+    // TODO:
+    if( function_exists('acf_add_local_field_group') ):
+
+      acf_add_local_field_group(array(
+        'key' => 'group_5e5057141af8a',
+        'title' => 'RentCafe Options',
+        'fields' => array(
+          array(
+            'key' => 'field_5e507080b133d',
+            'label' => 'RentCafe API Token',
+            'name' => 'rentcafe_api_token',
+            'type' => 'text',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+              'width' => '',
+              'class' => '',
+              'id' => '',
+            ),
+            'default_value' => '',
+            'placeholder' => '',
+            'prepend' => '',
+            'append' => '',
+            'maxlength' => '',
+          ),
+          array(
+            'key' => 'field_5e50572b1b55e',
+            'label' => 'Floorplans Response',
+            'name' => 'floorplans_response',
+            'type' => 'textarea',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+              'width' => '',
+              'class' => '',
+              'id' => '',
+            ),
+            'default_value' => '',
+            'placeholder' => '',
+            'maxlength' => '',
+            'rows' => '',
+            'new_lines' => '',
+          ),
+        ),
+        'location' => array(
+          array(
+            array(
+              'param' => 'options_page',
+              'operator' => '==',
+              'value' => 'acf-options',
+            ),
+          ),
+        ),
+        'menu_order' => 1,
+        'position' => 'normal',
+        'style' => 'default',
+        'label_placement' => 'top',
+        'instruction_placement' => 'label',
+        'hide_on_screen' => '',
+        'active' => 1,
+        'description' => '',
+      ));
+      
+      endif;
   }
 
 }

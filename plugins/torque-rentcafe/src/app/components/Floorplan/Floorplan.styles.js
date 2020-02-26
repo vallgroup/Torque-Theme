@@ -22,7 +22,9 @@ export const FloorplanContentContainer = styled.div`
   padding: 1.2em;
 `;
 
-export const TitleContainer = styled.h3`
+export const TitleContainer = styled.h3.attrs(props => ({
+  className: 'TitleContainer'
+}))`
   width: 100%;
   height: auto;
 `;

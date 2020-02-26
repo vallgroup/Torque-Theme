@@ -2,7 +2,6 @@
 
 require( Torque_Rentcafe_PATH . '/api/torque-rentcafe-rest-controller-class.php' );
 require( Torque_Rentcafe_PATH . '/shortcode/torque-rentcafe-shortcode-class.php' );
-require( Torque_Rentcafe_PATH . '/cpt/torque-rentcafe-cpt-class.php' );
 require( Torque_Rentcafe_PATH . '/includes/acf/torque-rentcafe-acf-class.php' );
 
 
