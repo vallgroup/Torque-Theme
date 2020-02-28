@@ -105,6 +105,7 @@ class Interra_Marketing_Automation_CPT {
 					'options' => array(
 						'Style 1' => 'style-1',
 						'Style 2' => 'style-2',
+						'Style 3' => 'style-3',
 					),
 					// add HTML for template preview
 					'wrapper_class' => 'span5',

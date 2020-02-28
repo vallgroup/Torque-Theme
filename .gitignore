@@ -3,6 +3,7 @@
 **/node_modules
 **/node_modules/**
 yarn-error.log
+yarn.lock
 
 
 # ignore all child themes, leave torque parent theme
