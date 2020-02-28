@@ -307,6 +307,21 @@ class Interra_Marketing_Automation {
 			true
 		);
 
+		wp_enqueue_script(
+			'interra-marketing-automation-cookie-script-dependency',
+			'https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js',
+			array() ,
+			'2.2.1',
+			true
+		);
+		wp_enqueue_script(
+			'interra-marketing-automation-cookie-script',
+			Interra_Marketing_Automation_URL . '/js/ima-cookies.js',
+			array('interra-marketing-automation-cookie-script-dependency'),
+			'0.0.1',
+			true
+		);
+
 		wp_enqueue_style(
 			'interra-marketing-automation-app-styles',
 			Interra_Marketing_Automation_URL . 'bundles/main.css'
