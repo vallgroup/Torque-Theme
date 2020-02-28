@@ -1,0 +1,73 @@
+export const filtersConfig = {
+  type: {
+    type: 'button',
+    title: 'type',
+    initial: 'all',
+    values: [
+      'all',
+      'studio',
+      '1 bed',
+      '2 bed',
+      '3 bed',
+      'townhouse',
+    ],
+    data_name: 'Beds',
+  },
+  availability: {
+    type: 'button',
+    title: 'availability',
+    initial: 'all',
+    values: [
+      'all',
+      'now',
+      '1-3 mo',
+    ],
+    data_name: 'AvailableDate',
+  },
+  price: {
+    type: 'range',
+    title: 'max price - $',
+    initial: '4000',
+    values: {
+      min: '2000',
+      max: '5000',
+      step: '500',
+    },
+    data_name: 'MaximumRent',
+  },
+  building: {
+    type: 'button',
+    title: 'building',
+    initial: 'all',
+    values: [
+      'all',
+      'north',
+      'south',
+    ],
+    data_name: 'PropertyId',
+  },
+  floor: {
+    type: 'button',
+    title: 'floor',
+    initial: 'all',
+    values: [
+      'all',
+      '1',
+      '2',
+      '3',
+      '4',
+      '5',
+      '6',
+      '7',
+      '8',
+      '9',
+      '10',
+      '11',
+      '12',
+      '13',
+      '14',
+      '15+',
+    ],
+    data_name: null,
+  }
+}

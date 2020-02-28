@@ -21,7 +21,7 @@ class Torque_Rentcafe_ACF_Class {
   public function acf_init() {
 
     // add ACF definitions
-    // TODO:
+    
     if( function_exists('acf_add_local_field_group') ):
 
       acf_add_local_field_group(array(
@@ -37,7 +37,7 @@ class Torque_Rentcafe_ACF_Class {
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array(
-              'width' => '',
+              'width' => '50',
               'class' => '',
               'id' => '',
             ),
@@ -48,9 +48,68 @@ class Torque_Rentcafe_ACF_Class {
             'maxlength' => '',
           ),
           array(
+            'key' => 'field_5e57e16ada63f',
+            'label' => 'Property Codes',
+            'name' => 'property_codes',
+            'type' => 'repeater',
+            'instructions' => 'Floorplans for the following property codes will be cached and made available in the front-end.',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+              'width' => '50',
+              'class' => '',
+              'id' => '',
+            ),
+            'collapsed' => '',
+            'min' => 0,
+            'max' => 0,
+            'layout' => 'table',
+            'button_label' => 'Add Property Code',
+            'sub_fields' => array(
+              array(
+                'key' => 'field_5e57e1a0da640',
+                'label' => 'Property Code',
+                'name' => 'property_code',
+                'type' => 'text',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                  'width' => '',
+                  'class' => '',
+                  'id' => '',
+                ),
+                'default_value' => '',
+                'placeholder' => '',
+                'prepend' => '',
+                'append' => '',
+                'maxlength' => '',
+              ),
+            ),
+          ),
+          array(
             'key' => 'field_5e50572b1b55e',
             'label' => 'Floorplans Response',
             'name' => 'floorplans_response',
+            'type' => 'textarea',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+              'width' => '',
+              'class' => '',
+              'id' => '',
+            ),
+            'default_value' => '',
+            'placeholder' => '',
+            'maxlength' => '',
+            'rows' => '',
+            'new_lines' => '',
+          ),
+          array(
+            'key' => 'field_5e56b5d3101af',
+            'label' => 'Availabilities Response',
+            'name' => 'availabilities_response',
             'type' => 'textarea',
             'instructions' => '',
             'required' => 0,
@@ -87,6 +146,8 @@ class Torque_Rentcafe_ACF_Class {
       ));
       
       endif;
+    
+    // end ACF definitions 
   }
 
 }

@@ -5,17 +5,14 @@ import {
   DetailWrapper,
   DetailName,
   DetailValue,
-} from "./Floorplan.styles.js";
+} from "./FloorplanGridView.styles.js";
 
 const Details = ({ details }) => {
   
   return (
     !isEmpty(details)
-      ? <DetailsContainer
-        className={'DetailWrapper'}
-      >
+      ? <DetailsContainer>
         {Object.entries(details).map(([key, detail]) => {
-            // console.log('floorplan.FloorplanId', floorplan.FloorplanId);
             return (
               <DetailWrapper 
                 key={key}

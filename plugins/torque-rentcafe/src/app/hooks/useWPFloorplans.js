@@ -5,6 +5,7 @@ export default (site, params) => {
 
   // request
   const [floorplans, setFloorplans] = useState([]);
+  const [availabilities, setAvailabilities] = useState([]);
   useEffect(
     () => {
       const getFloorplans = async () => {
@@ -13,13 +14,15 @@ export default (site, params) => {
             `${site}/wp-json/torque-rentcafe/v1/floorplans`,
             { params }
           );
-
+          const newAvailabilities = response?.data?.availabilities || [];
           const newFloorplans = response?.data?.floorplans || [];
-          // console.log('newFloorplans', newFloorplans);
-
+          // set new availabilities
+          setAvailabilities(newAvailabilities)
+          // set new floorplans
           return setFloorplans(newFloorplans);
         } catch (e) {
           console.warn(e);
+          setAvailabilities([]);
           setFloorplans([]);
         }
       };
@@ -29,5 +32,5 @@ export default (site, params) => {
     [site, params]
   );
 
-  return { floorplans };
+  return { floorplans, availabilities };
 };

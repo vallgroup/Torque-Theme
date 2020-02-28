@@ -19,8 +19,7 @@ class Torque_Rentcafe_Shortcode {
     // use this array to attributes and display them in the front end
     // for private attributes go to setup_atts()
     $this->expected_args = array(
-      'request_type' => '', // required
-      'property_code' => '', // optional
+      // '' => '', // required
     );
 
 		add_shortcode( self::$SHORTCODE_SLUG , array( $this, 'shortcode_handler') );

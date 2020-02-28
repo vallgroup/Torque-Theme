@@ -1,7 +1,7 @@
 import React from "react";
 import {
   TitleContainer
-} from "./Floorplan.styles.js";
+} from "./FloorplanGridView.styles.js";
 
 const Title = ({ title }) => {
   
