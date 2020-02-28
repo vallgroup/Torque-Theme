@@ -34,7 +34,7 @@ const FilterTypeRange = ({
               {'$' + numberWithCommas(filter.values.min)}
             </RangeMin>
             <RangeMax>
-              {'$' + numberWithCommas(filter.values.max)}
+              {'$' + numberWithCommas(filter.values.max) + '+'}
             </RangeMax>
           </FilterRangeContainer>
         </FilterContainer>

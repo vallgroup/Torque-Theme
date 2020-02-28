@@ -24,7 +24,7 @@ const FloorplanGridView = ({
     ? floorplan.Beds
     : null;
   const fpBaths = floorplan?.Baths
-    ? floorplan.Baths
+    ? floorplan.Baths.split('.')[0] // remove the '.00' for instance
     : null;
   const fpType = fpBeds && fpBaths
     ? fpBeds + ' bed/' + fpBaths + ' bath'

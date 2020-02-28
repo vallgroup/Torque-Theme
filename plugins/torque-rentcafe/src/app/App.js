@@ -14,7 +14,8 @@ import { LoadingMessage } from "./styles/App.styles";
 const App = ({ 
   site,
   requestType,
-  PropertyCode 
+  PropertyCode,
+  incomeRestricted, 
 }) => {
   
   // API query
@@ -28,9 +29,6 @@ const App = ({
   const query = useQuery();
   const floorplanId = query.get("floorplanId") || null;
 
-  console.log('floorplans.length', floorplans.length);
-  console.log('availabilities.length', availabilities.length);
-
   return ( 
     0 < floorplans.length
       ? <>
@@ -41,8 +39,9 @@ const App = ({
             availabilities={availabilities}
           />
           : <Floorplans 
-            floorplans={floorplans}
+            initialFloorplans={floorplans}
             availabilities={availabilities}
+            incomeRestricted={incomeRestricted}
           />}
       </>
       : <LoadingMessage>

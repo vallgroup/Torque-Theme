@@ -31,7 +31,7 @@ export const filtersConfig = {
     values: {
       min: '2000',
       max: '5000',
-      step: '500',
+      step: '250',
     },
     data_name: 'MaximumRent',
   },

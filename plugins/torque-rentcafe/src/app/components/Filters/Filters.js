@@ -7,7 +7,7 @@ import {
   FiltersButtonsContainer,
   FiltersFormButton,
 } from "./Filters.styles.js";
-import { filtersConfig } from "./Filters.config";
+import { filtersConfig } from "../../config/Filters.config";
 
 // props
 const Filters = ({
@@ -34,7 +34,10 @@ const Filters = ({
       building: filtersConfig.building.initial,
       floor: filtersConfig.floor.initial,
     };
+    // update state
     setCurrentFilters(newFilters);
+    // callback to update the floorplans grid
+    filtersUpdated(newFilters); // NB: pass the object, not the state
   }
 
   const renderInputs = () => {

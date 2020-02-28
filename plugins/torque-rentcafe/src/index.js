@@ -11,7 +11,8 @@ const entry = document.querySelectorAll(".torque-rentcafe-react-entry");
 entry.forEach(entry => {
   if (entry) {
     const sharedProps = {
-      site: entry.getAttribute("data-site")
+      site: entry.getAttribute("data-site"),
+      incomeRestricted: entry.getAttribute("data-income_restricted") === 'true',
     };
 
     ReactDOM.render(

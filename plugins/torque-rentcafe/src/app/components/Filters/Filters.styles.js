@@ -9,7 +9,7 @@ export const FiltersContainer = styled.div.attrs(props => ({
   align-items: center;
   justify-content: flex-start;
   box-sizing: border-box;
-  padding: 3vw 6vw 0;
+  padding: 3vw 6vw;
 `;
 
 export const FilterContainer = styled.div.attrs(props => ({
@@ -110,7 +110,7 @@ export const FiltersButtonsContainer = styled.div.attrs(props => ({
 }))`
   width: 100%;
   box-sizing: border-box;
-  padding: 2vw 6vw 0;
+  padding: 2vw 6vw 6vw;
 `;
 
 export const FiltersFormButton = styled.button.attrs(props => ({

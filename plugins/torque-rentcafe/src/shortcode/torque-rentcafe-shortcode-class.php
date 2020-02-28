@@ -19,7 +19,7 @@ class Torque_Rentcafe_Shortcode {
     // use this array to attributes and display them in the front end
     // for private attributes go to setup_atts()
     $this->expected_args = array(
-      // '' => '', // required
+      'income_restricted' => false, // optional -- restricts results to a set $/month
     );
 
 		add_shortcode( self::$SHORTCODE_SLUG , array( $this, 'shortcode_handler') );

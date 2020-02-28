@@ -8,7 +8,7 @@ const Title = ({ title }) => {
   return (
     title 
       && <TitleContainer>
-        {'Unit ' + title}
+        {title}
       </TitleContainer>
   )
 }

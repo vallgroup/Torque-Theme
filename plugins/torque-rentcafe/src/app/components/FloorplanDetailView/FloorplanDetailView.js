@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import SimpleReactLightbox, { SRLWrapper } from "simple-react-lightbox";
 import numberWithCommas from "../../helpers/numberHelpers";
 import Details from "../FloorplanDetailView/Details";
 import { 
@@ -15,7 +16,7 @@ import {
   FloorplanThumbnailContainer,
   FloorplanThumbnail,
 } from "../FloorplanDetailView/FloorplanDetailView.styles";
-import SimpleReactLightbox, { SRLWrapper } from "simple-react-lightbox";
+import { buildingCodes } from "../../config/Floorplans.config";
 
 const FloorplanDetailView = ({
   floorplanId,
@@ -35,16 +36,16 @@ const FloorplanDetailView = ({
 
   useEffect(() => {
     // find the floorplan instance
-    for (let index = 0; index < Object.keys(floorplans).length; index++) {
-      if ( floorplans[index].FloorplanId === floorplanId ) {
-        setFloorplan(floorplans[index]);
-        break;
+    Object.keys(floorplans).forEach((key, value) => {
+      if ( floorplans[key].FloorplanId === floorplanId ) {
+        setFloorplan(floorplans[key]);
       }
-    };
+    });
   }, []);
 
   console.log('floorplan', floorplan);
 
+  const propertyId = floorplan?.PropertyId || null
   const fpImages = floorplan?.FloorplanImageURL
     ? [floorplan.FloorplanImageURL]
     : [];
@@ -53,7 +54,7 @@ const FloorplanDetailView = ({
     ? floorplan.Beds
     : null;
   const fpBaths = floorplan?.Baths
-    ? floorplan.Baths
+    ? floorplan.Baths.split('.')[0] // remove the '.00' for instance
     : null;
   let fpAvailable = null;
   for (let index = 0; index < Object.keys(availabilities).length; index++) {
@@ -75,8 +76,14 @@ const FloorplanDetailView = ({
     'Availability': fpAvailable, 
     'Price': fpPrice,
   };
+  let fpBuilding = 'N/A';
+  Object.keys(buildingCodes).forEach((key, index) => {
+    if ( parseInt(buildingCodes[key].property_id) === parseInt(propertyId) ) {
+      fpBuilding = key;
+    }
+  });
   const buildingDetails = {
-    'Building': 'N/A',
+    'Building': fpBuilding,
     'Floors': 'N/A'
   };
 
@@ -107,13 +114,14 @@ const FloorplanDetailView = ({
             && <Details details={buildingDetails} />}
 
           <FloorplanButtonsContainer>
-            {0 < fpImages.length
+            {/* TODO: Download a PDF floorplan, when available */}
+            {/* {0 < fpImages.length
               && <FloorplanButton
                 href={fpImages[currentImageIndex]}
                 target={'_blank'}
               >
                 {'Download Floorplan'}
-              </FloorplanButton>}
+              </FloorplanButton>} */}
 
             {availabilityUrl
               && <FloorplanButton href={availabilityUrl} target={'_blank'}>
