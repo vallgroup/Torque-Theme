@@ -103,6 +103,7 @@ class Torque_Map_Controller {
 	private function get_map_shaped( $map ) {
 
 		return array(
+			'title' => $map->post_title,
 			'center' => get_field( 'center', $map->ID ),
 			'zoom' => get_field( 'zoom', $map->ID ),
 			'marker' => get_field( 'marker', $map->ID )
