@@ -116,6 +116,25 @@ export default class FiltersHelpers {
     return this;
   }
 
+  getByIncomeRestricted () {
+    let objIndex = 0;
+    const filteredFloorplans = {};
+    const floorplanKeys = Object.keys(this.floorplans);
+    const hasA = new RegExp(/(.*)A$/);
+
+    // check floorplan name for 'A' 
+    floorplanKeys.forEach((key, index) => {
+      if ( hasA.test(this.floorplans[index].FloorplanName) ) {
+        filteredFloorplans[objIndex] = this.floorplans[index];
+        objIndex++;
+      }
+    });
+
+    this.floorplans = filteredFloorplans;
+
+    return this;
+  }
+
   /**
    * 
    * @param {string} filterKey 

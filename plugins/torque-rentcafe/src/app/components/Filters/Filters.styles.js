@@ -60,6 +60,11 @@ export const FilterButton = styled.button.attrs(props => ({
   margin: 0 6px 5px 0;
   max-width: 135px;
 
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
   ${props => props.active
     ? `color: #FFF;
        background: #96d6ce;`

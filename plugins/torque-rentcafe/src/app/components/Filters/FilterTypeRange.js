@@ -20,7 +20,12 @@ const FilterTypeRange = ({
       ? <FilterContainer
           key={filterKey}
         >
-          <FilterTitle>{(filter.title || 'filter') + numberWithCommas(value)}</FilterTitle>
+          <FilterTitle>{
+            (filter.title || 'filter')
+            + numberWithCommas(value)
+            + (parseInt(value) === parseInt(filter.values.max)
+              ? '+'
+              : '')}</FilterTitle>
           <FilterRangeContainer>
             <FilterRange
               type={'range'} 

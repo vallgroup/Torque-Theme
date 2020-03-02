@@ -16,7 +16,3 @@ export const buildingCodes = {
     property_code: 'p1161664',
   },
 }
-
-export const displayOptions = {
-  income_restricted_rent: '3000',
-}

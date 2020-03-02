@@ -27,7 +27,7 @@ export const filtersConfig = {
   price: {
     type: 'range',
     title: 'max price - $',
-    initial: '4000',
+    initial: '5000',
     values: {
       min: '2000',
       max: '5000',

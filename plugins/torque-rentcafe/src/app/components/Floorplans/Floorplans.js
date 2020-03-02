@@ -6,12 +6,12 @@ import Filters from "../Filters/Filters"
 import FloorplanGridView from "../FloorplanGridView/FloorplanGridView";
 import { FloorplansContainer } from "./Floorplans.styles.js";
 import { LoadingMessage } from "../../styles/App.styles";
-import { displayOptions } from "../../config/Floorplans.config";
 
 // props
 //
 // floorplans: object 
 // availabilities: object 
+// incomeRestricted: boolean
 const Floorplans = ({
   initialFloorplans,
   availabilities,
@@ -20,11 +20,12 @@ const Floorplans = ({
   const [ filteredFloorplans, setFilteredFloorplans ] = useState(initialFloorplans);
   const __filtersHelper = new FiltersHelpers(initialFloorplans);
 
+  // filter for income-restricted listings
   useEffect(() => {
     // Filters are to be hidden and the results limited by price
     if (incomeRestricted) {
       const updatedFloorplans = __filtersHelper
-        .getByPrice(displayOptions.income_restricted_rent) // limit results by price
+        .getByIncomeRestricted() // limit results by price
         .floorplans; // return the filtered floorplans
 
       setFilteredFloorplans(updatedFloorplans);
@@ -37,6 +38,15 @@ const Floorplans = ({
   }, [filteredFloorplans]);
 
   const handleFiltersUpdated = (newFilters) => {
+
+    // check whether 'townhouse' was selected, and if so default building to 'all'
+    // NB: further logic found in <FilterTypeButton> lines: 26-36.
+    if (newFilters.type === 'townhouse') {
+      newFilters.building = 'all';
+    }
+
+    console.log('newFilters', newFilters);
+
     const updatedFloorplans = __filtersHelper
       .getByBuilding(newFilters['building']) // must be called first, because getByType has potential to override it if 'townhouse' is selected...
       .getByType(newFilters['type'])

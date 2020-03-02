@@ -24,6 +24,8 @@ const Filters = ({
       ...currentFilters,
       [key]: value
     });
+
+    // townhouseSanityCheck(key, value);
   }
 
   const resetFilters = () => {
@@ -40,11 +42,29 @@ const Filters = ({
     filtersUpdated(newFilters); // NB: pass the object, not the state
   }
 
+  const townhouseSanityCheck = (key, value) => {
+    const buildingFilters = document.getElementById('building');
+    const allBuildingBtn = buildingFilters.querySelectorAll(":scope button[value=all]")[0];
+    const northBuildingBtn = buildingFilters.querySelectorAll(":scope button[value=north]")[0];
+    const southBuildingBtn = buildingFilters.querySelectorAll(":scope button[value=south]")[0];
+    
+    if ( key === 'type' && value === 'townhouse' ) {
+      // northBuildingBtn.disabled = true;
+      // southBuildingBtn.disabled = true;
+      // allBuildingBtn.click();
+    } else {
+      // northBuildingBtn.disabled = false;
+      // southBuildingBtn.disabled = false;
+    }
+  }
+
   const renderInputs = () => {
     return (<>
       {Object.entries(filtersConfig).map(([key, filter], index) => {
         if ('button' === filter.type) {
           return <FilterTypeButton
+            currentFilters={currentFilters}
+            key={key}
             filterKey={key}
             filter={filter}
             active={currentFilters[key]}
@@ -52,6 +72,7 @@ const Filters = ({
           />
         } else if ('range' === filter.type) {
           return <FilterTypeRange
+            key={key}
             filterKey={key}
             filter={filter}
             value={currentFilters[key]}
