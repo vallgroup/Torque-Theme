@@ -82,16 +82,38 @@ export default class FiltersHelpers {
 
   getByPrice (filterValue) {
     const filterKey = 'price';
-    // early exit, if filter value is equal to max, return all
+
+    // if filter value is equal to max, update the operator to include >= as well as <=
     if ( filterValue === filtersConfig[filterKey].values.max ) {
-      return this;
+
+      const operator = (floorplanValue, filterValue) => {
+        return (
+          (
+            parseInt(floorplanValue) <= parseInt(filterValue)
+            || parseInt(floorplanValue) >= parseInt(filterValue)
+          )
+          && parseInt(floorplanValue) !== -1
+          && floorplanValue.toLowerCase() !== 'n/a'
+          && floorplanValue !== ''
+        );
+      };
+
+      this.loopThroughFilters(filterKey, filterValue, operator);
+
+    } else {
+
+      const operator = (floorplanValue, filterValue) => {
+        return (
+          parseInt(floorplanValue) <= parseInt(filterValue)
+          && parseInt(floorplanValue) !== -1
+          && floorplanValue.toLowerCase() !== 'n/a'
+          && floorplanValue !== ''
+        );
+      };
+
+      this.loopThroughFilters(filterKey, filterValue, operator);
+
     }
-
-    const operator = (floorplanValue, filterValue) => {
-      return parseInt(floorplanValue) <= parseInt(filterValue);
-    };
-
-    this.loopThroughFilters(filterKey, filterValue, operator);
 
     return this;
   }
@@ -116,7 +138,7 @@ export default class FiltersHelpers {
     return this;
   }
 
-  getByIncomeRestricted () {
+  getByIncomeRestricted (returnIncomeRestricted = false) {
     let objIndex = 0;
     const filteredFloorplans = {};
     const floorplanKeys = Object.keys(this.floorplans);
@@ -124,7 +146,31 @@ export default class FiltersHelpers {
 
     // check floorplan name for 'A' 
     floorplanKeys.forEach((key, index) => {
-      if ( hasA.test(this.floorplans[index].FloorplanName) ) {
+      if ( returnIncomeRestricted && hasA.test(this.floorplans[index].FloorplanName) ) {
+        // keep only ARO, if 'A' in title
+        filteredFloorplans[objIndex] = this.floorplans[index];
+        objIndex++;
+      } else if ( !returnIncomeRestricted && !hasA.test(this.floorplans[index].FloorplanName) ) {
+        // keep only non-ARO, if 'A' not in title
+        filteredFloorplans[objIndex] = this.floorplans[index];
+        objIndex++;
+      }
+    });
+
+    this.floorplans = filteredFloorplans;
+
+    return this;
+  }
+
+  removeIncomeRestricted () {
+    let objIndex = 0;
+    const filteredFloorplans = {};
+    const floorplanKeys = Object.keys(this.floorplans);
+    const hasA = new RegExp(/(.*)A$/);
+
+    // check floorplan name for 'A' 
+    floorplanKeys.forEach((key, index) => {
+      if ( !hasA.test(this.floorplans[index].FloorplanName) ) {
         filteredFloorplans[objIndex] = this.floorplans[index];
         objIndex++;
       }
@@ -175,7 +221,7 @@ export default class FiltersHelpers {
     floorplanKeys.forEach((key, index) => {
       const filterName = filtersConfig[filterKey].data_name;
       const floorplanValue = this.findFirstAvailability(this.floorplans[index], availabilities);
-      if ( operator(floorplanValue, filterValueLower, filterValueUpper) ) {
+      if ( floorplanValue && operator(floorplanValue, filterValueLower, filterValueUpper) ) {
         filteredFloorplans[objIndex] = this.floorplans[index];
         objIndex++;
       }
@@ -195,7 +241,8 @@ export default class FiltersHelpers {
   findFirstAvailability (floorplan, availabilities) {
     let fpAvailable = null;
     for (let index = 0; index < Object.keys(availabilities).length; index++) {
-      if ( availabilities[index].FloorplanId === floorplan.FloorplanId ) {
+      // console.log('availabilities[index].AvailableDate', availabilities[index].AvailableDate);
+      if (availabilities[index].FloorplanId === floorplan.FloorplanId) {
         fpAvailable = availabilities[index].AvailableDate;
         break;
       }

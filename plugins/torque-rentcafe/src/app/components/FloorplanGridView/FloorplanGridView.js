@@ -32,7 +32,11 @@ const FloorplanGridView = ({
 
   let fpAvailable = null;
   for (let index = 0; index < Object.keys(availabilities).length; index++) {
-    if ( availabilities[index].FloorplanId === floorplan.FloorplanId ) {
+    if (
+      availabilities[index].AvailableDate !== 'N/A'
+      && availabilities[index].AvailableDate !== ''
+      && availabilities[index].FloorplanId === floorplan.FloorplanId
+    ) {
       fpAvailable = availabilities[index].AvailableDate;
       break;
     }
@@ -41,9 +45,11 @@ const FloorplanGridView = ({
   const fpSF = floorplan?.MaximumSQFT
     ? numberWithCommas(floorplan.MaximumSQFT)
     : null;
-  const fpPrice = floorplan?.MinimumRent
-    ? 'From $' + numberWithCommas(floorplan.MinimumRent) + '/mo'
-    : null;
+  const fpPrice = floorplan?.MinimumRent 
+    && floorplan.MinimumRent !== '-1'
+    && floorplan.MinimumRent !== ''
+      ? 'From $' + numberWithCommas(floorplan.MinimumRent) + '/mo'
+      : null;
   const fpDetails = {
     Type: fpType || null,
     Available: fpAvailable || null, 

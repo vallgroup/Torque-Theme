@@ -75,6 +75,7 @@ export const DetailValue = styled.div.attrs(props => ({
   className: 'DetailValue'
 }))`
   flex: 1;
+  text-transform: capitalize;
 `;
 
 export const FloorplanButtonsContainer = styled.div.attrs(props => ({

@@ -18,19 +18,19 @@ class Torque_Rentcafe_Floorplans_Controller {
 
 	protected $request	= null;
 	protected $params		= array();
-	protected $apiToken = null;
-	protected $apiBaseUrl = 'http://api.rentcafe.com/rentcafeapi.aspx';
+	protected static $apiToken = null;
+	protected static $apiBaseUrl = 'http://api.rentcafe.com/rentcafeapi.aspx';
 
 	function __construct( $request ) {
 		$this->request	= $request;
 		$this->params		= $this->request->get_params();
-		$this->apiToken = get_field( 'rentcafe_api_token', 'options' );
+		self::$apiToken = get_field( 'rentcafe_api_token', 'options' );
 	}
 
 	/**
 	 * Retrieves the latest floorplans and availabilities from RentCafe
 	 */
-	public function refresh_cache() {
+	public static function refresh_cache() {
 		// empty vars
 		$floorplans = [];
 		$availabilities = [];
@@ -43,11 +43,15 @@ class Torque_Rentcafe_Floorplans_Controller {
 					$property_code = get_sub_field('property_code');
 					if ( $property_code ) {
 						// get property code floorplans, convert to array, then merge
-						$floorplan_data = json_decode( $this->fetch_floorplans_from_rentcafe( $property_code ), true );
-						$floorplans = array_merge( $floorplans, $floorplan_data );
+						$floorplan_data = json_decode( self::fetch_from_rentcafe( 'floorPlan', $property_code ), true );
+						$floorplans = $floorplan_data !== null
+							? array_merge( $floorplans, $floorplan_data ) 
+							: $floorplans;
 						// get property code availabilities, convert to array, then merge
-						$availabilities_data = json_decode( $this->fetch_availabilities_from_rentcafe( $property_code ), true );
-						$availabilities = array_merge( $availabilities, $availabilities_data );
+						$availabilities_data = json_decode( self::fetch_from_rentcafe( 'apartmentAvailability', $property_code ), true );
+						$availabilities = $availabilities_data !== null
+							? array_merge( $availabilities, $availabilities_data )
+							: $availabilities;
 					}
 				endwhile;
 			endif;
@@ -88,26 +92,33 @@ class Torque_Rentcafe_Floorplans_Controller {
 	}
 
 	/**
-	 * Fetches floorplans 
+	 * Fetches floorplans or availabilities
 	 */
-	private function fetch_floorplans_from_rentcafe( $property_code = null ) {
+	public static function fetch_from_rentcafe( $request_type = null, $property_code = null ) {
+
+		// set the api token
+		// NB: required as we're also using this function in a wp-cron,
+		//	which doesn't initialise the controller class hence 
+		//	doesn't set the API token.
+		if ( !self::$apiToken ) {
+			$tmpApiToken = get_field( 'rentcafe_api_token', 'options' );
+			self::$apiToken = $tmpApiToken;
+		} 
+
 		// early exit
-		if ( 
-			!$this->apiToken ||
-			!$this->apiBaseUrl ||
-			( !isset( $this->params['property_code'] ) && !$property_code )
+		if (
+			!self::$apiToken ||
+			!self::$apiBaseUrl ||
+			!$property_code || 
+			!$request_type
 		) {
 			return null;
 		}
 
-		$property_code = isset( $this->params['property_code'] )
-			? $this->params['property_code']
-			: $property_code;
-
 		// perform the cURL request
 		$curl = curl_init();
 		curl_setopt_array( $curl, array(
-			CURLOPT_URL => $this->apiBaseUrl . "?apiToken=" . $this->apiToken . "&requestType=floorPlan&propertyCode=" . $property_code,
+			CURLOPT_URL => self::$apiBaseUrl . "?apiToken=" . self::$apiToken . "&requestType=" . $request_type . "&propertyCode=" . $property_code,
 			CURLOPT_RETURNTRANSFER => true,
 			CURLOPT_ENCODING => "",
 			CURLOPT_MAXREDIRS => 10,
@@ -119,40 +130,7 @@ class Torque_Rentcafe_Floorplans_Controller {
 		$response = curl_exec( $curl );
 		curl_close( $curl );
 		
-		// var_dump( $response );
-		return $response;
-	}
-
-	private function fetch_availabilities_from_rentcafe( $property_code = null ) {
-
-		// early exit
-		if ( 
-			!$this->apiToken ||
-			!$this->apiBaseUrl ||
-			( !isset( $this->params['property_code'] ) && !$property_code )
-		) {
-			return null;
-		}
-
-		$property_code = isset( $this->params['property_code'] )
-			? $this->params['property_code']
-			: $property_code;
-
-		// perform the cURL request
-		$curl = curl_init();
-		curl_setopt_array( $curl, array(
-			CURLOPT_URL => $this->apiBaseUrl . "?apiToken=" . $this->apiToken . "&requestType=apartmentAvailability&propertyCode=" . $property_code,
-			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_ENCODING => "",
-			CURLOPT_MAXREDIRS => 10,
-			CURLOPT_TIMEOUT => 0,
-			CURLOPT_FOLLOWLOCATION => true,
-			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-			CURLOPT_CUSTOMREQUEST => "GET",
-		) );
-		$response = curl_exec( $curl );
-		curl_close( $curl );
-		
+		// var_dump( '$response', $response );
 		return $response;
 	}
 

@@ -22,3 +22,13 @@ export const FloorplansContainer = styled.div.attrs(props => ({
     }
   }
 `;
+
+export const FloorplanDisclaimer = styled.div.attrs(props => ({
+  className: 'FloorplanDisclaimer'
+}))`
+  max-width: 600px;
+  margin: -3vw auto 6vw;
+  color: #b4b4b7;
+  text-align: center;
+  font-size: 14px;
+`;
