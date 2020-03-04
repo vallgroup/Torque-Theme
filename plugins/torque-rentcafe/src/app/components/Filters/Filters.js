@@ -34,7 +34,7 @@ const Filters = ({
       availability: filtersConfig.availability.initial,
       price: filtersConfig.price.initial,
       building: filtersConfig.building.initial,
-      floor: filtersConfig.floor.initial,
+      // floor: filtersConfig.floor.initial,
     };
     // update state
     setCurrentFilters(newFilters);

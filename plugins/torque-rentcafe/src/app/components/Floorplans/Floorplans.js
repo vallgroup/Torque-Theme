@@ -61,9 +61,6 @@ const Floorplans = ({
     setFilteredFloorplans(updatedFloorplans);
   }
 
-  // console.log('typeof', typeof filteredFloorplans);
-  // console.log('filteredFloorplans', filteredFloorplans);
-
   return (
     <>
     {!incomeRestricted
