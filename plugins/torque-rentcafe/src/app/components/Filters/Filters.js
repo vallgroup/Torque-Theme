@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import isEmpty from "../../helpers/objectHelpers";
+import { isEmpty } from "../../helpers/objectHelpers";
 import FilterTypeButton from "./FilterTypeButton"
 import FilterTypeRange from "./FilterTypeRange"
 import {

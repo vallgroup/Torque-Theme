@@ -1,5 +1,5 @@
 import React from "react";
-import isEmpty from "../../helpers/objectHelpers";
+import { isEmpty } from "../../helpers/objectHelpers";
 import {
   DetailsContainer,
   DetailWrapper,

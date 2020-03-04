@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import isEmpty from "../../helpers/objectHelpers";
+import { isEmpty } from "../../helpers/objectHelpers";
 import FiltersHelpers from "../../helpers/filtersHelpers";
 import Filters from "../Filters/Filters"
 import FloorplanGridView from "../FloorplanGridView/FloorplanGridView";
+import FloorplansDisclaimer from "./FloorplansDisclaimer";
 import {
   FloorplansContainer,
   FloorplanDisclaimer
@@ -27,10 +28,10 @@ const Floorplans = ({
     // if incomeRestricted is TRUE, filter for income-restricted listings
     const updatedFloorplans = __filtersHelper
       .getByIncomeRestricted(incomeRestricted) // limit results by price
+      .sortAlphabetically()
       .floorplans; // return the filtered floorplans
 
     setFilteredFloorplans(updatedFloorplans);
-
   }, []);
 
   useEffect(() => {
@@ -39,8 +40,7 @@ const Floorplans = ({
   }, [filteredFloorplans]);
 
   const handleFiltersUpdated = (newFilters) => {
-
-    console.log('newFilters', newFilters);
+    // console.log('newFilters', newFilters);
 
     // check whether 'townhouse' was selected, and if so default building to 'all'
     // NB: further logic found in <FilterTypeButton> lines: 26-36.
@@ -55,29 +55,19 @@ const Floorplans = ({
       .getByAvailability(newFilters['availability'], availabilities)
       .getByPrice(newFilters['price'])
       // .getByFloor('floor', newFilters['floor'])
+      .sortAlphabetically()
       .floorplans; // return the filtered floorplans
 
     setFilteredFloorplans(updatedFloorplans);
   }
 
-  const floorplanDisclaimer = () => {
-    if (!incomeRestricted) {
-      return <FloorplanDisclaimer dangerouslySetInnerHTML={{
-        __html: '<p>All dimensions are approximate. Not all features are available in every apartment.</p><p>Based on availability.</p><p>Monthly utility fees will apply in addition to above rental amount, based on size of unit. Other additional fees may apply.</p>'
-      }} />
-    } else {
-      return <FloorplanDisclaimer dangerouslySetInnerHTML={{
-        __html: '<p>All dimensions are approximate. Not all features are available in every apartment.</p><p>Based on availability.</p>'
-      }} />
-    }
-  }
+  // console.log('typeof', typeof filteredFloorplans);
+  // console.log('filteredFloorplans', filteredFloorplans);
 
   return (
     <>
     {!incomeRestricted
-      && <Filters 
-        filtersUpdated={handleFiltersUpdated}
-      />}
+      && <Filters filtersUpdated={handleFiltersUpdated} />}
     {!isEmpty(filteredFloorplans)
       ? <>
         <FloorplansContainer>
@@ -91,7 +81,7 @@ const Floorplans = ({
             );
           })}
         </FloorplansContainer>
-        {floorplanDisclaimer()}
+        <FloorplansDisclaimer incomeRestricted={incomeRestricted} />
       </>
       : <LoadingMessage>
         {'We couldn\'t find any floor plans matching your criteria.'}

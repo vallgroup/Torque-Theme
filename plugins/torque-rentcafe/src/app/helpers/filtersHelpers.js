@@ -1,5 +1,9 @@
 import { filtersConfig } from "../config/Filters.config";
 import { buildingCodes } from "../config/Floorplans.config";
+import {
+  isEmpty,
+  sortObjectOfObjectsAlphabetically
+} from "../helpers/objectHelpers";
 /**
  * 
  */
@@ -7,6 +11,13 @@ export default class FiltersHelpers {
 
   constructor(floorplans) {
     this.floorplans = floorplans;
+  }
+
+  sortAlphabetically () {
+    if (!isEmpty(this.floorplans)) {
+      this.floorplans = sortObjectOfObjectsAlphabetically(this.floorplans, 'FloorplanName');
+    }
+    return this;
   }
 
   getByType (filterValue) {
@@ -48,15 +59,13 @@ export default class FiltersHelpers {
       return this;
     } else if (filterValue === 'now') {
       // current month
-      // >= today + 0
-      // <= today + 30 days
+      // >= today + 0 && <= today + 30 days
       const todaysDate = new Date();
       filterValueLower = todaysDate.setDate(todaysDate.getDate() + 0); // today() + 0 days
       filterValueUpper = todaysDate.setDate(todaysDate.getDate() + 30); // today() + 30 days
     } else { 
       // assume only other option (1-3 months)
-      // >= today + 30 days
-      // <= today + 120 days
+      // >= today + 30 days && <= today + 120 days
       const todaysDate = new Date();
       filterValueLower = todaysDate.setDate(todaysDate.getDate() + 30); // today() + 30 days
       filterValueUpper = todaysDate.setDate(todaysDate.getDate() + 120); // today() + 120 days
@@ -64,11 +73,8 @@ export default class FiltersHelpers {
 
     // define operator
     const operator = (floorplanValue, filterValueLower, filterValueUpper) => {
-      // assuming floorplanValue format: MM/DD/YYYY
-      floorplanValue = floorplanValue.split("/"); // get date parts
-      floorplanValue = new Date(floorplanValue[2], floorplanValue[0] - 1, floorplanValue[1]);  // Y/M/D & months are 0-based
-      floorplanValue = floorplanValue.setDate(floorplanValue.getDate()); // get date in correct format for comparison
-
+      // get fp date date in milliseconds
+      const floorplanValueParsed = Date.parse(floorplanValue);
       return (
         (floorplanValue >= filterValueLower)
         && (floorplanValue <= filterValueUpper)
@@ -233,20 +239,35 @@ export default class FiltersHelpers {
   }
 
   /**
-   * Given a floorplan (which has a FloorPlanId), find the first matching availability in the availabilities provided
+   * Given a floorplan (which has a FloorPlanId);
+   * 1) find all matching availabilities in the availabilities provided
+   * 2) of those availablities, get the most recent/soonest
    * 
    * @param {object} floorplan 
    * @param {object} availabilities 
    */
   findFirstAvailability (floorplan, availabilities) {
-    let fpAvailable = null;
+    let dateIndex = 0;
+    let fpAvailable = [];
     for (let index = 0; index < Object.keys(availabilities).length; index++) {
       // console.log('availabilities[index].AvailableDate', availabilities[index].AvailableDate);
       if (availabilities[index].FloorplanId === floorplan.FloorplanId) {
-        fpAvailable = availabilities[index].AvailableDate;
-        break;
+        fpAvailable[dateIndex] = availabilities[index].AvailableDate;
+        dateIndex++;
       }
     };
-    return fpAvailable;
+
+    // fpAvailable.push('4/10/2020');
+    // fpAvailable.push('3/20/2020');
+    // fpAvailable.push('1/15/2015');
+    // fpAvailable.push('1/30/2020');
+    
+    // sort date in ASC order
+    fpAvailable.sort((a, b) => {
+      return Date.parse(a) - Date.parse(b);
+    });
+
+    // console.log('fpAvailable', fpAvailable);
+    return fpAvailable[0] || null;
   }
 }

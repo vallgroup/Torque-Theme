@@ -23,7 +23,7 @@ export const FloorplansContainer = styled.div.attrs(props => ({
   }
 `;
 
-export const FloorplanDisclaimer = styled.div.attrs(props => ({
+export const FloorplansDisclaimerContainer = styled.div.attrs(props => ({
   className: 'FloorplanDisclaimer'
 }))`
   max-width: 600px;

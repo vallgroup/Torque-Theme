@@ -31,7 +31,14 @@ require( Torque_Rentcafe_PATH . '/autoload.php' );
 /**
  * Register plugin
  */
-add_action( 'plugins_loaded', array( Torque_Rentcafe::get_inst(), 'init' ) );register_deactivation_hook( __FILE__, array( Torque_Rentcafe::get_inst(), 'deactivate_plugin' ) );
+add_action( 'plugins_loaded', array( Torque_Rentcafe::get_inst(), 'init' ) );
+
+/**
+ * Add/remove WP-CRON job(s)
+ */
+register_activation_hook( __FILE__, array( Torque_Rentcafe::get_inst(), 'activate_plugin' ) );
+register_deactivation_hook( __FILE__, array( Torque_Rentcafe::get_inst(), 'deactivate_plugin' ) );
+
 
 class Torque_Rentcafe {
 
@@ -41,11 +48,10 @@ class Torque_Rentcafe {
 
 	public static $PLUGIN_SLUG = 'torque-rentcafe';
 
-	public static $PLUGIN_CRON_HOOK = 'torque_rentcafe_cron_hook';
+	public static $PLUGIN_CRON_HOOK = 'torque_rentcafe_cron';
 
 	public static function get_inst() {
 		!self::$instance AND self::$instance = new self;
-
 		return self::$instance;
 	}
 
@@ -68,24 +74,15 @@ class Torque_Rentcafe {
 
 		// enqueue plugin scripts
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_plugin_scripts' ) );
-		
-		// $cron_jobs = get_option( 'cron' );
-		// var_dump($cron_jobs);
 
-		// // register cron interval
-		// add_filter( 'cron_schedules', array( $this, 'register_cron_interval' ) );
+		// register cron interval
+		add_filter( 'cron_schedules', array( $this, 'register_cron_interval' ) );
 
-		// // enqueue cron job with associated function
-		// add_action( self::$PLUGIN_CRON_HOOK, Torque_Rentcafe_Floorplans_Controller::refresh_cache() );
-
-		// // schedule cron job
-		// if ( ! wp_next_scheduled( self::$PLUGIN_CRON_HOOK ) ) {
-		// 	// $this->execute_cache_cron();
-		// 	wp_schedule_event( time(), 'hourly', self::$PLUGIN_CRON_HOOK );
-		// }
-		
-		// $cache_cron_timestamp = wp_next_scheduled( self::$PLUGIN_CRON_HOOK );
-		// wp_unschedule_event( $cache_cron_timestamp, self::$PLUGIN_CRON_HOOK );
+		// enqueue cron job with associated function
+		add_action( 
+			self::$PLUGIN_CRON_HOOK,
+			'Torque_Rentcafe_Floorplans_Controller::refresh_cache'
+		);
 	}
 
 	public function enqueue_plugin_scripts() {
@@ -103,18 +100,28 @@ class Torque_Rentcafe {
 		);
 	}
 
+	public function activate_plugin() {
+		// schedule cron job event
+		if ( ! wp_next_scheduled( self::$PLUGIN_CRON_HOOK ) ) {
+			wp_schedule_event( time(), 'hourly', self::$PLUGIN_CRON_HOOK );
+		}
+	}
+
+	public function deactivate_plugin() {
+		$cache_cron_timestamp = wp_next_scheduled( self::$PLUGIN_CRON_HOOK );
+		wp_unschedule_event( $cache_cron_timestamp, self::$PLUGIN_CRON_HOOK );
+	}
 
 	public function register_cron_interval( $schedules ) {
 		$schedules['everyminute'] = array(
 			'interval'  => 60, // time in seconds
 			'display'   => 'Every Minute'
 		);
+		$schedules['every_two_minutes'] = array(
+			'interval'  => 120, // time in seconds
+			'display'   => 'Every Two Minute'
+		);
 		return $schedules;
-	}
-
-	public function deactivate_plugin() {
-		$cache_cron_timestamp = wp_next_scheduled( self::$PLUGIN_CRON_HOOK );
-		wp_unschedule_event( $cache_cron_timestamp, self::$PLUGIN_CRON_HOOK );
 	}
 }
 

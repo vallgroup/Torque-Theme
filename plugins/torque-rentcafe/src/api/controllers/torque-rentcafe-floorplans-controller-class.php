@@ -42,14 +42,15 @@ class Torque_Rentcafe_Floorplans_Controller {
 				while ( have_rows( 'property_codes', 'options' ) ) : the_row();
 					$property_code = get_sub_field('property_code');
 					if ( $property_code ) {
-						// get property code floorplans, convert to array, then merge
+						// get property code's floorplans, convert to array, then merge
 						$floorplan_data = json_decode( self::fetch_from_rentcafe( 'floorPlan', $property_code ), true );
-						$floorplans = $floorplan_data !== null
+						$floorplans = $floorplan_data !== null && 0 < count( $floorplan_data )
 							? array_merge( $floorplans, $floorplan_data ) 
 							: $floorplans;
-						// get property code availabilities, convert to array, then merge
+
+						// get property code's availabilities, convert to array, then merge
 						$availabilities_data = json_decode( self::fetch_from_rentcafe( 'apartmentAvailability', $property_code ), true );
-						$availabilities = $availabilities_data !== null
+						$availabilities = $availabilities_data !== null && 0 < count( $availabilities_data )
 							? array_merge( $availabilities, $availabilities_data )
 							: $availabilities;
 					}
@@ -57,11 +58,24 @@ class Torque_Rentcafe_Floorplans_Controller {
 			endif;
 			
 			// cache save new data
-			update_field( 'floorplans_response', json_encode( $floorplans ), 'option' );
-			update_field( 'availabilities_response', json_encode( $availabilities ), 'option' );
+			update_field( 
+				Torque_Rentcafe_ACF_Class::$FLOORPLANS_RESPONSE_KEY, 
+				json_encode( $floorplans ),
+				'option'
+			);
+			update_field(
+				Torque_Rentcafe_ACF_Class::$AVAILABILITIES_RESPONSE_KEY,
+				json_encode( $availabilities ),
+				'option'
+			);
+			
+			// var_dump('$floorplans', $floorplans);
+			// var_dump('$availabilities', $availabilities);
 	
 			return Torque_API_Responses::Success_Response( array(
-				'message' => 'the floorplans cache has been first cleared, and then populated with the latest data.',
+				'message' 				=> 'the floorplans cache has been first cleared, and then populated with the latest data.',
+				'floorplans'			=> $floorplans,
+				'availabilities'	=> $availabilities,
 			) );
 
 		} catch (Exception $e) {
@@ -98,12 +112,12 @@ class Torque_Rentcafe_Floorplans_Controller {
 
 		// set the api token
 		// NB: required as we're also using this function in a wp-cron,
-		//	which doesn't initialise the controller class hence 
+		//	which doesn't initialise the controller class, hence 
 		//	doesn't set the API token.
 		if ( !self::$apiToken ) {
 			$tmpApiToken = get_field( 'rentcafe_api_token', 'options' );
 			self::$apiToken = $tmpApiToken;
-		} 
+		}
 
 		// early exit
 		if (
@@ -129,8 +143,7 @@ class Torque_Rentcafe_Floorplans_Controller {
 		) );
 		$response = curl_exec( $curl );
 		curl_close( $curl );
-		
-		// var_dump( '$response', $response );
+
 		return $response;
 	}
 

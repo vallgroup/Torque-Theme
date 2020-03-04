@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import numberWithCommas from "../../helpers/numberHelpers";
+import FiltersHelpers from "../../helpers/filtersHelpers";
 import Title from "./Title";
 import Details from "./Details";
 import { 
@@ -30,17 +31,9 @@ const FloorplanGridView = ({
     ? fpBeds + ' bed/' + fpBaths + ' bath'
     : null
 
-  let fpAvailable = null;
-  for (let index = 0; index < Object.keys(availabilities).length; index++) {
-    if (
-      availabilities[index].AvailableDate !== 'N/A'
-      && availabilities[index].AvailableDate !== ''
-      && availabilities[index].FloorplanId === floorplan.FloorplanId
-    ) {
-      fpAvailable = availabilities[index].AvailableDate;
-      break;
-    }
-  };
+  // use filter helper to determine first available date
+  const __filtersHelper = new FiltersHelpers([]);
+  const fpAvailable = __filtersHelper.findFirstAvailability(floorplan, availabilities);
 
   const fpSF = floorplan?.MaximumSQFT
     ? numberWithCommas(floorplan.MaximumSQFT)

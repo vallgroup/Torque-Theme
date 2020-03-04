@@ -2,6 +2,9 @@
 
 class Torque_Rentcafe_ACF_Class {
 
+  public static $FLOORPLANS_RESPONSE_KEY = 'field_5e50572b1b55e';
+  public static $AVAILABILITIES_RESPONSE_KEY = 'field_5e56b5d3101af';
+
   public function __construct() {
     // run actions on admin init
     // add_action('admin_init', array( $this, 'acf_admin_init'), 99);
@@ -88,7 +91,7 @@ class Torque_Rentcafe_ACF_Class {
             ),
           ),
           array(
-            'key' => 'field_5e50572b1b55e',
+            'key' => self::$FLOORPLANS_RESPONSE_KEY,
             'label' => 'Floorplans Response',
             'name' => 'floorplans_response',
             'type' => 'textarea',
@@ -107,7 +110,7 @@ class Torque_Rentcafe_ACF_Class {
             'new_lines' => '',
           ),
           array(
-            'key' => 'field_5e56b5d3101af',
+            'key' => self::$AVAILABILITIES_RESPONSE_KEY,
             'label' => 'Availabilities Response',
             'name' => 'availabilities_response',
             'type' => 'textarea',
