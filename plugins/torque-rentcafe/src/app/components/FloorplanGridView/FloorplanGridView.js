@@ -5,11 +5,13 @@ import Title from "./Title";
 import Details from "./Details";
 import { 
   FloorplanContainer,
+  FloorplanImageContainer,
   FloorplanImage,
   FloorplanContentContainer,
   FloorplanButtonsContainer,
   FloorplanButton,
 } from "./FloorplanGridView.styles.js";
+import { buildingCodes } from "../../config/Floorplans.config";
 
 const FloorplanGridView = ({ 
   floorplan,
@@ -17,8 +19,12 @@ const FloorplanGridView = ({
 }) => {
 
   const fpId = floorplan?.FloorplanId || null;
+  const propertyId = floorplan?.PropertyId || null
 
-  const fpImage = floorplan?.FloorplanImageURL || null;
+  const fpImage = floorplan?.FloorplanImageURL
+    ? floorplan?.FloorplanImageURL.split(',')[0]
+    : null;
+
   const fpTitle = floorplan?.FloorplanName || null;
   
   const fpBeds = floorplan?.Beds
@@ -43,9 +49,15 @@ const FloorplanGridView = ({
     && floorplan.MinimumRent !== ''
       ? 'From $' + numberWithCommas(floorplan.MinimumRent) + '/mo'
       : null;
+  let fpBuilding = 'N/A';
+  Object.keys(buildingCodes).forEach((key, index) => {
+    if ( parseInt(buildingCodes[key].property_id) === parseInt(propertyId) ) {
+      fpBuilding = key;
+    }
+  });
   const fpDetails = {
     Type: fpType || null,
-    Available: fpAvailable || null, 
+    Building: fpBuilding || null, 
     SF: fpSF || null,
     Price: fpPrice || null,
   }
@@ -56,7 +68,9 @@ const FloorplanGridView = ({
     <FloorplanContainer>
 
       {fpImage
-        && <FloorplanImage src={fpImage} />}
+        && <FloorplanImageContainer>
+          <FloorplanImage src={fpImage} />
+        </FloorplanImageContainer>}
 
       <FloorplanContentContainer>
         {fpTitle

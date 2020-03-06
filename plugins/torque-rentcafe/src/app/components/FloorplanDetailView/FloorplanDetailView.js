@@ -29,9 +29,10 @@ const FloorplanDetailView = ({
   const [ floorplan, setFloorplan ] = useState(null);
   const [ currentImageIndex, setCurrentImageIndex ] = useState(0);
   // lightbox options
-  const lightboxOptions = {
+  const options = {
     showCaption: false,
-    enablePanzoom: false
+    enablePanzoom: false,
+    thumbnailsOpacity: 0.0
   }
 
   useEffect(() => {
@@ -47,7 +48,7 @@ const FloorplanDetailView = ({
 
   const propertyId = floorplan?.PropertyId || null
   const fpImages = floorplan?.FloorplanImageURL
-    ? [floorplan.FloorplanImageURL]
+    ? floorplan.FloorplanImageURL.split(',')
     : [];
   const fpTitle = floorplan?.FloorplanName || null;
   const fpBeds = floorplan?.Beds
@@ -69,25 +70,29 @@ const FloorplanDetailView = ({
   const fpPrice = floorplan?.MinimumRent
     ? 'From $' + numberWithCommas(floorplan.MinimumRent) + '/mo'
     : null;
-  const fpDetails = {
-    'Square Feet': fpSF,
-    'Bedrooms': fpBeds,
-    'Bathrooms': fpBaths,
-    'Availability': fpAvailable, 
-    'Price': fpPrice,
-  };
   let fpBuilding = 'N/A';
   Object.keys(buildingCodes).forEach((key, index) => {
     if ( parseInt(buildingCodes[key].property_id) === parseInt(propertyId) ) {
       fpBuilding = key;
     }
   });
-  const buildingDetails = {
+  const fpDetails = {
+    'Square Feet': fpSF,
+    'Bedrooms': fpBeds,
+    'Bathrooms': fpBaths,
+    'Availability': fpAvailable, 
+    'Price': fpPrice,
     'Building': fpBuilding,
-    'Floors': 'N/A'
   };
 
   const availabilityUrl = floorplan?.AvailabilityURL || null;
+
+  // workaround so clicking the main image opens the lightbox, but we don't need to wrap the main image in the lightbox component, hence it doesn't display as a lightbox thumbnail duplicate...
+  const openLightbox = () => {
+    const selector = '.thumbnail-index-' + currentImageIndex.toString();
+    const thumbnailToClick = document.querySelectorAll(selector)[0];
+    thumbnailToClick && thumbnailToClick.click();
+  }
   
   return (
     !!floorplan
@@ -110,9 +115,6 @@ const FloorplanDetailView = ({
           {!!fpDetails
             && <Details details={fpDetails} />}
 
-          {!!buildingDetails
-            && <Details details={buildingDetails} />}
-
           <FloorplanButtonsContainer>
             {/* TODO: Download a PDF floorplan, when available */}
             {/* {0 < fpImages.length
@@ -134,24 +136,27 @@ const FloorplanDetailView = ({
 
           {0 < fpImages.length
             && <SimpleReactLightbox key={currentImageIndex}>
-            <SRLWrapper {...lightboxOptions}>
-              <FloorplanImage src={fpImages[currentImageIndex]} />
-            </SRLWrapper>
-          </SimpleReactLightbox>}
-
-          {0 < fpImages.length
-            && <FloorplanThumbnailContainer>
+            <FloorplanImage 
+              src={fpImages[currentImageIndex]}
+              onClick={() => openLightbox()}
+            />
+            <SRLWrapper {...options}>
+              <FloorplanThumbnailContainer>
               {fpImages.map((image, index) => {
+                const thumbId = 'thumbnail-index-' + index.toString();
                 return (
                   <FloorplanThumbnail
                     key={index}
+                    className={thumbId}
                     src={image}
                     active={index === currentImageIndex}
                     onClick={() => setCurrentImageIndex(index)}
                   />
                 )
               })}
-            </FloorplanThumbnailContainer>}
+            </FloorplanThumbnailContainer>
+            </SRLWrapper>
+          </SimpleReactLightbox>}
 
         </FloorplanImageContainer>
       </FloorplanDetailContainer>

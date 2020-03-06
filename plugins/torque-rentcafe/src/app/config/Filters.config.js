@@ -13,17 +13,17 @@ export const filtersConfig = {
     ],
     data_name: 'Beds',
   },
-  availability: {
-    type: 'button',
-    title: 'availability',
-    initial: 'all',
-    values: [
-      'all',
-      'now',
-      '1-3 mo',
-    ],
-    data_name: 'AvailableDate',
-  },
+  // availability: {
+  //   type: 'button',
+  //   title: 'availability',
+  //   initial: 'all',
+  //   values: [
+  //     'all',
+  //     'now',
+  //     '1-3 mo',
+  //   ],
+  //   data_name: 'AvailableDate',
+  // },
   building: {
     type: 'button',
     title: 'building',

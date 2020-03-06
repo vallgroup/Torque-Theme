@@ -99,13 +99,16 @@ export const FloorplanImageContainer = styled.div.attrs(props => ({
   className: 'FloorplanImageContainer'
 }))`
   flex: 0 0 58%;
+  text-align: right;
 `;
 
 export const FloorplanImage = styled.img.attrs(props => ({
   className: 'FloorplanImage'
 }))`
-  width: 100%;
+  width: auto;
   height: auto;
+  max-height: 500px;
+  max-width: 100%;
 `;
 
 // thumbnail container
@@ -120,8 +123,8 @@ export const FloorplanThumbnailContainer = styled.div.attrs(props => ({
 export const FloorplanThumbnail = styled.img.attrs(props => ({
   className: 'FloorplanThumbnail'
 }))`
-  width: 23%;
-  height: auto;
+  width: auto;
+  height: 150px ;
   margin: 1%;
   border: 1px solid ${props => props.active
     ? `#086762`

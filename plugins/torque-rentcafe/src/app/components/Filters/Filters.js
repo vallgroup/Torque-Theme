@@ -24,38 +24,20 @@ const Filters = ({
       ...currentFilters,
       [key]: value
     });
-
-    // townhouseSanityCheck(key, value);
   }
 
   const resetFilters = () => {
     const newFilters = {
       type: filtersConfig.type.initial,
-      availability: filtersConfig.availability.initial,
       price: filtersConfig.price.initial,
       building: filtersConfig.building.initial,
+      // availability: filtersConfig.availability.initial,
       // floor: filtersConfig.floor.initial,
     };
     // update state
     setCurrentFilters(newFilters);
     // callback to update the floorplans grid
     filtersUpdated(newFilters); // NB: pass the object, not the state
-  }
-
-  const townhouseSanityCheck = (key, value) => {
-    const buildingFilters = document.getElementById('building');
-    const allBuildingBtn = buildingFilters.querySelectorAll(":scope button[value=all]")[0];
-    const northBuildingBtn = buildingFilters.querySelectorAll(":scope button[value=north]")[0];
-    const southBuildingBtn = buildingFilters.querySelectorAll(":scope button[value=south]")[0];
-    
-    if ( key === 'type' && value === 'townhouse' ) {
-      // northBuildingBtn.disabled = true;
-      // southBuildingBtn.disabled = true;
-      // allBuildingBtn.click();
-    } else {
-      // northBuildingBtn.disabled = false;
-      // southBuildingBtn.disabled = false;
-    }
   }
 
   const renderInputs = () => {

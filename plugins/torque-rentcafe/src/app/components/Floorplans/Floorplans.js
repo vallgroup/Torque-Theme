@@ -52,8 +52,8 @@ const Floorplans = ({
       .getByIncomeRestricted(incomeRestricted)
       .getByBuilding(newFilters['building']) // must be called first, because getByType has potential to override it if 'townhouse' is selected...
       .getByType(newFilters['type'])
-      .getByAvailability(newFilters['availability'], availabilities)
       .getByPrice(newFilters['price'])
+      // .getByAvailability(newFilters['availability'], availabilities)
       // .getByFloor('floor', newFilters['floor'])
       .sortAlphabetically()
       .floorplans; // return the filtered floorplans
@@ -63,8 +63,7 @@ const Floorplans = ({
 
   return (
     <>
-    {!incomeRestricted
-      && <Filters filtersUpdated={handleFiltersUpdated} />}
+    <Filters filtersUpdated={handleFiltersUpdated} />
     {!isEmpty(filteredFloorplans)
       ? <>
         <FloorplansContainer>

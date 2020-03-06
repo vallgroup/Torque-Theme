@@ -13,11 +13,21 @@ export const FloorplanContainer = styled.div.attrs(props => ({
   }
 `;
 
-export const FloorplanImage = styled.img.attrs(props => ({
-  className: 'FloorplanImage'
+export const FloorplanImageContainer = styled.div.attrs(props => ({
+  className: 'FloorplanImageContainer'
 }))`
   width: 100%;
   height: auto;
+  text-align: center;
+`;
+
+export const FloorplanImage = styled.img.attrs(props => ({
+  className: 'FloorplanImage'
+}))`
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 300px;
 `;
 
 export const FloorplanContentContainer = styled.div.attrs(props => ({
