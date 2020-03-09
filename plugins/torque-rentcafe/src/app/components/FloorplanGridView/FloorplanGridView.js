@@ -37,10 +37,6 @@ const FloorplanGridView = ({
     ? fpBeds + ' bed/' + fpBaths + ' bath'
     : null
 
-  // use filter helper to determine first available date
-  const __filtersHelper = new FiltersHelpers([]);
-  const fpAvailable = __filtersHelper.findFirstAvailability(floorplan, availabilities);
-
   const fpSF = floorplan?.MaximumSQFT
     ? numberWithCommas(floorplan.MaximumSQFT)
     : null;

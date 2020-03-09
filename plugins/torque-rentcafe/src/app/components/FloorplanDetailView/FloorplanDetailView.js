@@ -44,8 +44,6 @@ const FloorplanDetailView = ({
     });
   }, []);
 
-  console.log('floorplan', floorplan);
-
   const propertyId = floorplan?.PropertyId || null
   const fpImages = floorplan?.FloorplanImageURL
     ? floorplan.FloorplanImageURL.split(',')

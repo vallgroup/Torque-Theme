@@ -48,6 +48,26 @@ export default class FiltersHelpers {
     return this;
   }
 
+  getOnlyAvailable (availabilities) {
+    let objIndex = 0;
+    const filteredFloorplans = {};
+    const floorplanKeys = Object.keys(this.floorplans);
+
+    // for each floorplan, check if matching entries in availabilities
+    floorplanKeys.forEach((key, index) => {
+      // returns null if not found
+      const floorplanValue = this.findFirstAvailability(this.floorplans[index], availabilities);
+      if ( floorplanValue ) {
+        filteredFloorplans[objIndex] = this.floorplans[index];
+        objIndex++;
+      }
+    });
+        
+    this.floorplans = filteredFloorplans;
+
+    return this;
+  }
+
   getByAvailability (filterValue, availabilities) {
     const filterKey = 'availability';
     // early exit, if filter value as initial
@@ -250,24 +270,18 @@ export default class FiltersHelpers {
     let dateIndex = 0;
     let fpAvailable = [];
     for (let index = 0; index < Object.keys(availabilities).length; index++) {
-      // console.log('availabilities[index].AvailableDate', availabilities[index].AvailableDate);
       if (availabilities[index].FloorplanId === floorplan.FloorplanId) {
         fpAvailable[dateIndex] = availabilities[index].AvailableDate;
         dateIndex++;
       }
     };
-
-    // fpAvailable.push('4/10/2020');
-    // fpAvailable.push('3/20/2020');
-    // fpAvailable.push('1/15/2015');
-    // fpAvailable.push('1/30/2020');
     
     // sort date in ASC order
     fpAvailable.sort((a, b) => {
       return Date.parse(a) - Date.parse(b);
     });
 
-    // console.log('fpAvailable', fpAvailable);
+    // return the first availability
     return fpAvailable[0] || null;
   }
 }

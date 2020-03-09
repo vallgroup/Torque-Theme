@@ -28,6 +28,7 @@ const Floorplans = ({
     // if incomeRestricted is TRUE, filter for income-restricted listings
     const updatedFloorplans = __filtersHelper
       .getByIncomeRestricted(incomeRestricted) // limit results by price
+      .getOnlyAvailable(availabilities)
       .sortAlphabetically()
       .floorplans; // return the filtered floorplans
 
@@ -53,6 +54,7 @@ const Floorplans = ({
       .getByBuilding(newFilters['building']) // must be called first, because getByType has potential to override it if 'townhouse' is selected...
       .getByType(newFilters['type'])
       .getByPrice(newFilters['price'])
+      .getOnlyAvailable(availabilities)
       // .getByAvailability(newFilters['availability'], availabilities)
       // .getByFloor('floor', newFilters['floor'])
       .sortAlphabetically()
