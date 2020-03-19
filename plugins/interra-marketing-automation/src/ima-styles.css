@@ -239,6 +239,10 @@
 	background: linear-gradient(rgba(147, 206, 79, 0.6), #3e6c3a);
 }
 
+.ima-pictures-video * {
+	color: #fff !important;
+}
+
 .ima-property-pictures {
 	margin-bottom: 80px;
 }
