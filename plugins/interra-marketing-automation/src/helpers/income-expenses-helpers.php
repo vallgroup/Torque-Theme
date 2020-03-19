@@ -32,7 +32,9 @@ function output_table( $title = '', $table = array() ) {
 
         <?php if ( isset( $table['header'] ) ) :
           foreach( (array) $table['header'] as $column ) : ?>
-            <th><?php echo strip_tags( $column ); ?></th>
+            <th><?php echo ('current' !== $column)
+              ? strip_tags( $column )
+              : '--'; ?></th>
         <?php endforeach;
         endif; ?>
       </tr>

@@ -24,12 +24,13 @@ $highlights = get_field( 'listing_highlights' );
 
 ?>
 <div class="ima-property-info ima-section">
-
-  <div class="torque_listing-title" >
-    <div class="featured-image-size" >
-      <div class="featured-image" style="background-image: url('<?php echo get_the_post_thumbnail_url( null, 'large'); ?>')" ></div>
+  <?php if ( has_post_thumbnail() ) : ?>
+    <div class="torque_listing-title" >
+      <div class="featured-image-size" >
+        <div class="featured-image" style="background-image: url('<?php echo get_the_post_thumbnail_url( null, 'large'); ?>')" ></div>
+      </div>
     </div>
-  </div>
+  <?php endif; ?>
   <div class="torque-listing-content">
 
     <div class="torque-listing-content-details ima-full-width" >

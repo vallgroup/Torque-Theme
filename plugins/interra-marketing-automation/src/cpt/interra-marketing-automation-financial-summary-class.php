@@ -23,7 +23,8 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 
 	public function __construct() {
 		parent::__construct();
-		$this->ratio_fields = ['CAP Rate', 'Total Return (Yr. 1)', 'Debt Coverage Ratio', 'Down Payment'];
+		$this->ratio_fields = ['CAP Rate', 'Debt Coverage Ratio', 'GRM'];
+		$this->perc_fields = ['Total Return (Yr. 1)', 'Down Payment'];
 		$this->current_column_name = get_field( 'current_column_name' );
 		$this->financial_summary_columns = get_field( 'financial_summary_columns' );
 		$this->table_columns = $this->build_table_header();
@@ -79,10 +80,10 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 	protected function operating_data() {
 		$this->operating_table_content = array(
 			'Gross Scheduled Income' => $this->get_formula( 'GSI' ),
-			'Additional Income'      => $this->get_formula( 'AI' ),
-			'Total Scheduled Income' => $this->get_formula( 'GSI' ),
 			'Vacancy Cost ('.$this->vacancy['current'].'%)' => $this->get_formula( 'VC' ),
-			'Gross Income'           => $this->get_formula( 'GSI' ),
+			'Total Scheduled Income' => $this->get_formula( 'TSI' ),
+			'Additional Income'      => $this->get_formula( 'AI' ),
+			'Gross Income'           => $this->get_formula( 'GI' ),
 			'Operating Expenses'     => $this->get_formula( 'OE' ),
 		);
 	}
@@ -99,8 +100,8 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 		}
 
 		$this->noi = $total;
-		$this->operating_table_content['Pre-Tax Cash Flow']    = $this->get_formula( 'PTCF' );
 		$this->operating_table_content['Net Operating Income'] = $this->_get_noi();
+		$this->operating_table_content['Pre-Tax Cash Flow']    = $this->get_formula( 'PTCF' );
 
 		return $this->noi;
 	}
@@ -133,8 +134,16 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 				return $this->get_gsi();
 			break;
 
+			case 'TSI':
+				return $this->get_tsi();
+			break;
+
 			case 'AI': // Additional Income
 				return $this->get_additional_income();
+			break;
+
+			case 'GI':
+				return $this->get_gi();
 			break;
 
 			case 'OE': // Operating Expenses
@@ -206,7 +215,17 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 	private function get_gsi() {
 		$gsi = [];
 		foreach ( $this->table_columns as $key => $column ) {
-			$gsi[ $key ] = $this->income_total['current'];
+			$gsi[ $key ] = ($this->rent_roll_total['current'] * 12);
+		}
+
+		return $gsi;
+	}
+
+	private function get_tsi() {
+		$vc = (($this->rent_roll_total['current'] * 12) * ($this->vacancy['current'] / 100));
+		$gsi = [];
+		foreach ( $this->table_columns as $key => $column ) {
+			$gsi[ $key ] = ($this->rent_roll_total['current'] * 12) - $vc;
 		}
 
 		return $gsi;
@@ -215,10 +234,20 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 	private function get_additional_income() {
 		$ai = [];
 		foreach ( $this->table_columns as $key => $column ) {
-			$ai[ $key ] = $this->income_total['current'] - $this->rent_roll_total['current'];
+			$ai[ $key ] = $this->income_total['current'] - ($this->rent_roll_total['current'] * 12);
 		}
 
 		return $ai;
+	}
+
+	private function get_gi() {
+		$vc = (($this->rent_roll_total['current'] * 12) * ($this->vacancy['current'] / 100));
+		$gsi = [];
+		foreach ( $this->table_columns as $key => $column ) {
+			$gsi[ $key ] = (($this->rent_roll_total['current'] * 12) - $vc) + ($this->income_total['current'] - ($this->rent_roll_total['current'] * 12));
+		}
+
+		return $gsi;
 	}
 
 	private function get_operating_expenses() {
@@ -233,7 +262,7 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 	private function get_vacancy_cost() {
 		$vc = [];
 		foreach ( $this->table_columns as $key => $column ) {
-			$vc[ $key ] = (-($this->rent_roll_total['current'] * ($this->vacancy['current'] / 100)));
+			$vc[ $key ] = ((($this->rent_roll_total['current'] * 12) * ($this->vacancy['current'] / 100)));
 		}
 
 		return $vc;
@@ -249,9 +278,10 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 	}
 
 	private function get_pre_tax_cash_flow() {
+		$vc = (($this->rent_roll_total['current'] * 12) * ($this->vacancy['current'] / 100));
 		$ptcf = [];
 		foreach ( $this->table_columns as $key => $column ) {
-			$ptcf[ $key ] = ($this->noi - ( $this->loan_amo->morgage_payment['principal_interest'] * 12 ));
+			$ptcf[ $key ] = (((($this->rent_roll_total['current'] * 12) - $vc) + ($this->income_total['current'] - ($this->rent_roll_total['current'] * 12)) - $this->expenses_total['current']) - ( $this->loan_amo->morgage_payment['principal_interest'] * 12 ));
 		}
 
 		return $ptcf;
@@ -371,17 +401,19 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 	}
 
 	private function get_debt_cvg_ratio() {
+		$vc = (($this->rent_roll_total['current'] * 12) * ($this->vacancy['current'] / 100));
 		$cocr = [];
 		foreach ( (array) $this->table_columns as $key => $column ) {
-			$cocr[ $key ] = ( $this->noi / ( $this->loan_amo->morgage_payment['principal_interest'] * 12 ) );
+			$cocr[ $key ] = ( ((($this->rent_roll_total['current'] * 12) - $vc) + ($this->income_total['current'] - ($this->rent_roll_total['current'] * 12)) - $this->expenses_total['current']) / ( $this->loan_amo->morgage_payment['principal_interest'] * 12 ) );
 		}
 		return $cocr;
 	}
 
 	private function _get_noi() {
+		$vc = (($this->rent_roll_total['current'] * 12) * ($this->vacancy['current'] / 100));
 		$grm = [];
 		foreach ( $this->table_columns as $key => $column ) {
-			$grm[ $key ] = $this->noi;
+			$grm[ $key ] = (($this->rent_roll_total['current'] * 12) - $vc) + ($this->income_total['current'] - ($this->rent_roll_total['current'] * 12)) - $this->expenses_total['current'];
 		}
 		return $grm;
 	}

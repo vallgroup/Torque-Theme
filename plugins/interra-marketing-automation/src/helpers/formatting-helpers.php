@@ -24,6 +24,10 @@ function output_in_percentage( $value ) {
   echo (number_format( ( $value * 100 ), 2, '.', ',' )), '%';
 }
 
+function output_in_ratio( $value ) {
+  echo (number_format( ( $value ), 2, '.', ',' ));
+}
+
 /**
  * Takes an amount and outputs said amount in US dollars, formatted into
  * thousands if required, and to two decimal places.
@@ -46,6 +50,10 @@ function get_in_sq_ft( $value ) {
  */
 function get_in_percentage( $value ) {
   return (number_format( ( $value * 100 ), 2, '.', ',' )) . '%';
+}
+
+function get_in_ratio( $value ) {
+  return (number_format( ( $value ), 2, '.', ',' ));
 }
 
 ?>

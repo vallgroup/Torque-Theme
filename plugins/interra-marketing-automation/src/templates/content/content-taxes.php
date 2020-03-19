@@ -9,8 +9,16 @@ $taxes = [
 	'tax_year'           => $tax_year,
 	'land_assessment'    => $land_assessment,
 	'building_assessment' => $building_assesment,
-	'tax_rate'           => $tax_rate
+	// 'tax_rate'           => is_numeric( $tax_rate ) ? $tax_rate : 0,
 ];
+
+if (
+	empty( $tax_year ) &&
+	empty( $land_assessment ) &&
+	empty( $building_assesment )
+) {
+	return null;
+}
 
 ?>
 

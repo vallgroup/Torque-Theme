@@ -33,8 +33,10 @@ class Interra_Marketing_Automation_Income {
 
 	protected $ratio_fields = [];
 
+	protected $perc_fields = [];
+
 	public function __construct() {
-		$this->ratio_fields = ['Vacancy'];
+		$this->perc_fields = ['Vacancy'];
 
 		$this->vacancy = get_field( 'vacancy' );
 
@@ -79,10 +81,10 @@ class Interra_Marketing_Automation_Income {
 	protected function add_per_unit_column( $rows = array() ) {
 		if ( empty( $rows ) ) return array();
 
-		if ( 0 < $this->units_rented ) {
+		if ( 0 < count($this->rent_roll) ) {
 			foreach ( $rows as $name => $columns ) {
 				if ( isset( $columns['current'] ) ) {
-						$rows[ $name ]['per_unit'] = ((float) $columns['current'] / $this->units_rented);
+						$rows[ $name ]['per_unit'] = ((float) $columns['current'] / count($this->rent_roll));
 					}
 			}
 		}
@@ -100,6 +102,9 @@ class Interra_Marketing_Automation_Income {
 			foreach ( (array) $columns as $key => $col ) {
 				if ( in_array( $name, $this->ratio_fields )
 			 		|| in_array( $key, $this->ratio_fields )) {
+					$rows[ $name ][ $key ] = get_in_ratio( $col );
+				} elseif ( in_array( $name, $this->perc_fields )
+			 		|| in_array( $key, $this->perc_fields )) {
 					$rows[ $name ][ $key ] = get_in_percentage( $col / 100 );
 				} else {
 					$rows[ $name ][ $key ] = get_in_dollars( $col );
@@ -157,6 +162,12 @@ class Interra_Marketing_Automation_Income {
 		//
 		$this->income_table_content['Rental Income'] = $this->rent_roll_total;
 		$this->income_table_content['Vacancy'] = $this->vacancy;
+		// $current_vacancy = $this->vacancy['current'];
+		// $market_vacancy = $this->vacancy['market'];
+		// $this->income_table_content['Vacancy '."($current_vacancy%, $market_vacancy%)"] = [
+		// 	'current' => $this->rent_roll_total['current'] * ($current_vacancy / 100),
+		// 	'market' => $this->rent_roll_total['market'] * ($market_vacancy / 100),
+		// ];
  		// format income
  		foreach ( (array) $income_rows as $income ) {
  			$key = strip_tags( trim( $income['income_name'] ) );
@@ -191,6 +202,7 @@ class Interra_Marketing_Automation_Income {
 			if ( 'rental income' === $label_to_compare ) {
 				$rental_income['current'] = (float) $value['current'];
 				$rental_income['market']  = (float) $value['market'];
+				continue;
 			}
 
 			if ( 'vacancy' === $label_to_compare ) {
@@ -203,13 +215,14 @@ class Interra_Marketing_Automation_Income {
 			$total_income['market']  = ($total_income['market'] + (float) $value['market'] );
 		}
 
-		$vacancy_dollars['current'] = ($rental_income['current'] * $vacancy_percentage['current']);
-		$vacancy_dollars['market']  = ($rental_income['market'] * $vacancy_percentage['market']);
+		$rental_income_current = ($rental_income['current'] * 12);
+		$rental_income_market = ($rental_income['market'] * 12);
 
-		$total_income['current'] = ($total_income['current'] - $vacancy_dollars['current']);
-		$total_income['market']  = ($total_income['market'] - $vacancy_dollars['market']);
+		$vacancy_dollars['current'] = ($rental_income_current * $vacancy_percentage['current']);
+		$vacancy_dollars['market']  = ($rental_income_market * $vacancy_percentage['market']);
 
-		// $total_income['per_unit'] = ($total_income['current'] / $this->units_rented);
+		$total_income['current'] = (($rental_income_current + $total_income['current']) - $vacancy_dollars['current']);
+		$total_income['market']  = (($rental_income_market + $total_income['market']) - $vacancy_dollars['market']);
 
 		return $total_income;
 	}

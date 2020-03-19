@@ -41,6 +41,12 @@ $financial_summary_class = new Interra_Marketing_Automation_Financial_Summary();
 					</div>
 
 					<!-- <br /><br /> -->
+					<br /><br />
+				</div>
+
+
+				<div class="ima-column-right-50">
+					<?php load_template( Interra_Marketing_Automation_PATH . 'templates/content/content-taxes.php' ); ?>
 				</div>
 
 			</div>

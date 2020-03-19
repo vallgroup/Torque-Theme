@@ -17,7 +17,7 @@ class Interra_Marketing_Automation_Expenses Extends Interra_Marketing_Automation
 
 	public function __construct() {
 		parent::__construct();
-		$this->ratio_fields = ['per_gross_inc'];
+		$this->perc_fields = ['per_gross_inc'];
 		// get col names for table
 		$this->curr_col_name = get_field( 'exp_curr_col_name' );
 		$this->mkt_col_name = get_field( 'exp_mkt_col_name' );
@@ -62,7 +62,7 @@ class Interra_Marketing_Automation_Expenses Extends Interra_Marketing_Automation
 			$this->expense_table_content[ $key ] = array(
 				'current' => floatval( $expense['expense_amount'] ),
 				'market' => floatval( $expense['expense_amount_mkt'] ),
-				'per_gross_inc' => floatval( ($expense['expense_amount'] / $this->income_total['current']) ),
+				'per_gross_inc' => floatval( ($expense['expense_amount'] / $this->income_total['current']) * 100 ),
 			);
 		}
 		//

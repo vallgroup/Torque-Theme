@@ -2,6 +2,8 @@
 
 $maps     = get_field( 'maps' );
 
+if (!$maps) return;
+
 // [torque_map map_id="2955"]
 ?>
 
@@ -13,7 +15,7 @@ $maps     = get_field( 'maps' );
 
 			<h4>Maps</h4>
 
-			<?php foreach ($maps as $map ) {
+			<?php foreach ( (array) $maps as $map ) {
 				$map_obj = $map['map'] ?>
 
 				<h5><?php echo ucwords( esc_html( $map_obj->post_title ) ); ?></h5>
