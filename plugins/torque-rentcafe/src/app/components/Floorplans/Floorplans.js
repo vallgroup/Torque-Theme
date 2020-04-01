@@ -27,7 +27,7 @@ const Floorplans = ({
   useEffect(() => {
     // if incomeRestricted is TRUE, filter for income-restricted listings
     const updatedFloorplans = __filtersHelper
-      .getByIncomeRestricted(incomeRestricted) // limit results by price
+      .getByIncomeRestricted(incomeRestricted) // 'incomeRestricted' is true or false, filtering accordingly
       .getOnlyAvailable(availabilities)
       .sortAlphabetically()
       .floorplans; // return the filtered floorplans
@@ -50,7 +50,7 @@ const Floorplans = ({
     }
 
     const updatedFloorplans = __filtersHelper
-      .getByIncomeRestricted(incomeRestricted)
+      .getByIncomeRestricted(incomeRestricted) // 'incomeRestricted' is true or false, filtering accordingly
       .getByBuilding(newFilters['building']) // must be called first, because getByType has potential to override it if 'townhouse' is selected...
       .getByType(newFilters['type'])
       .getByPrice(newFilters['price'])
@@ -62,6 +62,8 @@ const Floorplans = ({
 
     setFilteredFloorplans(updatedFloorplans);
   }
+
+  // console.log('filteredFloorplans', filteredFloorplans);
 
   return (
     <>
