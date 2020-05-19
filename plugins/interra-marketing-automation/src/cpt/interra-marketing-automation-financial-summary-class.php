@@ -24,7 +24,7 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 	public function __construct() {
 		parent::__construct();
 		$this->ratio_fields = ['CAP Rate', 'Debt Coverage Ratio', 'GRM'];
-		$this->perc_fields = ['Total Return (Yr. 1)', 'Down Payment'];
+		$this->perc_fields = ['Cash-on-Cash Return (Yr. 1)', 'Down Payment'];
 		$this->current_column_name = get_field( 'current_column_name' );
 		$this->financial_summary_columns = get_field( 'financial_summary_columns' );
 		$this->table_columns = $this->build_table_header();
@@ -225,16 +225,17 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 		$vc = (($this->rent_roll_total['current'] * 12) * ($this->vacancy['current'] / 100));
 		$gsi = [];
 		foreach ( $this->table_columns as $key => $column ) {
-			$gsi[ $key ] = ($this->rent_roll_total['current'] * 12) - $vc;
+			$gsi[ $key ] = ($this->income_total['current'] + $vc);
 		}
 
 		return $gsi;
 	}
 
 	private function get_additional_income() {
+		$vc = (($this->rent_roll_total['current'] * 12) * ($this->vacancy['current'] / 100));
 		$ai = [];
 		foreach ( $this->table_columns as $key => $column ) {
-			$ai[ $key ] = $this->income_total['current'] - ($this->rent_roll_total['current'] * 12);
+			$ai[ $key ] = ($this->income_total['current'] - ($this->rent_roll_total['current'] * 12) + $vc);
 		}
 
 		return $ai;
@@ -244,7 +245,7 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 		$vc = (($this->rent_roll_total['current'] * 12) * ($this->vacancy['current'] / 100));
 		$gsi = [];
 		foreach ( $this->table_columns as $key => $column ) {
-			$gsi[ $key ] = (($this->rent_roll_total['current'] * 12) - $vc) + ($this->income_total['current'] - ($this->rent_roll_total['current'] * 12));
+			$gsi[ $key ] = $this->income_total['current'];
 		}
 
 		return $gsi;
@@ -281,7 +282,7 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 		$vc = (($this->rent_roll_total['current'] * 12) * ($this->vacancy['current'] / 100));
 		$ptcf = [];
 		foreach ( $this->table_columns as $key => $column ) {
-			$ptcf[ $key ] = (((($this->rent_roll_total['current'] * 12) - $vc) + ($this->income_total['current'] - ($this->rent_roll_total['current'] * 12)) - $this->expenses_total['current']) - ( $this->loan_amo->morgage_payment['principal_interest'] * 12 ));
+			$ptcf[ $key ] = (($this->income_total['current'] - $this->expenses_total['current']) - ( $this->loan_amo->morgage_payment['principal_interest'] * 12 ));
 		}
 
 		return $ptcf;
@@ -365,7 +366,8 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 	private function get_gross_rent_mltp() {
 		$grm = [];
 		foreach ( $this->table_columns as $key => $column ) {
-			$grm[ $key ] = ( $this->loan_amo->property_value / $this->rent_roll_total['current'] );
+			$__key = ('current' === $key) ? 'current' : 'market';
+			$grm[ $key ] = ( $this->loan_amo->property_value / $this->income_total[$__key] );
 		}
 		return $grm;
 	}
@@ -374,10 +376,10 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 		$ppu = [];
 		foreach ( (array) $this->get_property_value() as $key => $column ) {
 			if ( 'current' === $key ) {
-				$ppu[ $key ] = (($this->loan_amo->property_value / count( $this->rent_roll )) / 100);
+				$ppu[ $key ] = ($this->_noi() / $this->loan_amo->property_value);
 			} else {
 				foreach ($this->financial_summary_columns as $key => $value) {
-					$ppu[ $key ] = (($value['property_value'] / count( $this->rent_roll )) / 100);
+					$ppu[ $key ] = ($this->_noi() / $value['property_value']);
 				}
 			}
 		}
@@ -387,7 +389,10 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 	private function get_cash_on_cash_return() {
 		$cocr = [];
 		foreach ( (array) $this->table_columns as $key => $column ) {
-			$cocr[ $key ] = ((float) $this->income_total['current'] / (float) $this->financing_table_content['Debt Service']);
+			$cocr[ $key ] = (
+				(($this->income_total['current'] - $this->expenses_total['current']) - ( $this->loan_amo->morgage_payment['principal_interest'] * 12 ))
+				/ ($this->loan_amo->property_value * ($this->loan_amo->down_payment / 100))
+			) * 100;
 		}
 		return $cocr;
 	}
@@ -395,7 +400,11 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 	private function get_total_return() {
 		$cocr = [];
 		foreach ( (array) $this->table_columns as $key => $column ) {
-			$cocr[ $key ] = ((float) $this->income_total['current'] / (float) $this->financing_table_content['Debt Service']);
+			$cocr[ $key ] = (
+				($this->income_total['current'] - $this->expenses_total['current'])
+				- ((float) $this->loan_amo->morgage_payment['principal_interest'] * 12)
+				+ ($this->loan_amo->morgage_payment['principal'] * 12)
+			);
 		}
 		return $cocr;
 	}
@@ -413,9 +422,14 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 		$vc = (($this->rent_roll_total['current'] * 12) * ($this->vacancy['current'] / 100));
 		$grm = [];
 		foreach ( $this->table_columns as $key => $column ) {
-			$grm[ $key ] = (($this->rent_roll_total['current'] * 12) - $vc) + ($this->income_total['current'] - ($this->rent_roll_total['current'] * 12)) - $this->expenses_total['current'];
+			$grm[ $key ] = $this->_noi();
 		}
 		return $grm;
+	}
+
+	private function _noi() {
+		// $vc = (($this->rent_roll_total['current'] * 12) * ($this->vacancy['current'] / 100));
+		return ($this->income_total['current'] - $this->expenses_total['current']);
 	}
 }
 
