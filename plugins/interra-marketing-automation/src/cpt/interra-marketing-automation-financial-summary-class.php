@@ -23,8 +23,8 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 
 	public function __construct() {
 		parent::__construct();
-		$this->ratio_fields = ['CAP Rate', 'Debt Coverage Ratio', 'GRM'];
-		$this->perc_fields = ['Cash-on-Cash Return (Yr. 1)', 'Down Payment'];
+		$this->ratio_fields = ['Debt Coverage Ratio', 'GRM'];
+		$this->perc_fields = ['CAP Rate', 'Cash-on-Cash Return (Yr. 1)', 'Down Payment'];
 		$this->current_column_name = get_field( 'current_column_name' );
 		$this->financial_summary_columns = get_field( 'financial_summary_columns' );
 		$this->table_columns = $this->build_table_header();
@@ -328,7 +328,7 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 	private function get_ppl_reduction() {
 		$pr = [];
 		foreach ( $this->table_columns as $key => $column ) {
-			$pr[ $key ] = ($this->loan_amo->morgage_payment['principal'] * 12);
+			$pr[ $key ] = ($this->loan_amo->loan_amount - $this->loan_amo->amo_schedule[11]['new_balance']);
 		}
 
 		return $pr;
@@ -376,10 +376,10 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 		$ppu = [];
 		foreach ( (array) $this->get_property_value() as $key => $column ) {
 			if ( 'current' === $key ) {
-				$ppu[ $key ] = ($this->_noi() / $this->loan_amo->property_value);
+				$ppu[ $key ] = (($this->_noi() / $this->loan_amo->property_value) * 100);
 			} else {
 				foreach ($this->financial_summary_columns as $key => $value) {
-					$ppu[ $key ] = ($this->_noi() / $value['property_value']);
+					$ppu[ $key ] = (($this->_noi() / $value['property_value']) * 100);
 				}
 			}
 		}
@@ -403,7 +403,7 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 			$cocr[ $key ] = (
 				($this->income_total['current'] - $this->expenses_total['current'])
 				- ((float) $this->loan_amo->morgage_payment['principal_interest'] * 12)
-				+ ($this->loan_amo->morgage_payment['principal'] * 12)
+				+ ($this->loan_amo->loan_amount - $this->loan_amo->amo_schedule[11]['new_balance'])
 			);
 		}
 		return $cocr;
@@ -413,7 +413,8 @@ class Interra_Marketing_Automation_Financial_Summary Extends Interra_Marketing_A
 		$vc = (($this->rent_roll_total['current'] * 12) * ($this->vacancy['current'] / 100));
 		$cocr = [];
 		foreach ( (array) $this->table_columns as $key => $column ) {
-			$cocr[ $key ] = ( ((($this->rent_roll_total['current'] * 12) - $vc) + ($this->income_total['current'] - ($this->rent_roll_total['current'] * 12)) - $this->expenses_total['current']) / ( $this->loan_amo->morgage_payment['principal_interest'] * 12 ) );
+			$cocr[ $key ] = ( $this->_noi()
+				/ ( $this->loan_amo->morgage_payment['principal_interest'] * 12 ) );
 		}
 		return $cocr;
 	}
