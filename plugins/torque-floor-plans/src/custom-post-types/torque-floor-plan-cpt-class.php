@@ -23,6 +23,8 @@ class Torque_Floor_Plan_CPT {
 			'post_type_name' => 'floor_plan',
 	);
 
+	public static $FLOORPLAN_CATEGORY_ACF_KEY = 'field_5ee16e843395b';
+
 	/**
 	 * Holds options for the floor plan custom post type
 	 *
@@ -43,7 +45,68 @@ class Torque_Floor_Plan_CPT {
 	function __construct() {
 		$this->floor_plan = new PremiseCPT( self::$floor_plan_labels, $this->floor_plan_options );
 
-		add_action('init', array($this, 'add_metaboxes'));
+		add_action( 'init', array( $this, 'add_metaboxes' ) );
+		add_action( 'acf/init', array( $this, 'add_acf_metaboxes' ) );
+	}
+
+	// we need to use ACF so we can use the Filtered Loop tabs functionality...
+	public function add_acf_metaboxes() {
+		if( function_exists('acf_add_local_field_group') ):
+
+			acf_add_local_field_group(array(
+				'key' => 'group_5ee16e7bd04f0',
+				'title' => 'Floorplan Options',
+				'fields' => array(
+					array(
+						'key' => self::$FLOORPLAN_CATEGORY_ACF_KEY,
+						'label' => 'Floorplan Category',
+						'name' => 'floorplan_category',
+						'type' => 'select',
+						'instructions' => '',
+						'required' => 0,
+						'conditional_logic' => 0,
+						'wrapper' => array(
+							'width' => '',
+							'class' => '',
+							'id' => '',
+						),
+						'choices' => array(
+							'central-townhomes' => 'Central Townhomes',
+							'fairview-townhomes' => 'Fairview Townhomes',
+							'lynn-townhomes' => 'Lynn Townhomes',
+							'minor-townhomes' => 'Minor Townhomes',
+						),
+						'default_value' => array(
+							0 => 'central-townhomes',
+						),
+						'allow_null' => 0,
+						'multiple' => 0,
+						'ui' => 1,
+						'ajax' => 0,
+						'return_format' => 'value',
+						'placeholder' => '',
+					),
+				),
+				'location' => array(
+					array(
+						array(
+							'param' => 'post_type',
+							'operator' => '==',
+							'value' => 'floor_plan',
+						),
+					),
+				),
+				'menu_order' => 0,
+				'position' => 'normal',
+				'style' => 'default',
+				'label_placement' => 'top',
+				'instruction_placement' => 'label',
+				'hide_on_screen' => '',
+				'active' => 1,
+				'description' => '',
+			));
+			
+			endif;
 	}
 
 	public function add_metaboxes() {
