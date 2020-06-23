@@ -34,6 +34,7 @@ class Template_3 extends React.PureComponent {
           <a 
             className="download-wrapper"
             href={post?.meta?.floor_plan_downloads_pdf || ''}
+            target="_blank"
           >
             {'Download Full Floorplan'}
           </a>
