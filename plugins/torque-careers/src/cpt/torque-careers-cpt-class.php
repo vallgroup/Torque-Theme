@@ -19,7 +19,7 @@ class Torque_Careers_CPT {
 	public static $careers_labels = array(
 			'singular'       => 'Career',
 			'plural'         => 'Careers',
-			'slug'           => 'torque-career',
+			'slug'           => 'career',
 			'post_type_name' => 'torque_career',
 	);
 
