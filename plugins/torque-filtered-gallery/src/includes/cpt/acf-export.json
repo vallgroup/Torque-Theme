@@ -97,7 +97,15 @@
                 "type": "repeater",
                 "instructions": "",
                 "required": 0,
-                "conditional_logic": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5e54792b89ed7",
+                            "operator": "!=",
+                            "value": "1"
+                        }
+                    ]
+                ],
                 "wrapper": {
                     "width": "",
                     "class": "",

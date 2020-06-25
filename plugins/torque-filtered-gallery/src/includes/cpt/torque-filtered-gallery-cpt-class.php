@@ -202,7 +202,15 @@ class Torque_Filtered_Gallery_CPT {
             'type' => 'repeater',
             'instructions' => '',
             'required' => 0,
-            'conditional_logic' => 0,
+            'conditional_logic' => array(
+              array(
+                array(
+                  'field' => 'field_5e54792b89ed7',
+                  'operator' => '!=',
+                  'value' => '1',
+                ),
+              ),
+            ),
             'wrapper' => array(
               'width' => '',
               'class' => '',
