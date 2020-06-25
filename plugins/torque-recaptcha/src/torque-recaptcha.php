@@ -67,26 +67,88 @@ class Torque_Recaptcha {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_plugin_scripts' ) );
 
 		// enqueue google scripts
-		add_action('wp_head', array( $this, 'hook_google' ));
+		add_action( 'wp_head', array( $this, 'hook_google' ) );
+
+		// add ajax validation
+		add_action( 'wp_ajax_validate_recaptcha', array( $this, 'validate_recaptcha' ) );
+		add_action( 'wp_ajax_nopriv_validate_recaptcha', array( $this, 'validate_recaptcha' ) );
 	}
 
 	public function enqueue_plugin_scripts() {
-		wp_enqueue_script(
+
+		// get the site key
+    $site_key = get_field( 'tq_recaptcha_api_key', 'option' );
+    $form_selector = get_field( 'tq_recaptcha_form_selector', 'option' );
+    $action = 'validate_recaptcha';
+
+		// register script
+		wp_register_script(
 			'torque-recaptcha-scripts',
 			Torque_Recaptcha_URL . 'bundles/bundle.js',
-			array() ,
-			'0.0.1',
+			array('jquery') ,
+			'0.0.2',
 			true
 		);
+		// localize vars for script
+		wp_localize_script(
+			'torque-recaptcha-scripts',
+			'tqRecaptcha',
+			array( 
+			'ajaxURL' => admin_url( 'admin-ajax.php' ),
+			'siteKey' => $site_key,
+			'formSelector' => $form_selector,
+			'action' => $action,
+			)
+		);
+		// first enqueue jQuery
+		wp_enqueue_script( 'jquery' );
+		// then enqueue our reCAPTCHA
+		wp_enqueue_script( 'torque-recaptcha-scripts' );
 
+		// enqueue the styles
 		wp_enqueue_style(
 			'torque-recaptcha-styles',
 			Torque_Recaptcha_URL . 'bundles/main.css'
 		);
+		
 	}
 
 	public function hook_google() {
-		echo "<script src='https://www.google.com/recaptcha/api.js'></script>";
+    $recaptcha_version = get_field('tq_recaptcha_version', 'option');
+    $api_key = get_field('tq_recaptcha_api_key', 'option');
+		if (
+			'v2_invisible' === $recaptcha_version
+			|| 'v3' === $recaptcha_version
+		) {
+			echo '<script src="https://www.google.com/recaptcha/api.js?render='.$api_key.'"></script>';
+    } elseif ( 'v2_checkbox' === $recaptcha_version ) {
+			echo '<script src="https://www.google.com/recaptcha/api.js"></script>';
+		}
+	}
+
+	public function validate_recaptcha() {
+		// check the reCAPTCHA response isn't empty
+		if (
+			$_POST['g-recaptcha-response']
+			&& ! empty( $_POST['g-recaptcha-response'] )
+		) {
+			// set the verify URL
+			$url = 'https://www.google.com/recaptcha/api/siteverify';
+			$secret_key = get_field('tq_recaptcha_secret_key', 'option');
+			// check for a match
+			$response = file_get_contents( $url."?secret=".$secret_key."&response=".$_POST['g-recaptcha-response'] );
+			$data = json_decode( $response );
+
+			// send response to JS
+			if ( $data->success == true ) {
+				echo 'valid';
+			} else {
+				echo 'invalid';
+			}
+
+			// this is required to terminate immediately and return a proper response
+			wp_die();
+		}
 	}
 }
 

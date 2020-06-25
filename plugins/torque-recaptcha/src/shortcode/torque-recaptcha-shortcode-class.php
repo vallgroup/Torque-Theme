@@ -51,9 +51,37 @@ class Torque_Recaptcha_Shortcode {
 
 
   private function get_markup() {
-    $api_key = get_field('tq_recaptcha_api_key', 'option');
+    $markup = '';
+    $recaptcha_version = get_field( 'tq_recaptcha_version', 'option' );
+    $form_selector = get_field( 'tq_recaptcha_form_selector', 'option' );
+    $api_key = get_field( 'tq_recaptcha_api_key', 'option' );
 
-    return '<div class="g-recaptcha" data-sitekey="'.$api_key.'"></div>';
+    if (
+      'v2_invisible' === $recaptcha_version
+      || 'v3' === $recaptcha_version
+    ) {
+      // update the form's button, based on the user-provided form CSS selector
+      $markup .= '<script>
+        document.addEventListener("DOMContentLoaded", function(){
+          const theForm = document.querySelector("'.$form_selector.'");
+          if ( null !== theForm ) {
+            const theButton = theForm.querySelector("button[type=\'submit\']");
+            theButton.classList.add("g-recaptcha");
+            theButton.setAttribute("data-sitekey", "'.$api_key.'");
+            theButton.setAttribute("data-callback", "onRecaptchaSubmit");
+            theButton.setAttribute("data-action", "submit");
+          } else {
+            console.warn("Google reCAPTCHA: cannot find a form using selector \''.$form_selector.'\'");
+          }
+        });
+      </script>';
+    } elseif ( 'v2_checkbox' === $recaptcha_version ) {
+      $markup .= '<div class="g-recaptcha" data-sitekey="'.$api_key.'"></div>';
+    } else {
+      $markup = 'Please configure the Google reCAPTCHA options and reload the page.';
+    }
+
+    return $markup;
   }
 }
 
