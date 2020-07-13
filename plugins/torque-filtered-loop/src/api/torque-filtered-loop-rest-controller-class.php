@@ -14,7 +14,7 @@ class Torque_Filtered_Loop_REST_Controller {
   private $namespace;
 
   public function __construct() {
-    $this->namespace = 'filtered-loop/v1/';
+    $this->namespace = 'filtered-loop/v1';
 
     // add API endpoints
 		add_action( 'rest_api_init', array( $this, 'register_routes' ) );
