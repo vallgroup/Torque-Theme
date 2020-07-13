@@ -25,7 +25,7 @@ const Filters = ({
           className={classnames("torque-filtered-loop-filter-button", {
             active: allTerm.term_id === activeTerm
           })}
-          onClick={updateActiveTerm(allTerm.term_id)}
+          onClick={() => updateActiveTerm(allTerm.term_id)}
           dangerouslySetInnerHTML={{ __html: allTerm.name }}
         />
       )}
@@ -36,7 +36,7 @@ const Filters = ({
           className={classnames("torque-filtered-loop-filter-button", {
             active: term.term_id === activeTerm
           })}
-          onClick={updateActiveTerm(term.term_id)}
+          onClick={() => updateActiveTerm(term.term_id)}
           dangerouslySetInnerHTML={{ __html: term.name }}
         />
       ))}
