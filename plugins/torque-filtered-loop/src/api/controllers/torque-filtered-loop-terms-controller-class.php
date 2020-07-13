@@ -27,7 +27,7 @@ class Torque_Filtered_Loop_Terms_Controller {
 
 			if ($terms && $tax_name) {
 				return Torque_API_Responses::Success_Response( array(
-          'terms'	=> $terms,
+          'terms'	=> array_map( array( get_called_class(), 'add_thumbnail' ), $terms ),
 					'tax_name' => $tax_name
         ) );
 			}
@@ -40,5 +40,11 @@ class Torque_Filtered_Loop_Terms_Controller {
 		} catch (Exception $e) {
 			return Torque_API_Responses::Error_Response( $e );
 		}
+	}
+
+	public function add_thumbnail( $term ) {
+		$image = get_field( 'thumbnail', 'term_' . $term->term_id );
+		$term->thumbnail = esc_url( $image );
+		return $term;
 	}
 }
