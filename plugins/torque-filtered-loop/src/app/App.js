@@ -14,6 +14,7 @@ const App = ({
   firstTerm,
   loopTemplate
 }) => {
+
   const [activeTerm, setActiveTerm] = useState(0);
   const updateActiveTerm = useCallback(
     termId => () => setActiveTerm(termId),
@@ -32,7 +33,6 @@ const App = ({
     postsPerPage
   );
   const sortedPosts = useSortPosts(firstTerm, posts);
-
   return terms?.length ? (
     <div className={"torque-filtered-loop"}>
       <Filters
