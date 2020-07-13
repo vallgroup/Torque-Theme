@@ -4,9 +4,16 @@ import { Template_0, Template_1, Template_2, Template_3 } from "./Templates";
 
 class Posts extends React.PureComponent {
   render() {
+
     return (
       <div className={"posts-wrapper"}>
-        {this.props.posts.map((post, index) => {
+        {this.props.posts.filter((post, idx) => (
+          (!this.props.filterSelected ||
+          0 == this.props.filterSelected) ?
+          true :
+          (post.terms && post.terms[0] && post.terms[0].term_id == this.props.filterSelected)
+        ))
+        .map((post, index) => {
           switch (this.props.loopTemplate) {
             case "template-3":
               return <Template_3 key={index} post={post} />;
@@ -36,6 +43,7 @@ class Posts extends React.PureComponent {
 Posts.propTypes = {
   posts: PropTypes.array.isRequired,
   loopTemplate: PropTypes.string.isRequired,
+  filterSelected: PropTypes.number.isRequired,
   parentId: PropTypes.number
 };
 
