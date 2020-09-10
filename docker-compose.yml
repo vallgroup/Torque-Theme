@@ -1,41 +1,41 @@
 version: '3.1'
 
 services:
-   the-venn-child-db:
+   everton-child-db:
      image: mysql:5.7
      volumes:
-       - the_venn_child_db_data:/var/lib/mysql
+       - everton_child_db_data:/var/lib/mysql
      restart: always
      environment:
-       MYSQL_DATABASE: the-venn-child-wp
+       MYSQL_DATABASE: everton-child-wp
        MYSQL_ROOT_PASSWORD_FILE: /run/secrets/torque_wp_mysql_root
        MYSQL_USER_FILE: /run/secrets/torque_wp_mysql_user
        MYSQL_PASSWORD_FILE: /run/secrets/torque_wp_mysql_pass
      networks:
-       - the-venn-child-back
+       - everton-child-back
      secrets:
        - torque_wp_mysql_root
        - torque_wp_mysql_user
        - torque_wp_mysql_pass
 
-   the-venn-child-phpmyadmin:
+   everton-child-phpmyadmin:
     depends_on:
-      - the-venn-child-db
+      - everton-child-db
     image: phpmyadmin/phpmyadmin
     restart: always
     ports:
       - 8080:80
     environment:
-      PMA_HOST: the-venn-child-db
+      PMA_HOST: everton-child-db
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/torque_wp_mysql_root
     networks:
-      - the-venn-child-back
+      - everton-child-back
     secrets:
       - torque_wp_mysql_root
 
-   the-venn-child-wordpress:
+   everton-child-wordpress:
      depends_on:
-       - the-venn-child-db
+       - everton-child-db
      image: wordpress:latest
      ports:
        - "8000:80"
@@ -44,22 +44,22 @@ services:
        - ./php.ini:/var/www/html/php.ini
      restart: always
      environment:
-       WORDPRESS_DB_HOST: the-venn-child-db:3306
-       WORDPRESS_DB_NAME: the-venn-child-wp
+       WORDPRESS_DB_HOST: everton-child-db:3306
+       WORDPRESS_DB_NAME: everton-child-wp
        WORDPRESS_DB_USER_FILE: /run/secrets/torque_wp_mysql_user
        WORDPRESS_DB_PASSWORD_FILE: /run/secrets/torque_wp_mysql_pass
        WORDPRESS_DEBUG: 1
      networks:
-       - the-venn-child-back
+       - everton-child-back
      secrets:
        - torque_wp_mysql_user
        - torque_wp_mysql_pass
 
 networks:
-  the-venn-child-back:
+  everton-child-back:
 
 volumes:
-  the_venn_child_db_data:
+  everton_child_db_data:
     driver: local
 
 secrets:
