@@ -103,7 +103,8 @@ class Torque_Load_More {
     register_rest_route( $this->namespace, $this->endpoint , array(
       'methods' => 'POST',
       'callback' => array($this, 'get_next_page'),
-      'args' => array(),
+			'permission_callback' => '__return_true',
+			'args' => array(),
     ) );
   }
 
