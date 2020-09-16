@@ -20,6 +20,7 @@ class Torque_Filtered_Gallery_Images_Routes {
 	  		'methods'             => 'GET',
 	  		'callback'            => array( $this, 'get_images' ),
 	  		'args'                => Torque_Filtered_Gallery_Images_Controller::get_images_args(),
+	  		'permission_callback' => '__return_true',
 	  	),
 	  ) );
   }

@@ -13,7 +13,7 @@ class Torque_Filtered_Gallery_REST_Controller {
   private $namespace;
 
   public function __construct() {
-    $this->namespace = 'filtered-gallery/v1/';
+    $this->namespace = 'filtered-gallery/v1';
 
     // add API endpoints
 		add_action( 'rest_api_init', array( $this, 'register_routes' ) );

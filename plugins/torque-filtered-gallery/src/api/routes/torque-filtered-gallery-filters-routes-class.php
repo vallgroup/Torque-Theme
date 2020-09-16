@@ -20,6 +20,7 @@ class Torque_Filtered_Gallery_Filters_Routes {
 	  		'methods'             => 'GET',
 	  		'callback'            => array( $this, 'get_filter_acf_select' ),
 	  		'args'                => Torque_Filtered_Gallery_Filters_Controller::get_filter_acf_select_args(),
+	  		'permission_callback' => '__return_true',
 	  	),
 	  ) );
   }
