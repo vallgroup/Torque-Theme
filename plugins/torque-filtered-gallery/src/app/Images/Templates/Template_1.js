@@ -3,35 +3,33 @@ import PropTypes from "prop-types";
 
 class Template_1 extends React.PureComponent {
   render() {
-    const { post } = this.props;
+    const { image } = this.props;
 
-    const backgroundImage = post?.thumbnail;
-    const content = post?.post_content;
+    const lightboxOptions = {}
 
-    return (
-      <div className={"loop-post template-1"}>
-        <div className={"featured-image-wrapper"}>
-          <div
+    const imageUrl = image.url;
+    const imageCaption = image.caption || '';
+
+    console.log('image', image);
+
+    return (<>
+      <div className={"loop-image template-1"}>
+        <div className={"image-container"}>
+          <img
+            src={imageUrl}
             className={"featured-image"}
-            style={{ backgroundImage: `url(${backgroundImage})` }}
           />
         </div>
-
-        <div className={"content-wrapper"}>
-          <h4 dangerouslySetInnerHTML={{ __html: post.post_title }} />
-
-          <div
-            className="content"
-            dangerouslySetInnerHTML={{ __html: content }}
-          />
+        <div className={"image-caption"}>
+          {imageCaption}
         </div>
       </div>
-    );
+    </>);
   }
 }
 
 Template_1.propTypes = {
-  post: PropTypes.object.isRequired
+  image: PropTypes.object.isRequired
 };
 
 export default Template_1;

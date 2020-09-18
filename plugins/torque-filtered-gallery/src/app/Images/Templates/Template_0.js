@@ -9,6 +9,8 @@ class Template_0 extends React.PureComponent {
 
     const imageUrl = image.url;
 
+    console.log('image', image);
+
     return (
       <div className={"loop-image template-0"}>
           <img

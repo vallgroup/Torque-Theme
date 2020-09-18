@@ -10,15 +10,21 @@ class Images extends React.PureComponent {
             ? this.props.images.map((image, index) => {
             switch (this.props.loopTemplate) {
               case "template-2":
-                // maybe later used for a lightbox functionality? 
+                // not in-use
                 // return <Template_2 key={index} image={image} />;
 
               case "template-1":
-                // maybe later used to add an overlay with image title?
-                // return <Template_1 key={index} image={image} />;
+                // image with caption
+                return (
+                  <Template_1
+                    key={index}
+                    image={image}
+                  />
+                );
 
               case "template-0":
               default:
+                // image only
                 return (
                   <Template_0
                     key={index}
