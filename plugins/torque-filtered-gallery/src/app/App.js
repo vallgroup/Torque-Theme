@@ -31,8 +31,13 @@ const App = ({
   const { images } = useWPImages(site, null, params);
   const numImages = Object.keys(images).length;
   const lightboxOptions = {
-    showCaption: false,
-    enablePanzoom: false
+    settings: {
+      disablePanzoom: true,
+    },
+    caption: {
+      showCaption: true,
+      captionAlignment: 'center',
+    }
   }
 
   return filterSettings?.length ? (
@@ -61,13 +66,19 @@ const App = ({
       {/* By passing the number of images as a key, we force the lightbox component to re-render, hence updating the thumbnails, etc... */}
       {0 < numImages && useLightbox
         && <SimpleReactLightbox key={numImages}>
-          <SRLWrapper {...lightboxOptions}>
-            <Images images={images} loopTemplate={loopTemplate} />
+          <SRLWrapper options={lightboxOptions} >
+            <Images 
+              images={images}
+              loopTemplate={loopTemplate}
+            />
           </SRLWrapper>
         </SimpleReactLightbox>}
       {/* If no images, don't load the lightbox components as it throws an error (plugin is missing a check somewhere...) */}
       {0 >= numImages || !useLightbox
-        && <Images images={images} loopTemplate={loopTemplate} />}
+        && <Images 
+          images={images}
+          loopTemplate={loopTemplate}
+        />}
     </div>
   ) : null;
 };
