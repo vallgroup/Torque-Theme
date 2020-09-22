@@ -12,7 +12,7 @@ const Filters = ({
 }) => {
   const allTerm = {
     term_id: 0,
-    name: "All"
+    name: "View All"
   };
 
   return (

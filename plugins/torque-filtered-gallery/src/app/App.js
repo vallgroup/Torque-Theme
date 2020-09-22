@@ -29,7 +29,7 @@ const App = ({
     metaParams
   });
   const { images } = useWPImages(site, null, params);
-  const numImages = Object.keys(images).length;
+  const numImages = images && Object.keys(images).length;
   const lightboxOptions = {
     settings: {
       disablePanzoom: true,
@@ -66,7 +66,7 @@ const App = ({
       {/* By passing the number of images as a key, we force the lightbox component to re-render, hence updating the thumbnails, etc... */}
       {0 < numImages && useLightbox
         && <SimpleReactLightbox key={numImages}>
-          <SRLWrapper options={lightboxOptions} >
+          <SRLWrapper options={lightboxOptions}>
             <Images 
               images={images}
               loopTemplate={loopTemplate}
