@@ -4,19 +4,16 @@ import PropTypes from "prop-types";
 class Template_0 extends React.PureComponent {
   render() {
     const { image } = this.props;
-
-    const lightboxOptions = {}
-
     const imageUrl = image.url;
-
-    console.log('image', image);
+    const imageCaption = image.caption || '';
 
     return (
       <div className={"loop-image template-0"}>
-          <img
-            src={imageUrl}
-            className={"featured-image"}
-          />
+        <img
+          src={imageUrl}
+          className={"featured-image"}
+          alt={imageCaption}
+        />
       </div>
     );
   }
