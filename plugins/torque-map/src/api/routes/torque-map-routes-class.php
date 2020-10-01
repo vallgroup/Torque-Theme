@@ -19,7 +19,8 @@ class Torque_Map_Routes {
 	  	array(
 	  		'methods'             => 'GET',
 	  		'callback'            => array( $this, 'get_map' ),
-	  		'args'                => Torque_Map_Controller::get_map_args(),
+        'args'                => Torque_Map_Controller::get_map_args(),
+  			'permission_callback' => '__return_true',
 	  		// 'permission_callback' => array('Torque_API_Permissions', 'user_can_read'),
 	  	),
 	  ) );
