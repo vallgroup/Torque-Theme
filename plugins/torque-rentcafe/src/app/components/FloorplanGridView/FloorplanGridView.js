@@ -53,7 +53,7 @@ const FloorplanGridView = ({
   });
   const fpDetails = {
     Type: fpType || null,
-    Building: fpBuilding || null, 
+    // Building: fpBuilding || null, 
     SF: fpSF || null,
     Price: fpPrice || null,
   }
@@ -85,7 +85,7 @@ const FloorplanGridView = ({
 
         {availabilityUrl
           && <FloorplanButton href={availabilityUrl} target={'_blank'}>
-            {'Apply Now'}
+            {'Check Availability'}
           </FloorplanButton>}
       </FloorplanButtonsContainer>
 

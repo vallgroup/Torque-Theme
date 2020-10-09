@@ -12,7 +12,7 @@ class Torque_Rentcafe_REST_Controller {
   private $namespace;
 
   public function __construct() {
-    $this->namespace = 'torque-rentcafe/v1/';
+    $this->namespace = 'torque-rentcafe/v1';
 
     // add API endpoints
 		add_action( 'rest_api_init', array( $this, 'register_routes' ) );

@@ -35,6 +35,15 @@ class Torque_Rentcafe_Floorplans_Controller {
 		$floorplans = [];
 		$availabilities = [];
 
+		// early exit
+		if ( ! get_field( 'rentcafe_api_token', 'options' ) ) {
+			return Torque_API_Responses::Failure_Response( array(
+				'message'					=> 'Please ensure your Rentcafe API Token has been added to the options page.',
+				'floorplans'			=> [],
+				'availabilities'	=> [],
+			));
+		}
+
 		try {
 
 			// fetch new data
@@ -73,7 +82,7 @@ class Torque_Rentcafe_Floorplans_Controller {
 			// var_dump('$availabilities', $availabilities);
 	
 			return Torque_API_Responses::Success_Response( array(
-				'message' 				=> 'the floorplans cache has been first cleared, and then populated with the latest data.',
+				'message' 				=> 'The floorplans cache has been first cleared, and then populated with the latest data.',
 				'floorplans'			=> $floorplans,
 				'availabilities'	=> $availabilities,
 			) );
@@ -99,6 +108,7 @@ class Torque_Rentcafe_Floorplans_Controller {
 			) );
 		} else {
 			return Torque_API_Responses::Failure_Response( array(
+				'message'					=> 'no cached floorplans or availabilities were found.',
 				'floorplans'			=> [],
 				'availabilities'	=> [],
 			));

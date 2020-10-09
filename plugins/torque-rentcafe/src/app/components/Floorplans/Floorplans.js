@@ -49,12 +49,13 @@ const Floorplans = ({
       newFilters.building = 'all';
     }
 
+    /* Note: only searching by 'type' filter for Everton project */
     const updatedFloorplans = __filtersHelper
-      .getByIncomeRestricted(incomeRestricted) // 'incomeRestricted' is true or false, filtering accordingly
-      .getByBuilding(newFilters['building']) // must be called first, because getByType has potential to override it if 'townhouse' is selected...
+      // .getByIncomeRestricted(incomeRestricted) // 'incomeRestricted' is true or false, filtering accordingly
+      // .getByBuilding(newFilters['building']) // must be called first, because getByType has potential to override it if 'townhouse' is selected...
       .getByType(newFilters['type'])
-      .getByPrice(newFilters['price'])
-      .getOnlyAvailable(availabilities)
+      // .getByPrice(newFilters['price'])
+      // .getOnlyAvailable(availabilities)
       // .getByAvailability(newFilters['availability'], availabilities)
       // .getByFloor('floor', newFilters['floor'])
       .sortAlphabetically()

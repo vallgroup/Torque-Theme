@@ -21,6 +21,7 @@ class Torque_Rentcafe_Floorplans_Routes {
 					'methods'             => 'GET',
 					'callback'            => array( $this, 'get_floorplans' ),
 					'args'                => Torque_Rentcafe_Floorplans_Controller::get_args(),
+					'permission_callback' => '__return_true',
 				),
 		) );
 
@@ -31,6 +32,7 @@ class Torque_Rentcafe_Floorplans_Routes {
 				array(
 					'methods'             => 'GET',
 					'callback'            => array( $this, 'refresh_cache' ),
+					'permission_callback' => '__return_true',
 				),
 		) );
 		

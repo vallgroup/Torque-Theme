@@ -9,13 +9,15 @@ export const FiltersContainer = styled.div.attrs(props => ({
   align-items: center;
   justify-content: flex-start;
   box-sizing: border-box;
-  padding: 3vw 6vw;
+  padding: 0.5em 0;
+  border-top: 4px solid #96855e;
+  border-bottom: 4px solid #96855e;
 `;
 
 export const FilterContainer = styled.div.attrs(props => ({
   className: 'FilterContainer'
 }))`
-  width: auto;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -27,18 +29,26 @@ export const FilterContainer = styled.div.attrs(props => ({
 export const FilterTitle = styled.div.attrs(props => ({
   className: 'FilterTitle'
 }))`
-  flex: 1 1 100%;
+  // flex: 1 1 100%;
   box-sizing: border-box;
-  padding: 10px;
-  text-transform: uppercase;
-  font-size: 12px;
+  font-family: TradeGothicLTStd-Ext;
+  font-size: 20px;
   font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.4;
+  letter-spacing: 2px;
+  text-align: left;
+  color: #96855e;
+  text-transform: uppercase;
+  padding: 0 3.8em 0 2em;
+}
 `;
 
 export const FilterButtonsContainer = styled.div.attrs(props => ({
   className: 'FilterButtonsContainer'
 }))`
-  flex: 1 1 100%;
+  // flex: 1 1 100%;
   box-sizing: border-box;
   padding: 10px 10px 5px;
   display: flex;
@@ -51,13 +61,16 @@ export const FilterButton = styled.button.attrs(props => ({
 }))`
   flex: auto;
   box-sizing: border-box;
-  padding: 0 2px;
-  border-color: transparent;
-  border-radius: 8px;
-  padding: 7.5px 8.5px;
-  text-transform: uppercase;
-  font-size: 14px;
-  margin: 0 6px 5px 0;
+  padding: 0.2em 0.5em;
+  font-family: Cochin;
+  font-size: 20px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.25;
+  text-transform: capitalize;
+  border: 0;
+  margin: 0 2.5em 5px 0;
   max-width: 135px;
 
   &:disabled {
@@ -67,9 +80,9 @@ export const FilterButton = styled.button.attrs(props => ({
 
   ${props => props.active
     ? `color: #FFF;
-       background: #96d6ce;`
-    : `color: #2b2c2c;
-       background: #ebebeb;`}
+      background: transparent;`
+    : `color: #96855e;
+      background: transparent;`}
 `;
 
 export const FilterRangeContainer = styled.div.attrs(props => ({

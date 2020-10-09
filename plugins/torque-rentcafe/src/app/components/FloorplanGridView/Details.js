@@ -14,24 +14,18 @@ const Details = ({ details }) => {
       ? <DetailsContainer>
         {Object.entries(details).map(([key, detail]) => {
             return (
-              <DetailWrapper 
+              <DetailWrapper
                 key={key}
-                className={'DetailWrapper'}
+                className={key}
               >
-                <>
-                  <DetailName
-                    className={'DetailName'}
-                  >
-                    {key + ': '}
-                  </DetailName>
-                  <DetailValue 
-                    className={'DetailValue'}
-                  >
-                    {detail
-                      ? detail
-                      : 'N/A'}
-                  </DetailValue>
-                </>
+                <DetailName>
+                  {key + ': '}
+                </DetailName>
+                <DetailValue>
+                  {detail
+                    ? detail
+                    : 'N/A'}
+                </DetailValue>
               </DetailWrapper>
             )
           })}

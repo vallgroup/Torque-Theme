@@ -19,6 +19,10 @@ const Filters = ({
     resetFilters();
   }, []);
 
+  useEffect(() => {
+    filtersUpdated(currentFilters);
+  }, [currentFilters]);
+
   const updateFilters = (key, value) => {
     setCurrentFilters({
       ...currentFilters,
@@ -27,10 +31,11 @@ const Filters = ({
   }
 
   const resetFilters = () => {
+    /* Note: only searching by 'type' for Everton project */
     const newFilters = {
       type: filtersConfig.type.initial,
-      price: filtersConfig.price.initial,
-      building: filtersConfig.building.initial,
+      // price: filtersConfig.price.initial,
+      // building: filtersConfig.building.initial,
       // availability: filtersConfig.availability.initial,
       // floor: filtersConfig.floor.initial,
     };
@@ -52,7 +57,9 @@ const Filters = ({
             active={currentFilters[key]}
             handleChange={updateFilters}
           />
-        } else if ('range' === filter.type) {
+        } 
+        /* Note: not in use for Everton project */
+        /* else if ('range' === filter.type) {
           return <FilterTypeRange
             key={key}
             filterKey={key}
@@ -60,7 +67,7 @@ const Filters = ({
             value={currentFilters[key]}
             handleChange={updateFilters}
           />
-        }
+        } */
       })}
     </>)
   }
@@ -72,7 +79,8 @@ const Filters = ({
         && renderInputs()}
     </FiltersContainer>
 
-    <FiltersButtonsContainer>
+    {/* Note: not used in Everton Project, as we search on 'type' change instead */}
+    {/* <FiltersButtonsContainer>
       <FiltersFormButton
         type={'solid'}
         onClick={() => filtersUpdated(currentFilters)}
@@ -86,7 +94,7 @@ const Filters = ({
       >
         {'Clear All'}
       </FiltersFormButton>
-    </FiltersButtonsContainer>
+    </FiltersButtonsContainer> */}
     </>
   );
 }
