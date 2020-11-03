@@ -91,6 +91,25 @@
                 "ui_off_text": ""
             },
             {
+                "key": "field_5fa0ee32855df",
+                "label": "Hide Background Graphic?",
+                "name": "filtered_gallery_hide_background_graphic",
+                "type": "true_false",
+                "instructions": "Hide the background graphic.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "",
+                "default_value": 0,
+                "ui": 1,
+                "ui_on_text": "",
+                "ui_off_text": ""
+            },
+            {
                 "key": "field_5e4d72664009e",
                 "label": "Filtered Gallery Categories",
                 "name": "filtered_gallery_categories",
