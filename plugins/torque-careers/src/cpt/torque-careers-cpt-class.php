@@ -19,7 +19,7 @@ class Torque_Careers_CPT {
 	public static $careers_labels = array(
 			'singular'       => 'Career',
 			'plural'         => 'Careers',
-			'slug'           => 'torque-career',
+			'slug'           => 'career',
 			'post_type_name' => 'torque_career',
 	);
 
@@ -44,6 +44,56 @@ class Torque_Careers_CPT {
 		if ( class_exists( 'PremiseCPT' ) ) {
 			new PremiseCPT( self::$careers_labels, $this->careers_options );
 		}
+		// register ACF fields
+		add_action('acf/init', array($this, 'add_career_acf_metaboxes'));
+	}
+
+	public function add_career_acf_metaboxes() {
+		if( function_exists('acf_add_local_field_group') ):
+
+			acf_add_local_field_group(array(
+				'key' => 'group_5f17762af03ae',
+				'title' => 'Career Form Settings',
+				'fields' => array(
+					array(
+						'key' => 'field_5f1776b042209',
+						'label' => 'Notification Email',
+						'name' => 'notification_email',
+						'type' => 'email',
+						'instructions' => 'Please enter the email address for which you\'d like to receive notifications of Career submissions.',
+						'required' => 0,
+						'conditional_logic' => 0,
+						'wrapper' => array(
+							'width' => '',
+							'class' => '',
+							'id' => '',
+						),
+						'default_value' => '',
+						'placeholder' => '',
+						'prepend' => '',
+						'append' => '',
+					),
+				),
+				'location' => array(
+					array(
+						array(
+							'param' => 'post_type',
+							'operator' => '==',
+							'value' => 'torque_career',
+						),
+					),
+				),
+				'menu_order' => 0,
+				'position' => 'normal',
+				'style' => 'default',
+				'label_placement' => 'top',
+				'instruction_placement' => 'label',
+				'hide_on_screen' => '',
+				'active' => 1,
+				'description' => '',
+			));
+			
+			endif;
 	}
 }
 
