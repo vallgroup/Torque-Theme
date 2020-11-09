@@ -104,6 +104,7 @@ class Torque_Load_More {
       'methods' => 'POST',
       'callback' => array($this, 'get_next_page'),
       'args' => array(),
+      'permission_callback' => '__return_true',
     ) );
   }
 
