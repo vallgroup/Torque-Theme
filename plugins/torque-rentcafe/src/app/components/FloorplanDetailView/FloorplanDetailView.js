@@ -142,17 +142,17 @@ const FloorplanDetailView = ({
               <FloorplanThumbnailContainer>
               {fpImages.map((image, index) => {
                 const thumbId = 'thumbnail-index-' + index.toString();
-                return (
-                  <FloorplanThumbnail
-                    key={index}
-                    className={thumbId}
-                    src={image}
-                    active={index === currentImageIndex}
-                    onClick={() => setCurrentImageIndex(index)}
-                  />
-                )
-              })}
-            </FloorplanThumbnailContainer>
+                  return (
+                    <FloorplanThumbnail
+                      key={index}
+                      className={thumbId}
+                      src={image}
+                      active={index === currentImageIndex}
+                      onClick={() => setCurrentImageIndex(index)}
+                    />
+                  )
+                })}
+              </FloorplanThumbnailContainer>
             </SRLWrapper>
           </SimpleReactLightbox>}
 

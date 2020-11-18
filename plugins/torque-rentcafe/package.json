@@ -16,7 +16,7 @@
     "react": "^16.8.1",
     "react-dom": "16.8.1",
     "react-router-dom": "^5.1.2",
-    "simple-react-lightbox": "^2.2.0",
+    "simple-react-lightbox": "^3.3.4-2",
     "styled-components": "^5.0.1"
   },
   "devDependencies": {

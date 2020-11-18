@@ -10,16 +10,17 @@ import {
   FloorplanContentContainer,
   FloorplanButtonsContainer,
   FloorplanButton,
+  ImageLightboxToggle,
 } from "./FloorplanGridView.styles.js";
 import { buildingCodes } from "../../config/Floorplans.config";
 
-const FloorplanGridView = ({ 
+const FloorplanGridView = ({
   floorplan,
   availabilities
 }) => {
 
   const fpId = floorplan?.FloorplanId || null;
-  const propertyId = floorplan?.PropertyId || null
+  const propertyId = floorplan?.PropertyId || null;
 
   const fpImage = floorplan?.FloorplanImageURL
     ? floorplan?.FloorplanImageURL.split(',')[0]
@@ -59,13 +60,25 @@ const FloorplanGridView = ({
   }
 
   const availabilityUrl = floorplan?.AvailabilityURL || null
+
+  // workaround to open the lightbox at the index of the toggle clicked
+  const openLightboxViaToggle = () => {
+    const selector = '.image-id-' + fpId.toString();
+    const thumbnailToClick = document.querySelectorAll(selector)[0];
+    thumbnailToClick && thumbnailToClick.click();
+  }
   
   return (
     <FloorplanContainer>
+      <ImageLightboxToggle onClick={() => openLightboxViaToggle()} />
 
       {fpImage
         && <FloorplanImageContainer>
-          <FloorplanImage src={fpImage} />
+          <FloorplanImage
+            className={`image-id-${fpId}`}
+            src={fpImage}
+            alt={fpTitle}
+          />
         </FloorplanImageContainer>}
 
       <FloorplanContentContainer>
@@ -77,14 +90,15 @@ const FloorplanGridView = ({
       </FloorplanContentContainer>
 
       <FloorplanButtonsContainer>
-        <FloorplanButton
-          href={'?floorplanId=' + fpId}
-        >
+        <FloorplanButton href={'?floorplanId=' + fpId}>
           {'View Details'}
         </FloorplanButton>
 
         {availabilityUrl
-          && <FloorplanButton href={availabilityUrl} target={'_blank'}>
+          && <FloorplanButton 
+            href={availabilityUrl}
+            target={'_blank'}
+          >
             {'Check Availability'}
           </FloorplanButton>}
       </FloorplanButtonsContainer>

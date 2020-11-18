@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import SimpleReactLightbox, { SRLWrapper } from "simple-react-lightbox";
 import { isEmpty } from "../../helpers/objectHelpers";
 import FiltersHelpers from "../../helpers/filtersHelpers";
 import Filters from "../Filters/Filters"
@@ -23,6 +24,13 @@ const Floorplans = ({
 }) => {
   const [ filteredFloorplans, setFilteredFloorplans ] = useState(initialFloorplans);
   const __filtersHelper = new FiltersHelpers(initialFloorplans);
+
+  // lightbox options
+  const options = {
+    showCaption: true,
+    enablePanzoom: false,
+    thumbnailsOpacity: 0.0
+  }
 
   useEffect(() => {
     // if incomeRestricted is TRUE, filter for income-restricted listings
@@ -64,25 +72,29 @@ const Floorplans = ({
     setFilteredFloorplans(updatedFloorplans);
   }
 
-  // console.log('filteredFloorplans', filteredFloorplans);
+  console.log('filteredFloorplans', filteredFloorplans);
 
   return (
     <>
     <Filters filtersUpdated={handleFiltersUpdated} />
     {!isEmpty(filteredFloorplans)
       ? <>
-        <FloorplansContainer>
-          {Object.entries(filteredFloorplans).map(([key, floorplan]) => {
-            return (
-              <FloorplanGridView
-                key={floorplan?.FloorplanId}
-                floorplan={floorplan}
-                availabilities={availabilities || null}
-              />
-            );
-          })}
-        </FloorplansContainer>
-        <FloorplansDisclaimer incomeRestricted={incomeRestricted} />
+        <SimpleReactLightbox key={Object.keys(filteredFloorplans).length}>
+          <SRLWrapper {...options}>
+            <FloorplansContainer>
+              {Object.entries(filteredFloorplans).map(([key, floorplan]) => {
+                return (
+                  <FloorplanGridView
+                    key={floorplan?.FloorplanId}
+                    floorplan={floorplan}
+                    availabilities={availabilities || null}
+                  />
+                );
+              })}
+            </FloorplansContainer>
+          </SRLWrapper>
+        </SimpleReactLightbox>
+        {/* <FloorplansDisclaimer incomeRestricted={incomeRestricted} /> */}
       </>
       : <LoadingMessage>
         {'We couldn\'t find any floor plans matching your criteria.'}

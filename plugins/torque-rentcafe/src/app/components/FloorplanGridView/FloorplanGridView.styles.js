@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const FloorplanContainer = styled.div.attrs(props => ({
   className: 'FloorplanContainer'
 }))`
+  position: relative;
   flex: 1 1 100%;
 
   @media only screen and (min-width: 767px) {
@@ -11,6 +12,18 @@ export const FloorplanContainer = styled.div.attrs(props => ({
   @media only screen and (min-width: 1024px) {
     flex: 0 0 33.33%;
   }
+`;
+
+export const ImageLightboxToggle = styled.div.attrs(props => ({
+  className: 'ImageLightboxToggle'
+}))`
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 20px;
+  height: 20px;
+  background: black;
+  cursor: pointer;
 `;
 
 export const FloorplanImageContainer = styled.div.attrs(props => ({
