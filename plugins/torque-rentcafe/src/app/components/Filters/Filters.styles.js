@@ -150,3 +150,32 @@ export const FiltersFormButton = styled.button.attrs(props => ({
        background: #FFF;
        border-color: #96d6ce;`}
 `;
+
+export const SiteMapButton = styled.button.attrs(props => ({
+  className: 'FilterButton SiteMapButton'
+}))`
+  flex: auto;
+  box-sizing: border-box;
+  padding: 0.2em 0.5em;
+  font-family: Cochin;
+  font-size: 20px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.25;
+  text-transform: capitalize;
+  border: 0;
+  margin: 0 2.5em 5px 0;
+  max-width: 135px;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  ${props => props.active
+    ? `color: #FFF;
+      background: transparent;`
+    : `color: #96855e;
+      background: transparent;`}
+`;

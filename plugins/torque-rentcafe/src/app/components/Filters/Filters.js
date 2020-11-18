@@ -6,12 +6,16 @@ import {
   FiltersContainer,
   FiltersButtonsContainer,
   FiltersFormButton,
+  SiteMapButton,
 } from "./Filters.styles.js";
 import { filtersConfig } from "../../config/Filters.config";
 
 // props
 const Filters = ({
-  filtersUpdated
+  filtersUpdated,
+  hasSiteMap,
+  siteMapVisible,
+  toggleSiteMap,
 }) => {
   const [ currentFilters, setCurrentFilters ] = useState({});
 
@@ -20,7 +24,7 @@ const Filters = ({
   }, []);
 
   useEffect(() => {
-    filtersUpdated(currentFilters);
+    !isEmpty(currentFilters) && filtersUpdated(currentFilters);
   }, [currentFilters]);
 
   const updateFilters = (key, value) => {
@@ -28,6 +32,7 @@ const Filters = ({
       ...currentFilters,
       [key]: value
     });
+    toggleSiteMap(false);
   }
 
   const resetFilters = () => {
@@ -77,6 +82,13 @@ const Filters = ({
     <FiltersContainer>
       {!isEmpty(filtersConfig)
         && renderInputs()}
+      {hasSiteMap 
+        && <SiteMapButton
+          onClick={() => toggleSiteMap()}
+          active={siteMapVisible}
+        >
+          {'Site Map'}
+        </SiteMapButton>}
     </FiltersContainer>
 
     {/* Note: not used in Everton Project, as we search on 'type' change instead */}

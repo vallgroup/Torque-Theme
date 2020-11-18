@@ -8,7 +8,9 @@ import FloorplanGridView from "../FloorplanGridView/FloorplanGridView";
 import FloorplansDisclaimer from "./FloorplansDisclaimer";
 import {
   FloorplansContainer,
-  FloorplanDisclaimer
+  FloorplanDisclaimer,
+  SiteMapLightboxWrapperAnchor,
+  SiteMapImage,
 } from "./Floorplans.styles.js";
 import { LoadingMessage } from "../../styles/App.styles";
 
@@ -20,10 +22,13 @@ import { LoadingMessage } from "../../styles/App.styles";
 const Floorplans = ({
   initialFloorplans,
   availabilities,
-  incomeRestricted
+  incomeRestricted,
+  siteMap,
 }) => {
   const [ filteredFloorplans, setFilteredFloorplans ] = useState(initialFloorplans);
   const __filtersHelper = new FiltersHelpers(initialFloorplans);
+
+  const [ siteMapVisible, setSiteMapVisible ] = useState(false);
 
   // lightbox options
   const options = {
@@ -31,6 +36,13 @@ const Floorplans = ({
     enablePanzoom: false,
     thumbnailsOpacity: 0.0
   }
+  // lightbox callbacks
+  // const callbacks = {
+  //     onSlideChange: object => console.log(object),
+  //     onLightboxOpened: object => console.log(object),
+  //     onLightboxClosed: object => console.log(object),
+  //     onCountSlides: object => console.log(object)
+  // };
 
   useEffect(() => {
     // if incomeRestricted is TRUE, filter for income-restricted listings
@@ -63,7 +75,7 @@ const Floorplans = ({
       // .getByBuilding(newFilters['building']) // must be called first, because getByType has potential to override it if 'townhouse' is selected...
       .getByType(newFilters['type'])
       // .getByPrice(newFilters['price'])
-      // .getOnlyAvailable(availabilities)
+      .getOnlyAvailable(availabilities)
       // .getByAvailability(newFilters['availability'], availabilities)
       // .getByFloor('floor', newFilters['floor'])
       .sortAlphabetically()
@@ -72,15 +84,33 @@ const Floorplans = ({
     setFilteredFloorplans(updatedFloorplans);
   }
 
-  console.log('filteredFloorplans', filteredFloorplans);
+  const toggleSiteMap = (forcedState = null) => {
+    if ( null !== forcedState ) {
+      setSiteMapVisible(forcedState);
+    } else {
+      setSiteMapVisible(!siteMapVisible);
+    }
+  }
+
+  // console.log('filteredFloorplans', filteredFloorplans);
 
   return (
     <>
-    <Filters filtersUpdated={handleFiltersUpdated} />
+    <Filters
+      filtersUpdated={handleFiltersUpdated}
+      hasSiteMap={!!siteMap}
+      siteMapVisible={siteMapVisible}
+      toggleSiteMap={toggleSiteMap}
+    />
     {!isEmpty(filteredFloorplans)
       ? <>
-        <SimpleReactLightbox key={Object.keys(filteredFloorplans).length}>
-          <SRLWrapper {...options}>
+        <SimpleReactLightbox 
+          key={Object.keys(filteredFloorplans).length}
+        >
+          <SRLWrapper 
+            options={options}
+            // callbacks={callbacks}
+          >
             <FloorplansContainer>
               {Object.entries(filteredFloorplans).map(([key, floorplan]) => {
                 return (
@@ -91,6 +121,18 @@ const Floorplans = ({
                   />
                 );
               })}
+              {!!siteMap 
+                && <SiteMapLightboxWrapperAnchor
+                  href={siteMap}
+                  data-attribute="SRL"
+                  show={siteMapVisible}
+                >
+                  <SiteMapImage 
+                    src={siteMap} 
+                    show={siteMapVisible}
+                    alt="Site Map"
+                  />
+                </SiteMapLightboxWrapperAnchor>}
             </FloorplansContainer>
           </SRLWrapper>
         </SimpleReactLightbox>

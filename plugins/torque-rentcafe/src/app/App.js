@@ -15,7 +15,8 @@ const App = ({
   site,
   requestType,
   PropertyCode,
-  incomeRestricted, 
+  incomeRestricted,
+  siteMap,
 }) => {
   
   // API query
@@ -42,6 +43,7 @@ const App = ({
             initialFloorplans={floorplans}
             availabilities={availabilities}
             incomeRestricted={incomeRestricted}
+            siteMap={siteMap}
           />}
       </>
       : <LoadingMessage>

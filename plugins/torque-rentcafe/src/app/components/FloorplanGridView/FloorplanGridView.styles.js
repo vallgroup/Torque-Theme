@@ -14,8 +14,8 @@ export const FloorplanContainer = styled.div.attrs(props => ({
   }
 `;
 
-export const ImageLightboxToggle = styled.div.attrs(props => ({
-  className: 'ImageLightboxToggle'
+export const LightboxImageToggle = styled.div.attrs(props => ({
+  className: 'LightboxImageToggle'
 }))`
   position: absolute;
   right: 10px;
@@ -23,6 +23,13 @@ export const ImageLightboxToggle = styled.div.attrs(props => ({
   width: 20px;
   height: 20px;
   background: black;
+  cursor: pointer;
+`;
+
+export const LightboxWrapperAnchor = styled.a.attrs(props => ({
+  className: 'LightboxWrapperAnchor'
+}))`
+  text-decoration: none;
   cursor: pointer;
 `;
 

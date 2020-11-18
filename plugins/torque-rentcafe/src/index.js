@@ -13,6 +13,7 @@ entry.forEach(entry => {
     const sharedProps = {
       site: entry.getAttribute("data-site"),
       incomeRestricted: entry.getAttribute("data-income_restricted") === 'true',
+      siteMap: entry.getAttribute("data-site_map"),
     };
 
     ReactDOM.render(

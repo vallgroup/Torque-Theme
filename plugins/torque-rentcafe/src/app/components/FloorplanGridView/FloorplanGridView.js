@@ -10,7 +10,8 @@ import {
   FloorplanContentContainer,
   FloorplanButtonsContainer,
   FloorplanButton,
-  ImageLightboxToggle,
+  LightboxWrapperAnchor,
+  LightboxImageToggle,
 } from "./FloorplanGridView.styles.js";
 import { buildingCodes } from "../../config/Floorplans.config";
 
@@ -70,15 +71,21 @@ const FloorplanGridView = ({
   
   return (
     <FloorplanContainer>
-      <ImageLightboxToggle onClick={() => openLightboxViaToggle()} />
+      <LightboxImageToggle onClick={() => openLightboxViaToggle()} />
 
       {fpImage
         && <FloorplanImageContainer>
-          <FloorplanImage
+
+          <LightboxWrapperAnchor
+            href={fpImage}
+            data-attribute="SRL"
             className={`image-id-${fpId}`}
-            src={fpImage}
-            alt={fpTitle}
-          />
+          >
+            <FloorplanImage
+              src={fpImage}
+              alt={fpTitle.toUpperCase()}
+            />
+          </LightboxWrapperAnchor>
         </FloorplanImageContainer>}
 
       <FloorplanContentContainer>

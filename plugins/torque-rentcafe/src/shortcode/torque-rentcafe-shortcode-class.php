@@ -20,6 +20,7 @@ class Torque_Rentcafe_Shortcode {
     // for private attributes go to setup_atts()
     $this->expected_args = array(
       'income_restricted' => false, // optional -- restricts results to a set $/month
+      'site_map' => false, // optional -- include a site map button and expandable site map
     );
 
 		add_shortcode( self::$SHORTCODE_SLUG , array( $this, 'shortcode_handler') );
@@ -58,7 +59,7 @@ class Torque_Rentcafe_Shortcode {
     return shortcode_atts( array_merge( $this->expected_args,
       // these are your arguments that do not show up in the front end.
       array(
-        '' => ''
+        '' => '',
       ) ), $atts, self::$SHORTCODE_SLUG );
   }
 
