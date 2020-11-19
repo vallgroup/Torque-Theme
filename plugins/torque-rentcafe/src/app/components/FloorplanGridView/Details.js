@@ -4,22 +4,37 @@ import {
   DetailsContainer,
   DetailWrapper,
   DetailName,
+  DetailIcon,
   DetailValue,
 } from "./FloorplanGridView.styles.js";
+import bedsImg from "../../assets/beds-icon.png";
+import sfImg from "../../assets/sf-icon.png";
+import priceImg from "../../assets/price-icon.png";
 
 const Details = ({ details }) => {
+
+  const icons = {
+    Type: bedsImg,
+    SF: sfImg,
+    Price: priceImg,
+  }
+
+  console.log('icons', icons)
   
   return (
     !isEmpty(details)
       ? <DetailsContainer>
         {Object.entries(details).map(([key, detail]) => {
+            const icon = icons[key]
             return (
               <DetailWrapper
                 key={key}
                 className={key}
               >
                 <DetailName>
-                  {key + ': '}
+                  {icon
+                    ? <DetailIcon src={icon}/>
+                    : key}
                 </DetailName>
                 <DetailValue>
                   {detail

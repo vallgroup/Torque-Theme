@@ -9,7 +9,8 @@ import FloorplansDisclaimer from "./FloorplansDisclaimer";
 import {
   FloorplansContainer,
   FloorplanDisclaimer,
-  SiteMapLightboxWrapperAnchor,
+  SiteMapLightboxWrapper,
+  SiteMapImageAnchor,
   SiteMapImage,
 } from "./Floorplans.styles.js";
 import { LoadingMessage } from "../../styles/App.styles";
@@ -122,17 +123,23 @@ const Floorplans = ({
                 );
               })}
               {!!siteMap 
-                && <SiteMapLightboxWrapperAnchor
-                  href={siteMap}
-                  data-attribute="SRL"
-                  show={siteMapVisible}
-                >
-                  <SiteMapImage 
-                    src={siteMap} 
+                && <>
+                  <SiteMapLightboxWrapper
                     show={siteMapVisible}
-                    alt="Site Map"
+                    onClick={() => toggleSiteMap(false)}
                   />
-                </SiteMapLightboxWrapperAnchor>}
+                  <SiteMapImageAnchor
+                    href={siteMap}
+                    data-attribute={"SRL"}
+                    show={siteMapVisible}
+                  >
+                    <SiteMapImage 
+                      src={siteMap} 
+                      show={siteMapVisible}
+                      alt="Site Map"
+                    />
+                  </SiteMapImageAnchor>
+                </>}
             </FloorplansContainer>
           </SRLWrapper>
         </SimpleReactLightbox>

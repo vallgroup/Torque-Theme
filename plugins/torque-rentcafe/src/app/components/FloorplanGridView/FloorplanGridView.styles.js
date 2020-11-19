@@ -14,7 +14,7 @@ export const FloorplanContainer = styled.div.attrs(props => ({
   }
 `;
 
-export const LightboxImageToggle = styled.div.attrs(props => ({
+export const LightboxImageToggle = styled.img.attrs(props => ({
   className: 'LightboxImageToggle'
 }))`
   position: absolute;
@@ -22,7 +22,6 @@ export const LightboxImageToggle = styled.div.attrs(props => ({
   top: 10px;
   width: 20px;
   height: 20px;
-  background: black;
   cursor: pointer;
 `;
 
@@ -63,6 +62,7 @@ export const TitleContainer = styled.h3.attrs(props => ({
 }))`
   width: 100%;
   height: auto;
+  margin-bottom: 10px;
 `;
 
 export const DetailsContainer = styled.div.attrs(props => ({
@@ -81,13 +81,25 @@ export const DetailWrapper = styled.div.attrs(props => ({
   flex: 1 1 100%;
   display: flex;
   flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 6px;
 `;
 
 export const DetailName = styled.div.attrs(props => ({
   className: 'DetailName'
 }))`
   font-weight: bold;
-  margin-right: 6px;
+  margin-right: 18px;
+`;
+
+export const DetailIcon = styled.img.attrs(props => ({
+  className: 'DetailIcon'
+}))`
+  width: 22px;
+  height: auto;
+  max-width: 22px;
+  max-height: 22px;
 `;
 
 export const DetailValue = styled.div.attrs(props => ({

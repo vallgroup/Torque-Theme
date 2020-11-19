@@ -14,6 +14,7 @@ import {
   LightboxImageToggle,
 } from "./FloorplanGridView.styles.js";
 import { buildingCodes } from "../../config/Floorplans.config";
+import lightboxToggleImg from "../../assets/expand-icon.png";
 
 const FloorplanGridView = ({
   floorplan,
@@ -71,14 +72,17 @@ const FloorplanGridView = ({
   
   return (
     <FloorplanContainer>
-      <LightboxImageToggle onClick={() => openLightboxViaToggle()} />
+      <LightboxImageToggle
+        src={lightboxToggleImg}
+        onClick={() => openLightboxViaToggle()}
+      />
 
       {fpImage
         && <FloorplanImageContainer>
 
           <LightboxWrapperAnchor
             href={fpImage}
-            data-attribute="SRL"
+            data-attribute={"SRL"}
             className={`image-id-${fpId}`}
           >
             <FloorplanImage
