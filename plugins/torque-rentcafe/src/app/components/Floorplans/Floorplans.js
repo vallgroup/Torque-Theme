@@ -95,8 +95,7 @@ const Floorplans = ({
 
   // console.log('filteredFloorplans', filteredFloorplans);
 
-  return (
-    <>
+  return (<>
     <Filters
       filtersUpdated={handleFiltersUpdated}
       hasSiteMap={!!siteMap}
@@ -148,8 +147,7 @@ const Floorplans = ({
       : <LoadingMessage>
         {'We couldn\'t find any floor plans matching your criteria.'}
       </LoadingMessage>}
-    </>
-  );
+  </>);
 }
 
 export default Floorplans

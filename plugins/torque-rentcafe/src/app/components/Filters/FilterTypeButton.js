@@ -4,6 +4,7 @@ import {
   FilterTitle,
   FilterButtonsContainer,
   FilterButton,
+  SiteMapButton,
 } from "./Filters.styles.js";
 
 const FilterTypeButton = ({
@@ -11,7 +12,11 @@ const FilterTypeButton = ({
   filterKey,
   filter,
   active,
-  handleChange
+  handleChange,
+  includeSiteMapBtn,
+  hasSiteMap,
+  siteMapVisible,
+  toggleSiteMap,
 }) => {
   return (
     active
@@ -47,6 +52,13 @@ const FilterTypeButton = ({
                 </FilterButton>
               )
             })}
+            {includeSiteMapBtn && hasSiteMap
+              && <SiteMapButton
+                onClick={() => toggleSiteMap()}
+                active={siteMapVisible}
+              >
+                {'Site Map'}
+              </SiteMapButton>}
           </FilterButtonsContainer>
         </FilterContainer>
       : null

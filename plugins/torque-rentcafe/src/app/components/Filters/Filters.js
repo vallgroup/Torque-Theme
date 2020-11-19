@@ -6,7 +6,6 @@ import {
   FiltersContainer,
   FiltersButtonsContainer,
   FiltersFormButton,
-  SiteMapButton,
 } from "./Filters.styles.js";
 import { filtersConfig } from "../../config/Filters.config";
 
@@ -61,6 +60,10 @@ const Filters = ({
             filter={filter}
             active={currentFilters[key]}
             handleChange={updateFilters}
+            includeSiteMapBtn={'type' === filter.title.toLowerCase()}
+            hasSiteMap={hasSiteMap}
+            siteMapVisible={siteMapVisible}
+            toggleSiteMap={toggleSiteMap}
           />
         } 
         /* Note: not in use for Everton project */
@@ -82,13 +85,6 @@ const Filters = ({
     <FiltersContainer>
       {!isEmpty(filtersConfig)
         && renderInputs()}
-      {hasSiteMap 
-        && <SiteMapButton
-          onClick={() => toggleSiteMap()}
-          active={siteMapVisible}
-        >
-          {'Site Map'}
-        </SiteMapButton>}
     </FiltersContainer>
 
     {/* Note: not used in Everton Project, as we search on 'type' change instead */}
