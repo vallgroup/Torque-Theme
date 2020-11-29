@@ -111,7 +111,9 @@ const Floorplans = ({
             options={options}
             // callbacks={callbacks}
           >
-            <FloorplansContainer>
+            <FloorplansContainer
+              show={!siteMapVisible}
+            >
               {Object.entries(filteredFloorplans).map(([key, floorplan]) => {
                 return (
                   <FloorplanGridView
@@ -121,25 +123,19 @@ const Floorplans = ({
                   />
                 );
               })}
-              {!!siteMap 
-                && <>
-                  <SiteMapLightboxWrapper
-                    show={siteMapVisible}
-                    onClick={() => toggleSiteMap(false)}
-                  />
-                  <SiteMapImageAnchor
-                    href={siteMap}
-                    data-attribute={"SRL"}
-                    show={siteMapVisible}
-                  >
-                    <SiteMapImage 
-                      src={siteMap} 
-                      show={siteMapVisible}
-                      alt="Site Map"
-                    />
-                  </SiteMapImageAnchor>
-                </>}
             </FloorplansContainer>
+            {!!siteMap 
+              && <SiteMapImageAnchor
+                href={siteMap}
+                data-attribute={"SRL"}
+                show={siteMapVisible}
+              >
+                <SiteMapImage 
+                  src={siteMap} 
+                  show={siteMapVisible}
+                  alt="Site Map"
+                />
+              </SiteMapImageAnchor>}
           </SRLWrapper>
         </SimpleReactLightbox>
         {/* <FloorplansDisclaimer incomeRestricted={incomeRestricted} /> */}
