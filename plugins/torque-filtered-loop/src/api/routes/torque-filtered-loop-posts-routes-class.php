@@ -20,6 +20,7 @@ class Torque_Filtered_Loop_Posts_Routes {
 	  		'methods'             => 'GET',
 	  		'callback'            => array( $this, 'get_posts' ),
 	  		'args'                => Torque_Filtered_Loop_Posts_Controller::get_posts_args(),
+        'permission_callback' => '__return_true',
 	  		//'permission_callback' => array('Torque_API_Permissions', 'user_can_read'),
 	  	),
 	  ) );

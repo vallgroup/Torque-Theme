@@ -19,7 +19,8 @@ class Torque_Filtered_Loop_Filters_Routes {
 	  	array(
 	  		'methods'             => 'GET',
 	  		'callback'            => array( $this, 'get_filter_acf_select' ),
-	  		'args'                => Torque_Filtered_Loop_Filters_Controller::get_filter_acf_select_args(),
+        'args'                => Torque_Filtered_Loop_Filters_Controller::get_filter_acf_select_args(),
+        'permission_callback' => '__return_true',
 	  		//'permission_callback' => array('Torque_API_Permissions', 'user_can_read'),
 	  	),
 	  ) );
@@ -29,6 +30,7 @@ class Torque_Filtered_Loop_Filters_Routes {
 	  		'methods'             => 'GET',
 	  		'callback'            => array( $this, 'get_filter_dropdown_date' ),
 	  		'args'                => Torque_Filtered_Loop_Filters_Controller::get_filter_dropdown_date_args(),
+        'permission_callback' => '__return_true',
 	  		//'permission_callback' => array('Torque_API_Permissions', 'user_can_read'),
 	  	),
 	  ) );

@@ -20,6 +20,7 @@ class Torque_Filtered_Loop_Terms_Routes {
 	  		'methods'             => 'GET',
 	  		'callback'            => array( $this, 'get_terms' ),
 	  		'args'                => Torque_Filtered_Loop_Terms_Controller::get_terms_args(),
+        'permission_callback' => '__return_true',
 	  		//'permission_callback' => array('Torque_API_Permissions', 'user_can_read'),
 	  	),
 	  ) );
