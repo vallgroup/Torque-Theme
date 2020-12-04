@@ -26,7 +26,7 @@ function checkRecaptchaBadge(e) {
 function onRecaptchaSubmit(token) {
   // set vars
   const theForm = document.querySelector(tqRecaptcha.formSelector);
-  const theButton = document.querySelector(`${tqRecaptcha.formSelector} .contact-submit`);
+  const theButton = document.querySelector(`${tqRecaptcha.formSelector} [type='submit']`);
   const overlayClassName = 'recaptcha-loading-overlay';
   const overlayHTML = '<div class="' + overlayClassName + '">Loading...</div>';
 
@@ -40,9 +40,10 @@ function onRecaptchaSubmit(token) {
 
   // check for a response
   const gRecaptchaResponse = token;
+
   if ('' !== gRecaptchaResponse) {
     // add loading overlay
-    theButton.insertAdjacentHTML('afterend', overlayHTML);
+    // theButton.insertAdjacentHTML('afterend', overlayHTML);
     // send Google reCAPTCHA response to our validation PHP script
     jQuery.ajax({
       type: 'POST',
@@ -72,6 +73,8 @@ function onRecaptchaSubmit(token) {
       // reset the reCAPTCHA
       grecaptcha.reset();
     })
+  } else {
+    console.log('gRecaptchaResponse is empty...');
   }
 }
 
@@ -88,13 +91,3 @@ function isScrolledIntoView(el) {
 
   return isVisible;
 }
-
-// function isScrolledIntoView(elem) {
-//   var docViewTop = $(window).scrollTop();
-//   var docViewBottom = docViewTop + $(window).height();
-
-//   var elemTop = $(elem).offset().top;
-//   var elemBottom = elemTop + $(elem).height();
-
-//   return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
-// }
