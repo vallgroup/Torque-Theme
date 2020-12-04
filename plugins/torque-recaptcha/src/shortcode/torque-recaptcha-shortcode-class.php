@@ -65,7 +65,7 @@ class Torque_Recaptcha_Shortcode {
         document.addEventListener("DOMContentLoaded", function(){
           const theForm = document.querySelector("'.$form_selector.'");
           if ( null !== theForm ) {
-            const theButton = theForm.querySelector("button[type=\'submit\']");
+            const theButton = theForm.querySelector("[type=\'submit\']");
             theButton.classList.add("g-recaptcha");
             theButton.setAttribute("data-sitekey", "'.$api_key.'");
             theButton.setAttribute("data-callback", "onRecaptchaSubmit");

@@ -94,10 +94,10 @@ class Torque_Recaptcha {
 			'torque-recaptcha-scripts',
 			'tqRecaptcha',
 			array( 
-			'ajaxURL' => admin_url( 'admin-ajax.php' ),
-			'siteKey' => $site_key,
-			'formSelector' => $form_selector,
-			'action' => $action,
+				'ajaxURL' => admin_url( 'admin-ajax.php' ),
+				'siteKey' => $site_key,
+				'formSelector' => $form_selector,
+				'action' => $action,
 			)
 		);
 		// first enqueue jQuery
