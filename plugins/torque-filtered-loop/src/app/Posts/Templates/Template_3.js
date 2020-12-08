@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-class Template_2 extends React.PureComponent {
+class Template_3 extends React.PureComponent {
   render() {
     const { post } = this.props;
 
@@ -9,7 +9,7 @@ class Template_2 extends React.PureComponent {
     const excerpt = post?.post_excerpt;
 
     return (
-      <div className={"loop-post template-2"}>
+      <div className={"loop-post template-3"}>
         <a href={post.permalink}>
           <div className={"featured-image-wrapper"}>
             <div
@@ -20,20 +20,26 @@ class Template_2 extends React.PureComponent {
         </a>
 
         <div className={"content-wrapper"}>
+          <div className={"post-terms-wrapper"}>{this.renderTerms()}</div>
+
           <a href={post.permalink}>
-            <h4 dangerouslySetInnerHTML={{ __html: post.post_title }} />
+            <h3 
+              className="post-title"
+              dangerouslySetInnerHTML={{ __html: post.post_title }}
+            />
           </a>
 
           <div
-            className="excerpt"
+            className="post-excerpt"
             dangerouslySetInnerHTML={{ __html: excerpt }}
           />
 
-          <a href={post.permalink}>
-            <button>View</button>
+          <a
+            className="post-cta"
+            href={post.permalink}
+          >
+            <span>Read More</span>
           </a>
-
-          <div className={"post-terms-wrapper"}>{this.renderTerms()}</div>
         </div>
       </div>
     );
@@ -58,8 +64,8 @@ class Template_2 extends React.PureComponent {
   }
 }
 
-Template_2.propTypes = {
+Template_3.propTypes = {
   post: PropTypes.object.isRequired
 };
 
-export default Template_2;
+export default Template_3;

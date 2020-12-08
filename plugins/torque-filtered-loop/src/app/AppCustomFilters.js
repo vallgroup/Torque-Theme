@@ -1,7 +1,7 @@
 import React, { memo, useMemo, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Posts from "./Posts";
-import { DropdownDate, DropdownTax, TabsACF } from "./Filters/CustomFilters";
+import { DropdownDate, DropdownTax, TabsTax, TabsACF } from "./Filters/CustomFilters";
 import { useCustomFilters, useWPPosts } from "./hooks";
 import { createRequestParams, combineCustomFilters } from "./helpers";
 
@@ -32,30 +32,37 @@ const App = ({
 
   return filterSettings?.length ? (
     <div className={"torque-filtered-loop custom-filters"}>
-      {filterSettings.map((filter, index) => {
-        const customFilterProps = {
-          key: filter.id,
-          value: filters[filter.id],
-          onChange: createFilterUpdater(filter.id),
-          args: filter.args,
-          site
-        };
 
-        switch (filter.type) {
-          case "tabs_acf":
-            return <TabsACF {...customFilterProps} />;
+      <div className={"filters-wrapper"}>
+        {filterSettings.map((filter, index) => {
+          const customFilterProps = {
+            key: filter.id,
+            value: filters[filter.id],
+            onChange: createFilterUpdater(filter.id),
+            args: filter.args,
+            site
+          };
 
-          case "dropdown_tax":
-            return <DropdownTax {...customFilterProps} />;
+          switch (filter.type) {
+            case "tabs_acf":
+              return <TabsACF {...customFilterProps} />;
 
-          case "dropdown_date":
-            return <DropdownDate {...customFilterProps} postType={postType} />;
+            // case "tabs_tax":
+            // case "dropdown_tax":
+            //   return <TabsTax {...customFilterProps} />;
 
-          default:
-            console.warn(`Filter type ${filter.type} not found`);
-            return null;
-        }
-      })}
+            case "dropdown_tax":
+              return <DropdownTax {...customFilterProps} />;
+
+            case "dropdown_date":
+              return <DropdownDate {...customFilterProps} postType={postType} />;
+
+            default:
+              console.warn(`Filter type ${filter.type} not found`);
+              return null;
+          }
+        })}
+      </div>
 
       <Posts posts={posts} loopTemplate={loopTemplate} />
 
