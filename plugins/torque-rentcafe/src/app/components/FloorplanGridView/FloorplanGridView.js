@@ -41,7 +41,7 @@ const FloorplanGridView = ({
     : null
 
   const fpSF = floorplan?.MaximumSQFT
-    ? numberWithCommas(floorplan.MaximumSQFT)
+    ? numberWithCommas(floorplan.MaximumSQFT) + ' SF'
     : null;
   const fpPrice = floorplan?.MinimumRent 
     && floorplan.MinimumRent !== '-1'
