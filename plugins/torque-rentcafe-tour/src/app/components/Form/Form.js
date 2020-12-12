@@ -202,9 +202,9 @@ const Form = () => {
         && <LoadingIcon />}
     </form>
     {isError
-      && <SuccessMessage>{'There was an error whilst sending your request. Please refresh the page and try again. If you continue to experience issues please contact us directly.'}</SuccessMessage>}
+      && <ErrorMessage className={'form-error'}>{'There was an error whilst sending your request. Please refresh the page and try again. If you continue to experience issues please contact us directly.'}</ErrorMessage>}
     {isSuccess
-      && <ErrorMessage>{'Thanks for your request to schedule a tour!'}</ErrorMessage>}
+      && <SuccessMessage className={'form-success'}>{'Thanks for your request to schedule a tour!'}</SuccessMessage>}
   </>);
 }
 
