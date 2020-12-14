@@ -33,10 +33,6 @@ const Form = () => {
         _url += `${i}=${encodeURIComponent(_authData[i])}&`
       }
     }
-    // !objEmpty(formConfig.apiAuth)
-    //   && Object.entries(formConfig.apiAuth).forEach(([k,v]) => {
-    //     _url += `${k}=${v}&`;
-    //   });
     
     // add data params
     for (let i in _formData) {
@@ -44,10 +40,6 @@ const Form = () => {
         _url += `${i}=${encodeURIComponent(_formData[i])}&`
       }
     }
-    // !objEmpty(data)
-    //   && Object.entries(data).forEach(([k,v]) => {
-    //     _url += `${k}=${v}&`;
-    //   });
 
     submitToAPI(_url)
   }
@@ -56,6 +48,8 @@ const Form = () => {
     setIsLoading(true);
     // send API request
     const _response = await axios.post(url)
+
+    console.log('url', url)
     console.log('_response', _response)
     
     if ( 0 === _response.data.ErrorCode ) {

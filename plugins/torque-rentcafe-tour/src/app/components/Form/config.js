@@ -1,9 +1,9 @@
 export const formConfig = {
   apiAuth: {
     MarketingAPIKey: 'YzAwMDAwMDg3MzQ1IzEyMjU1OTgjODRmNDUzNTktOTUzZi00MjhjLWI5OWUtNjg2YjczMTJkZGE2-pel5N3PWZSc%3d',
-    CompanyCode: 'c00000075117', // TODO: update with actual Company Code from Everton...
     PropertyId: '1225598',
     PropertyCode: 'p1196011',
+    // CompanyCode: 'c00000075117', // TODO: update with actual Company Code from Everton...
     TouchPoint: 'Appointment',
   },
   apiURL: 'https://marketingapi.rentcafe.com/marketingapi/api/appointments/createleadwithappointment?',
