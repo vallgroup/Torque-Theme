@@ -35,7 +35,10 @@ class Torque_Filtered_Loop_Shortcode {
     //   supported options:
     //     tabs_acf - creates tab filters for a given acf select field (pass the acf field id)
     //     dropdown_tax - creates dropdown filter for a given wp tax (pass the tax slug)
+    //     tabs_tax - creates tab filter for a given wp tax (pass the tax slug)
+    //     tabs_tax_multi - creates multi-select tab filter for a given wp tax (pass the tax slug)
     //     dropdown_date - creates dropdown filter for filtering by month (no args)
+    //     tabs_date - creates tab filter for filtering by month (no args)
     //
     // 'filters_args' - comma separated array of filter arguments for the types
     //

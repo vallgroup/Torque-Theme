@@ -31,7 +31,30 @@ export default (filterVals, customFiltersSettings) =>
             break;
           }
 
+          case "tabs_tax": {
+            const taxName = filterType.args;
+            const termId = filterVals[filterId];
+            if (termId === 0) break;
+
+            taxParams[taxName] = termId;
+            break;
+          }
+
+          case "tabs_tax_multi": {
+            const taxName = filterType.args;
+            const termId = filterVals[filterId];
+            if (termId === 0) break;
+
+            taxParams[taxName] = termId;
+            break;
+          }
+
           case "dropdown_date": {
+            dateParams.push(filterVals[filterId]);
+            break;
+          }
+
+          case "tabs_date": {
             dateParams.push(filterVals[filterId]);
             break;
           }

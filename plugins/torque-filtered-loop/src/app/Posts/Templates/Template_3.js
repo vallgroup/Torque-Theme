@@ -10,16 +10,20 @@ class Template_3 extends React.PureComponent {
 
     return (
       <div className={"loop-post template-3"}>
-        <a href={post.permalink}>
-          <div className={"featured-image-wrapper"}>
-            <div
-              className={"featured-image"}
-              style={{ backgroundImage: `url(${backgroundImage})` }}
-            />
-          </div>
-        </a>
+
+        {backgroundImage
+          ? <a href={post.permalink}>
+            <div className={"featured-image-wrapper"}>
+              <div
+                className={"featured-image"}
+                style={{ backgroundImage: `url(${backgroundImage})` }}
+              />
+            </div>
+          </a>
+          : null}
 
         <div className={"content-wrapper"}>
+
           <div className={"post-terms-wrapper"}>{this.renderTerms()}</div>
 
           <a href={post.permalink}>
@@ -53,12 +57,13 @@ class Template_3 extends React.PureComponent {
       terms &&
       terms.map((term, index) => {
         return (
-          <div
-            key={index}
-            className={"term"}
-            dangerouslySetInnerHTML={{ __html: term.name }}
-          />
-        );
+          'category' === term.taxonomy
+            ? <div
+              key={index}
+              className={"term"}
+              dangerouslySetInnerHTML={{ __html: term.name }}
+            />
+            : null);
       })
     );
   }

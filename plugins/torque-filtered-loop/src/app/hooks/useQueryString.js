@@ -3,7 +3,9 @@ export default () => {
 
   const query = {};
   urlParams.forEach((value, key) => {
-    query[key] = isInteger(value) ? parseInt(value) : value;
+    query[key] = isInteger(value)
+      ? parseInt(value) 
+      : value;
   });
 
   const setQuery = (key, value) => {

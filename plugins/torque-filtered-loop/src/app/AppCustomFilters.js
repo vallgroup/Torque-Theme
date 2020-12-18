@@ -1,7 +1,13 @@
 import React, { memo, useMemo, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Posts from "./Posts";
-import { DropdownDate, DropdownTax, TabsTax, TabsACF } from "./Filters/CustomFilters";
+import { 
+  DropdownTax, 
+  TabsTax,
+  DropdownDate,
+  TabsDate,
+  TabsACF,
+} from "./Filters/CustomFilters";
 import { useCustomFilters, useWPPosts } from "./hooks";
 import { createRequestParams, combineCustomFilters } from "./helpers";
 
@@ -44,18 +50,23 @@ const App = ({
           };
 
           switch (filter.type) {
-            case "tabs_acf":
-              return <TabsACF {...customFilterProps} />;
-
-            // case "tabs_tax":
-            // case "dropdown_tax":
-            //   return <TabsTax {...customFilterProps} />;
-
             case "dropdown_tax":
               return <DropdownTax {...customFilterProps} />;
 
+            case "tabs_tax":
+              return <TabsTax {...customFilterProps} />;
+
+            case "tabs_tax_multi":
+              return <TabsTax {...customFilterProps} multiSelect={true} />;
+
             case "dropdown_date":
               return <DropdownDate {...customFilterProps} postType={postType} />;
+
+            case "tabs_date":
+              return <TabsDate {...customFilterProps} postType={postType} />;
+
+            case "tabs_acf":
+              return <TabsACF {...customFilterProps} />;
 
             default:
               console.warn(`Filter type ${filter.type} not found`);

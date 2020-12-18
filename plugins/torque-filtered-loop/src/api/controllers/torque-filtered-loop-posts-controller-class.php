@@ -88,9 +88,20 @@ class Torque_Filtered_Loop_Posts_Controller {
 				}
 				$tax_slug = substr($key, 4);
 
+				// check if tax query value is an array (multi-select), and format the value accordingly
+				if ( false !== strpos( $value, ',' ) ) {
+					$value = str_replace( ' ', '', $value );
+					$value = explode( ',', $value );
+					$operator = 'EXISTS';
+				} else {
+					$value = intval($value);
+					$operator = 'IN';
+				}
+
 				$query['tax_query'][] = array(
 					'taxonomy' => $tax_slug,
-					'terms'    => intval($value),
+					'terms'    => $value,
+					'operator' => $operator,
 				);
 				continue;
 			}
