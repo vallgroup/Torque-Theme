@@ -1,14 +1,18 @@
 import styled from "styled-components";
 
 export const FloorplansContainer = styled.div.attrs(props => ({
-  className: 'FloorplansContainer'
+  className: 'FloorplansContainer',
+  show: props.show
 }))`
   position: relative;
   width: 100%;
-  display: flex;
+  display: ${props => props.show
+    ? `flex`
+    : `none`};
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
+
 
   @media only screen and (min-width: 767px) {
     &::after {
@@ -34,42 +38,25 @@ export const FloorplansDisclaimerContainer = styled.div.attrs(props => ({
   font-size: 14px;
 `;
 
-export const SiteMapLightboxWrapper = styled.div.attrs(props => ({
-  className: 'SiteMapLightboxWrapper',
+export const SiteMapImageAnchor = styled.a.attrs(props => ({
+  className: 'SiteMapImageAnchor',
   show: props.show || false
 }))`
-  position: absolute;
-  top: 0;
-  left: 0;
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
-  max-height: ${props => props.show
-    ? `100%`
-    : `0`};
+  display: ${props => props.show
+    ? `block`
+    : `none`};
   text-decoration: none;
   cursor: pointer;
-  backdrop-filter: blur(2px);
-  transition: 0.5s;
 `;
-
-export const SiteMapImageAnchor = styled.a.attrs(props => ({
-  className: 'SiteMapImageAnchor'
-}))``;
 
 export const SiteMapImage = styled.img.attrs(props => ({
   className: 'SiteMapImage',
   show: props.show || false
 }))`
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: auto;
   transition: 0.5s;
-  ${props => props.show
-    ? `max-height: 100%;
-      opacity: 1;`
-    : `max-height: 0;
-      opacity: 0;`}
+  opacity: ${props => props.show
+    ? `1`
+    : `0`};
 `;

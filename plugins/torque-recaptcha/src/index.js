@@ -1,10 +1,32 @@
 // assign our function to the global scope
 window.onRecaptchaSubmit = onRecaptchaSubmit;
 
+document.addEventListener('DOMContentLoaded', checkRecaptchaBadge, false);
+document.addEventListener('scroll', checkRecaptchaBadge, false);
+
+function checkRecaptchaBadge(e) {
+  // set vars
+  const theForm = document.querySelector(tqRecaptcha.formSelector);
+  const recaptchaBadge = document.querySelector('body > div > .grecaptcha-badge');
+
+  if (null !== recaptchaBadge) {
+    if (
+      null === theForm
+      || !isScrolledIntoView(theForm)
+    ) {
+      // hide
+      recaptchaBadge.style.right = '-286px';
+    } else {
+      // show
+      recaptchaBadge.style.right = '-186px';
+    }
+  }
+}
+
 function onRecaptchaSubmit(token) {
   // set vars
   const theForm = document.querySelector(tqRecaptcha.formSelector);
-  const theButton = document.querySelector(`${tqRecaptcha.formSelector} .contact-submit`);
+  const theButton = document.querySelector(`${tqRecaptcha.formSelector} [type='submit']`);
   const overlayClassName = 'recaptcha-loading-overlay';
   const overlayHTML = '<div class="' + overlayClassName + '">Loading...</div>';
 
@@ -18,9 +40,10 @@ function onRecaptchaSubmit(token) {
 
   // check for a response
   const gRecaptchaResponse = token;
+
   if ('' !== gRecaptchaResponse) {
     // add loading overlay
-    theButton.insertAdjacentHTML('afterend', overlayHTML);
+    // theButton.insertAdjacentHTML('afterend', overlayHTML);
     // send Google reCAPTCHA response to our validation PHP script
     jQuery.ajax({
       type: 'POST',
@@ -50,5 +73,21 @@ function onRecaptchaSubmit(token) {
       // reset the reCAPTCHA
       grecaptcha.reset();
     })
+  } else {
+    console.log('gRecaptchaResponse is empty...');
   }
+}
+
+function isScrolledIntoView(el) {
+  var rect = el.getBoundingClientRect();
+  var elemTop = rect.top;
+  var elemBottom = rect.bottom;
+
+  // Only completely visible elements return true:
+  // var isVisible = (elemTop >= 0) && (elemBottom <= window.innerHeight);
+
+  // Partially visible elements return true:
+  var isVisible = elemTop < window.innerHeight && elemBottom >= 0;
+
+  return isVisible;
 }
