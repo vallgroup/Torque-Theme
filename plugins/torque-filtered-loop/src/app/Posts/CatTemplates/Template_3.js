@@ -21,10 +21,8 @@ class Template_3 extends React.PureComponent {
     }
 
     return (
-      <div className={"loop-post template-1"}>
+      <div className={"loop-post loop-cat template-3"}>
         <div className={"content-wrapper"}>
-
-          <h4 dangerouslySetInnerHTML={{ __html: _title }} />
 
           <div className={"featured-image-wrapper"}>
             <div

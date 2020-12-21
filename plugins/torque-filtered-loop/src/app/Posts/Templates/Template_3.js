@@ -9,29 +9,32 @@ class Template_3 extends React.PureComponent {
     const excerpt = post?.post_excerpt;
 
     return (
-      <div className={"loop-post template-1"}>
+      <div className={"loop-post template-3"}>
         <div className={"content-wrapper"}>
-          
-          <h4 dangerouslySetInnerHTML={{ __html: post.post_title }} />
+          <a
+            href={post?.meta?.floor_plan_downloads_pdf || ''}
+            target="_blank"
+          >
+            <h4 dangerouslySetInnerHTML={{ __html: post.post_title }} />
 
-          <div className={"featured-image-wrapper"}>
-            <div
-              className={"featured-image"}
-              style={{ backgroundImage: `url(${backgroundImage})` }}
-            />
-          </div>
-
-          <div className="meta-wrapper">
-            <div className="rsf">
-              {this.formatedSF()}
+            <div className={"featured-image-wrapper"}>
+              <div
+                className={"featured-image"}
+                style={{ backgroundImage: `url(${backgroundImage})` }}
+              />
             </div>
-            <div
-              className="excerpt"
-              dangerouslySetInnerHTML={{ __html: excerpt }}
-            />
-          </div>
 
-          <a 
+            <div className="meta-wrapper">
+              <div className="rsf">
+                {this.formatedSF()}
+              </div>
+              <div
+                className="excerpt"
+                dangerouslySetInnerHTML={{ __html: excerpt }}
+              />
+            </div>
+          </a>
+          <a
             className="download-wrapper"
             href={post?.meta?.floor_plan_downloads_pdf || ''}
             target="_blank"
