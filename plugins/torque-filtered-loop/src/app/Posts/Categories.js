@@ -15,7 +15,6 @@ class Categories extends React.PureComponent {
           (post.terms && post.terms[0] && post.terms[0].term_id == this.props.filterSelected)
         ))
         .map((post, index) => {
-          console.log('loading this category: ', post, this.props.loopTemplate);
           switch (this.props.loopTemplate) {
             case "template-3":
               return <Template_3
