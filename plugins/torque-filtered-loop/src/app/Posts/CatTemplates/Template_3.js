@@ -23,14 +23,17 @@ class Template_3 extends React.PureComponent {
     return (
       <div className={"loop-post loop-cat template-3"}>
         <div className={"content-wrapper"}>
-
           <div className={"featured-image-wrapper"}>
-            <div
-              className={"featured-image"}
-              style={{ backgroundImage: `url(${backgroundImage})` }}
-            />
+            <a
+              href={'#cat_selected'}
+              onClick={selectNewCat}
+            >
+              <div
+                className={"featured-image"}
+                style={{ backgroundImage: `url(${backgroundImage})` }}
+              />
+            </a>
           </div>
-
           {button && '' !== button &&
             <a
               className="download-wrapper"
