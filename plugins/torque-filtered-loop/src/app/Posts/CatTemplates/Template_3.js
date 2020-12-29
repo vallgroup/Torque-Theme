@@ -15,8 +15,6 @@ class Template_3 extends React.PureComponent {
     const selectNewCat = (e) => {
       e.preventDefault()
 
-      console.log(cat);
-
       onChange(cat.term_id)
     }
 
