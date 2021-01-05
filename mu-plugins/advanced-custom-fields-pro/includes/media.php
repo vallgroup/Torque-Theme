@@ -49,12 +49,22 @@ class ACF_Media {
 	*/
 	
 	function enqueue_scripts(){
-		
-		// localize
-		acf_localize_data(array(
-			'mimeTypeIcon'	=> wp_mime_type_icon(),
-			'mimeTypes'		=> get_allowed_mime_types()
-		));
+		if( wp_script_is('acf-input') ) {
+			acf_localize_text(array(
+				'Select.verb'			=> _x('Select', 'verb', 'acf'),
+				'Edit.verb'				=> _x('Edit', 'verb', 'acf'),
+				'Update.verb'			=> _x('Update', 'verb', 'acf'),
+				'Uploaded to this post'	=> __('Uploaded to this post', 'acf'),
+				'Expand Details' 		=> __('Expand Details', 'acf'),
+				'Collapse Details' 		=> __('Collapse Details', 'acf'),
+				'Restricted'			=> __('Restricted', 'acf'),
+				'All images'			=> __('All images', 'acf')
+			));
+			acf_localize_data(array(
+				'mimeTypeIcon'	=> wp_mime_type_icon(),
+				'mimeTypes'		=> get_allowed_mime_types()
+			));
+		}
 	}
 		
 		
@@ -90,11 +100,20 @@ class ACF_Media {
 		$errors = acf_validate_attachment( $file, $field, 'upload' );
 		
 		
-		// filter for 3rd party customization
-		$errors = apply_filters("acf/upload_prefilter", $errors, $file, $field);
-		$errors = apply_filters("acf/upload_prefilter/type={$field['type']}", $errors, $file, $field );
-		$errors = apply_filters("acf/upload_prefilter/name={$field['name']}", $errors, $file, $field );
-		$errors = apply_filters("acf/upload_prefilter/key={$field['key']}", $errors, $file, $field );
+		/**
+		*  Filters the errors for a file before it is uploaded to WordPress.
+		*
+		*  @date	16/02/2015
+		*  @since	5.1.5
+		*
+		*  @param	array $errors An array of errors.
+		*  @param	array $file An array of data for a single file.
+		*  @param	array $field The field array.
+		*/
+		$errors = apply_filters( "acf/upload_prefilter/type={$field['type']}",	$errors, $file, $field );
+		$errors = apply_filters( "acf/upload_prefilter/name={$field['_name']}",	$errors, $file, $field );
+		$errors = apply_filters( "acf/upload_prefilter/key={$field['key']}", 	$errors, $file, $field );
+		$errors = apply_filters( "acf/upload_prefilter", 						$errors, $file, $field );
 		
 		
 		// append error

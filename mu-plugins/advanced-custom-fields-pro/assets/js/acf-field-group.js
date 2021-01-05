@@ -38,7 +38,7 @@
 				e.preventDefault();
 				
 				// unlock form
-				acf.validation.unlockForm( $el );
+				acf.unlockForm( $el );
 				
 				// alert
 				alert( acf.__('Field group title is required') );
@@ -315,7 +315,6 @@
 			
 			// get input value
 			var $input = this.$input( name );
-			//console.log($input );
 			var value = $input.length ? $input.val() : null;
 			
 			// set data silently (cache)
@@ -642,19 +641,24 @@
 		
 		onClickDelete: function( e, $el ){
 			
+			// Bypass confirmation when holding down "shift" key.
+			if( e.shiftKey ) {
+				return this.delete();
+			}
+
 			// add class
 			this.$el.addClass('-hover');
 			
 			// add tooltip
-			var self = this;
 			var tooltip = acf.newTooltip({
 				confirmRemove: true,
 				target: $el,
+				context: this,
 				confirm: function(){
-					self.delete( true );
+					this.delete();
 				},
 				cancel: function(){
-					self.$el.removeClass('-hover');
+					this.$el.removeClass('-hover');
 				}
 			});
 		},
@@ -980,7 +984,7 @@
 			// check parent
 			var parent = this.getParent();
 			if( parent ) {
-				ID = parent.prop('ID') || parent.prop('key');
+				ID = parseInt(parent.prop('ID')) || parent.prop('key');
 			}
 			
 			// update
@@ -1435,7 +1439,7 @@
 			conditionTypes.map(function( model ){
 				choices.push({
 					id:		model.prototype.operator,
-					text:	acf.strEscape(model.prototype.label)
+					text:	model.prototype.label
 				});
 			});
 			
@@ -2500,11 +2504,10 @@
 	
 })(jQuery);
 
-// @codekit-prepend "../js/field-group.js";
-// @codekit-prepend "../js/field-group-field.js";
-// @codekit-prepend "../js/field-group-settings.js";
-// @codekit-prepend "../js/field-group-conditions.js";
-// @codekit-prepend "../js/field-group-fields.js";
-// @codekit-prepend "../js/field-group-locations.js";
-// @codekit-prepend "../js/field-group-compatibility.js";
-
+// @codekit-prepend "_field-group.js";
+// @codekit-prepend "_field-group-field.js";
+// @codekit-prepend "_field-group-settings.js";
+// @codekit-prepend "_field-group-conditions.js";
+// @codekit-prepend "_field-group-fields.js";
+// @codekit-prepend "_field-group-locations.js";
+// @codekit-prepend "_field-group-compatibility.js";
