@@ -29,7 +29,7 @@ const TabsTax = ({ site, value, onChange, args, multiSelect = false }) => {
     } else if ('Tags' === taxName) {
       setFilterTitle('Tags')
     } else {
-      setFilterTitle(`Filter by ${taxName}`)
+      setFilterTitle(taxName)
     }
   },[taxName])
 

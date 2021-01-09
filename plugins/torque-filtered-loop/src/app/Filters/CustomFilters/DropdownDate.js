@@ -16,7 +16,7 @@ const DropdownDate = ({ site, value, onChange, postType }) => {
 
   return dates?.length ? (
     <Dropdown
-      title={`Filter by Date`}
+      title={'Date'}
       options={dropdownOptions}
       value={value}
       onChange={onChange}

@@ -121,6 +121,10 @@ class Torque_Filtered_Loop_Posts_Controller {
 		$post->permalink = get_post_permalink($post->ID);
 
 		$post->terms = wp_get_post_terms($post->ID, array_keys($this->taxonomies));
+
+		$post->acf = function_exists( 'get_fields' ) 
+			? get_fields( $post->ID, false ) 
+			: null;
 	}
 
 	private function prepare_meta( $post_id ) {
@@ -153,7 +157,11 @@ class Torque_Filtered_Loop_Posts_Controller {
 	}
 
 	private function has_next_page( $query_args ) {
-		if ( !$query_args['posts_per_page'] || $query_args['posts_per_page'] == -1 ) {
+		if ( 
+			!isset( $query_args['posts_per_page'] ) 
+			|| !$query_args['posts_per_page'] 
+			|| $query_args['posts_per_page'] == -1 
+		) {
 			return false;
 		}
 

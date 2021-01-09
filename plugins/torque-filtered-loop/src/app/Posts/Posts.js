@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Template_0, Template_1, Template_2, Template_3 } from "./Templates";
+import { Template_0, Template_1, Template_2, Template_3, Template_4, Template_5 } from "./Templates";
 
 class Posts extends React.PureComponent {
   render() {
@@ -8,6 +8,10 @@ class Posts extends React.PureComponent {
       <div className={"posts-wrapper"}>
         {this.props.posts.map((post, index) => {
           switch (this.props.loopTemplate) {
+            case "template-5":
+              return <Template_5 key={index} post={post} />;
+            case "template-4":
+              return <Template_4 key={index} post={post} />;
             case "template-3":
               return <Template_3 key={index} post={post} />;
             case "template-2":

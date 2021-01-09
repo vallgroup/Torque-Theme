@@ -20,7 +20,7 @@ const DropdownTax = ({ site, value, onChange, args }) => {
 
   return terms?.length ? (
     <Dropdown
-      title={`Filter by ${taxName}`}
+      title={taxName}
       options={dropdownOptions}
       value={value}
       onChange={onChange}

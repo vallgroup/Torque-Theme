@@ -43,7 +43,10 @@ const Dropdown = ({ title, options, value, onChange }) => {
         className={classnames(styles.title_wrapper, "dropdown-title-wrapper")}
         onClick={handleDropdownClick}
       >
-        <span className="dropdown-title">{title}</span>
+        <span className="dropdown-title">
+          <span className="pre-title">Filter by </span>
+          {title}
+        </span>
         {selectedOption && (
           <span className="dropdown-value">{selectedOption.name}</span>
         )}

@@ -50,21 +50,28 @@ const App = ({
           };
 
           switch (filter.type) {
+
+            // Taxonomy - dropdown
             case "dropdown_tax":
               return <DropdownTax {...customFilterProps} />;
 
+            // Taxonomy - tabs
             case "tabs_tax":
               return <TabsTax {...customFilterProps} />;
 
+            // Taxonomy - tabs (multi-select)
             case "tabs_tax_multi":
               return <TabsTax {...customFilterProps} multiSelect={true} />;
 
+            // Date - dropdown
             case "dropdown_date":
               return <DropdownDate {...customFilterProps} postType={postType} />;
 
+            // Date - tabs
             case "tabs_date":
               return <TabsDate {...customFilterProps} postType={postType} />;
 
+            // ACF - tabs
             case "tabs_acf":
               return <TabsACF {...customFilterProps} />;
 

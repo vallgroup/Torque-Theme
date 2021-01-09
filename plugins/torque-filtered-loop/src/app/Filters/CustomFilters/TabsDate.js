@@ -16,7 +16,7 @@ const TabsDate = ({ site, value, onChange, postType }) => {
 
   return dates?.length ? (
     <Tabs
-      title={`Filter by Date`}
+      title={'Date'}
       options={dropdownOptions}
       value={value}
       onChange={onChange}

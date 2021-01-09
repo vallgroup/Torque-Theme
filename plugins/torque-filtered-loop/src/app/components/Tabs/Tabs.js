@@ -66,7 +66,10 @@ const Tabs = ({ title, options, value, onChange, multiSelect }) => {
         className={classnames(styles.title_wrapper, "tabs-title-wrapper")}
         onClick={handleTabsClick}
       >
-        <span className="tabs-title">{title}</span>
+        <span className="tabs-title">
+          <span className="pre-title">Filter by </span>
+          {title}
+        </span>
       </div>
 
       <div
