@@ -53,7 +53,11 @@ class Torque_Filtered_Loop_Shortcode {
 
       // args for second method
       'filters_types' => '',
-      'filters_args'  => ''
+      'filters_args'  => '',
+
+      // newcastle-specific args
+      'property_type' => 'investment',
+      'enable_map_view' => '0',
     );
 
 		add_shortcode( self::$SHORTCODE_SLUG , array( $this, 'shortcode_handler') );

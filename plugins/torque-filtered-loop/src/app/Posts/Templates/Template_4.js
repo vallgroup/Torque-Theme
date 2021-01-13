@@ -1,6 +1,6 @@
 import React, { setState } from "react";
 import PropTypes from "prop-types";
-import { InfoBox_0 } from "../InfoBox";
+import { InfoBox_0 } from "../../components/InfoBox";
 
 class Template_4 extends React.PureComponent {
   constructor(props) {

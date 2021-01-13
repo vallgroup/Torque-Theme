@@ -77,11 +77,12 @@ const Tabs = ({ title, options, value, onChange, multiSelect }) => {
       >
         {optionsWithAll.map(({ key, name }) => {
           // if:
-          //  - not multi-select
-          //  - there are no selectedOptions
-          //  - the key is 0, 
-          // this: pre-select the 'All' option
-          // else: check if option is in selectedOptions array, and style accordingly
+          //  1) not multi-select
+          //  2) there are no selectedOptions
+          //  3) the key is 0, 
+          // --> pre-select the 'All' option
+          // else:
+          // --> check if option is in selectedOptions array, and style accordingly
           const isSelected = !multiSelect
             && arrEmpty(selectedOptions) 
             && 0 === key

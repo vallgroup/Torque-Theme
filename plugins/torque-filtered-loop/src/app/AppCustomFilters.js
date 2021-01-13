@@ -1,12 +1,14 @@
 import React, { memo, useMemo, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Posts from "./Posts";
+import MapView from "./MapView";
 import { 
   DropdownTax, 
   TabsTax,
   DropdownDate,
   TabsDate,
   TabsACF,
+  ViewToggle,
 } from "./Filters/CustomFilters";
 import { useCustomFilters, useWPPosts } from "./hooks";
 import { createRequestParams, combineCustomFilters } from "./helpers";
@@ -17,13 +19,17 @@ const App = ({
   postsPerPage,
   filtersTypes,
   filtersArgs,
-  loopTemplate
+  loopTemplate,
+  enableMapView
 }) => {
+  // states
+  const [currView, setCurrView] = useState('grid');
+
+  // custom hooks
   const { filterSettings, filters, createFilterUpdater } = useCustomFilters(
     filtersTypes,
     filtersArgs
   );
-
   const { taxParams, metaParams, dateParams } = combineCustomFilters(
     filters,
     filterSettings
@@ -36,10 +42,21 @@ const App = ({
   });
   const { posts, getNextPage } = useWPPosts(site, null, params, postsPerPage);
 
+  const handleViewUpdate = (newView) => {
+    setCurrView(newView)
+  }
+
   return filterSettings?.length ? (
     <div className={"torque-filtered-loop custom-filters"}>
 
       <div className={"filters-wrapper"}>
+
+        {enableMapView
+          && <ViewToggle 
+            currView={currView}
+            handleViewUpdate={handleViewUpdate} 
+          />}
+
         {filterSettings.map((filter, index) => {
           const customFilterProps = {
             key: filter.id,
@@ -82,7 +99,18 @@ const App = ({
         })}
       </div>
 
-      <Posts posts={posts} loopTemplate={loopTemplate} />
+      {'map' === currView
+        ? <div className={"map-wrapper"}>
+          <MapView 
+            // todo pull from server
+            apiKey={'AIzaSyBtV0qDI-J9OoIm_p1nDHBtorLb7oD1z7k'}
+            posts={posts} 
+          />
+        </div>
+        : <Posts 
+          posts={posts} 
+          loopTemplate={loopTemplate} 
+        />}
 
       {getNextPage && (
         <button

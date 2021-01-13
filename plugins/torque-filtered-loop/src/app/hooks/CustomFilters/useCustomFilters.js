@@ -20,6 +20,10 @@ export default (filtersTypes, filtersArgs) => {
   const createFilterUpdater = useMemo(
     () => (filterId) => (value, multiSelect = false) => () => {
 
+      // console.log('filterId', filterId)
+      // console.log('value', value)
+      // console.log('multiSelect', multiSelect)
+
       if (
         multiSelect 
         && 0 !== value
@@ -38,6 +42,7 @@ export default (filtersTypes, filtersArgs) => {
   // update query string if filters change
   useEffect(
     () => {
+      // console.log('filters', filters)
       let filterId = "";
       for (filterId in filters) {
         const filterSetting = filterSettings.find(({ id }) => id === filterId);
@@ -59,7 +64,8 @@ export default (filtersTypes, filtersArgs) => {
         _newValue = removeArrayItem(filters[filterId], value)
       } else {
         // console.log('filter val not in array, so ADD it')
-        _newValue = filters[filterId].push(value)
+        filters[filterId].push(value)
+        _newValue = filters[filterId]
       }
 
       if (arrEmpty(_newValue)) {
@@ -88,6 +94,9 @@ export default (filtersTypes, filtersArgs) => {
       }
       
     }
+
+    // console.log('_newValue', _newValue)
+    // console.log('---------------')
 
     return _newValue;
   }

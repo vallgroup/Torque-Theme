@@ -14,12 +14,16 @@ export default (site, activeTerm, params, postsPerPage) => {
           params["posts_per_page"] = postsPerPage;
           params["paged"] = page;
 
+          console.log('params',params)
+
           const response = await axios.get(
             `${site}/wp-json/filtered-loop/v1/posts`,
             {
               params
             }
           );
+
+          console.log('response', response);
 
           setHasNextPage(response?.data?.has_next_page);
 

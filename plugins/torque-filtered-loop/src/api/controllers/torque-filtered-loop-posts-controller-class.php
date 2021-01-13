@@ -87,28 +87,46 @@ class Torque_Filtered_Loop_Posts_Controller {
 					continue;
 				}
 				$tax_slug = substr($key, 4);
+				$operator = 'IN';
+				$field = 'term_id';
 
 				// check if tax query value is an array (multi-select), and format the value accordingly
 				if ( false !== strpos( $value, ',' ) ) {
+					// tidy values
 					$value = str_replace( ' ', '', $value );
 					$value = explode( ',', $value );
-					$operator = 'EXISTS';
+
+					$query['tax_query'] = array(
+						'relation'	=> 'AND'
+					);
+
+					// create a new tax_query array for each term ID
+					foreach($value as $v) {
+						$query['tax_query'][] = array(
+							'taxonomy' => $tax_slug,
+							'field'    => $field,
+							'terms'    => intval($v),
+							'operator' => $operator,
+						);
+					}
 				} else {
-					$value = intval($value);
-					$operator = 'IN';
+					// create tax_query for the term ID
+					$query['tax_query'][] = array(
+						'taxonomy' => $tax_slug,
+						'field'    => $field,
+						'terms'    => intval($value),
+						'operator' => $operator,
+					);
 				}
 
-				$query['tax_query'][] = array(
-					'taxonomy' => $tax_slug,
-					'terms'    => $value,
-					'operator' => $operator,
-				);
 				continue;
 			}
 
 			// other params
 			$query[$key] = $value;
 		}
+
+		// var_dump( $query );
 
 		return $query;
 	}
