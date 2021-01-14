@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 
 const ViewToggle = ({ currView, handleViewUpdate }) => {
-
-  console.log('currView', currView)
-
   return (
     <div className={`torque-custom-filter-tabs`}>
       <div

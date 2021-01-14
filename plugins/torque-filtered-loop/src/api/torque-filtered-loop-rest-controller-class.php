@@ -5,6 +5,7 @@ define( 'Torque_Filtered_Loop_API_ROOT', dirname(__FILE__) . '/' );
 require_once( Torque_Filtered_Loop_API_ROOT . 'routes/torque-filtered-loop-filters-routes-class.php');
 require_once( Torque_Filtered_Loop_API_ROOT . 'routes/torque-filtered-loop-posts-routes-class.php');
 require_once( Torque_Filtered_Loop_API_ROOT . 'routes/torque-filtered-loop-terms-routes-class.php');
+require_once( Torque_Filtered_Loop_API_ROOT . 'routes/torque-filtered-loop-map-routes-class.php');
 
 /**
 * The plugin API class
@@ -31,6 +32,9 @@ class Torque_Filtered_Loop_REST_Controller {
 
     $terms_routes = new Torque_Filtered_Loop_Terms_Routes( $this->namespace );
     $terms_routes->register_routes();
+
+    $map_routes = new Torque_Filtered_Loop_Map_Routes( $this->namespace );
+    $map_routes->register_routes();
   }
 }
 

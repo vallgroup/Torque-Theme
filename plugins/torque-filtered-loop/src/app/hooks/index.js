@@ -3,6 +3,7 @@ export { default as useWPPosts } from "./useWPPosts";
 export { default as useParentId } from "./useParentId";
 export { default as useSortPosts } from "./useSortPosts";
 export { default as useQueryString } from "./useQueryString";
+export { default as useMapOptions } from "./useMapOptions";
 
 export { default as useCustomFilters } from "./CustomFilters/useCustomFilters";
 export {

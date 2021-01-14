@@ -10,7 +10,7 @@ import {
   TabsACF,
   ViewToggle,
 } from "./Filters/CustomFilters";
-import { useCustomFilters, useWPPosts } from "./hooks";
+import { useCustomFilters, useWPPosts, useMapOptions } from "./hooks";
 import { createRequestParams, combineCustomFilters } from "./helpers";
 
 const App = ({
@@ -41,6 +41,7 @@ const App = ({
     dateParams
   });
   const { posts, getNextPage } = useWPPosts(site, null, params, postsPerPage);
+  const { mapOptions } = useMapOptions(site);
 
   const handleViewUpdate = (newView) => {
     setCurrView(newView)
@@ -100,11 +101,12 @@ const App = ({
       </div>
 
       {'map' === currView
-        ? <div className={"map-wrapper"}>
+        ? mapOptions && <div className={"map-wrapper"}>
           <MapView 
             // todo pull from server
-            apiKey={'AIzaSyBtV0qDI-J9OoIm_p1nDHBtorLb7oD1z7k'}
-            posts={posts} 
+            apiKey={mapOptions.api_key}
+            posts={posts}
+            mapOptions={mapOptions}
           />
         </div>
         : <Posts 
