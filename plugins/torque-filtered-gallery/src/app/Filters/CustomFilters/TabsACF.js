@@ -2,7 +2,15 @@ import React, { memo } from "React";
 import Filters from "..";
 import { useACFSelectChoices } from "../../hooks";
 
-const TabsACF = ({ site, value, onChange, args, galleryID, hideFilters }) => {
+const TabsACF = ({ 
+  site,
+  value,
+  onChange,
+  args,
+  galleryID,
+  hideFilters,
+  iframeOptions
+}) => {
   if (typeof args !== "string") {
     console.warn(
       `TabsACF: expected args to be an acf select field id but got ${args}`
@@ -25,6 +33,7 @@ const TabsACF = ({ site, value, onChange, args, galleryID, hideFilters }) => {
       activeTerm={value}
       updateActiveTerm={onChange}
       hideFilters={hideFilters}
+      iframeOptions={iframeOptions}
     />
   );
 };

@@ -16,6 +16,11 @@ entry.forEach(entry => {
       loopTemplate: entry.getAttribute("data-loop-template"),
       hideFilters: entry.getAttribute("data-hide_filters") === '1',
       useLightbox: entry.getAttribute("data-use_lightbox") === '1',
+      iframeOptions: {
+        iframeButtonTitle: entry.getAttribute("data-iframe_button_title"),
+        iframeTitle: entry.getAttribute("data-iframe_title"),
+        iframeURL: entry.getAttribute("data-iframe_url"),
+      },
     };
 
     const filtersTypes = entry.getAttribute("data-filters_types");

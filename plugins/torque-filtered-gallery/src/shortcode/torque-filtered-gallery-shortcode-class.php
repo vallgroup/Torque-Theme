@@ -29,10 +29,14 @@ class Torque_Filtered_Gallery_Shortcode {
     //
     // 'filters_args' - comma separated array of filter arguments for the types
     $this->expected_args = array(
-      'gallery_id'        => '', // required
-      'posts_per_page'    => '-1', // optional
-      'use_lightbox'      => false, // optional
-      'hide_filters'      => false, // optional
+      'gallery_id'          => '', // required
+      'posts_per_page'      => '-1', // optional
+      'use_lightbox'        => false, // optional
+      'hide_filters'        => false, // optional
+
+      'iframe_button_title' => get_field( 'iframe_button_title', 'options' ),
+      'iframe_title'        => get_field( 'iframe_title', 'options' ),
+      'iframe_url'          => get_field( 'iframe_url', 'options' ),
 
       // default args for second method
       'filters_types' => 'tabs_acf',

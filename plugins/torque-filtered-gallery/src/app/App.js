@@ -1,6 +1,7 @@
 import React, { memo, useMemo, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Images from "./Images";
+import Iframe from "./Iframe";
 import { TabsACF } from "./Filters/CustomFilters";
 import { useCustomFilters, useWPImages } from "./hooks";
 import { createRequestParams, combineCustomFilters } from "./helpers";
@@ -14,7 +15,10 @@ const App = ({
   loopTemplate,
   hideFilters,
   useLightbox,
+  iframeOptions
 }) => {
+  const [showIframe, setShowIframe] = useState(false);
+  
   const { filterSettings, filters, createFilterUpdater } = useCustomFilters(
     filtersTypes,
     filtersArgs
@@ -40,6 +44,10 @@ const App = ({
     }
   }
 
+  useEffect(() => {
+    setShowIframe(false)
+  }, [filters])
+
   return filterSettings?.length ? (
     <div className={"torque-filtered-gallery custom-filters"}>
       {filterSettings.map((filter, index) => {
@@ -51,6 +59,11 @@ const App = ({
           site,
           galleryID,
           hideFilters,
+          iframeOptions: {
+            ...iframeOptions,
+            showIframe,
+            setShowIframe
+          }
         };
 
         switch (filter.type) {
@@ -64,7 +77,7 @@ const App = ({
       })}
 
       {/* By passing the number of images as a key, we force the lightbox component to re-render, hence updating the thumbnails, etc... */}
-      {0 < numImages && useLightbox
+      {0 < numImages && useLightbox && !showIframe
         && <SimpleReactLightbox key={numImages}>
           <SRLWrapper options={lightboxOptions}>
             <Images 
@@ -73,12 +86,17 @@ const App = ({
             />
           </SRLWrapper>
         </SimpleReactLightbox>}
+
       {/* If no images, don't load the lightbox components as it throws an error (plugin is missing a check somewhere...) */}
-      {0 >= numImages || !useLightbox
+      {(0 >= numImages || !useLightbox) && !showIframe
         && <Images 
           images={images}
           loopTemplate={loopTemplate}
         />}
+
+      {/* Show the iFrame if */}
+      {(showIframe && iframeOptions.iframeURL)
+        && <Iframe {...iframeOptions} />}
     </div>
   ) : null;
 };

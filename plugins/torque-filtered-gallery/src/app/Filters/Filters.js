@@ -8,7 +8,8 @@ const Filters = ({
   activeTerm,
   updateActiveTerm,
   hideAllOption,
-  hideFilters
+  hideFilters,
+  iframeOptions
 }) => {
   const allTerm = {
     term_id: 0,
@@ -24,6 +25,7 @@ const Filters = ({
               active: allTerm.term_id === activeTerm
             })}
             onClick={updateActiveTerm(allTerm.term_id)}
+            // onClick={updateActiveTerm(allTerm.term_id)}
             dangerouslySetInnerHTML={{ __html: allTerm.name }}
           />
         )}
@@ -35,9 +37,19 @@ const Filters = ({
               active: term.term_id === activeTerm
             })}
             onClick={updateActiveTerm(term.term_id)}
+            // onClick={updateActiveTerm(term.term_id)}
             dangerouslySetInnerHTML={{ __html: term.name }}
           />
         ))}
+
+        {(iframeOptions.iframeButtonTitle && iframeOptions.iframeURL)
+          && <button
+            className={classnames("torque-filtered-gallery-filter-button", {
+              active: iframeOptions.showIframe
+            })}
+            onClick={() => iframeOptions.setShowIframe(!iframeOptions.showIframe)}
+            dangerouslySetInnerHTML={{ __html: iframeOptions.iframeButtonTitle }}
+          />}
       </div>
   );
 };
@@ -47,7 +59,8 @@ Filters.propTypes = {
   terms: PropTypes.array.isRequired,
   activeTerm: PropTypes.any.isRequired,
   updateActiveTerm: PropTypes.func.isRequired,
-  hideAllOption: PropTypes.bool
+  hideAllOption: PropTypes.bool,
+  iframeOptions: PropTypes.object
 };
 
 Filters.defaultProps = {

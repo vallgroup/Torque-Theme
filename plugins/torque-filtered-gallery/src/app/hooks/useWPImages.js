@@ -3,7 +3,7 @@ import axios from "axios";
 
 export default (site, activeTerm, params) => {
   // request
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState(false);
   useEffect(
     () => {
       const getImages = async () => {

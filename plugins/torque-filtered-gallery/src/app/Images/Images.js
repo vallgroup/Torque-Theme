@@ -4,6 +4,10 @@ import { Template_0, Template_1, Template_2 } from "./Templates";
 
 class Images extends React.PureComponent {
   render() {
+
+    // add loading message while pulling images from WP server
+    if (false === this.props.images) return (<p>{'Loading gallery...'}</p>)
+
     return (
         <div className={"images-wrapper"}>
           {0 < this.props.images.length
@@ -40,7 +44,10 @@ class Images extends React.PureComponent {
 }
 
 Images.propTypes = {
-  images: PropTypes.array.isRequired,
+  images: PropTypes.oneOfType([
+    PropTypes.array.isRequired,
+    PropTypes.bool.isRequired
+  ]),
   loopTemplate: PropTypes.string.isRequired,
   parentId: PropTypes.number
 };

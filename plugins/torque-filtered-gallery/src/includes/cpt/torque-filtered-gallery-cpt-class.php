@@ -102,7 +102,112 @@ class Torque_Filtered_Gallery_CPT {
 			'callback' => array( $this, 'output_sc_string' ),
     ), array( 'torque_filtered_gallery' ), '', '' );
     
+    // ACF DEFS - START
+
+    // UPDATED: 20210115
+    
     if( function_exists('acf_add_local_field_group') ):
+
+      // options for the plugin
+
+      acf_add_local_field_group(array(
+        'key' => 'group_60011a86068ce',
+        'title' => 'Filtered Galleries Options',
+        'fields' => array(
+          array(
+            'key' => 'field_60011cacdf58f',
+            'label' => 'Instructions',
+            'name' => '',
+            'type' => 'message',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+              'width' => '',
+              'class' => '',
+              'id' => '',
+            ),
+            'message' => 'This iFrame will be included in the Filtered Gallery only if the gallery utilizes Filtered Gallery Categories. A button will be appended to the filters, and when clicked will hide the gallery and load the iFrame in its place.',
+            'new_lines' => 'wpautop',
+            'esc_html' => 0,
+          ),
+          array(
+            'key' => 'field_60011a8b0db9d',
+            'label' => 'iFrame Button Title',
+            'name' => 'iframe_button_title',
+            'type' => 'text',
+            'instructions' => 'Text to appear on the button appended to the gallery filters.',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+              'width' => '50',
+              'class' => '',
+              'id' => '',
+            ),
+            'default_value' => '',
+            'placeholder' => '',
+            'prepend' => '',
+            'append' => '',
+            'maxlength' => '',
+            'readonly' => 0,
+            'disabled' => 0,
+          ),
+          array(
+            'key' => 'field_60011bd90db9f',
+            'label' => 'iFrame Title',
+            'name' => 'iframe_title',
+            'type' => 'text',
+            'instructions' => 'Text to appear above the iframe .',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+              'width' => '50',
+              'class' => '',
+              'id' => '',
+            ),
+            'default_value' => '',
+            'placeholder' => '',
+            'prepend' => '',
+            'append' => '',
+            'maxlength' => '',
+            'readonly' => 0,
+            'disabled' => 0,
+          ),
+          array(
+            'key' => 'field_60011c570dba0',
+            'label' => 'iFrame URL',
+            'name' => 'iframe_url',
+            'type' => 'url',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+              'width' => '100',
+              'class' => '',
+              'id' => '',
+            ),
+            'default_value' => '',
+            'placeholder' => '',
+          ),
+        ),
+        'location' => array(
+          array(
+            array(
+              'param' => 'options_page',
+              'operator' => '==',
+              'value' => 'acf-options',
+            ),
+          ),
+        ),
+        'menu_order' => 0,
+        'position' => 'normal',
+        'style' => 'default',
+        'label_placement' => 'top',
+        'instruction_placement' => 'label',
+        'hide_on_screen' => '',
+        'active' => 1,
+        'description' => '',
+      ));
 
       // Categories, for the attachment page
       acf_add_local_field_group(array(
@@ -308,6 +413,8 @@ class Torque_Filtered_Gallery_CPT {
       ));
       
       endif;
+
+    // ACF DEFS - END
 
   }
 }
