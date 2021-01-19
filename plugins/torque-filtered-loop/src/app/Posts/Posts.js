@@ -16,7 +16,6 @@ class Posts extends React.PureComponent {
               return <Template_3 key={index} post={post} />;
             case "template-2":
               return <Template_2 key={index} post={post} />;
-
             case "template-1":
               return <Template_1 key={index} post={post} />;
 

@@ -1,14 +1,14 @@
 import React, { useRef, useEffect } from "react";
 import { arrayContains, arrEmpty } from "../../helpers";
 
-const InfoBox_1 = ({ post }) => {
+const InfoBox_1 = ({ post, styles }) => {
   // refs
   const infoBox = useRef();
 
   // vars
   const thumbnail = post?.thumbnail;
   const title = post?.post_title;
-  const excerpt = post?.post_content;
+  const excerpt = post?.acf?.retail_description;
   const webLink = post?.acf?.website_link;
   const retailLink = post?.permalink;
   const isRetail = post?.terms

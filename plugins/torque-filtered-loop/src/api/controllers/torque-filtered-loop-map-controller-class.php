@@ -15,7 +15,8 @@ class Torque_Filtered_Loop_Map_Controller {
 		try {
 			$api_key = get_field( 'google_maps_api_key', 'options' );
 			$marker_icon = get_field( 'marker_icon', 'options' );
-			$map_zoom = get_field( 'map_zoom', 'options' );
+			$map_zoom_archive = get_field( 'map_zoom_archive', 'options' );
+			$map_zoom_single = get_field( 'map_zoom_single', 'options' );
 			$map_center = get_field( 'map_center_latitude', 'options' ) && get_field( 'map_center_latitude', 'options' )
 				? array(
 					'lat' => get_field( 'map_center_latitude', 'options' ),
@@ -26,11 +27,12 @@ class Torque_Filtered_Loop_Map_Controller {
 
 			return Torque_API_Responses::Success_Response( array(
 				'map_options'	=> array(
-					'api_key' 		=> $api_key,
-					'marker_icon' => $marker_icon,
-					'map_zoom' 		=> $map_zoom,
-					'map_center' 	=> $map_center,
-					'map_styles' 	=> $map_styles,
+					'api_key' 					=> $api_key,
+					'marker_icon' 			=> $marker_icon,
+					'map_zoom_archive'	=> $map_zoom_archive,
+					'map_zoom_single'		=> $map_zoom_single,
+					'map_center' 				=> $map_center,
+					'map_styles' 				=> $map_styles,
 				)
 			) );
 		} catch (Exception $e) {

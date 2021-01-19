@@ -8,7 +8,7 @@ const InfoBox_0 = ({ post, setHeight }) => {
   // vars
   const thumbnail = post?.thumbnail;
   const title = post?.post_title;
-  const excerpt = post?.post_content;
+  const excerpt = post?.acf?.multifamily_description;
   const webLink = post?.acf?.website_link;
   const retailLink = post?.permalink;
   const isRetail = post?.terms

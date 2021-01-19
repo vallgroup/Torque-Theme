@@ -4,7 +4,7 @@ import { arrEmpty } from "../helpers";
 import InfoWindowEx from "./InfoWindowEx";
 import { InfoBox_1 } from "../components/InfoBox";
 
-const MapView = ({ apiKey, posts, mapOptions }) => {
+const MapView = ({ apiKey, posts, mapOptions, loopTemplate, mapWrapperRef }) => {
   // states
   const [markers, setMarkers] = useState([]);
   const [selectedPlace, setSelectedPlace] = useState({});
@@ -12,10 +12,11 @@ const MapView = ({ apiKey, posts, mapOptions }) => {
   const [showingInfoWindow, setShowingInfoWindow] = useState(false);
   const [showingInfoBox, setShowingInfoBox] = useState(false);
   const [mapCenter, setMapCenter] = useState(mapOptions.map_center);
-  const [mapZoom, setMapZoom] = useState(parseInt(mapOptions.map_zoom));
+  const [mapZoom, setMapZoom] = useState(parseInt(mapOptions.map_zoom_archive) || 12);
   const [mapStyles, setMapStyles] = useState(mapOptions.map_styles && JSON.parse(mapOptions.map_styles));
   const [markerIcon, setMarkerIcon] = useState(mapOptions.marker_icon);
 
+  const mapContainerRef = useRef(null);
   const infoWindowContainerRef = useRef(null);
 
   useEffect(() => {
@@ -33,38 +34,85 @@ const MapView = ({ apiKey, posts, mapOptions }) => {
         })
       });
       setMarkers(newMarkers)
+      handleMapReset()
     }
   }, [posts]);
 
   const onMarkerClick = (marker) => {
-    console.log('onMarkerClick()')
+    // set the active marker
     setActiveMarker(marker)
+    // show the info window
     setShowingInfoWindow(true)
+    // hide the info box
     setShowingInfoBox(false)
+    // remove the toggle class from parent wrapper
+    mapWrapperRef.current.classList.remove('info-box-open')
   }
 
   const showInfoBox = () => {
-    console.log('showInfoBox()')
-    setShowingInfoBox(true)
+    if (showingInfoBox) {
+      // hide the info box
+      setShowingInfoBox(false)
+      // remove the toggle class from parent wrapper
+      mapWrapperRef.current.classList.remove('info-box-open')
+    } else {
+      // show the info box
+      setShowingInfoBox(true)
+      // add the toggle class from parent wrapper
+      mapWrapperRef.current.classList.add('info-box-open')
+    }
   }
 
-  const onMapClick = () => {
-    console.log('onMapClick()')
+  const onInfoWindowClose = () => {
     if (showingInfoWindow) {
+      // reset active marker
       setActiveMarker(null)
+      // hide info window
       setShowingInfoWindow(false)
+      // hide info box
       setShowingInfoBox(false)
+      // remove the toggle class from parent wrapper
+      mapWrapperRef.current.classList.remove('info-box-open')
     }
+  }
+
+  const handleMapReset = () => {
+      // reset active marker
+      setActiveMarker(null)
+      // hide info window
+      setShowingInfoWindow(false)
+      // hide info box
+      setShowingInfoBox(false)
   }
 
   const renderMarkers = () => {
     // console.log('renderMarkers()', markers)
     return markers.map((marker, index) => {
+
+      // determine if this post is of type 'Retail'
+      let isRetail = false;
+      marker.post.terms.forEach(term => {
+        if (
+          'newcastle_property_type' === term.taxonomy
+          && 'Retail' === term.name
+        ) {
+          isRetail = true;
+          return;
+        }
+      });
+
+      // early exit, if template-5 and not a retail marker
+      if (
+        'template-5' === loopTemplate
+        && !isRetail
+      ) return null;
+
       return (
-        marker.geometry.location
+        (marker.geometry.location)
           && <Marker
             key={index}
             name={marker.name}
+            marker={marker}
             onClick={() => onMarkerClick(marker)}
             position={marker.geometry.location}
             icon={{
@@ -79,7 +127,6 @@ const MapView = ({ apiKey, posts, mapOptions }) => {
   }
 
   const renderInfoWindow = () => {
-    console.log('renderInfoWindow()')
     if (activeMarker) {
       // display a marker
       return (<div className={`infowindow`}>
@@ -90,7 +137,7 @@ const MapView = ({ apiKey, posts, mapOptions }) => {
             {activeMarker.post?.acf?.city || ''}, {activeMarker.post?.acf?.state || ''} {activeMarker.post?.acf?.zip_code || ''}
           </h5>
           <div 
-            className={`cta ${showingInfoBox ? 'selected' : ''}`}
+            className={`cta ${showingInfoBox ? 'opened' : ''}`}
             onClick={() => showInfoBox()}
           >
             {'View Details'}
@@ -102,74 +149,51 @@ const MapView = ({ apiKey, posts, mapOptions }) => {
     }
   }
 
-  // console.log('---')
-  // console.log('activeMarker', activeMarker ? activeMarker.name : activeMarker)
-  // console.log('showingInfoWindow', showingInfoWindow)
-  // console.log('showingInfoBox', showingInfoBox)
-  // console.log('---')
+  if (!apiKey || !mapCenter) return null;
 
-  return (<div 
-    className={'map-container'}
-    onClick={() => onMapClick()}
-  >
-    <Map
-      google={google}
-      zoom={mapZoom}
-      initialCenter={mapCenter}
-      styles={mapStyles}
-    >
-        
-      {markers && !arrEmpty(markers)
-        && renderMarkers()}
-
-      {/* not showing infowindow or infobox */}
-      {/* <InfoWindowEx
-        visible={showingInfoWindow}
-        marker={activeMarker}
-        onClose={() => onMapClick()}
+  return (
+    <div className={'map-container'} >
+      <Map
+        google={google}
+        zoom={mapZoom}
+        initialCenter={{
+          lat: parseFloat(mapCenter.lat),
+          lng: parseFloat(mapCenter.lng)
+        }}
+        styles={mapStyles}
       >
-        {renderInfoWindow()}
-      </InfoWindowEx> */}
+          
+        {markers && !arrEmpty(markers)
+          && renderMarkers()}
 
-      {/* showing infowindow, but not infobox */}
-      {/* {activeMarker
-        && <InfoWindowEx
+        {/* NOTE: required, because the Google Maps library we're using doesn't allow for
+          links in the InfoWindow component content, therefore we render a new div via React 
+          and send props through */}
+        {/* SEE: https://stackoverflow.com/questions/53615413/how-to-add-a-button-in-infowindow-with-google-maps-react */}
+        <InfoWindowEx
           visible={showingInfoWindow}
-          position={activeMarker?.geometry?.location || mapCenter}
-          onClose={() => onMapClick()}
+          position={activeMarker?.geometry?.location 
+            ? {
+              lat: parseFloat(activeMarker.geometry.location.lat),
+              lng: parseFloat(activeMarker.geometry.location.lng)
+            }
+            : {
+              lat: parseFloat(mapCenter.lat),
+              lng: parseFloat(mapCenter.lng)
+            }}
+          onClose={() => onInfoWindowClose()}
         >
           {renderInfoWindow()}
-        </InfoWindowEx>} */}
+        </InfoWindowEx>
 
-      {/* not showing infowindow or infobox */}
-      {/* <InfoWindow
-        marker={activeMarker}
-        visible={showingInfoWindow}
-        // position={activeMarker?.geometry?.location || mapCenter}
-        // onClose={() => onMapClick()}
-      >
-        {renderInfoWindow()}
-      </InfoWindow> */}
-
-      {/* showing infowindow, but not infobox */}
-      {activeMarker
-        && <InfoWindow
-          visible={showingInfoWindow}
-          position={activeMarker?.geometry?.location || mapCenter}
-          onClose={() => onMapClick()}
-          // these aren't built into the google-maps-react library...
-          // options={{
-          //   enableEventPropagation: true
-          // }}
-        >
-          {renderInfoWindow()}
-        </InfoWindow>}
-
-    </Map>
+      </Map>
 
     {showingInfoBox
       && activeMarker
-      && <InfoBox_1 post={activeMarker.post} />}
+      && <InfoBox_1 
+        post={activeMarker.post}
+        styles={{}}
+      />}
   </div>);
 };
 

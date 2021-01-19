@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useState, useEffect } from "react";
+import React, { memo, useMemo, useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import Posts from "./Posts";
 import MapView from "./MapView";
@@ -24,6 +24,9 @@ const App = ({
 }) => {
   // states
   const [currView, setCurrView] = useState('grid');
+
+  // refs
+  const mapWrapperRef = useRef();
 
   // custom hooks
   const { filterSettings, filters, createFilterUpdater } = useCustomFilters(
@@ -101,14 +104,20 @@ const App = ({
       </div>
 
       {'map' === currView
-        ? mapOptions && <div className={"map-wrapper"}>
-          <MapView 
-            // todo pull from server
-            apiKey={mapOptions.api_key}
-            posts={posts}
-            mapOptions={mapOptions}
-          />
-        </div>
+        ? mapOptions 
+          && <div 
+            ref={mapWrapperRef}
+            className={"map-wrapper"}
+          >
+            <MapView 
+              // todo pull from server
+              apiKey={mapOptions.api_key}
+              posts={posts}
+              mapOptions={mapOptions}
+              loopTemplate={loopTemplate}
+              mapWrapperRef={mapWrapperRef}
+            />
+          </div>
         : <Posts 
           posts={posts} 
           loopTemplate={loopTemplate} 

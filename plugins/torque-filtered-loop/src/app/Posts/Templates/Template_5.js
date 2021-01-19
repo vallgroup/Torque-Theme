@@ -8,6 +8,21 @@ class Template_5 extends React.PureComponent {
     const backgroundImage = post?.thumbnail;
     const excerpt = post?.post_excerpt;
 
+    // determine if this post is of type 'Retail'
+    let isRetail = false;
+    post.terms.forEach(term => {
+      if (
+        'newcastle_property_type' === term.taxonomy
+        && 'Retail' === term.name
+      ) {
+        isRetail = true;
+        return;
+      }
+    });
+
+    // early exit
+    if (!isRetail) return null;
+    
     return (
       <div className={"loop-post template-5"}>
 
@@ -42,7 +57,7 @@ class Template_5 extends React.PureComponent {
             className="post-cta"
             href={post.permalink}
           >
-            <span>Read More</span>
+            <span>Learn More</span>
           </a>
         </div>
       </div>
@@ -56,8 +71,9 @@ class Template_5 extends React.PureComponent {
     return (
       terms &&
       terms.map((term, index) => {
+        console.log('term.taxonomy', term.taxonomy)
         return (
-          'category' === term.taxonomy
+          'newcastle_property_location' === term.taxonomy
             ? <div
               key={index}
               className={"term"}

@@ -1,28 +1,25 @@
-import React, { memo, useEffect, useRef } from "react";
+import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { InfoWindow } from "google-maps-react";
 
-// original example from: https://stackoverflow.com/questions/53615413/how-to-add-a-button-in-infowindow-with-google-maps-react
+export default class InfoWindowEx extends Component {
+  constructor(props) {
+    super(props);
+    this.infoWindowRef = React.createRef();
+    this.contentElement = document.createElement(`div`);
+  }
 
-// export default function InfoWindowEx(props) {
-//   const infoWindowRef = React.createRef();
-//   const contentElement = document.createElement('div');
-//   useEffect(() => {
-//     ReactDOM.render(React.Children.only(props.children), contentElement);
-//     infoWindowRef.current.infowindow.setContent(contentElement);
-//   }, [props.children]);
-//   return <InfoWindow ref={infoWindowRef} {...props} />;
-// }
+  componentDidUpdate(prevProps) {
+    if (this.props.children !== prevProps.children) {
+      ReactDOM.render(
+        React.Children.only(this.props.children),
+        this.contentElement
+      );
+      this.infoWindowRef.current.infowindow.setContent(this.contentElement);
+    }
+  }
 
-const InfoWindowEx = (props) => {
-  const infoWindowRef = useRef();
-  const contentElement = document.createElement("div");
-  useEffect(() => {
-    console.log('InfoWindowEx props', props)
-    ReactDOM.render(React.Children.only(props.children), contentElement);
-    infoWindowRef.current.infowindow.setContent(contentElement);
-  }, [props.children]);
-  return <InfoWindow ref={infoWindowRef} {...props} />;
+  render() {
+    return <InfoWindow ref={this.infoWindowRef} {...this.props} />;
+  }
 }
-
-export default memo(InfoWindowEx);
