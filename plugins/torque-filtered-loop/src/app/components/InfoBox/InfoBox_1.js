@@ -1,21 +1,23 @@
 import React, { useRef, useEffect } from "react";
 import { arrayContains, arrEmpty } from "../../helpers";
 
-const InfoBox_1 = ({ post, styles }) => {
+const InfoBox_1 = ({ post }) => {
   // refs
   const infoBox = useRef();
 
   // vars
-  const thumbnail = post?.thumbnail;
-  const title = post?.post_title;
-  const excerpt = post?.acf?.retail_description;
-  const webLink = post?.acf?.website_link;
-  const retailLink = post?.permalink;
   const isRetail = post?.terms
     ? Boolean(post.terms.find((term, idx) => {
       return 'retail' === term.name.toLowerCase();
     }))
     : false;
+  const thumbnail = post?.thumbnail;
+  const title = post?.post_title;
+  const excerpt = isRetail 
+    ? post?.acf?.retail_description
+    : post?.acf?.multifamily_description;
+  const webLink = post?.acf?.website_link;
+  const retailLink = post?.permalink;
 
   const renderAddress = () => {  
     const streetAddress = post?.acf?.street_address;

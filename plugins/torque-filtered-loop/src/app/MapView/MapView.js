@@ -131,7 +131,7 @@ const MapView = ({ apiKey, posts, mapOptions, loopTemplate, mapWrapperRef }) => 
       // display a marker
       return (<div className={`infowindow`}>
         <div>
-          <h3 className={'title'}>{activeMarker.post?.post_name || ''}</h3>
+          <h3 className={'title'}>{activeMarker.post?.post_title || ''}</h3>
           <h5 className={'address'}>
             {activeMarker.post?.acf?.street_address || ''}<br/>
             {activeMarker.post?.acf?.city || ''}, {activeMarker.post?.acf?.state || ''} {activeMarker.post?.acf?.zip_code || ''}
@@ -190,10 +190,7 @@ const MapView = ({ apiKey, posts, mapOptions, loopTemplate, mapWrapperRef }) => 
 
     {showingInfoBox
       && activeMarker
-      && <InfoBox_1 
-        post={activeMarker.post}
-        styles={{}}
-      />}
+      && <InfoBox_1 post={activeMarker.post} />}
   </div>);
 };
 

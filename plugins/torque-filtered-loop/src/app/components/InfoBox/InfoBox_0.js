@@ -6,18 +6,21 @@ const InfoBox_0 = ({ post, setHeight }) => {
   const infoBox = useRef();
 
   // vars
-  const thumbnail = post?.thumbnail;
-  const title = post?.post_title;
-  const excerpt = post?.acf?.multifamily_description;
-  const webLink = post?.acf?.website_link;
-  const retailLink = post?.permalink;
   const isRetail = post?.terms
     ? Boolean(post.terms.find((term, idx) => {
       return 'retail' === term.name.toLowerCase();
     }))
     : false;
+  const thumbnail = post?.thumbnail;
+  const title = post?.post_title;
+  const excerpt = isRetail 
+    ? post?.acf?.retail_description
+    : post?.acf?.multifamily_description;
+  const webLink = post?.acf?.website_link;
+  const retailLink = post?.permalink;
 
   // when the infoBox is updated, send the div height to parent component
+  // this height is then used to add a spacer at the bottom of the grid item
   useEffect(() => {
     setHeight(infoBox.current.offsetHeight)
   }, [infoBox])
