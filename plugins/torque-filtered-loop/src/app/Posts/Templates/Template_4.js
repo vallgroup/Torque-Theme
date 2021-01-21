@@ -20,7 +20,7 @@ class Template_4 extends React.PureComponent {
     return (
       <div 
         className={"loop-post template-4"}
-        style={{ marginBottom: this.state.isOpen ? this.state.infoBoxHeight : 0 }}
+        style={{ marginBottom: this.state.isOpen ? this.state.infoBoxHeight : '2em' }}
       >
 
         {backgroundImage
