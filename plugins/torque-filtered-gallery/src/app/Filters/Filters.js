@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from "react";
+import React, { memo, useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 
@@ -15,6 +15,23 @@ const Filters = ({
     term_id: 0,
     name: "View All"
   };
+
+  // check if the URL contains the search param to initially load the iframe
+  useEffect(() => {
+    const currUrl = window.location.href;
+    const urlSearchParam = '?' + iframeOptions.iframeButtonTitle
+      .trim()
+      .toLowerCase()
+      .replace(' ', '-');
+
+    if (currUrl && currUrl.includes(urlSearchParam)) {
+      // added a slight delay, incase other filters are loading first
+      // when any other filters change the iframe is hidden, so we need to get this out of the way first
+      setTimeout(() => {
+        iframeOptions.setShowIframe(true)
+      }, 1000);
+    }
+  },[])
 
   return (
     0 < terms?.length && !hideFilters // if no terms passed in, hide the filters
