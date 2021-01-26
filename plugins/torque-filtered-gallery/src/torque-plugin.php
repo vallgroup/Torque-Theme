@@ -36,14 +36,11 @@ add_action( 'plugins_loaded', array( Torque_Filtered_Gallery::get_inst(), 'init'
 class Torque_Filtered_Gallery {
 
 	public static $instance = NULL;
-
 	public static $PLUGIN_NAME = 'Torque Filtered Gallery';
-
 	public static $PLUGIN_SLUG = 'torque-filtered-gallery';
 
 	public static function get_inst() {
 		!self::$instance AND self::$instance = new self;
-
 		return self::$instance;
 	}
 
@@ -59,9 +56,9 @@ class Torque_Filtered_Gallery {
 
 		// comment out class names to exclude
 		Torque_Filtered_Gallery_Autoloader::autoload( array(
-			'Torque_Filtered_Gallery_Shortcode',
 			'Torque_Filtered_Gallery_REST_Controller',
-			'Torque_Filtered_Gallery_CPT'
+			'Torque_Filtered_Gallery_Shortcode',
+			'Torque_Filtered_Gallery_CPT',
 		) );
 
 		// enqueue plugin scripts

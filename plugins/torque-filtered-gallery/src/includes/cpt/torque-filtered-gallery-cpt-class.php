@@ -88,7 +88,6 @@ class Torque_Filtered_Gallery_CPT {
 	 */
 	public function output_sc_string() {
     global $post;
-    var_dump( 'testing....' );
 		?>
 		<p>To use this filtered gallery anywhere on your site, copy and paste this shortcode: <code>[torque_filtered_gallery gallery_id="<?php echo $post->ID; ?>"]</code></p>
 		<?php

@@ -33,11 +33,6 @@ class Torque_Filtered_Gallery_Shortcode {
       'posts_per_page'      => '-1', // optional
       'use_lightbox'        => false, // optional
       'hide_filters'        => false, // optional
-
-      'iframe_button_title' => get_field( 'iframe_button_title', 'options' ),
-      'iframe_title'        => get_field( 'iframe_title', 'options' ),
-      'iframe_url'          => get_field( 'iframe_url', 'options' ),
-
       // default args for second method
       'filters_types' => 'tabs_acf',
       'filters_args'  => Torque_Filtered_Gallery_CPT::$FILTERED_GALLERY_CAT_KEY
@@ -82,6 +77,15 @@ class Torque_Filtered_Gallery_Shortcode {
         // these are your arguments that do not show up in the front end.
         array(
           'loop-template' => 'template-'.apply_filters( self::$GALLERY_TEMPLATE_FILTER_HANDLE, "0" ),
+          'iframe_button_title' => class_exists('ACF')
+            ? get_field( 'iframe_button_title', 'options' )
+            : null,
+          'iframe_title'        => class_exists('ACF')
+            ? get_field( 'iframe_title', 'options' )
+            : null,
+          'iframe_url'          => class_exists('ACF')
+            ? get_field( 'iframe_url', 'options' )
+            : null,
         )
       ), $atts, self::$SHORTCODE_SLUG );
   }
