@@ -1,14 +1,12 @@
-import React, { Component } from 'react'
+import React from 'react'
 import TourScheduler from './components/TourScheduler'
 
-// props
-//
-// site: string 
+const App = ({
+  site,
+  apiParams
+}) => {
 
-class App extends Component {
-  render() {
-    return <TourScheduler />
-  }
+  return <TourScheduler apiParams={apiParams} />;
 }
 
 export default App

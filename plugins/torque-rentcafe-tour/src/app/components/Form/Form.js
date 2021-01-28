@@ -12,7 +12,7 @@ import {
 } from "./styles";
 import { formConfig } from "./config";
 
-const Form = () => {
+const Form = ({ apiParams }) => {
   // states
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -24,13 +24,23 @@ const Form = () => {
   const onSubmit = (data) => {
     // base URL
     var _url = formConfig.apiURL;
-    var _authData = formConfig.apiAuth;
+    var _staticApiParams = formConfig.staticApiParams;
+    var _dynamicApiParams = apiParams;
     var _formData = data;
     
-    // add auth params
-    for (let i in _authData) {
-      if (_authData.hasOwnProperty(i)) {
-        _url += `${i}=${encodeURIComponent(_authData[i])}&`
+    // add dynamic auth params
+    for (let i in _dynamicApiParams) {
+      if (_dynamicApiParams.hasOwnProperty(i)) {
+        _url += _dynamicApiParams[i]
+          ? `${i}=${encodeURIComponent(_dynamicApiParams[i])}&` 
+          : ``
+      }
+    }
+    
+    // add static auth params
+    for (let i in _staticApiParams) {
+      if (_staticApiParams.hasOwnProperty(i)) {
+        _url += `${i}=${encodeURIComponent(_staticApiParams[i])}&`
       }
     }
     
@@ -49,7 +59,6 @@ const Form = () => {
     // send API request
     const _response = await axios.post(url)
 
-    console.log('url', url)
     console.log('_response', _response)
     
     if ( 0 === _response.data.ErrorCode ) {

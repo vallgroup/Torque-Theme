@@ -61,7 +61,7 @@ class Torque_Rentcafe_Tour {
 		Torque_Rentcafe_Tour_Autoloader::autoload( array(
 			// 'Torque_Rentcafe_Tour_REST_Controller',
 			'Torque_Rentcafe_Tour_Shortcode',
-			// 'Torque_Rentcafe_Tour_CPT',
+			'Torque_Rentcafe_Tour_CPT',
 		) );
 
 		// enqueue plugin scripts

@@ -4,16 +4,15 @@ import Form from "../Form";
 // props
 //
 // name: type
-const TourScheduler = () => {
+
+const TourScheduler = ({ apiParams }) => {
   // vars
 
   // states
 
   // etc...
 
-  return (<>
-    <Form />
-  </>);
+  return <Form apiParams={apiParams} />;
 }
 
 export default TourScheduler

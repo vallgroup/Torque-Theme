@@ -58,7 +58,18 @@ class Torque_Rentcafe_Tour_Shortcode {
     return shortcode_atts( array_merge( $this->expected_args,
       // these are your arguments that do not show up in the front end.
       array(
-        '' => ''
+        'marketing_api_key' => class_exists('ACF')
+          ? get_field( 'marketing_api_key', 'options' )
+          : null,
+        'company_code'      => class_exists('ACF')
+          ? get_field( 'company_code', 'options' )
+          : null,
+        'property_id'       => class_exists('ACF')
+          ? get_field( 'property_id', 'options' )
+          : null,
+        'property_code'     => class_exists('ACF')
+          ? get_field( 'property_code', 'options' )
+          : null,
       ) ), $atts, self::$SHORTCODE_SLUG );
   }
 

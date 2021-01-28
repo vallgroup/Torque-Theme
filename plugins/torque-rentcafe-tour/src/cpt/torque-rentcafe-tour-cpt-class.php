@@ -5,36 +5,31 @@
 class Torque_Rentcafe_Tour_CPT {
 
 	/**
-	 * Holds the example cpt object
+	 * Holds the rentcafe_tour cpt object
 	 *
 	 * @var Object
 	 */
-	protected $example = null;
+	protected $rentcafe_tour = null;
 
 	/**
-	 * Holds the labels needed to build the example custom post type.
+	 * Holds the labels needed to build the rentcafe_tour custom post type.
 	 *
 	 * @var array
 	 */
-	public static $example_labels = array(
-			'singular'       => 'Example',
-			'plural'         => 'Examples',
-			'slug'           => 'torque-example',
-			'post_type_name' => 'torque_example',
+	public static $rentcafe_tour_labels = array(
+			'singular'       => 'Rentcafe Tour',
+			'plural'         => 'Rentcafe Tours',
+			'slug'           => 'torque-rentcafe-tour',
+			'post_type_name' => 'torque_rentcafe_tour',
 	);
 
 	/**
-	 * Holds options for the example custom post type
+	 * Holds options for the rentcafe_tour custom post type
 	 *
 	 * @var array
 	 */
-	protected $example_options = array(
-		'supports' => array(
-			'title',
-			'editor',
-			'thumbnail',
-		),
-		'menu_icon'           => 'dashicons-businessman',
+	protected $rentcafe_tour_options = array(
+		'public'		=> false,
 	);
 
 	/**
@@ -42,29 +37,132 @@ class Torque_Rentcafe_Tour_CPT {
 	 */
 	function __construct() {
 		if ( class_exists( 'PremiseCPT' ) ) {
-			new PremiseCPT( self::$example_labels, $this->example_options );
+			new PremiseCPT( self::$rentcafe_tour_labels, $this->rentcafe_tour_options );
+      
+      // add metaboxes needed from ACF
+      add_action( 'acf/init', array( $this, 'acf_init' ) );
 		}
+	}
 
-		pwp_add_metabox(
-			'Example Meta',
-			array( self::$example_labels['post_type_name'] ),
-			array(
-				'name_prefix' => 'example_meta',
-				array(
-					'type'    => 'text',
-					'context' => 'post',
-					'name'    => '[tel]',
-					'label'   => 'Telephone',
+	public function acf_init() {
+    
+		// UPDATED: 20210128
+		
+		// ACF DEFS - START
+		
+		if( function_exists('acf_add_local_field_group') ):
+
+			acf_add_local_field_group(array(
+				'key' => 'group_60129dca3332d',
+				'title' => 'Rentcafe Tour Options',
+				'fields' => array(
+					array(
+						'key' => 'field_60129dd40aba3',
+						'label' => 'Marketing API Key',
+						'name' => 'marketing_api_key',
+						'type' => 'text',
+						'instructions' => '',
+						'required' => 0,
+						'conditional_logic' => 0,
+						'wrapper' => array(
+							'width' => '50',
+							'class' => '',
+							'id' => '',
+						),
+						'default_value' => '',
+						'placeholder' => '',
+						'prepend' => '',
+						'append' => '',
+						'maxlength' => '',
+						'readonly' => 0,
+						'disabled' => 0,
+					),
+					array(
+						'key' => 'field_60129de50aba4',
+						'label' => 'Company Code',
+						'name' => 'company_code',
+						'type' => 'text',
+						'instructions' => '',
+						'required' => 0,
+						'conditional_logic' => 0,
+						'wrapper' => array(
+							'width' => '50',
+							'class' => '',
+							'id' => '',
+						),
+						'default_value' => '',
+						'placeholder' => '',
+						'prepend' => '',
+						'append' => '',
+						'maxlength' => '',
+						'readonly' => 0,
+						'disabled' => 0,
+					),
+					array(
+						'key' => 'field_60129def0aba5',
+						'label' => 'Property ID',
+						'name' => 'property_id',
+						'type' => 'text',
+						'instructions' => '',
+						'required' => 0,
+						'conditional_logic' => 0,
+						'wrapper' => array(
+							'width' => '50',
+							'class' => '',
+							'id' => '',
+						),
+						'default_value' => '',
+						'placeholder' => '',
+						'prepend' => '',
+						'append' => '',
+						'maxlength' => '',
+						'readonly' => 0,
+						'disabled' => 0,
+					),
+					array(
+						'key' => 'field_60129e080aba6',
+						'label' => 'Property Code',
+						'name' => 'property_code',
+						'type' => 'text',
+						'instructions' => '',
+						'required' => 0,
+						'conditional_logic' => 0,
+						'wrapper' => array(
+							'width' => '50',
+							'class' => '',
+							'id' => '',
+						),
+						'default_value' => '',
+						'placeholder' => '',
+						'prepend' => '',
+						'append' => '',
+						'maxlength' => '',
+						'readonly' => 0,
+						'disabled' => 0,
+					),
 				),
-				array(
-					'type'    => 'text',
-					'context' => 'post',
-					'name'    => '[email]',
-					'label'   => 'Email',
+				'location' => array(
+					array(
+						array(
+							'param' => 'options_page',
+							'operator' => '==',
+							'value' => 'acf-options',
+						),
+					),
 				),
-			),
-			'example_meta'
-		);
+				'menu_order' => 0,
+				'position' => 'normal',
+				'style' => 'default',
+				'label_placement' => 'top',
+				'instruction_placement' => 'label',
+				'hide_on_screen' => '',
+				'active' => 1,
+				'description' => '',
+			));
+			
+			endif;
+
+		// ACF DEFS - END
 	}
 }
 
