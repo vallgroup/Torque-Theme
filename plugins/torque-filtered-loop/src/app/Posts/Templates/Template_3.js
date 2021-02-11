@@ -13,8 +13,6 @@ class Template_3 extends React.PureComponent {
     const backgroundImage = post?.thumbnail;
     const excerpt = post?.post_excerpt + '...';
 
-    console.log('post', post)
-
     return (
       <div className={"loop-post template-3"}>
 

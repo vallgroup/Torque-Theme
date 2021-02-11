@@ -33,6 +33,8 @@ class Torque_Filtered_Loop_Posts_Controller {
 
 			$query = new WP_Query( $query_args );
 
+			// var_dump( $query->have_posts() );
+
 			$has_next_page = $this->has_next_page( $query_args );
 
 			if ($query->have_posts()) {
@@ -90,14 +92,22 @@ class Torque_Filtered_Loop_Posts_Controller {
 				$operator = 'IN';
 				$field = 'term_id';
 
+				// var_dump( $value );
+
 				// check if tax query value is an array (multi-select), and format the value accordingly
 				if ( false !== strpos( $value, ',' ) ) {
 					// tidy values
-					$value = str_replace( ' ', '', $value );
-					$value = explode( ',', $value );
-
+					$value = explode( 
+						',', 
+						str_replace( 
+							' ', 
+							'', 
+							$value
+						)
+					);
+						
 					$query['tax_query'] = array(
-						'relation'	=> 'AND'
+						'relation'	=> 'OR'
 					);
 
 					// create a new tax_query array for each term ID

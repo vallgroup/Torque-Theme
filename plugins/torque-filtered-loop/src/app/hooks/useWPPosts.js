@@ -14,6 +14,13 @@ export default (site, activeTerm, params, postsPerPage) => {
           params["posts_per_page"] = postsPerPage;
           params["paged"] = page;
 
+          // if the param is an array (from a multi-select tax), then join the array for use in the axois request
+          Object.keys(params).map((key, idx) => {
+            if (Array.isArray(params[key])) {
+              params[key] = params[key].join(',');
+            }
+          });
+
           const response = await axios.get(
             `${site}/wp-json/filtered-loop/v1/posts`,
             {

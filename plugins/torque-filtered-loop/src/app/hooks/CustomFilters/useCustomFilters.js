@@ -19,11 +19,6 @@ export default (filtersTypes, filtersArgs) => {
   // createFilterUpdater('some_filter_id') becomes a function you can pass to that filter's onChange handler
   const createFilterUpdater = useMemo(
     () => (filterId) => (value, multiSelect = false) => () => {
-
-      // console.log('filterId', filterId)
-      // console.log('value', value)
-      // console.log('multiSelect', multiSelect)
-
       if (
         multiSelect 
         && 0 !== value
@@ -42,7 +37,6 @@ export default (filtersTypes, filtersArgs) => {
   // update query string if filters change
   useEffect(
     () => {
-      // console.log('filters', filters)
       let filterId = "";
       for (filterId in filters) {
         const filterSetting = filterSettings.find(({ id }) => id === filterId);
@@ -75,7 +69,6 @@ export default (filtersTypes, filtersArgs) => {
         // console.log('array now only has 1 val, so convert to an int instead')
         _newValue = _newValue[0]
       }
-
     } else if (
       filters[filterId]
       && 0 !== value
@@ -92,13 +85,10 @@ export default (filtersTypes, filtersArgs) => {
           value
         ]
       }
-      
     }
 
-    // console.log('_newValue', _newValue)
-    // console.log('---------------')
-
     return _newValue;
+
   }
 
   return { filterSettings, filters, createFilterUpdater };

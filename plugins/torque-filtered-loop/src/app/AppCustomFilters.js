@@ -2,6 +2,7 @@ import React, { memo, useMemo, useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import Posts from "./Posts";
 import MapView from "./MapView";
+import NoPostsNotice from "./components/NoPostsNotice";
 import { 
   DropdownTax, 
   TabsTax,
@@ -11,7 +12,7 @@ import {
   ViewToggle,
 } from "./Filters/CustomFilters";
 import { useCustomFilters, useWPPosts, useMapOptions } from "./hooks";
-import { createRequestParams, combineCustomFilters } from "./helpers";
+import { createRequestParams, combineCustomFilters, arrEmpty } from "./helpers";
 
 const App = ({
   site,
@@ -24,6 +25,7 @@ const App = ({
 }) => {
   // states
   const [currView, setCurrView] = useState('grid');
+  const [currPosts, setCurrPosts] = useState([]);
 
   // refs
   const mapWrapperRef = useRef();
@@ -50,8 +52,31 @@ const App = ({
     setCurrView(newView)
   }
 
+  // for template #5, filter out non-retail posts
+  useEffect(() => {
+    var _newPosts = []
+    if ('template-5' === loopTemplate && !arrEmpty(posts)) {
+      _newPosts = posts.filter((post, idx) => {
+        let isRetail = false;
+        post.terms.forEach(term => {
+          if (
+            'newcastle_property_type' === term.taxonomy
+            && 'Retail' === term.name
+          ) {
+            isRetail = true;
+            return;
+          }
+        });
+        return isRetail;
+      });
+    } else {
+      _newPosts = posts;
+    }
+    setCurrPosts(_newPosts);
+  }, [posts]);
+
   return filterSettings?.length ? (
-    <div className={"torque-filtered-loop custom-filters"}>
+    <div className={`torque-filtered-loop custom-filters ${loopTemplate}`}>
 
       <div className={"filters-wrapper"}>
 
@@ -104,7 +129,7 @@ const App = ({
       </div>
 
       {'map' === currView
-        ? mapOptions 
+        && mapOptions 
           && <div 
             ref={mapWrapperRef}
             className={"map-wrapper"}
@@ -117,11 +142,15 @@ const App = ({
               loopTemplate={loopTemplate}
               mapWrapperRef={mapWrapperRef}
             />
-          </div>
-        : <Posts 
-          posts={posts} 
-          loopTemplate={loopTemplate} 
-        />}
+          </div>}
+          
+      
+      {('grid' === currView && !arrEmpty(currPosts))
+        ? <Posts 
+            posts={currPosts} 
+            loopTemplate={loopTemplate} 
+          />
+        : <NoPostsNotice />}
 
       {getNextPage && (
         <button

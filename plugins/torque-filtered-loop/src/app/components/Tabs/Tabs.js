@@ -5,6 +5,19 @@ import classnames from "classnames";
 
 const Tabs = ({ title, options, value, onChange, multiSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isAccordionOpen, setIsAccordionOpen] = useState(false);
+  const isAccordion = options && 12 < options.length;
+  const optionsWithAll = options.slice(0);
+  let filterWrapperCls = multiSelect
+    ? ' multi-select'
+    : ''
+  filterWrapperCls += isAccordion
+    ? ' accordion'
+    : ''
+  filterWrapperCls += isAccordionOpen
+    ? ' expanded'
+    : ' collapsed'
+
   const handleTabsClick = useMemo(
     () => e => {
       e.stopPropagation();
@@ -27,9 +40,8 @@ const Tabs = ({ title, options, value, onChange, multiSelect }) => {
     },
     [isOpen]
   );
-
-  const optionsWithAll = options.slice(0);
   
+  // add the 'all' option to the tabs
   !multiSelect && optionsWithAll.unshift({
     key: 0,
     name: "View All"
@@ -56,10 +68,6 @@ const Tabs = ({ title, options, value, onChange, multiSelect }) => {
     [optionsWithAll, value]
   );
 
-  const filterWrapperCls = multiSelect
-    ? 'multi-select'
-    : ''
-
   return (
     <div className={classnames(styles.root, "torque-custom-filter-tabs")}>
       <div
@@ -69,11 +77,18 @@ const Tabs = ({ title, options, value, onChange, multiSelect }) => {
         <span className="tabs-title">
           <span className="pre-title">Filter by </span>
           {title}
+          {isAccordion
+            && <span 
+                className={`accordion-toggle ${isAccordionOpen ? `expanded` : `collapsed`}`}
+                onClick={() => setIsAccordionOpen(!isAccordionOpen)}
+              >
+                {`(${isAccordionOpen ? `collapse` : `expand`})`}
+              </span>}
         </span>
       </div>
 
       <div
-        className={classnames(styles.tabs_wrapper, `tabs-wrapper ${filterWrapperCls}`)}
+        className={classnames(styles.tabs_wrapper, `tabs-wrapper${filterWrapperCls}`)}
       >
         {optionsWithAll.map(({ key, name }) => {
           // if:
