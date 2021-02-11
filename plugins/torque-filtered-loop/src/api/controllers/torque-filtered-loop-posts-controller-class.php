@@ -62,7 +62,6 @@ class Torque_Filtered_Loop_Posts_Controller {
 		$query = array();
 
 		foreach ($params as $key => $value) {
-
 			// meta query params
 			if (substr($key, 0 ,5) === 'meta_') {
 				if ($value === "0") {
@@ -92,8 +91,6 @@ class Torque_Filtered_Loop_Posts_Controller {
 				$operator = 'IN';
 				$field = 'term_id';
 
-				// var_dump( $value );
-
 				// check if tax query value is an array (multi-select), and format the value accordingly
 				if ( false !== strpos( $value, ',' ) ) {
 					// tidy values
@@ -106,19 +103,22 @@ class Torque_Filtered_Loop_Posts_Controller {
 						)
 					);
 						
+					// add AND relationship, in case multiple tax_ queries are present
 					$query['tax_query'] = array(
-						'relation'	=> 'OR'
+						'relation'	=> 'AND'
 					);
 
 					// create a new tax_query array for each term ID
+					$_terms = [];
 					foreach($value as $v) {
-						$query['tax_query'][] = array(
-							'taxonomy' => $tax_slug,
-							'field'    => $field,
-							'terms'    => intval($v),
-							'operator' => $operator,
-						);
+						$_terms[] = intval($v);
 					}
+					$query['tax_query'][] = array(
+						'taxonomy' => $tax_slug,
+						'field'    => $field,
+						'terms'    => $_terms, // array of terms
+						'operator' => $operator,
+					);
 				} else {
 					// create tax_query for the term ID
 					$query['tax_query'][] = array(
@@ -135,8 +135,6 @@ class Torque_Filtered_Loop_Posts_Controller {
 			// other params
 			$query[$key] = $value;
 		}
-
-		// var_dump( $query );
 
 		return $query;
 	}

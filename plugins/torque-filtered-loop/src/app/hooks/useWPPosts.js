@@ -28,6 +28,9 @@ export default (site, activeTerm, params, postsPerPage) => {
             }
           );
 
+          // console.log('response', response);
+          // console.log('params', params);
+
           setHasNextPage(response?.data?.has_next_page);
 
           const newPosts = response?.data?.posts || [];

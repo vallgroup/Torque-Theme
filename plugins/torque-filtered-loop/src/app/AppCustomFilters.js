@@ -2,7 +2,6 @@ import React, { memo, useMemo, useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import Posts from "./Posts";
 import MapView from "./MapView";
-import NoPostsNotice from "./components/NoPostsNotice";
 import { 
   DropdownTax, 
   TabsTax,
@@ -145,12 +144,11 @@ const App = ({
           </div>}
           
       
-      {('grid' === currView && !arrEmpty(currPosts))
-        ? <Posts 
-            posts={currPosts} 
-            loopTemplate={loopTemplate} 
-          />
-        : <NoPostsNotice />}
+      {'grid' === currView 
+        && <Posts 
+          posts={currPosts}
+          loopTemplate={loopTemplate} 
+        />}
 
       {getNextPage && (
         <button
