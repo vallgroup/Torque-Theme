@@ -18,8 +18,6 @@ const Details = ({ details }) => {
     SF: sfImg,
     Price: priceImg,
   }
-
-  console.log('icons', icons)
   
   return (
     !isEmpty(details)
