@@ -12,6 +12,7 @@ import {
 } from "./Filters/CustomFilters";
 import { useCustomFilters, useWPPosts, useMapOptions } from "./hooks";
 import { createRequestParams, combineCustomFilters, arrEmpty } from "./helpers";
+import InfoBoxContext from "../app/context";
 
 const App = ({
   site,
@@ -25,6 +26,7 @@ const App = ({
   // states
   const [currView, setCurrView] = useState('grid');
   const [currPosts, setCurrPosts] = useState([]);
+  const [openInfoBox, setOpenInfoBox] = useState(false);
 
   // refs
   const mapWrapperRef = useRef();
@@ -75,90 +77,92 @@ const App = ({
   }, [posts]);
 
   return filterSettings?.length ? (
-    <div className={`torque-filtered-loop custom-filters ${loopTemplate}`}>
+    <InfoBoxContext.Provider value={{openInfoBox, setOpenInfoBox}}>
+      <div className={`torque-filtered-loop custom-filters ${loopTemplate}`}>
 
-      <div className={"filters-wrapper"}>
+        <div className={"filters-wrapper"}>
 
-        {enableMapView
-          && <ViewToggle 
-            currView={currView}
-            handleViewUpdate={handleViewUpdate} 
+          {enableMapView
+            && <ViewToggle 
+              currView={currView}
+              handleViewUpdate={handleViewUpdate} 
+            />}
+
+          {filterSettings.map((filter, index) => {
+            const customFilterProps = {
+              key: filter.id,
+              value: filters[filter.id],
+              onChange: createFilterUpdater(filter.id),
+              args: filter.args,
+              site
+            };
+
+            switch (filter.type) {
+
+              // Taxonomy - dropdown
+              case "dropdown_tax":
+                return <DropdownTax {...customFilterProps} />;
+
+              // Taxonomy - tabs
+              case "tabs_tax":
+                return <TabsTax {...customFilterProps} />;
+
+              // Taxonomy - tabs (multi-select)
+              case "tabs_tax_multi":
+                return <TabsTax {...customFilterProps} multiSelect={true} />;
+
+              // Date - dropdown
+              case "dropdown_date":
+                return <DropdownDate {...customFilterProps} postType={postType} />;
+
+              // Date - tabs
+              case "tabs_date":
+                return <TabsDate {...customFilterProps} postType={postType} />;
+
+              // ACF - tabs
+              case "tabs_acf":
+                return <TabsACF {...customFilterProps} />;
+
+              default:
+                console.warn(`Filter type ${filter.type} not found`);
+                return null;
+            }
+          })}
+        </div>
+
+        {'map' === currView
+          && mapOptions 
+            && <div 
+              ref={mapWrapperRef}
+              className={"map-wrapper"}
+            >
+              <MapView 
+                // todo pull from server
+                apiKey={mapOptions.api_key}
+                posts={posts}
+                mapOptions={mapOptions}
+                loopTemplate={loopTemplate}
+                mapWrapperRef={mapWrapperRef}
+              />
+            </div>}
+            
+        
+        {'grid' === currView 
+          && <Posts 
+            posts={currPosts}
+            loopTemplate={loopTemplate} 
           />}
 
-        {filterSettings.map((filter, index) => {
-          const customFilterProps = {
-            key: filter.id,
-            value: filters[filter.id],
-            onChange: createFilterUpdater(filter.id),
-            args: filter.args,
-            site
-          };
-
-          switch (filter.type) {
-
-            // Taxonomy - dropdown
-            case "dropdown_tax":
-              return <DropdownTax {...customFilterProps} />;
-
-            // Taxonomy - tabs
-            case "tabs_tax":
-              return <TabsTax {...customFilterProps} />;
-
-            // Taxonomy - tabs (multi-select)
-            case "tabs_tax_multi":
-              return <TabsTax {...customFilterProps} multiSelect={true} />;
-
-            // Date - dropdown
-            case "dropdown_date":
-              return <DropdownDate {...customFilterProps} postType={postType} />;
-
-            // Date - tabs
-            case "tabs_date":
-              return <TabsDate {...customFilterProps} postType={postType} />;
-
-            // ACF - tabs
-            case "tabs_acf":
-              return <TabsACF {...customFilterProps} />;
-
-            default:
-              console.warn(`Filter type ${filter.type} not found`);
-              return null;
-          }
-        })}
-      </div>
-
-      {'map' === currView
-        && mapOptions 
-          && <div 
-            ref={mapWrapperRef}
-            className={"map-wrapper"}
+        {getNextPage && (
+          <button
+            className="torque-filtered-loop-load-more"
+            onClick={getNextPage}
           >
-            <MapView 
-              // todo pull from server
-              apiKey={mapOptions.api_key}
-              posts={posts}
-              mapOptions={mapOptions}
-              loopTemplate={loopTemplate}
-              mapWrapperRef={mapWrapperRef}
-            />
-          </div>}
-          
-      
-      {'grid' === currView 
-        && <Posts 
-          posts={currPosts}
-          loopTemplate={loopTemplate} 
-        />}
-
-      {getNextPage && (
-        <button
-          className="torque-filtered-loop-load-more"
-          onClick={getNextPage}
-        >
-          Load More
-        </button>
-      )}
-    </div>
+            Load More
+          </button>
+        )}
+      </div>
+    </InfoBoxContext.Provider>
   ) : null;
 };
 

@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { arrayContains, arrEmpty } from "../../helpers";
 
+// used for displaying the info box for the map
 const InfoBox_1 = ({ post }) => {
   // refs
   const infoBox = useRef();
@@ -19,7 +20,7 @@ const InfoBox_1 = ({ post }) => {
   const webLink = post?.acf?.website_link;
   const retailLink = post?.permalink;
 
-  const renderAddress = () => {  
+  const renderAddress = () => {
     const streetAddress = post?.acf?.street_address;
     const city = post?.acf?.city;
     const state = post?.acf?.state;

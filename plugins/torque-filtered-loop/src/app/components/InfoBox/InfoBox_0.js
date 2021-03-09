@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { arrayContains, arrEmpty } from "../../helpers";
 
+// used in-line, for displaying info box in the grid
 const InfoBox_0 = ({ post, setHeight }) => {
   // refs
   const infoBox = useRef();
@@ -23,9 +24,9 @@ const InfoBox_0 = ({ post, setHeight }) => {
   // this height is then used to add a spacer at the bottom of the grid item
   useEffect(() => {
     setHeight(infoBox.current.offsetHeight)
-  }, [infoBox])
+  }, [infoBox]);
 
-  const renderAddress = () => {  
+  const renderAddress = () => {
     const streetAddress = post?.acf?.street_address;
     const city = post?.acf?.city;
     const state = post?.acf?.state;
@@ -87,11 +88,11 @@ const InfoBox_0 = ({ post, setHeight }) => {
           {webLink
             ? <a 
               className={"info-box-button cta-website"}
-              href={webLink}
-              target={"_blank"}
+              href={webLink.url}
+              target={webLink.target}
               rel={"nofollow noopener"}
             >
-              {'View Website'}
+              {webLink.title}
             </a>
             : null}
         </div>

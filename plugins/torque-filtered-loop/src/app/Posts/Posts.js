@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Template_0, Template_1, Template_2, Template_3, Template_4, Template_5 } from "./Templates";
+import { Template_0, Template_1, Template_2, Template_3, Template_5 } from "./Templates";
+import Template_4 from "./Templates";
 import { arrEmpty } from "../helpers";
 import NoPostsNotice from "../components/NoPostsNotice";
 
