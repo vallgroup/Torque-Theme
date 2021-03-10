@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Filters from "./Filters";
 import Posts from "./Posts";
 import { useWPTerms, useWPPosts, useParentId, useSortPosts } from "./hooks";
-import { createTaxParams, createRequestParams } from "./helpers";
+import { createTaxParams, createRequestParams, arrEmpty } from "./helpers";
 
 const App = ({
   site,
@@ -31,7 +31,7 @@ const App = ({
     params,
     postsPerPage
   );
-  const sortedPosts = useSortPosts(firstTerm, posts);
+  const sortedPosts = !arrEmpty(useSortPosts(firstTerm, posts));
 
   return terms?.length ? (
     <div className={"torque-filtered-loop"}>

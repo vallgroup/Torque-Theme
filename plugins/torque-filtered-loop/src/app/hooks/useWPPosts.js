@@ -6,7 +6,7 @@ export default (site, activeTerm, params, postsPerPage) => {
   const [page, getNextPage, setHasNextPage] = usePagination([params]);
 
   // request
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState(false);
   useEffect(
     () => {
       const getPosts = async () => {

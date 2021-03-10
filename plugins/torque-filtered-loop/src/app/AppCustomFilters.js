@@ -25,7 +25,7 @@ const App = ({
 }) => {
   // states
   const [currView, setCurrView] = useState('grid');
-  const [currPosts, setCurrPosts] = useState([]);
+  const [currPosts, setCurrPosts] = useState(false);
   const [openInfoBox, setOpenInfoBox] = useState(false);
 
   // refs
@@ -56,7 +56,11 @@ const App = ({
   // for template #5, filter out non-retail posts
   useEffect(() => {
     var _newPosts = []
-    if ('template-5' === loopTemplate && !arrEmpty(posts)) {
+    if (
+      'template-5' === loopTemplate && 
+      !arrEmpty(posts) &&
+      false !== posts
+    ) {
       _newPosts = posts.filter((post, idx) => {
         let isRetail = false;
         post.terms.forEach(term => {

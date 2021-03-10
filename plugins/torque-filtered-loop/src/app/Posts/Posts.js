@@ -9,6 +9,8 @@ class Posts extends React.PureComponent {
   render() {
     if (arrEmpty(this.props.posts)) {
       return <NoPostsNotice loopTemplate={this.props.loopTemplate} />
+    } else if (false === this.props.posts) {
+      return <div>Loading...</div>
     } else {
       return (
         <div className={"posts-wrapper"}>
@@ -43,7 +45,10 @@ class Posts extends React.PureComponent {
 }
 
 Posts.propTypes = {
-  posts: PropTypes.array.isRequired,
+  posts: PropTypes.oneOfType([
+    PropTypes.array.isRequired,
+    PropTypes.bool.isRequired
+  ]),
   loopTemplate: PropTypes.string.isRequired,
   parentId: PropTypes.number
 };

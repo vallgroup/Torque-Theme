@@ -47,7 +47,6 @@ export const arrEmpty = (arr) => {
   if (
     'undefined' === typeof arr 
     || null === arr
-    || false === arr
   ) return true
   return (null === arr.length || 0 >= arr.length)
 }
