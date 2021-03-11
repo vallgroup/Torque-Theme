@@ -56,8 +56,9 @@ class Torque_Filtered_Loop_Shortcode {
       'filters_args'  => '',
 
       // newcastle-specific args
-      'property_type' => 'investment',
+      'property_type'   => 'investment',
       'enable_map_view' => '0',
+      'date_type'       => 'MMM YYYY', // pass 'YYYY' to filter by year only, or 'MMM YYYY' to filter by month and year
     );
 
 		add_shortcode( self::$SHORTCODE_SLUG , array( $this, 'shortcode_handler') );

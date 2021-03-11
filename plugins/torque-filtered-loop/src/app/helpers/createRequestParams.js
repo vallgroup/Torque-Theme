@@ -25,8 +25,14 @@ export default ({ postType, taxParams, metaParams, dateParams }) =>
 
           const date = new Date(dateParam);
 
-          params["year"] = date.getFullYear();
-          params["monthnum"] = date.getMonth() + 1; // js indexes months from 0
+          if (4 === dateParam.length) {
+            // we have the year only
+            params["year"] = date.getFullYear();
+          } else {
+            // we have the year and month
+            params["year"] = date.getFullYear();
+            params["monthnum"] = date.getMonth() + 1; // js indexes months from 0
+          }
         });
       }
 

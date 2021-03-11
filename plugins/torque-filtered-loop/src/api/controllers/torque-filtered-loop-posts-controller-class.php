@@ -31,6 +31,8 @@ class Torque_Filtered_Loop_Posts_Controller {
 		try {
 			$query_args = $this->build_query_from_params($this->request->get_params());
 
+			// var_dump( $query_args );
+
 			$query = new WP_Query( $query_args );
 
 			// var_dump( $query->have_posts() );

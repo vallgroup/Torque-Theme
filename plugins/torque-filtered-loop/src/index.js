@@ -21,6 +21,7 @@ entry.forEach(entry => {
     const filtersArgs = entry.getAttribute("data-filters_args");
 
     const enableMapView = entry.getAttribute("data-enable_map_view");
+    const dateType = entry.getAttribute("data-date_type");
 
     // pass through the data-site attr as props so the app knows where to send requests
     ReactDOM.render(
@@ -30,6 +31,7 @@ entry.forEach(entry => {
           filtersTypes={filtersTypes}
           filtersArgs={filtersArgs}
           enableMapView={enableMapView}
+          dateType={dateType}
         />
       ) : (
         <App

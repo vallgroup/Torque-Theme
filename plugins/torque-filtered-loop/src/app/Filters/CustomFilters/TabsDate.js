@@ -2,8 +2,8 @@ import React, { memo, useMemo } from "react";
 import { Tabs } from "../../components";
 import { useDateChoices } from "../../hooks";
 
-const TabsDate = ({ site, value, onChange, postType }) => {
-  const dates = useDateChoices(site, postType);
+const TabsDate = ({ site, value, onChange, postType, dateType }) => {
+  const dates = useDateChoices(site, postType, dateType);
 
   const dropdownOptions = useMemo(
     () =>

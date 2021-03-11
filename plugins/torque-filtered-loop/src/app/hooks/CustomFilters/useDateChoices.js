@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export default (site, postType) => {
+export default (site, postType, dateType) => {
   const [dates, setDates] = useState([]);
 
   useEffect(
@@ -11,7 +11,10 @@ export default (site, postType) => {
       const getDates = async () => {
         try {
           const url = `${site}/wp-json/filtered-loop/v1/filters/dropdown-date`;
-          const params = { post_type: postType };
+          const params = { 
+            post_type: postType,
+            date_type: dateType || 'YYYY MM',
+          };
           const response = await axios.get(url, { params });
 
           if (response.data.success && response.data.dates) {

@@ -21,7 +21,8 @@ const App = ({
   filtersTypes,
   filtersArgs,
   loopTemplate,
-  enableMapView
+  enableMapView,
+  dateType,
 }) => {
   // states
   const [currView, setCurrView] = useState('grid');
@@ -121,7 +122,7 @@ const App = ({
 
               // Date - tabs
               case "tabs_date":
-                return <TabsDate {...customFilterProps} postType={postType} />;
+                return <TabsDate {...customFilterProps} postType={postType} dateType={dateType} />;
 
               // ACF - tabs
               case "tabs_acf":

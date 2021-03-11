@@ -18,6 +18,9 @@ class Torque_Filtered_Loop_Filters_Controller {
       'post_type' => array(
         'validate_callback' => array( 'Torque_Validation', 'string' ),
       ),
+      'date_type' => array(
+        'validate_callback' => array( 'Torque_Validation', 'string' ),
+      ),
     );
 	}
 
@@ -51,6 +54,7 @@ class Torque_Filtered_Loop_Filters_Controller {
 	public function get_filter_dropdown_date() {
 		try {
 			$post_type = $this->request['post_type'];
+			$date_type = $this->request['date_type'];
 			$query = new WP_Query( array(
 				'post_type'	=> $post_type,
 				'posts_per_page' => -1,
@@ -61,7 +65,11 @@ class Torque_Filtered_Loop_Filters_Controller {
 				$dates_arr = [];
 
 				foreach ($query->posts as $post) {
-					$dates = date("M Y", strtotime($post->post_date));
+					if ( 'YYYY' === $date_type ) {
+						$dates = date("Y", strtotime($post->post_date));
+					} else {
+						$dates = date("M Y", strtotime($post->post_date));
+					}
 					if (!in_array($dates, $dates_arr)) {
 						$dates_arr[] = $dates;
 					}
