@@ -79,14 +79,14 @@ const InfoBox_1 = ({ post }) => {
               {'View Retail'}
             </a>
             : null}
-          {webLink
+          {"" !== webLink.title && "" !== webLink.url
             ? <a 
               className={"info-box-button cta-website"}
-              href={webLink}
-              target={"_blank"}
-              rel={"nofollow noopener"}
+              href={webLink.url}
+              target={webLink.target || "_self"}
+              rel={"_blank" === webLink.target ? "nofollow noopener" : ""}
             >
-              {'View Website'}
+              {webLink.title}
             </a>
             : null}
         </div>
