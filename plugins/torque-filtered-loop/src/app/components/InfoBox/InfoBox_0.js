@@ -14,12 +14,14 @@ const InfoBox_0 = ({ post, setHeight }) => {
     : false;
   const thumbnail = post?.thumbnail;
   const title = post?.post_title;
-  const excerpt = isRetail 
+  const excerpt = isRetail
     ? post?.acf?.retail_description
     : post?.acf?.multifamily_description;
   const webLink = post?.acf?.website_link;
   const retailLink = post?.permalink;
 
+  const additionalLinks = post?.acf?.additional_files_links;
+console.log({additionalLinks, webLink});
   // when the infoBox is updated, send the div height to parent component
   // this height is then used to add a spacer at the bottom of the grid item
   useEffect(() => {
@@ -31,22 +33,22 @@ const InfoBox_0 = ({ post, setHeight }) => {
     const city = post?.acf?.city;
     const state = post?.acf?.state;
     const zipCode = post?.acf?.zip_code;
-    
+
     return (
       <div className={"info-box-address-wrapper"}>
-        {streetAddress 
+        {streetAddress
           && <span className={"street-address"}>
             {streetAddress}
           </span>}
-        {city 
+        {city
           && <><br/><span className={"city"}>
             {city}
           </span></>}
-        {state 
+        {state
           && <span className={"state"}>
             {`, ${state}`}
           </span>}
-        {zipCode 
+        {zipCode
           && <span className={"zip-code"}>
             {`, ${zipCode}`}
           </span>}
@@ -55,38 +57,38 @@ const InfoBox_0 = ({ post, setHeight }) => {
   }
 
   return (
-    <div 
+    <div
       className={"info-box-wrapper template-0"}
       ref={infoBox}
     >
       <div className={"info-box-col1"}>
 
         {title
-          ? <h3 
+          ? <h3
             className="info-box-title"
             dangerouslySetInnerHTML={{ __html: title }}
           />
           : null}
-        
+
         {renderAddress()}
-        
+
         {excerpt
-          && <div 
+          && <div
             className={"info-box-excerpt"}
             dangerouslySetInnerHTML={{ __html: excerpt }}
           ></div>}
-        
+
         <div className={"info-box-buttons-wrapper"}>
           {isRetail
-            ? <a 
+            ? <a
               className={"info-box-button cta-retail"}
               href={retailLink}
             >
               {'View Retail'}
             </a>
             : null}
-          {"" !== webLink.title && "" !== webLink.url
-            ? <a 
+          {"" !== webLink && "" !== webLink.title && "" !== webLink.url
+            ? <a
               className={"info-box-button cta-website"}
               href={webLink.url}
               target={webLink.target || "_self"}
@@ -95,6 +97,15 @@ const InfoBox_0 = ({ post, setHeight }) => {
               {webLink.title}
             </a>
             : null}
+          {additionalLinks && additionalLinks.map((link, idx) => (
+            <a
+              key={idx}
+              className={"info-box-button cta-website additional-link"}
+              href={link.field_6000f3c8d8e36}
+            >
+              {link.field_6000f35bd8e33}
+            </a>
+          ))}
         </div>
 
       </div>
