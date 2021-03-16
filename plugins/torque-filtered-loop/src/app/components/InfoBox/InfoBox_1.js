@@ -19,6 +19,13 @@ const InfoBox_1 = ({ post }) => {
     : post?.acf?.multifamily_description;
   const webLink = post?.acf?.website_link;
   const retailLink = post?.permalink;
+  // additional link ACF defs:
+  // field_604b44007d3ae - bool, open in new tab
+  // field_6000f35bd8e33 - string, title of link/file
+  // field_6000f362d8e34 - string, either 'link' or 'file'
+  // field_6000f3b1d8e35 - object, file ()
+  // field_6000f3c8d8e36 - string, link url
+  const additionalLinks = post?.acf?.additional_files_links;
 
   const renderAddress = () => {
     const streetAddress = post?.acf?.street_address;
@@ -71,6 +78,7 @@ const InfoBox_1 = ({ post }) => {
           ></div>}
         
         <div className={"info-box-buttons-wrapper"}>
+
           {isRetail
             ? <a 
               className={"info-box-button cta-retail"}
@@ -79,8 +87,9 @@ const InfoBox_1 = ({ post }) => {
               {'View Retail'}
             </a>
             : null}
-          {"" !== webLink.title && "" !== webLink.url
-            ? <a 
+
+          {"" !== webLink && "" !== webLink.title && "" !== webLink.url
+            ? <a
               className={"info-box-button cta-website"}
               href={webLink.url}
               target={webLink.target || "_self"}
@@ -89,6 +98,18 @@ const InfoBox_1 = ({ post }) => {
               {webLink.title}
             </a>
             : null}
+
+          {additionalLinks && additionalLinks.map((link, idx) => {
+            ('link' === link.field_6000f362d8e34 && '' !== link.field_6000f3c8d8e36) &&
+              <a
+                key={idx}
+                className={"info-box-button cta-website additional-link"}
+                href={link.field_6000f3c8d8e36}
+                target={'1' === link.field_604b44007d3ae ? '_blank' : '_self'}
+              >
+                {link.field_6000f35bd8e33}
+              </a>
+          })}
         </div>
 
       </div>
