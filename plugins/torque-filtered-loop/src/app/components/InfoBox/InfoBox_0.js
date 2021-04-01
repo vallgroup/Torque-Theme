@@ -27,8 +27,6 @@ const InfoBox_0 = ({ post, setHeight }) => {
   // field_6000f3c8d8e36 - string, link url
   const additionalLinks = post?.acf?.additional_files_links;
 
-  console.log({additionalLinks, webLink});
-
   // when the infoBox is updated, send the div height to parent component
   // this height is then used to add a spacer at the bottom of the grid item
   useEffect(() => {
@@ -108,7 +106,7 @@ const InfoBox_0 = ({ post, setHeight }) => {
             : null}
 
           {additionalLinks && additionalLinks.map((link, idx) => {
-            ('link' === link.field_6000f362d8e34 && '' !== link.field_6000f3c8d8e36) &&
+            return ('link' === link.field_6000f362d8e34 && '' !== link.field_6000f3c8d8e36) &&
               <a
                 key={idx}
                 className={"info-box-button cta-website additional-link"}

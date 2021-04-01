@@ -19,10 +19,6 @@ export default function Template_4({ post }) {
     // openInfoBox === post.ID && setIsOpen(true);
   },[openInfoBox]);
 
-  // console.log('openInfoBox', openInfoBox);
-  // console.log('post.ID', post.ID);
-  // console.log('isOpen', isOpen);
-
   // handles the open/closed state of this grid item's info box
   const handleCtaClick = (e) => {
     // prevent default anchor events
