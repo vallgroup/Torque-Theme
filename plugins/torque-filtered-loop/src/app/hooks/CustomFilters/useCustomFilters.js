@@ -10,7 +10,19 @@ export default (filtersTypes, filtersArgs) => {
 
   const initFilters = {};
   filterSettings.forEach(filter => {
-    if (query[filter.args]) initFilters[filter.id] = query[filter.args];
+    if (query[filter.args]) {
+      // if multiple args
+      if (String(query[filter.args]).includes(',')) {
+        // split up and save initial filters as an array
+        const _args = [];
+        query[filter.args].split(',').forEach(v => {
+          return _args.push(parseInt(v));
+        });
+        initFilters[filter.id] = _args;
+      } else {
+        initFilters[filter.id] = query[filter.args];
+      }
+    }
   });
 
   const [filters, setFilters] = useState(initFilters);
@@ -88,7 +100,6 @@ export default (filtersTypes, filtersArgs) => {
     }
 
     return _newValue;
-
   }
 
   return { filterSettings, filters, createFilterUpdater };

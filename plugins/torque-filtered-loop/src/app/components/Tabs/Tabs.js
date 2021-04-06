@@ -49,21 +49,21 @@ const Tabs = ({ title, options, value, onChange, multiSelect }) => {
 
   const selectedOptions = useMemo(
     () => {
-      let values = [];
+      const _values = [];
 
       if (Array.isArray(value)) {
         // if currently selected 'value' is an array, we have multiple selected
         value.forEach(v => {
           // for each selected value, add it to the array of selectedOptions (if found)
-          const valFound = options.find(option => option.key === v)
-          if (valFound) values.push(valFound.key)
+          const valFound = options.find(option => option.key === parseInt(v))
+          if (valFound) _values.push(valFound.key)
         })
       } else {
         // we have a single selected value, so make sure it is in the options and push it to the selectedOptions
         const valFound = options.find(option => option.key === value)
-        if (valFound) values.push(valFound.key)
+        if (valFound) _values.push(valFound.key)
       }
-      return values
+      return _values
     },
     [optionsWithAll, value]
   );
