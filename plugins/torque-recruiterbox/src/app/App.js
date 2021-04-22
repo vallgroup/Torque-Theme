@@ -8,7 +8,7 @@ const App = ({
   apiFilters
 }) => {
   // states
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [apiKeys, setApiKeys] = useState(null);
 
   // get API keys from WP
@@ -19,7 +19,7 @@ const App = ({
   const getApiKeys = async () => {
     setIsLoading(true);
 
-    // send API request
+    // get API secrets
     try {
       const _response = await axios.get('http://localhost:8000/wp-json/torque-recruiterbox/v1/secrets/');
       
@@ -32,8 +32,6 @@ const App = ({
 
     setIsLoading(false);
   }
-
-  console.log('apiFilters', apiFilters);
 
   return isLoading ?
     <LoadingIcon/> : 
