@@ -11,7 +11,7 @@ if ( $logo_src ) {
 
   <a href="<?php echo get_home_url(); ?>">
     <div>
-      <img class="torque-logo torque-header-logo" src="<?php echo $logo_src; ?>" />
+      <img class="torque-logo torque-header-logo" src="<?php echo $logo_src; ?>" alt="<?php echo get_bloginfo( 'name' ) . ' Logo'; ?>" />
     </div>
   </a>
 
