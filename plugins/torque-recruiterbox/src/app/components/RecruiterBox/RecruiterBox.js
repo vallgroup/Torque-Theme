@@ -7,7 +7,8 @@ import Opening from '../Opening';
 const RecruiterBox = ({apiKeys, apiFilters}) => {
   // states
   const [isLoading, setIsLoading] = useState(false);
-  const [apiCalled, setApiCalled] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [hasOpenings, setHasOpenings] = useState();
   const [openings, setOpenings] = useState([]);
   // vars
   const rbApiUrl = 'https://jsapi.recruiterbox.com/v1/openings';
@@ -18,116 +19,69 @@ const RecruiterBox = ({apiKeys, apiFilters}) => {
     // fetch openings
     buildOpenings();
     // set loading and api called
-    setApiCalled(true);
     setIsLoading(false);
   },[]);
 
-  const buildOpenings = () => {
-    let _clientOpenings = [];
-    !arrEmpty(apiKeys) && apiKeys.forEach((secret) => {
+  const buildOpenings = async () => {
+    const _clientOpenings = [];
+
+    !arrEmpty(apiKeys) && await Promise.all(apiKeys.map(async (secret, idx) => {
       if (secret.client_name && '' !== secret.client_name) {
         try {
+          // check if we need to include filters for this client
           const _clientFilters = secret.filter_data ? apiFilters : {};
-          const _response = axios.get(rbApiUrl, {
+          // fetch the openings
+          const _response = await axios.get(rbApiUrl, {
             params: {
               'client_name': secret.client_name,
               ..._clientFilters
             }
           });
-
+          // if openings available, add to client openings
           if (!arrEmpty(_response?.data?.objects)) {
-            _clientOpenings.push(_response.data.objects);
+            _clientOpenings.push(..._response.data.objects);
           }
-          // _clientOpenings.push(
-          //   {
-          //     "id": "a42f3",
-          //     "title": "UX - Engineer",
-          //     "description": "UX - Engineer",
-          //     "location": {
-          //       "city": "San Jose",
-          //       "state": "CA",
-          //       "country": "USA"
-          //     },
-          //     "tags": ["Dev","UX"],
-          //     "hosted_url": "https://demoaccount.recruiterbox.com/jobs/ad3e",
-          //     "allows_remote": true,
-          //     "position_type": "contract",
-          //     "team": "FrontEnd Engineers",
-          //     "close_date": 1513445073
-          //   },
-          //   {
-          //     "id": "a4d2f3",
-          //     "title": "Product Engineer",
-          //     "description": "Frontend Engineer",
-          //     "location": {
-          //       "city": "Chicago",
-          //       "state": "IL",
-          //       "country": "USA"
-          //     },
-          //     "tags": ["Dev","UX"],
-          //     "hosted_url": "https://demoaccount.recruiterbox.com/jobs/ad3e",
-          //     "allows_remote": true,
-          //     "position_type": "contract",
-          //     "team": "FrontEnd Engineers",
-          //     "close_date": 1513445073
-          //   },
-          //   {
-          //     "id": "a42af3",
-          //     "title": "Senior Product Engineer",
-          //     "description": "Frontend Engineer",
-          //     "location": {
-          //       "city": "Chicago",
-          //       "state": "IL",
-          //       "country": "USA"
-          //     },
-          //     "tags": ["Dev","UX"],
-          //     "hosted_url": "https://demoaccount.recruiterbox.com/jobs/ad3e",
-          //     "allows_remote": true,
-          //     "position_type": "contract",
-          //     "team": "FrontEnd Engineers",
-          //     "close_date": 1513445073
-          //   },
-          //   {
-          //     "id": "a42sdaf3",
-          //     "title": "Mid Product Engineer",
-          //     "description": "Frontend Engineer",
-          //     "location": {
-          //       "city": "Chicago",
-          //       "state": "IL",
-          //       "country": "USA"
-          //     },
-          //     "tags": ["Dev","UX"],
-          //     "hosted_url": "https://demoaccount.recruiterbox.com/jobs/ad3e",
-          //     "allows_remote": true,
-          //     "position_type": "contract",
-          //     "team": "FrontEnd Engineers",
-          //     "close_date": 1513445073
-          //   }
-          // );
+          setIsError(false);
         } catch (error) {
           console.warn(error);
+          setIsError(true);
         }
       }
-    });
+    }));
 
-    Promise.all(_clientOpenings)
-      .then(_clientOpenings => {
-        setOpenings(_clientOpenings)
-      });
+    if (!arrEmpty(_clientOpenings)) {
+      // save the openings
+      setOpenings(_clientOpenings);
+      setHasOpenings(true);
+    } else {
+      setHasOpenings(false);
+    }
   }
 
-  return isLoading ? 
-    <LoadingIcon/> :
-    apiCalled && !arrEmpty(openings) ?
+  console.log('isLoading', isLoading);
+  console.log('isError', isError);
+  console.log('hasOpenings', hasOpenings);
+  console.log('----');
+
+  // early-exits
+  if (isLoading) {
+    return <LoadingIcon/>;
+  } else if (isError) {
+    return 'An error has occured. Please reload this page to try again.';
+  } else if (false === hasOpenings) {
+    return 'No current openings available.';
+  }
+
+  return (
     <div className={'openings-container'}>
-      {openings.map((opening, idx) => {
-        return <Opening
-        key={idx}
-        opening={opening}
+      {openings.map((opening, idx) => (
+        <Opening
+          key={idx}
+          opening={opening}
         />
-      })}
-    </div> :
-    'No current openings available.';
+      ))}
+    </div>
+  );
 }
 
 export default RecruiterBox
