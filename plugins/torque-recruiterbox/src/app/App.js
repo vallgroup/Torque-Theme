@@ -21,7 +21,7 @@ const App = ({
 
     // get API secrets
     try {
-      const _response = await axios.get('http://localhost:8000/wp-json/torque-recruiterbox/v1/secrets/');
+      const _response = await axios.get(`${site}/wp-json/torque-recruiterbox/v1/secrets/`);
       
       if (_response?.data?.api_keys) {
         setApiKeys(_response.data.api_keys);
