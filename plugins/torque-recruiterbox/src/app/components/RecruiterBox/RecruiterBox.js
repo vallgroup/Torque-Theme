@@ -58,11 +58,6 @@ const RecruiterBox = ({apiKeys, apiFilters}) => {
     }
   }
 
-  console.log('isLoading', isLoading);
-  console.log('isError', isError);
-  console.log('hasOpenings', hasOpenings);
-  console.log('----');
-
   // early-exits
   if (isLoading) {
     return <LoadingIcon/>;
