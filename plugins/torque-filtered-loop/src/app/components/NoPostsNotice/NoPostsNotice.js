@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from "react";
 import { arrayContains, arrEmpty } from "../../helpers";
 
 const NoPostsNotice = ({ loopTemplate }) => {
-  const postTypeLabel = 'template-4' === loopTemplate || 'template-5' === loopTemplate
+  const postTypeLabel = 'template-4' === loopTemplate || 'template-5' === loopTemplate  || 'template-6' === loopTemplate
     ? 'properties'
     : 'posts';
   return (
