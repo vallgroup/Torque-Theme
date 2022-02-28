@@ -23,6 +23,7 @@ const MapView = ({ apiKey, posts, mapOptions, loopTemplate, mapWrapperRef }) => 
   const pinSize = mapOptions.pin_size ? mapOptions.pin_size.split(",").map( Number ) : [39,54]
 
   useEffect(() => {
+
     // format each post as a marker, and define bounds array for auto center feature
     if (posts && !arrEmpty(posts)) {
       const newMarkers = [];
@@ -39,7 +40,11 @@ const MapView = ({ apiKey, posts, mapOptions, loopTemplate, mapWrapperRef }) => 
         })
 
         if (post && post.acf && post.acf.latitude_longitude) {
-          points.extend({ lat: post.acf.latitude_longitude.lat, lng: post.acf.latitude_longitude.lng })
+          let boundsLatLng = post.acf.latitude_longitude
+          if ( typeof post.acf.latitude_longitude === 'string' ) {
+            boundsLatLng = JSON.parse(post.acf.latitude_longitude)
+          }
+          points.extend({ lat: parseFloat(boundsLatLng.lat), lng: parseFloat(boundsLatLng.lng) })
         }
 
       });
