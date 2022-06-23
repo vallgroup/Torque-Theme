@@ -1,4 +1,4 @@
-import React, { memo } from "React";
+import React, { memo } from "react";
 import Filters from "..";
 import { useACFSelectChoices } from "../../hooks";
 
