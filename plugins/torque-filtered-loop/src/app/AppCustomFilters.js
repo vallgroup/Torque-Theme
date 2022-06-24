@@ -29,7 +29,8 @@ const App = ({
     dateParams
   });
   const { posts, getNextPage } = useWPPosts(site, null, params, postsPerPage);
-
+  //filter post for possible duplicates
+  const filteredPosts = posts.filter((post, index, array) => array.findIndex(t => t.ID == post.ID) == index);
   return filterSettings?.length ? (
     <div className={"torque-filtered-loop custom-filters"}>
       {filterSettings.map((filter, index) => {
@@ -57,7 +58,7 @@ const App = ({
         }
       })}
 
-      <Posts posts={posts} loopTemplate={loopTemplate} />
+      <Posts posts={filteredPosts} loopTemplate={loopTemplate} />
 
       {getNextPage && (
         <button
