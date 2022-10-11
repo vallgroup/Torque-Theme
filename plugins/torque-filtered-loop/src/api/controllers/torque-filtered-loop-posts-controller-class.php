@@ -30,9 +30,6 @@ class Torque_Filtered_Loop_Posts_Controller {
 	public function get_posts() {
 		try {
 			$query_args = $this->build_query_from_params($this->request->get_params());
-
-			// var_dump( $query_args );
-
 			$query = new WP_Query( $query_args );
 
 			// var_dump( $query->have_posts() );
@@ -62,6 +59,7 @@ class Torque_Filtered_Loop_Posts_Controller {
 
 	private function build_query_from_params($params) {
 		$query = array();
+		$tax_query = array();
 
 		foreach ($params as $key => $value) {
 			// meta query params
@@ -96,15 +94,15 @@ class Torque_Filtered_Loop_Posts_Controller {
 				// check if tax query value is an array (multi-select), and format the value accordingly
 				if ( false !== strpos( $value, ',' ) ) {
 					// tidy values
-					$value = explode( 
-						',', 
-						str_replace( 
-							' ', 
-							'', 
+					$value = explode(
+						',',
+						str_replace(
+							' ',
+							'',
 							$value
 						)
 					);
-						
+
 					// add AND relationship, in case multiple tax_ queries are present
 					$query['tax_query'] = array(
 						'relation'	=> 'AND'
@@ -115,22 +113,24 @@ class Torque_Filtered_Loop_Posts_Controller {
 					foreach($value as $v) {
 						$_terms[] = intval($v);
 					}
-					$query['tax_query'][] = array(
+
+					array_push($tax_query, array(
 						'taxonomy' => $tax_slug,
 						'field'    => $field,
 						'terms'    => $_terms, // array of terms
 						'operator' => $operator,
-					);
+					));
 				} else {
 					// create tax_query for the term ID
-					$query['tax_query'][] = array(
+					array_push($tax_query, array(
 						'taxonomy' => $tax_slug,
 						'field'    => $field,
 						'terms'    => intval($value),
 						'operator' => $operator,
-					);
+					));
 				}
 
+				$query['tax_query'][] = $tax_query;
 				continue;
 			}
 
@@ -150,8 +150,8 @@ class Torque_Filtered_Loop_Posts_Controller {
 
 		$post->terms = wp_get_post_terms($post->ID, array_keys($this->taxonomies));
 
-		$post->acf = function_exists( 'get_fields' ) 
-			? get_fields( $post->ID, false ) 
+		$post->acf = function_exists( 'get_fields' )
+			? get_fields( $post->ID, false )
 			: null;
 	}
 
@@ -185,10 +185,10 @@ class Torque_Filtered_Loop_Posts_Controller {
 	}
 
 	private function has_next_page( $query_args ) {
-		if ( 
-			!isset( $query_args['posts_per_page'] ) 
-			|| !$query_args['posts_per_page'] 
-			|| $query_args['posts_per_page'] == -1 
+		if (
+			!isset( $query_args['posts_per_page'] )
+			|| !$query_args['posts_per_page']
+			|| $query_args['posts_per_page'] == -1
 		) {
 			return false;
 		}

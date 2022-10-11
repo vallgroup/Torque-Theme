@@ -63,6 +63,7 @@ const MapView = ({ apiKey, posts, mapOptions, loopTemplate, mapWrapperRef }) => 
     setShowingInfoBox(false)
     // remove the toggle class from parent wrapper
     mapWrapperRef.current.classList.remove('info-box-open')
+    showInfoBox();
   }
 
   const showInfoBox = () => {
@@ -148,7 +149,7 @@ const MapView = ({ apiKey, posts, mapOptions, loopTemplate, mapWrapperRef }) => 
       return (<div className={`infowindow`}>
         <div>
           <h3 className={'title'}>{activeMarker.post?.post_title || ''}</h3>
-          <h5 className={'address'}>
+          {/*<h5 className={'address'}>
             {activeMarker.post?.acf?.street_address || ''}<br/>
             {activeMarker.post?.acf?.city || ''}, {activeMarker.post?.acf?.state || ''} {activeMarker.post?.acf?.zip_code || ''}
           </h5>
@@ -157,7 +158,7 @@ const MapView = ({ apiKey, posts, mapOptions, loopTemplate, mapWrapperRef }) => 
             onClick={() => showInfoBox()}
           >
             {'View Details'}
-          </div>
+          </div>*/}
         </div>
       </div>);
     } else {
