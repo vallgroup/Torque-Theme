@@ -15,6 +15,7 @@ class Torque_Filtered_Loop_Map_Controller {
 		try {
 			$api_key = get_field( 'google_maps_api_key', 'options' );
 			$marker_icon = get_field( 'marker_icon', 'options' );
+			$pin_size = get_field( 'pin_size', 'options' );
 			$map_zoom_archive = get_field( 'map_zoom_archive', 'options' );
 			$map_zoom_single = get_field( 'map_zoom_single', 'options' );
 			$map_center = get_field( 'map_center_latitude', 'options' ) && get_field( 'map_center_latitude', 'options' )
@@ -29,6 +30,7 @@ class Torque_Filtered_Loop_Map_Controller {
 				'map_options'	=> array(
 					'api_key' 					=> $api_key,
 					'marker_icon' 			=> $marker_icon,
+					'pin_size' 					=> $pin_size,
 					'map_zoom_archive'	=> $map_zoom_archive,
 					'map_zoom_single'		=> $map_zoom_single,
 					'map_center' 				=> $map_center,
