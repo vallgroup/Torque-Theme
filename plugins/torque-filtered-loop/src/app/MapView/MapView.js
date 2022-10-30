@@ -23,7 +23,6 @@ const MapView = ({ apiKey, posts, mapOptions, loopTemplate, mapWrapperRef }) => 
   const pinSize = mapOptions.pin_size ? mapOptions.pin_size.split(",").map( Number ) : [39,54]
 
   useEffect(() => {
-
     // format each post as a marker, and define bounds array for auto center feature
     if (posts && !arrEmpty(posts)) {
       const newMarkers = [];
@@ -54,30 +53,28 @@ const MapView = ({ apiKey, posts, mapOptions, loopTemplate, mapWrapperRef }) => 
     }
   }, [posts]);
 
-  const onMarkerClick = (marker) => {
+  const onMarkerClick = async (marker) => {
     // set the active marker
-    setActiveMarker(marker)
+    await setActiveMarker(marker)
     // show the info window
-    setShowingInfoWindow(true)
+    await setShowingInfoWindow(true)
     // hide the info box
-    setShowingInfoBox(false)
-    // remove the toggle class from parent wrapper
-    mapWrapperRef.current.classList.remove('info-box-open')
+    // await setShowingInfoBox(false)
+    // // remove the toggle class from parent wrapper
+    // mapWrapperRef.current.classList.remove('info-box-open')
     showInfoBox();
   }
 
   const showInfoBox = () => {
-    if (showingInfoBox) {
-      // hide the info box
-      setShowingInfoBox(false)
-      // remove the toggle class from parent wrapper
-      mapWrapperRef.current.classList.remove('info-box-open')
-    } else {
-      // show the info box
-      setShowingInfoBox(true)
-      // add the toggle class from parent wrapper
-      mapWrapperRef.current.classList.add('info-box-open')
-    }
+    setShowingInfoBox(true)
+    // add the toggle class from parent wrapper
+    mapWrapperRef.current.classList.add('info-box-open');
+  }
+
+  const closeBlueBox = () => {
+    setShowingInfoBox(false)
+    // add the toggle class from parent wrapper
+    mapWrapperRef.current.classList.remove('info-box-open');
   }
 
   const onInfoWindowClose = () => {
@@ -208,7 +205,7 @@ const MapView = ({ apiKey, posts, mapOptions, loopTemplate, mapWrapperRef }) => 
 
     {showingInfoBox
       && activeMarker
-      && <InfoBox_1 post={activeMarker.post} />}
+      && <InfoBox_1 post={activeMarker.post} close={closeBlueBox} />}
   </div>);
 };
 

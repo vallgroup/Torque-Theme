@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from "react";
 import { arrayContains, arrEmpty } from "../../helpers";
 
 // used for displaying the info box for the map
-const InfoBox_1 = ({ post }) => {
+const InfoBox_1 = ({ post, close }) => {
   // refs
   const infoBox = useRef();
 
@@ -14,7 +14,7 @@ const InfoBox_1 = ({ post }) => {
     : false;
   const thumbnail = post?.thumbnail;
   const title = post?.post_title;
-  const excerpt = isRetail 
+  const excerpt = isRetail
     ? post?.acf?.retail_description
     : post?.acf?.multifamily_description;
   const webLink = post?.acf?.website_link;
@@ -32,22 +32,22 @@ const InfoBox_1 = ({ post }) => {
     const city = post?.acf?.city;
     const state = post?.acf?.state;
     const zipCode = post?.acf?.zip_code;
-    
+
     return (
       <div className={"info-box-address-wrapper"}>
-        {streetAddress 
+        {streetAddress
           && <span className={"street-address"}>
             {streetAddress}
           </span>}
-        {city 
+        {city
           && <><br/><span className={"city"}>
             {city}
           </span></>}
-        {state 
+        {state
           && <span className={"state"}>
             {`, ${state}`}
           </span>}
-        {zipCode 
+        {zipCode
           && <span className={"zip-code"}>
             {`, ${zipCode}`}
           </span>}
@@ -56,31 +56,32 @@ const InfoBox_1 = ({ post }) => {
   }
 
   return (
-    <div 
+    <div
       className={"info-box-wrapper template-1"}
       ref={infoBox}
     >
+      <a className={"close-blue-box"} onClick={close}></a>
       <div className={"info-box-col1"}>
 
         {title
-          ? <h3 
+          ? <h3
             className="info-box-title"
             dangerouslySetInnerHTML={{ __html: title }}
           />
           : null}
-        
+
         {renderAddress()}
-        
+
         {excerpt
-          && <div 
+          && <div
             className={"info-box-excerpt"}
             dangerouslySetInnerHTML={{ __html: excerpt }}
           ></div>}
-        
+
         <div className={"info-box-buttons-wrapper"}>
 
           {isRetail
-            ? <a 
+            ? <a
               className={"info-box-button cta-retail"}
               href={retailLink}
             >
