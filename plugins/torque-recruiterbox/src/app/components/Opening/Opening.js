@@ -3,10 +3,10 @@ import {objEmpty} from '../../helpers'
 
 const Opening = ({opening}) => {
   // vars
-  const _url = opening.hosted_url;
+  const _url = opening.absolute_url;
   const _title = opening.title;
-  const _address = `${opening.location.city}, ${opening.location.state}, ${opening.location.country}`;
-  
+  const _address = opening.location.name;
+
   return !objEmpty(opening) ?
     <div className={'opening-container'}>
       <a
@@ -18,7 +18,7 @@ const Opening = ({opening}) => {
         <span className={'opening-title'}>{_title}</span>
         <span className={'opening-address'}>{_address}</span>
       </a>
-    </div> : 
+    </div> :
     null;
 }
 

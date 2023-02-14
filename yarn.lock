@@ -3981,11 +3981,6 @@ iferr@^0.1.5:
   resolved "https://registry.yarnpkg.com/iferr/-/iferr-0.1.5.tgz#c60eed69e6d8fdb6b3104a1fcbca1c192dc5b501"
   integrity sha1-xg7taebY/bazEEofy8ocGS3FtQE=
 
-iframe-lightbox@^0.2.8:
-  version "0.2.11"
-  resolved "https://registry.yarnpkg.com/iframe-lightbox/-/iframe-lightbox-0.2.11.tgz#a532dd50416562cf5ea6b35231e2c23ca79d65bd"
-  integrity sha512-Rl561jbkKGSNCcg2Mx+/htbcWJR5YCsc6O7jNaYyboL7ckvKH9LuObzYq+f8V7J7TUTBASvDx6qqsrN4m35+rw==
-
 ignore@^3.3.5:
   version "3.3.10"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.10.tgz#0a97fb876986e8081c631160f8f9f389157f0043"
