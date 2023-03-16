@@ -11,7 +11,8 @@ const RecruiterBox = ({apiKeys, apiFilters}) => {
   const [hasOpenings, setHasOpenings] = useState();
   const [openings, setOpenings] = useState([]);
   // vars
-  const rbApiUrl = 'https://jsapi.recruiterbox.com/v1/openings';
+  //const rbApiUrl = 'https://jsapi.recruiterbox.com/v1/openings';
+  const rbApiUrl = 'https://boards-api.greenhouse.io/v1/boards';
 
   useEffect(() => {
     // set loading
@@ -28,18 +29,16 @@ const RecruiterBox = ({apiKeys, apiFilters}) => {
     !arrEmpty(apiKeys) && await Promise.all(apiKeys.map(async (secret, idx) => {
       if (secret.client_name && '' !== secret.client_name) {
         try {
-          // check if we need to include filters for this client
-          const _clientFilters = secret.filter_data ? apiFilters : {};
           // fetch the openings
-          const _response = await axios.get(rbApiUrl, {
+          const _response = await axios.get(`${rbApiUrl}/${secret.client_name}/jobs`, {
             params: {
-              'client_name': secret.client_name,
-              ..._clientFilters
+              'content': false,
             }
           });
+
           // if openings available, add to client openings
-          if (!arrEmpty(_response?.data?.objects)) {
-            _clientOpenings.push(..._response.data.objects);
+          if (!arrEmpty(_response?.data?.jobs)) {
+            _clientOpenings.push(..._response.data.jobs);
           }
           setIsError(false);
         } catch (error) {

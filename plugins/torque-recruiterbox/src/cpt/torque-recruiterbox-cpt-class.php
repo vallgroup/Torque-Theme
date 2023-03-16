@@ -13,23 +13,23 @@ class Torque_RecruiterBox_CPT {
 	}
 
 	public function acf_init() {
-    
+
 		// UPDATED: 20210421
-		
+
 		// ACF DEFS - START
-		
+
 		if( function_exists('acf_add_local_field_group') ):
 
 			acf_add_local_field_group(array(
 				'key' => 'group_607fbc296a6d1',
-				'title' => 'RecruiterBox Options',
+				'title' => 'Greenhouse Options',
 				'fields' => array(
 					array(
 						'key' => 'field_607fbc297a1fb',
-						'label' => 'RecruiterBox API Keys',
+						'label' => 'Greenhouse API Keys',
 						'name' => 'recruiterbox_api_keys',
 						'type' => 'repeater',
-						'instructions' => 'Enter at least one Client Name and API key combination, used to fetch data from RecruiterBox.',
+						'instructions' => 'Enter at least one Client Name and API key combination, used to fetch data from Greenhouse.',
 						'required' => 0,
 						'conditional_logic' => 0,
 						'wrapper' => array(
@@ -38,8 +38,8 @@ class Torque_RecruiterBox_CPT {
 							'id' => '',
 						),
 						'collapsed' => '',
-						'min' => 0,
-						'max' => 0,
+						'min' => 1,
+						'max' => 1,
 						'layout' => 'table',
 						'button_label' => 'Add API Key',
 						'sub_fields' => array(
@@ -84,26 +84,7 @@ class Torque_RecruiterBox_CPT {
 								'maxlength' => '',
 								'readonly' => 0,
 								'disabled' => 0,
-							),
-							array(
-								'key' => 'field_607fc005eacae',
-								'label' => 'Filter Data?',
-								'name' => 'filter_data',
-								'type' => 'true_false',
-								'instructions' => 'If selected, the data will be fetched according to the filters set in the page Content Module. If unselected all data will be fetched.',
-								'required' => 0,
-								'conditional_logic' => 0,
-								'wrapper' => array(
-									'width' => '',
-									'class' => '',
-									'id' => '',
-								),
-								'message' => '',
-								'default_value' => 0,
-								'ui' => 1,
-								'ui_on_text' => '',
-								'ui_off_text' => '',
-							),
+							)
 						),
 					),
 				),
@@ -125,9 +106,9 @@ class Torque_RecruiterBox_CPT {
 				'active' => true,
 				'description' => '',
 			));
-			
+
 			endif;
-		
+
 		// ACF DEFS - END
 	}
 }
