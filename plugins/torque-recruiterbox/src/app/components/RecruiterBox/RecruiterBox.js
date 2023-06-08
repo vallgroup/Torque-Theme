@@ -38,7 +38,14 @@ const RecruiterBox = ({apiKeys, apiFilters}) => {
 
           // if openings available, add to client openings
           if (!arrEmpty(_response?.data?.jobs)) {
-            _clientOpenings.push(..._response.data.jobs);
+            const _jobs = _response.data.jobs;
+
+            //apdd client name to each job
+            _jobs.forEach(object => {
+              object.board = secret.client_name;
+            });
+
+            _clientOpenings.push(..._jobs);
           }
           setIsError(false);
         } catch (error) {
