@@ -39,7 +39,7 @@ class Torque_RecruiterBox_CPT {
 						),
 						'collapsed' => '',
 						'min' => 1,
-						'max' => 1,
+						'max' => 0,
 						'layout' => 'table',
 						'button_label' => 'Add API Key',
 						'sub_fields' => array(
