@@ -203,7 +203,7 @@ class Entrata_API {
 				if ($start_date_date) {
 					$compare_date = date_create_from_format("d/m/Y",$unit->{'@attributes'}->AvailableOn);
 					$diff = date_diff($compare_date, $start_date_date);
-					$is_available_by_date = ($diff->invert === 0 || $diff->days === 0);
+					$is_available_by_date = ($diff->invert === 1 || $diff->days === 0);
 				} else {
 					$is_available_by_date = true;
 				}
