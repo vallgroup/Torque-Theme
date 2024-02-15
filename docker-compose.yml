@@ -21,13 +21,13 @@ services:
        - torque_wp_mysql_user
        - torque_wp_mysql_pass
 
-   atlantic-residential-phpmyadmin:
+   atlantic-residential-adminer:
     depends_on:
       - atlantic-residential-db
-    image: phpmyadmin/phpmyadmin
+    image: adminer:latest
     restart: always
     ports:
-      - 8080:80
+      - 8081:8080
     environment:
       PMA_HOST: atlantic-residential-db
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/torque_wp_mysql_root
@@ -35,13 +35,15 @@ services:
       - atlantic-residential-back
     secrets:
       - torque_wp_mysql_root
+    links:
+      - atlantic-residential-db
 
    atlantic-residential-wordpress:
      depends_on:
        - atlantic-residential-db
      image: wordpress:latest
      ports:
-       - "8000:80"
+       - "8083:80"
      volumes:
        - ./wp-content:/var/www/html/wp-content
        - ./php.ini:/var/www/html/php.ini
@@ -51,7 +53,7 @@ services:
        WORDPRESS_DB_NAME: torque-wp
        WORDPRESS_DB_USER_FILE: /run/secrets/torque_wp_mysql_user
        WORDPRESS_DB_PASSWORD_FILE: /run/secrets/torque_wp_mysql_pass
-       WORDPRESS_DEBUG: 1
+       WORDPRESS_DEBUG: 0 
      networks:
        - atlantic-residential-back
      secrets:
