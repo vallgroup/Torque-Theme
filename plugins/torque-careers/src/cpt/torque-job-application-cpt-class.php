@@ -56,6 +56,7 @@ class Torque_Job_Application_CPT {
 	 */
 	protected $job_applications_options = array(
 		'public'				=> false,
+		'show_ui'				=> true,
 		'supports'			=> array(
 			'title',   // will just hold the applicant name, making it easier to search
 			'editor'  // serialized array of the application data to keep it flexible
