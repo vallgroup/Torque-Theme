@@ -11,7 +11,7 @@ services:
       - interra-db_data:/var/lib/mysql
     restart: always
     environment:
-      MYSQL_DATABASE: torque-wp
+      MYSQL_DATABASE: interra-wp
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/torque_wp_mysql_root
       MYSQL_USER_FILE: /run/secrets/torque_wp_mysql_user
       MYSQL_PASSWORD_FILE: /run/secrets/torque_wp_mysql_pass
@@ -22,13 +22,13 @@ services:
       - torque_wp_mysql_user
       - torque_wp_mysql_pass
 
-  interra-phpmyadmin:
+  interra-adminer:
     depends_on:
       - interra-db
-    image: phpmyadmin/phpmyadmin
+    image: adminer:latest
     restart: always
     ports:
-      - 8080:80
+      - 8081:8080
     environment:
       PMA_HOST: interra-db
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/torque_wp_mysql_root
@@ -36,6 +36,8 @@ services:
       - interra-back
     secrets:
       - torque_wp_mysql_root
+    links:
+      - interra-db
 
   interra-wordpress:
     depends_on:
@@ -49,10 +51,10 @@ services:
     restart: always
     environment:
       WORDPRESS_DB_HOST: interra-db:3306
-      WORDPRESS_DB_NAME: torque-wp
+      WORDPRESS_DB_NAME: interra-wp
       WORDPRESS_DB_USER_FILE: /run/secrets/torque_wp_mysql_user
       WORDPRESS_DB_PASSWORD_FILE: /run/secrets/torque_wp_mysql_pass
-      WORDPRESS_DEBUG: 1
+      WORDPRESS_DEBUG: 0
     networks:
       - interra-back
     secrets:

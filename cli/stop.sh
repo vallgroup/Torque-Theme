@@ -6,8 +6,8 @@ then
   COMPOSE_CONTAINERS="$(docker-compose.exe ps -q)"
   [[ ! -z "$COMPOSE_CONTAINERS" ]] && docker-compose.exe rm --stop
 else
-  COMPOSE_CONTAINERS="$(docker-compose ps -q)"
-  [[ ! -z "$COMPOSE_CONTAINERS" ]] && docker-compose rm --stop
+  COMPOSE_CONTAINERS="$(docker compose ps -q)"
+  [[ ! -z "$COMPOSE_CONTAINERS" ]] && docker compose rm --stop
 fi
 
 # stop and remove any previously running torque docker containers to avoid conflicts
