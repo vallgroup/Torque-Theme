@@ -73,7 +73,7 @@ export default function Template_4({ post }) {
         </div>
 
         {title
-          ? <h3
+          ? <h2
             className="post-title"
             dangerouslySetInnerHTML={{ __html: title }}
           />
