@@ -13,7 +13,7 @@ if [ "$IS_WINDOWS" == true ];
 then
   docker-compose.exe up -d
 else
-  docker-compose up -d;
+  docker compose up -d;
 fi
 
 # runs 'start' script for workspace <workspace-nanme>
