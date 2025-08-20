@@ -4,6 +4,7 @@ import Posts from "./Posts";
 import { DropdownDate, DropdownTax, TabsACF } from "./Filters/CustomFilters";
 import { useCustomFilters, useWPPosts } from "./hooks";
 import { createRequestParams, combineCustomFilters } from "./helpers";
+import PostsHorizontal from "./Posts/PostsHorizontal";
 
 const App = ({
   site,
@@ -11,12 +12,18 @@ const App = ({
   postsPerPage,
   filtersTypes,
   filtersArgs,
-  loopTemplate
+  loopTemplate,
+  categoryTermExclude,
+  categoryTermInclude,
+  useCustomLabel,
+  perPageOffset,
 }) => {
   const { filterSettings, filters, createFilterUpdater } = useCustomFilters(
     filtersTypes,
     filtersArgs
   );
+  const [calculatedPostsPerPage, setCalculatedPostsPerPage] =
+    useState(postsPerPage);
 
   const { taxParams, metaParams, dateParams } = combineCustomFilters(
     filters,
@@ -26,47 +33,92 @@ const App = ({
     postType,
     taxParams,
     metaParams,
-    dateParams
+    dateParams,
+    categoryTermExclude,
+    categoryTermInclude,
   });
-  const { posts, getNextPage } = useWPPosts(site, null, params, postsPerPage);
+
+  const { posts, getNextPage, page, isLoading } = useWPPosts(
+    site,
+    null,
+    params,
+    calculatedPostsPerPage
+  );
+
   //filter post for possible duplicates
-  const filteredPosts = posts.filter((post, index, array) => array.findIndex(t => t.ID == post.ID) == index);
+  const filteredPosts = posts.filter(
+    (post, index, array) => array.findIndex((t) => t.ID == post.ID) == index
+  );
+
+  useEffect(() => {
+    if (page === 1 && loopTemplate === "template-3") {
+      setCalculatedPostsPerPage(
+        parseInt(postsPerPage) + parseInt(perPageOffset)
+      );
+    }
+  }, [page]);
+
   return filterSettings?.length ? (
     <div className={"torque-filtered-loop custom-filters"}>
-      {filterSettings.map((filter, index) => {
-        const customFilterProps = {
-          key: filter.id,
-          value: filters[filter.id],
-          onChange: createFilterUpdater(filter.id),
-          args: filter.args,
-          site
-        };
+      <div className="wrap-filters">
+        {useCustomLabel && <p>Filters</p>}
+        {filterSettings.map((filter, _) => {
+          const customFilterProps = {
+            key: filter.id,
+            value: filters[filter.id],
+            onChange: createFilterUpdater(filter.id),
+            args: filter.args,
+            site,
+          };
 
-        switch (filter.type) {
-          case "tabs_acf":
-            return <TabsACF {...customFilterProps} />;
+          switch (filter.type) {
+            case "tabs_acf":
+              return <TabsACF {...customFilterProps} />;
 
-          case "dropdown_tax":
-            return <DropdownTax {...customFilterProps} />;
+            case "dropdown_tax":
+              return (
+                <DropdownTax
+                  {...customFilterProps}
+                  categoryTermExclude={categoryTermExclude}
+                  useCustomLabel
+                />
+              );
 
-          case "dropdown_date":
-            return <DropdownDate {...customFilterProps} postType={postType} />;
+            case "dropdown_date":
+              return (
+                <DropdownDate
+                  {...customFilterProps}
+                  postType={postType}
+                  useCustomLabel
+                />
+              );
 
-          default:
-            console.warn(`Filter type ${filter.type} not found`);
-            return null;
-        }
-      })}
+            default:
+              console.warn(`Filter type ${filter.type} not found`);
+              return null;
+          }
+        })}
+      </div>
 
-      <Posts posts={filteredPosts} loopTemplate={loopTemplate} />
-
-      {getNextPage && (
-        <button
-          className="torque-filtered-loop-load-more"
-          onClick={getNextPage}
-        >
-          Load More
-        </button>
+      {loopTemplate === "template-3" ? (
+        <PostsHorizontal
+          posts={filteredPosts}
+          loopTemplate={loopTemplate}
+          getNextPage={getNextPage}
+          isLoading={isLoading}
+        />
+      ) : (
+        <>
+          <Posts posts={filteredPosts} loopTemplate={loopTemplate} />
+          {getNextPage && (
+            <button
+              className="torque-filtered-loop-load-more"
+              onClick={getNextPage}
+            >
+              Load More
+            </button>
+          )}
+        </>
       )}
     </div>
   ) : null;

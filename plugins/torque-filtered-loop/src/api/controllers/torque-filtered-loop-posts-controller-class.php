@@ -1,68 +1,72 @@
 <?php
 
-require_once( get_template_directory() . '/api/responses/torque-api-responses-class.php');
-require_once( get_template_directory() . '/includes/validation/torque-validation-class.php');
+require_once(get_template_directory() . '/api/responses/torque-api-responses-class.php');
+require_once(get_template_directory() . '/includes/validation/torque-validation-class.php');
 
-class Torque_Filtered_Loop_Posts_Controller {
+class Torque_Filtered_Loop_Posts_Controller
+{
 
-	public static function get_posts_args() {
+	public static function get_posts_args()
+	{
 		return array(
-      'post_type' => array(
-        'validate_callback' => array( 'Torque_Validation', 'string' ),
-      ),
+			'post_type' => array(
+				'validate_callback' => array('Torque_Validation', 'string'),
+			),
 			'year'	=> array(
-        'validate_callback' => array( 'Torque_Validation', 'int' ),
-      ),
+				'validate_callback' => array('Torque_Validation', 'int'),
+			),
 			'monthnum'	=> array(
-        'validate_callback' => array( 'Torque_Validation', 'int' ),
-      ),
-    );
+				'validate_callback' => array('Torque_Validation', 'int'),
+			),
+		);
 	}
 
 	protected $request = null;
+	protected $taxonomies = null;
 
-	function __construct( $request ) {
-
+	function __construct($request)
+	{
 		$this->request = $request;
-		$this->taxonomies = get_taxonomies(array('public' => true),'names');
+		$this->taxonomies = get_taxonomies(array('public' => true), 'names');
 	}
 
-	public function get_posts() {
+	public function get_posts()
+	{
 		try {
 			$query_args = $this->build_query_from_params($this->request->get_params());
 
-			$query = new WP_Query( $query_args );
+			$query = new WP_Query($query_args);
 
-			$has_next_page = $this->has_next_page( $query_args );
+			$has_next_page = $this->has_next_page($query_args);
 
 			if ($query->have_posts()) {
 				foreach ($query->posts as &$post) {
 					$this->setup_post_shape($post);
 				}
 
-        return Torque_API_Responses::Success_Response( array(
-          'posts'	=> $query->posts,
+				return Torque_API_Responses::Success_Response(array(
+					'posts'	=> $query->posts,
 					'has_next_page' => $has_next_page
-        ) );
+				));
 			}
 
-			return Torque_API_Responses::Failure_Response( array(
+			return Torque_API_Responses::Failure_Response(array(
 				'posts'	=> [],
 				'has_next_page' => false
 			));
-
 		} catch (Exception $e) {
-			return Torque_API_Responses::Error_Response( $e );
+			return Torque_API_Responses::Error_Response($e);
 		}
 	}
 
-	private function build_query_from_params($params) {
+	private function build_query_from_params($params)
+	{
 		$query = array();
 
 		foreach ($params as $key => $value) {
 
 			// meta query params
-			if (substr($key, 0 ,5) === 'meta_') {
+			if (substr($key, 0, 5) === 'meta_') {
 				if ($value === "0") {
 					continue;
 				}
@@ -70,7 +74,7 @@ class Torque_Filtered_Loop_Posts_Controller {
 
 				if (substr($meta_key, 0, 6) === 'field_') {
 					// is acf key, need to get the field name
-					$field = get_field_object( $meta_key );
+					$field = get_field_object($meta_key);
 					$meta_key = $field['name'];
 				}
 
@@ -82,7 +86,7 @@ class Torque_Filtered_Loop_Posts_Controller {
 			}
 
 			// tax query params
-			if (substr($key, 0 ,4) === 'tax_') {
+			if (substr($key, 0, 4) === 'tax_') {
 				if ($value === "0") {
 					continue;
 				}
@@ -95,6 +99,36 @@ class Torque_Filtered_Loop_Posts_Controller {
 				continue;
 			}
 
+			// exclude category query params
+			if ($key === 'category_term_exclude') {
+				if ($value === "0") {
+					continue;
+				}
+				$tax_slug = $value;
+
+				$query['tax_query'][] = array(
+					'taxonomy' => 'category',
+					'terms'    => intval($value),
+					'operator' => 'NOT IN',
+				);
+				continue;
+			}
+
+			// include category query params
+			if ($key === 'category_term_include') {
+				if ($value === "0") {
+					continue;
+				}
+				$tax_slug = $value;
+
+				$query['tax_query'][] = array(
+					'taxonomy' => 'category',
+					'terms'    => intval($value),
+					'operator' => 'IN',
+				);
+				continue;
+			}
+
 			// other params
 			$query[$key] = $value;
 		}
@@ -102,20 +136,35 @@ class Torque_Filtered_Loop_Posts_Controller {
 		return $query;
 	}
 
-	private function setup_post_shape( &$post ) {
-		$post->meta = $this->prepare_meta( $post->ID );
+	private function setup_post_shape(&$post)
+	{
+		$post->meta = $this->prepare_meta($post->ID);
 
 		$post->thumbnail = get_field('thumbnail_image', $post->ID) ? get_field('thumbnail_image', $post->ID) : get_the_post_thumbnail_url($post->ID, 'large');
 
 		$post->permalink = get_post_permalink($post->ID);
 
 		$post->terms = wp_get_post_terms($post->ID, array_keys($this->taxonomies));
+
+		$post->post_excerpt = $this->prepare_excerpt($post->ID);
 	}
 
-	private function prepare_meta( $post_id ) {
+	private function prepare_excerpt($post_id)
+	{
+		$auto_excerpt = get_the_excerpt($post_id);
+		$cleaned_string = str_replace(['&hellip;', '[', ']'], '', $auto_excerpt);
+
+		// otherwise generate an excerpt from the post content or body
+		$post = get_post($post_id);
+		$excerpt = $auto_excerpt ? $cleaned_string : wp_trim_words($post->post_content, 20, null);
+		return $excerpt . ' [...]';
+	}
+
+	private function prepare_meta($post_id)
+	{
 		$wp_keys = array_filter(
 			get_post_custom_keys($post_id),
-			function($meta_key) {
+			function ($meta_key) {
 				// hide private meta
 				return $meta_key[0] !== '_';
 			}
@@ -127,7 +176,7 @@ class Torque_Filtered_Loop_Posts_Controller {
 
 			if (is_array($meta)) {
 				foreach ($meta as $arr_key => $value) {
-					$meta_key = $key.'_'.$arr_key;
+					$meta_key = $key . '_' . $arr_key;
 					$wp_meta[$meta_key] = $value;
 				}
 			} else {
@@ -141,15 +190,16 @@ class Torque_Filtered_Loop_Posts_Controller {
 		return $wp_meta + $acf_meta;
 	}
 
-	private function has_next_page( $query_args ) {
-		if ( !$query_args['posts_per_page'] || $query_args['posts_per_page'] == -1 ) {
+	private function has_next_page($query_args)
+	{
+		if (!$query_args['posts_per_page'] || $query_args['posts_per_page'] == -1) {
 			return false;
 		}
 
 		$next_page = intval($query_args['paged']) + 1;
 		$query_args['paged'] = $next_page;
 
-		$query = new WP_Query( $query_args );
+		$query = new WP_Query($query_args);
 		return $query->have_posts();
 	}
 }

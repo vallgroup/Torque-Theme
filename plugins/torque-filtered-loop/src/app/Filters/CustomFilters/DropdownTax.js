@@ -3,54 +3,53 @@ import { Dropdown } from "../../components";
 import { useWPTerms } from "../../hooks";
 import { useNeighborhoodOrder } from "../../hooks";
 
-const DropdownTax = ({ site, value, onChange, args }) => {
+const DropdownTax = ({
+  site,
+  value,
+  onChange,
+  args,
+  categoryTermExclude,
+  useCustomLabel,
+}) => {
   if (typeof args !== "string") {
     console.warn(`DropdownTax: expected args to be a tax but got ${args}`);
     return null;
   }
 
-  const [terms, taxName] = useWPTerms(site, args);
+  const [terms, taxName] = useWPTerms(site, args, categoryTermExclude);
   const order = useNeighborhoodOrder(site);
 
-  const dropdownOptions = useMemo(
-    () => {
-      return sortByNeighborhood(terms).map(term => ({
-        key: term.term_id,
-        name: term.name
-      }))
-    },
-    [terms, taxName, order]
-  );
-
+  const dropdownOptions = useMemo(() => {
+    return sortByNeighborhood(terms).map((term) => ({
+      key: term.term_id,
+      name: term.name,
+    }));
+  }, [terms, taxName, order]);
 
   return terms?.length ? (
     <Dropdown
-      title={`Filter by ${taxName}`}
+      title={useCustomLabel ? taxName : `Filter by ${taxName}`}
       options={dropdownOptions}
       value={value}
       onChange={onChange}
+      id="dropdown-tax"
     />
   ) : null;
 
   function sortByNeighborhood(terms) {
-
     if (0 === order.length) {
       return terms;
     }
 
     return terms.sort((a, b) => {
-
-      if (-1 !== order.indexOf(a.term_id)
-        && -1 !== order.indexOf(b.term_id)) {
+      if (-1 !== order.indexOf(a.term_id) && -1 !== order.indexOf(b.term_id)) {
         return 0;
-      } else
-      if (-1 !== order.indexOf(a.term_id)) {
+      } else if (-1 !== order.indexOf(a.term_id)) {
         return -1;
-      } else
-      if(-1 !== order.indexOf(b.term_id)) {
+      } else if (-1 !== order.indexOf(b.term_id)) {
         return 1;
       }
-    })
+    });
   }
 };
 
