@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Handle registratioin of tinymce plugin for shortcode
  */
-class Torque_Filtered_Loop_TinyMCE {
+class Torque_Filtered_Loop_TinyMCE
+{
 
 	public static $instance = NULL;
 
@@ -15,42 +17,50 @@ class Torque_Filtered_Loop_TinyMCE {
 
 	function __construct() {}
 
-	public static function get_inst() {
-		!self::$instance AND self::$instance = new self;
+	public static function get_inst()
+	{
+		!self::$instance and self::$instance = new self;
 
 		return self::$instance;
 	}
 
-	public function init() {
-		add_filter( "mce_external_plugins" , array( $this, 'mce_plugin' ) );
-    add_action( 'admin_footer'         , array( $this, 'insert_editor' ) );
-    add_action( 'print_media_templates', array( $this, 'media_templates' ) );
+	public function init()
+	{
+		add_filter("mce_external_plugins", array($this, 'mce_plugin'));
+		add_action('admin_footer', array($this, 'insert_editor'));
+		add_action('print_media_templates', array($this, 'media_templates'));
 
-		if ( apply_filters( self::$TINYMCE_PLUGIN_BUTTON_FILTER, true ) )
-    	add_filter( "mce_buttons"          , array( $this, 'mce_button' ) );
+		if (apply_filters(self::$TINYMCE_PLUGIN_BUTTON_FILTER, true))
+			add_filter("mce_buttons", array($this, 'mce_button'));
 	}
 
-	public function mce_plugin( $plugin_array ) {
+	public function mce_plugin($plugin_array)
+	{
 		$plugin_array['torque_filtered_loop'] = '/wp-content/plugins/torque-filtered-loop/shortcode/torque-filtered-loop-tinymce-plugin.js';
 		return $plugin_array;
 	}
 
-	public function mce_button( $buttons ) {
-    array_push( $buttons, 'torque_filtered_loop_button' );
+	public function mce_button($buttons)
+	{
+		array_push($buttons, 'torque_filtered_loop_button');
 		return $buttons;
 	}
 
-	public function insert_editor( $hook ) {
-		?>
+	public function insert_editor($hook)
+	{
+?>
 		<div id="torque-filtered-loop-builder" style="display:none;">
 		</div>
-		<?php
+<?php
 	}
 
-	public function media_templates() {
-		if ( ! isset( get_current_screen()->id )
-			|| get_current_screen()->base != 'post' )
-      return;
+	public function media_templates()
+	{
+		if (
+			! isset(get_current_screen()->id)
+			|| get_current_screen()->base != 'post'
+		)
+			return;
 		include_once 'torque-filtered-loop-tinymce-editor.html';
 	}
 }

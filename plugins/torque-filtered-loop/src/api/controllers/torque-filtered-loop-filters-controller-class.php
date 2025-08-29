@@ -1,57 +1,62 @@
 <?php
 
-require_once( get_template_directory() . '/api/responses/torque-api-responses-class.php');
-require_once( get_template_directory() . '/includes/validation/torque-validation-class.php');
+require_once(get_template_directory() . '/api/responses/torque-api-responses-class.php');
+require_once(get_template_directory() . '/includes/validation/torque-validation-class.php');
 
-class Torque_Filtered_Loop_Filters_Controller {
+class Torque_Filtered_Loop_Filters_Controller
+{
 
-	public static function get_filter_acf_select_args() {
+	public static function get_filter_acf_select_args()
+	{
 		return array(
-      'field_id' => array(
-        'validate_callback' => array( 'Torque_Validation', 'string' ),
-      ),
-    );
+			'field_id' => array(
+				'validate_callback' => array('Torque_Validation', 'string'),
+			),
+		);
 	}
 
-	public static function get_filter_dropdown_date_args() {
+	public static function get_filter_dropdown_date_args()
+	{
 		return array(
-      'post_type' => array(
-        'validate_callback' => array( 'Torque_Validation', 'string' ),
-      ),
-    );
+			'post_type' => array(
+				'validate_callback' => array('Torque_Validation', 'string'),
+			),
+		);
 	}
 
 	protected $request = null;
 
-	function __construct( $request ) {
+	function __construct($request)
+	{
 
 		$this->request = $request;
 	}
 
-	public function get_filter_acf_select() {
+	public function get_filter_acf_select()
+	{
 		try {
-			$field = get_field_object( $this->request['field_id'] );
+			$field = get_field_object($this->request['field_id']);
 			$choices = $field['choices'];
 
 			if ($choices) {
-        return Torque_API_Responses::Success_Response( array(
-          'choices'	=> $choices
-        ) );
+				return Torque_API_Responses::Success_Response(array(
+					'choices'	=> $choices
+				));
 			}
 
-			return Torque_API_Responses::Failure_Response( array(
+			return Torque_API_Responses::Failure_Response(array(
 				'choices'	=> []
 			));
-
 		} catch (Exception $e) {
-			return Torque_API_Responses::Error_Response( $e );
+			return Torque_API_Responses::Error_Response($e);
 		}
 	}
 
-	public function get_filter_dropdown_date() {
+	public function get_filter_dropdown_date()
+	{
 		try {
 			$post_type = $this->request['post_type'];
-			$query = new WP_Query( array(
+			$query = new WP_Query(array(
 				'post_type'	=> $post_type,
 				'posts_per_page' => -1,
 				'orderby'	=> 'date'
@@ -67,17 +72,16 @@ class Torque_Filtered_Loop_Filters_Controller {
 					}
 				}
 
-        return Torque_API_Responses::Success_Response( array(
-          'dates'	=> $dates_arr
-        ) );
+				return Torque_API_Responses::Success_Response(array(
+					'dates'	=> $dates_arr
+				));
 			}
 
-			return Torque_API_Responses::Failure_Response( array(
+			return Torque_API_Responses::Failure_Response(array(
 				'dates'	=> []
 			));
-
 		} catch (Exception $e) {
-			return Torque_API_Responses::Error_Response( $e );
+			return Torque_API_Responses::Error_Response($e);
 		}
 	}
 }

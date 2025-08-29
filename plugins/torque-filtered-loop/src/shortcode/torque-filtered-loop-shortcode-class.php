@@ -1,8 +1,9 @@
 <?php
 
-require( Torque_Filtered_Loop_PATH . 'shortcode/torque-filtered-loop-tinymce-class.php' );
+require(Torque_Filtered_Loop_PATH . 'shortcode/torque-filtered-loop-tinymce-class.php');
 
-class Torque_Filtered_Loop_Shortcode {
+class Torque_Filtered_Loop_Shortcode
+{
 
   public static $SHORTCODE_SLUG = 'torque_filtered_loop';
 
@@ -12,12 +13,13 @@ class Torque_Filtered_Loop_Shortcode {
 
   private $atts = array();
 
-	private $content = '';
+  private $content = '';
 
   /**
    * Add the shortcode and link it to our callback
    */
-  public function __construct() {
+  public function __construct()
+  {
     // use this array to attributes and display them in the front end
     // for private attributes go to setup_atts()
     //
@@ -50,20 +52,32 @@ class Torque_Filtered_Loop_Shortcode {
 
       // args for second method
       'filters_types' => '',
-      'filters_args'  => ''
+      'filters_args'  => '',
+      'category_term_exclude'   => '',
+      'category_term_include'   => '',
+      'use_custom_label' => 'false',
+      'per_page_offset' => '0',
     );
 
-		add_shortcode( self::$SHORTCODE_SLUG , array( $this, 'shortcode_handler') );
+    add_shortcode(self::$SHORTCODE_SLUG, array($this, 'shortcode_handler'));
 
-    add_action( 'load-post.php'    ,  array(
-      Torque_Filtered_Loop_TinyMCE::get_inst(),
-      'init' ),
-    20 );
-    add_action( 'load-post-new.php',  array(
-      Torque_Filtered_Loop_TinyMCE::get_inst(),
-      'init' ),
-    20 );
-	}
+    add_action(
+      'load-post.php',
+      array(
+        Torque_Filtered_Loop_TinyMCE::get_inst(),
+        'init'
+      ),
+      20
+    );
+    add_action(
+      'load-post-new.php',
+      array(
+        Torque_Filtered_Loop_TinyMCE::get_inst(),
+        'init'
+      ),
+      20
+    );
+  }
 
   /**
    * The callback for the shortcode, should output some markup to be displayed.
@@ -72,8 +86,9 @@ class Torque_Filtered_Loop_Shortcode {
    * @param  string $content Children found inside enclosing shortcode tags
    * @return string
    */
-  public function shortcode_handler( $atts, $content ) {
-    $this->atts = $this->setup_atts( $atts );
+  public function shortcode_handler($atts, $content)
+  {
+    $this->atts = $this->setup_atts($atts);
     $this->content = $content;
 
     return $this->get_markup();
@@ -85,15 +100,16 @@ class Torque_Filtered_Loop_Shortcode {
    * @param  array $atts    Attributes found when parsing shortcode
    * @return array       Attributes combined with our defaults
    */
-  private function setup_atts($atts) {
+  private function setup_atts($atts)
+  {
 
-    return shortcode_atts( array_merge(
-        $this->expected_args,
-        // these are your arguments that do not show up in the front end.
-        array(
-          'loop-template' => 'template-'.apply_filters( self::$LOOP_TEMPLATE_FILTER_HANDLE, "0" ),
-        )
-      ), $atts, self::$SHORTCODE_SLUG );
+    return shortcode_atts(array_merge(
+      $this->expected_args,
+      // these are your arguments that do not show up in the front end.
+      array(
+        'loop-template' => 'template-' . apply_filters(self::$LOOP_TEMPLATE_FILTER_HANDLE, "0"),
+      )
+    ), $atts, self::$SHORTCODE_SLUG);
   }
 
 
@@ -105,20 +121,19 @@ class Torque_Filtered_Loop_Shortcode {
    *
    * @return string
    */
-  private function get_markup() {
+  private function get_markup()
+  {
     $exp_args = '';
-    foreach ( $this->atts as $key => $arg ) {
-      if ( empty( $arg ) )
+    foreach ($this->atts as $key => $arg) {
+      if (empty($arg))
         continue;
-      $exp_args .= ' data-'.esc_attr( $key ).'="'.$arg.'"';
+      $exp_args .= ' data-' . esc_attr($key) . '="' . $arg . '"';
     }
 
     return '<span
-      class="torque-filtered-loop-react-entry"
-      data-site="'.get_site_url().'"
-      '.$exp_args.'>
+      class="torque-filtered-loop-react-entry ' . $this->atts['loop-template'] . '"
+      data-site="' . get_site_url() . '"
+      ' . $exp_args . '>
       </span>';
   }
 }
-
-?>

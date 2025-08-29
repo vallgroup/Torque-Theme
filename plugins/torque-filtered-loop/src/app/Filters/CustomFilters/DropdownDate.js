@@ -2,24 +2,25 @@ import React, { memo, useMemo } from "react";
 import { Dropdown } from "../../components";
 import { useDateChoices } from "../../hooks";
 
-const DropdownDate = ({ site, value, onChange, postType }) => {
+const DropdownDate = ({ site, value, onChange, postType, useCustomLabel }) => {
   const dates = useDateChoices(site, postType);
 
   const dropdownOptions = useMemo(
     () =>
-      dates.map(date => ({
+      dates.map((date) => ({
         key: date,
-        name: date
+        name: date,
       })),
     [dates]
   );
 
   return dates?.length ? (
     <Dropdown
-      title={`Filter by Date`}
+      title={useCustomLabel ? "Date" : "Filter by Date"}
       options={dropdownOptions}
       value={value}
       onChange={onChange}
+      id="dropdown-date"
     />
   ) : null;
 };

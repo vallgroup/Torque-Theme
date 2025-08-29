@@ -2,45 +2,48 @@ import styles from "./Dropdown.scss";
 import React, { memo, useState, useMemo, useEffect } from "react";
 import classnames from "classnames";
 
-const Dropdown = ({ title, options, value, onChange }) => {
+const Dropdown = ({ title, options, value, onChange, id }) => {
   const [isOpen, setIsOpen] = useState(false);
   const handleDropdownClick = useMemo(
-    () => e => {
+    () => (e) => {
       e.stopPropagation();
-      setIsOpen(isOpen => !isOpen);
+      setIsOpen((isOpen) => !isOpen);
     },
     []
   );
-  useEffect(
-    () => {
-      // close dropdown when clicking outside
-      function handleBodyClick() {
-        setIsOpen(false);
-      }
+  useEffect(() => {
+    // close dropdown when clicking outside
+    function handleBodyClick() {
+      setIsOpen(false);
+    }
 
-      if (isOpen) {
-        document.addEventListener("click", handleBodyClick);
-        return () => document.removeEventListener("click", handleBodyClick);
-      }
-    },
-    [isOpen]
-  );
+    if (isOpen) {
+      document.addEventListener("click", handleBodyClick);
+      return () => document.removeEventListener("click", handleBodyClick);
+    }
+  }, [isOpen]);
 
   const optionsWithAll = options.slice(0);
   optionsWithAll.unshift({
     key: 0,
-    name: "All"
+    name: "All",
   });
 
   const selectedOption = useMemo(
-    () => options.find(option => option.key === value),
+    () => options.find((option) => option.key === value),
     [optionsWithAll, value]
   );
 
   return (
-    <div className={classnames(styles.root, "torque-custom-filter-dropdown")}>
+    <div
+      className={classnames(styles.root, "torque-custom-filter-dropdown", id)}
+    >
       <div
-        className={classnames(styles.title_wrapper, "dropdown-title-wrapper")}
+        className={classnames(
+          styles.title_wrapper,
+          "dropdown-title-wrapper",
+          selectedOption ? "active-filter" : ""
+        )}
         onClick={handleDropdownClick}
       >
         <span className="dropdown-title">{title}</span>
