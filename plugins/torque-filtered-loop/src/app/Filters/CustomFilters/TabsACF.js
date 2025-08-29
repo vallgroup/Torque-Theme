@@ -12,9 +12,9 @@ const TabsACF = ({ site, value, onChange, args }) => {
 
   const choices = useACFSelectChoices(site, args);
   // hijack the Filters component to use its' markup.. we just have to change the choices to fit
-  const filterOptions = Object.keys(choices).map(choiceKey => ({
+  const filterOptions = Object.keys(choices).map((choiceKey) => ({
     term_id: choiceKey,
-    name: choices[choiceKey]
+    name: choices[choiceKey],
   }));
 
   return (
