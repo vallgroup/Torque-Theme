@@ -57,6 +57,7 @@ class Torque_Filtered_Loop_Shortcode
       'category_term_include'   => '',
       'use_custom_label' => 'false',
       'per_page_offset' => '0',
+      'use_template_variation' => 'false',
     );
 
     add_shortcode(self::$SHORTCODE_SLUG, array($this, 'shortcode_handler'));

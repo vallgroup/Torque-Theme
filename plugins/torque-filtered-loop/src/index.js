@@ -23,6 +23,7 @@ entry.forEach((entry) => {
     const categoryTermInclude = entry.getAttribute("data-category_term_include");
     const useCustomLabel = entry.getAttribute("data-use_custom_label");
     const perPageOffset = entry.getAttribute("data-per_page_offset");
+    const useTemplateVariation = entry.getAttribute("data-use_template_variation");
 
     // pass through the data-site attr as props so the app knows where to send requests
     ReactDOM.render(
@@ -35,6 +36,7 @@ entry.forEach((entry) => {
           categoryTermInclude={categoryTermInclude}
           useCustomLabel={useCustomLabel}
           perPageOffset={perPageOffset || 0}
+          useTemplateVariation={useTemplateVariation}
         />
       ) : (
         <App

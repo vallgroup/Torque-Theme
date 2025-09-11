@@ -5,6 +5,8 @@ import { DropdownDate, DropdownTax, TabsACF } from "./Filters/CustomFilters";
 import { useCustomFilters, useWPPosts } from "./hooks";
 import { createRequestParams, combineCustomFilters } from "./helpers";
 import PostsHorizontal from "./Posts/PostsHorizontal";
+import PostsVariation from "./Posts/PostsVariation";
+import TabsDropdownACF from "./Filters/CustomFilters/TabsDropdownACF";
 
 const App = ({
   site,
@@ -17,6 +19,7 @@ const App = ({
   categoryTermInclude,
   useCustomLabel,
   perPageOffset,
+  useTemplateVariation,
 }) => {
   const { filterSettings, filters, createFilterUpdater } = useCustomFilters(
     filtersTypes,
@@ -58,10 +61,25 @@ const App = ({
     }
   }, [page]);
 
+  const includeTabsAcf = filterSettings.find(
+    (item) => item.type === "tabs_acf"
+  );
+
   return filterSettings?.length ? (
     <div className={"torque-filtered-loop custom-filters"}>
+      {includeTabsAcf && loopTemplate === "template-3" && (
+        <div className="wrap-top-filters">
+          <TabsDropdownACF
+            key={includeTabsAcf.id}
+            value={filters[includeTabsAcf.id]}
+            onChange={createFilterUpdater(includeTabsAcf.id)}
+            args={includeTabsAcf.args}
+            site={site}
+          />
+        </div>
+      )}
       <div className="wrap-filters">
-        {useCustomLabel && <p>Filters</p>}
+        {useCustomLabel === 'true' && <p>Filters</p>}
         {filterSettings.map((filter, _) => {
           const customFilterProps = {
             key: filter.id,
@@ -73,7 +91,9 @@ const App = ({
 
           switch (filter.type) {
             case "tabs_acf":
-              return <TabsACF {...customFilterProps} />;
+              return loopTemplate === "template-3" ? null : (
+                <TabsACF {...customFilterProps} />
+              );
 
             case "dropdown_tax":
               return (
@@ -101,12 +121,26 @@ const App = ({
       </div>
 
       {loopTemplate === "template-3" ? (
-        <PostsHorizontal
-          posts={filteredPosts}
-          loopTemplate={loopTemplate}
-          getNextPage={getNextPage}
-          isLoading={isLoading}
-        />
+        useTemplateVariation === "true" ? (
+          <>
+            <PostsVariation posts={filteredPosts} />
+            {getNextPage && (
+              <button
+                className="torque-filtered-loop-load-more"
+                onClick={getNextPage}
+              >
+                Load More
+              </button>
+            )}
+          </>
+        ) : (
+          <PostsHorizontal
+            posts={filteredPosts}
+            loopTemplate={loopTemplate}
+            getNextPage={getNextPage}
+            isLoading={isLoading}
+          />
+        )
       ) : (
         <>
           <Posts posts={filteredPosts} loopTemplate={loopTemplate} />

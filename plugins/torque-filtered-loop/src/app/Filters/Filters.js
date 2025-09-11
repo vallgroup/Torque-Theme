@@ -9,13 +9,13 @@ const Filters = ({
   activeTerm,
   updateActiveTerm,
   parentId,
-  hideAllOption
+  hideAllOption,
 }) => {
   const filteredTerms = filterTermsByParent(terms, parentId);
 
   const allTerm = {
     term_id: 0,
-    name: "All"
+    name: "All",
   };
 
   return (
@@ -23,18 +23,18 @@ const Filters = ({
       {!hideAllOption && (
         <button
           className={classnames("torque-filtered-loop-filter-button", {
-            active: allTerm.term_id === activeTerm
+            active: allTerm.term_id === activeTerm,
           })}
           onClick={updateActiveTerm(allTerm.term_id)}
           dangerouslySetInnerHTML={{ __html: allTerm.name }}
         />
       )}
 
-      {filteredTerms.map(term => (
+      {filteredTerms.map((term) => (
         <button
           key={term.term_id}
           className={classnames("torque-filtered-loop-filter-button", {
-            active: term.term_id === activeTerm
+            active: term.term_id === activeTerm,
           })}
           onClick={updateActiveTerm(term.term_id)}
           dangerouslySetInnerHTML={{ __html: term.name }}
@@ -47,14 +47,15 @@ const Filters = ({
 Filters.propTypes = {
   className: PropTypes.string,
   terms: PropTypes.array.isRequired,
-  activeTerm: PropTypes.number.isRequired,
+  activeTerm: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    .isRequired,
   updateActiveTerm: PropTypes.func.isRequired,
   parentId: PropTypes.number,
-  hideAllOption: PropTypes.bool
+  hideAllOption: PropTypes.bool,
 };
 
 Filters.defaultProps = {
-  activeTerm: 0
+  activeTerm: 0,
 };
 
 export default memo(Filters);
