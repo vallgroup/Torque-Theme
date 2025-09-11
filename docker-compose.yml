@@ -18,13 +18,13 @@ services:
        - torque_wp_mysql_user
        - torque_wp_mysql_pass
 
-   newcastle-child-phpmyadmin:
+   newcastle-child-adminer:
     depends_on:
       - newcastle-child-db
-    image: phpmyadmin/phpmyadmin
+    image: adminer:latest
     restart: always
     ports:
-      - 8080:80
+      - 8081:8080
     environment:
       PMA_HOST: newcastle-child-db
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/torque_wp_mysql_root
@@ -32,13 +32,15 @@ services:
       - newcastle-child-back
     secrets:
       - torque_wp_mysql_root
+    links:
+      - newcastle-child-db
 
    newcastle-child-wordpress:
      depends_on:
        - newcastle-child-db
      image: wordpress:latest
      ports:
-       - "8000:80"
+       - "8083:80"
      volumes:
        - ./wp-content:/var/www/html/wp-content
        - ./php.ini:/var/www/html/php.ini
@@ -48,7 +50,7 @@ services:
        WORDPRESS_DB_NAME: newcastle-child-wp
        WORDPRESS_DB_USER_FILE: /run/secrets/torque_wp_mysql_user
        WORDPRESS_DB_PASSWORD_FILE: /run/secrets/torque_wp_mysql_pass
-       WORDPRESS_DEBUG: 1
+       WORDPRESS_DEBUG: 0
      networks:
        - newcastle-child-back
      secrets:
