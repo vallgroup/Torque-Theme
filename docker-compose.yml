@@ -48,6 +48,8 @@ services:
     volumes:
       - ./wp-content:/var/www/html/wp-content
       - ./php.ini:/var/www/html/php.ini
+      - ./wp-config.php:/var/www/html/wp-config.php
+      - ./.htaccess:/var/www/html/.htaccess
     restart: always
     environment:
       WORDPRESS_DB_HOST: interra-db:3306
